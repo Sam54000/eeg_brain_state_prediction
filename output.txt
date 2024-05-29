@@ -3,16 +3,111 @@ EDF file detected
 Setting channel info structure...
 Creating raw.info structure...
 Reading 0 ... 163499  =      0.000 ...   653.996 secs...
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 64 concurrent workers.
+[Parallel(n_jobs=-1)]: Done  14 out of  64 | elapsed:    3.3s remaining:   11.7s
+[Parallel(n_jobs=-1)]: Done  27 out of  64 | elapsed:    4.4s remaining:    6.0s
+[Parallel(n_jobs=-1)]: Done  40 out of  64 | elapsed:    5.4s remaining:    3.3s
+[Parallel(n_jobs=-1)]: Done  53 out of  64 | elapsed:    6.6s remaining:    1.4s
+[Parallel(n_jobs=-1)]: Done  64 out of  64 | elapsed:    7.6s finished
+saving into /projects/EEG_FMRI/bids_eeg/BIDS/NEW/DERIVATIVES/eeg_features_extraction/sub-11/ses-02/eeg/sub-11_ses-02_task-rest_run-01_desc-MorletTFR_eeg.pkl
+Filtering raw data in 1 contiguous segment
+Setting up band-pass filter from 0.5 - 4 Hz
+
+FIR filter parameters
+---------------------
+Designing a one-pass, zero-phase, non-causal bandpass filter:
+- Windowed time-domain design (firwin) method
+- Hamming window with 0.0194 passband ripple and 53 dB stopband attenuation
+- Lower passband edge: 0.50
+- Lower transition bandwidth: 0.50 Hz (-6 dB cutoff frequency: 0.25 Hz)
+- Upper passband edge: 4.00 Hz
+- Upper transition bandwidth: 2.00 Hz (-6 dB cutoff frequency: 5.00 Hz)
+- Filter length: 1651 samples (6.604 s)
+
+[Parallel(n_jobs=1)]: Done  17 tasks      | elapsed:    0.1s
 Used Annotations descriptions: ['New Segment', 'R128', 'S  1', 'S  5', 'S 99', 'Sync On', 'Time 0']
 Used Annotations descriptions: ['New Segment', 'R128', 'S  1', 'S  5', 'S 99', 'Sync On', 'Time 0']
 cropping from 31.064 to 635.864
+Filtering raw data in 1 contiguous segment
+Setting up band-pass filter from 4 - 8 Hz
+
+FIR filter parameters
+---------------------
+Designing a one-pass, zero-phase, non-causal bandpass filter:
+- Windowed time-domain design (firwin) method
+- Hamming window with 0.0194 passband ripple and 53 dB stopband attenuation
+- Lower passband edge: 4.00
+- Lower transition bandwidth: 2.00 Hz (-6 dB cutoff frequency: 3.00 Hz)
+- Upper passband edge: 8.00 Hz
+- Upper transition bandwidth: 2.00 Hz (-6 dB cutoff frequency: 9.00 Hz)
+- Filter length: 413 samples (1.652 s)
+
+[Parallel(n_jobs=1)]: Done  17 tasks      | elapsed:    0.0s
+Used Annotations descriptions: ['New Segment', 'R128', 'S  1', 'S  5', 'S 99', 'Sync On', 'Time 0']
+Used Annotations descriptions: ['New Segment', 'R128', 'S  1', 'S  5', 'S 99', 'Sync On', 'Time 0']
+cropping from 31.064 to 635.864
+Filtering raw data in 1 contiguous segment
+Setting up band-pass filter from 8 - 13 Hz
+
+FIR filter parameters
+---------------------
+Designing a one-pass, zero-phase, non-causal bandpass filter:
+- Windowed time-domain design (firwin) method
+- Hamming window with 0.0194 passband ripple and 53 dB stopband attenuation
+- Lower passband edge: 8.00
+- Lower transition bandwidth: 2.00 Hz (-6 dB cutoff frequency: 7.00 Hz)
+- Upper passband edge: 13.00 Hz
+- Upper transition bandwidth: 3.25 Hz (-6 dB cutoff frequency: 14.62 Hz)
+- Filter length: 413 samples (1.652 s)
+
+[Parallel(n_jobs=1)]: Done  17 tasks      | elapsed:    0.0s
+Used Annotations descriptions: ['New Segment', 'R128', 'S  1', 'S  5', 'S 99', 'Sync On', 'Time 0']
+Used Annotations descriptions: ['New Segment', 'R128', 'S  1', 'S  5', 'S 99', 'Sync On', 'Time 0']
+cropping from 31.064 to 635.864
+Filtering raw data in 1 contiguous segment
+Setting up band-pass filter from 13 - 30 Hz
+
+FIR filter parameters
+---------------------
+Designing a one-pass, zero-phase, non-causal bandpass filter:
+- Windowed time-domain design (firwin) method
+- Hamming window with 0.0194 passband ripple and 53 dB stopband attenuation
+- Lower passband edge: 13.00
+- Lower transition bandwidth: 3.25 Hz (-6 dB cutoff frequency: 11.38 Hz)
+- Upper passband edge: 30.00 Hz
+- Upper transition bandwidth: 7.50 Hz (-6 dB cutoff frequency: 33.75 Hz)
+- Filter length: 255 samples (1.020 s)
+
+[Parallel(n_jobs=1)]: Done  17 tasks      | elapsed:    0.1s
+Used Annotations descriptions: ['New Segment', 'R128', 'S  1', 'S  5', 'S 99', 'Sync On', 'Time 0']
+Used Annotations descriptions: ['New Segment', 'R128', 'S  1', 'S  5', 'S 99', 'Sync On', 'Time 0']
+cropping from 31.064 to 635.864
+Filtering raw data in 1 contiguous segment
+Setting up band-pass filter from 30 - 40 Hz
+
+FIR filter parameters
+---------------------
+Designing a one-pass, zero-phase, non-causal bandpass filter:
+- Windowed time-domain design (firwin) method
+- Hamming window with 0.0194 passband ripple and 53 dB stopband attenuation
+- Lower passband edge: 30.00
+- Lower transition bandwidth: 7.50 Hz (-6 dB cutoff frequency: 26.25 Hz)
+- Upper passband edge: 40.00 Hz
+- Upper transition bandwidth: 10.00 Hz (-6 dB cutoff frequency: 45.00 Hz)
+- Filter length: 111 samples (0.444 s)
+
+[Parallel(n_jobs=1)]: Done  17 tasks      | elapsed:    0.1s
+Used Annotations descriptions: ['New Segment', 'R128', 'S  1', 'S  5', 'S 99', 'Sync On', 'Time 0']
+Used Annotations descriptions: ['New Segment', 'R128', 'S  1', 'S  5', 'S 99', 'Sync On', 'Time 0']
+cropping from 31.064 to 635.864
+saving into /projects/EEG_FMRI/bids_eeg/BIDS/NEW/DERIVATIVES/eeg_features_extraction/sub-11/ses-02/eeg/sub-11_ses-02_task-rest_run-01_desc-EEGbandsEnvelopes_eeg.pkl
 Traceback (most recent call last):
-  File "/home/slouviot/01_projects/eeg_brain_state_prediction/envelope_and_TF_pipeline.py", line 186, in <module>
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/envelope_and_TF_pipeline.py", line 199, in <module>
     Main()
-  File "/home/slouviot/01_projects/eeg_brain_state_prediction/envelope_and_TF_pipeline.py", line 175, in Main
-    features_object.run_wavelets().save(saving_path)
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/slouviot/01_projects/eeg_brain_state_prediction/envelope_and_TF_pipeline.py", line 110, in run_wavelets
-    cycles = self.frequencies / 2
-             ~~~~~~~~~~~~~~~~~^~~
-TypeError: unsupported operand type(s) for /: 'list' and 'int'
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/envelope_and_TF_pipeline.py", line 196, in Main
+    features_object.extract_custom_band_envelope().save(custom_envelope_filename)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/envelope_and_TF_pipeline.py", line 99, in extract_custom_band_envelope
+    self.frequencies.append((low_frequency, high_frequency))
+    ^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'numpy.ndarray' object has no attribute 'append'

@@ -69,9 +69,9 @@ class EEGfeatures:
         temp_envelopes_list = list()
         for band in frequencies:
             filtered = self.raw.copy().filter(*band)
-            temp_envelopes_list.append(
-                filtered.copy().apply_hilbert(envelope = True).get_data()
-                )
+            envelope = filtered.copy().apply_hilbert(envelope = True)
+            envelope_cropped = specific_crop(envelope, margin = 0)
+            temp_envelopes_list.append(envelope_cropped.get_data())
         return np.stack(temp_envelopes_list, axis = -1)
 
     def extract_eeg_band_envelope(self: 'EEGfeatures') -> 'EEGfeatures':
@@ -94,12 +94,13 @@ class EEGfeatures:
                                 highest_frequency: int = 40,
                                 lowest_frequency: int = 1, 
                                 frequency_step: int = 1) -> 'EEGfeatures':
+        self.frequencies = list()
         for low_frequency in range(lowest_frequency, highest_frequency, frequency_step):
             high_frequency = low_frequency + frequency_step
             self.frequencies.append((low_frequency, high_frequency))
 
-        self.frequencies = np.array(self.frequencies)
         self.feature = self._extract_envelope(self.frequencies)
+        self.frequencies = np.array(self.frequencies)
         self.feature_info = f"""
         Custom bands envelopes 
         from {lowest_frequency} to {highest_frequency} Hz
@@ -114,8 +115,6 @@ class EEGfeatures:
         self.feature = self.raw.copy().compute_tfr(freqs = self.frequencies, 
                                 n_cycles = cycles,
                                 method='morlet',
-                                average = False,
-                                return_itc = False,
                                 n_jobs = -1)
         self.feature_info = """Morlet Time-Frequency Representation
         with 40 frequencies from 1 to 40 Hz number of cycles = frequency / 2"""
@@ -145,14 +144,27 @@ def measure_gradient_time(raw, print_results = True):
         print(f'Standard deviation of time space between gradient triggers: {std_time_space}')
     return np.round(average_time_space,1)
 
-def specific_crop(raw):
+def specific_crop(raw: mne.io.Raw, margin: int = 1) -> mne.io.Raw:
+    """Crop the raw data to get only when fMRI gradient is on.
+    
+    The function take the time of occurence of the first and the last gradient
+    trigger to get raw data only between these two triggers. It also add a margin
+    to anticipate edge effect that would be cropped after processing.
+    Args:
+        raw (mne.io.Raw): _description_
+        padding (int, optional): Add a margin in second from the first and the
+                                 to anticipate process 
+                                 that would induce an edge effects. Defaults to 1.
+
+    Returns:
+        mne.io.Raw: _description_
+    """
     gradient_time = measure_gradient_time(raw, print_results = False)
     gradient_trigger_name = utils.extract_gradient_trigger_name(raw)
     events, event_id = mne.events_from_annotations(raw)
     picked_events = mne.pick_events(events, include=[event_id[gradient_trigger_name]])
-    picked_event_id = {gradient_trigger_name: event_id[gradient_trigger_name]}
-    start = picked_events[0][0] / raw.info['sfreq']
-    stop = picked_events[-1][0] / raw.info['sfreq'] + gradient_time
+    start = picked_events[0][0] / raw.info['sfreq'] - margin
+    stop = (picked_events[-1][0] / raw.info['sfreq'] + gradient_time) + margin
     print(f'cropping from {start} to {stop}')
     cropped = raw.copy().crop(start, stop)
     return cropped
@@ -170,8 +182,7 @@ def Main():
                                 datatype='eeg')
             bids_path.mkdir()
             
-            raw_cropped = specific_crop(raw)
-            features_object = EEGfeatures(raw_cropped)
+            features_object = EEGfeatures(raw)
 
             bids_path.update(description = 'MorletTFR')
             saving_path = os.path.splitext(bids_path.fpath)[0] + '.pkl'
@@ -183,7 +194,10 @@ def Main():
 
             bids_path.update(description = 'CustomEnvelopes')
             custom_envelope_filename = os.path.splitext(bids_path.fpath)[0] + '.pkl'
-            features_object.extract_custom_envelope().save(custom_envelope_filename)
+            features_object.extract_custom_band_envelope().save(custom_envelope_filename)
 
 if __name__ == '__main__':
     Main()
+
+# TODO The frequencies need a better handling because it changes datastructure
+#      from list of tuple to numpy array. It could be better to keep it as np.array
