@@ -68,24 +68,26 @@ class EEGfeatures:
         self.times = raw.times
         self.frequencies = list()
 
-    def extract_eeg_band_envelope(self: 'EEGfeatures') -> 'EEGfeatures':
-        envelopes_list = list()
-
-        self.frequencies = [
-            (0.5, 4),
-            (4, 8),
-            (8, 13),
-            (13, 30),
-            (30, 40)
-        ]
-
-        for band in self.frequencies:
+    def _extract_envelope(self, frequencies: list[tuple[float,float]])-> np.ndarray:
+        temp_envelopes_list = list()
+        for band in frequencies:
             filtered = self.raw.copy().filter(*band)
-            envelopes_list.append(
+            temp_envelopes_list.append(
                 filtered.copy().apply_hilbert(envelope = True).get_data()
                 )
+        return np.stack(temp_envelopes_list, axis = -1)
 
-        self.envelopes = np.stack(envelopes_list, axis = -1)
+    def extract_eeg_band_envelope(self: 'EEGfeatures') -> 'EEGfeatures':
+
+        self.frequencies = [ 
+                    (0.5, 4),
+                    (4, 8),
+                    (8, 13),
+                    (13, 30),
+                    (30, 40) 
+                    ]
+        self.feature = self._extract_envelope(self.frequencies)
+        self.feature_info = "EEG bands envelopes"
 
         return self
 
@@ -93,19 +95,31 @@ class EEGfeatures:
                                 highest_frequency: int = 40,
                                 lowest_frequency: int = 1, 
                                 frequency_step: int = 1) -> 'EEGfeatures':
+        for low_frequency in range(lowest_frequency, highest_frequency, frequency_step):
+            high_frequency = low_frequency + frequency_step
+            self.frequencies.append((low_frequency, high_frequency))
 
-        temp_envelope_list = list()
-        for start_frequency in range(lowest_frequency, 
-                                     highest_frequency, 
-                                     frequency_step):
-            stop_frequency = start_frequency + frequency_step
-            self.frequencies.append((start_frequency, stop_frequency))
-            filtered = self.raw.copy().filter(start_frequency, stop_frequency)
-            temp_envelope_list.append(
-                filtered.copy().apply_hilbert(envelope = True).get_data()
-                )
-            self.envelopes = np.stack(temp_envelope_list, axis = -1)
+        self.feature = self._extract_envelope(self.frequencies)
+        self.feature_info = f"""
+        Custom bands envelopes 
+        from {lowest_frequency} to {highest_frequency} Hz
+        """
 
+        return self
+
+    def run_wavelets(self: 'EEGfeatures') -> 'EEGfeatures':
+
+        self.frequencies = list(np.linspace(1,40,40))
+        cycles = self.frequencies / 2
+        self.feature = self.raw.copy().compute_tfr(freqs = self.frequencies, 
+                                n_cycles = cycles,
+                                method='morlet',
+                                average = False,
+                                return_itc = False,
+                                n_jobs = -1)
+        self.feature_info = """Morlet Time-Frequency Representation
+        with 40 frequencies from 1 to 40 Hz number of cycles = frequency / 2"""
+        
         return self
     
     def save(self, filename):
@@ -113,7 +127,8 @@ class EEGfeatures:
             'channel_names': self.channel_names,
             'times': self.times,
             'frequencies': self.frequencies,
-            'envelopes': self.envelopes
+            'feature': self.feature,
+            'feature_info': self.feature_info
         }
         print(f'saving into {filename}')
         with open(filename, 'wb') as file:
@@ -136,17 +151,6 @@ class TimeFrequency:
         self.channel_names = raw.info['ch_names']
         self.times = raw.times
 
-    def run_wavelets(self: 'TimeFrequency'):
-        frequencies = np.linspace(1,40,40)
-        cycles = frequencies / 2
-        self.power = self.raw.compute_tfr(freqs = frequencies, 
-                                n_cycles = cycles,
-                                method='morlet',
-                                average = False,
-                                return_itc = False,
-                                n_jobs = -1)
-        
-        return self
     
     def save(self, filename):
         param_to_save = {
