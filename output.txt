@@ -1,0 +1,18 @@
+Extracting EDF parameters from /projects/EEG_FMRI/bids_eeg/BIDS/NEW/PREP_BV_EDF/sub-11_ses-02_task-rest_run-01_desc-GradientStep1_eeg.edf...
+EDF file detected
+Setting channel info structure...
+Creating raw.info structure...
+Reading 0 ... 163499  =      0.000 ...   653.996 secs...
+Used Annotations descriptions: ['New Segment', 'R128', 'S  1', 'S  5', 'S 99', 'Sync On', 'Time 0']
+Used Annotations descriptions: ['New Segment', 'R128', 'S  1', 'S  5', 'S 99', 'Sync On', 'Time 0']
+cropping from 31.064 to 635.864
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/envelope_and_TF_pipeline.py", line 186, in <module>
+    Main()
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/envelope_and_TF_pipeline.py", line 175, in Main
+    features_object.run_wavelets().save(saving_path)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/envelope_and_TF_pipeline.py", line 110, in run_wavelets
+    cycles = self.frequencies / 2
+             ~~~~~~~~~~~~~~~~~^~~
+TypeError: unsupported operand type(s) for /: 'list' and 'int'

@@ -33,7 +33,6 @@ import mne_bids
 from mne_bids import BIDSPath
 import os
 from pathlib import Path
-import eeg_research.preprocessing.tools.gradient_remover as GradientRemover
 import eeg_research.preprocessing.tools.utils as utils
 import numpy as np
 import pickle
@@ -53,8 +52,6 @@ def parse_file_entities(filename: str | os.PathLike) -> dict:
             key = 'session'
         elif key == 'acq':
             key = 'acquisition'
-        elif key == 'run':
-            value = int(value)
         elif key == 'desc':
             key = 'description'
 
@@ -79,13 +76,15 @@ class EEGfeatures:
 
     def extract_eeg_band_envelope(self: 'EEGfeatures') -> 'EEGfeatures':
 
-        self.frequencies = [ 
+        self.frequencies = np.array([ 
                     (0.5, 4),
                     (4, 8),
                     (8, 13),
                     (13, 30),
                     (30, 40) 
                     ]
+        )
+    
         self.feature = self._extract_envelope(self.frequencies)
         self.feature_info = "EEG bands envelopes"
 
@@ -99,6 +98,7 @@ class EEGfeatures:
             high_frequency = low_frequency + frequency_step
             self.frequencies.append((low_frequency, high_frequency))
 
+        self.frequencies = np.array(self.frequencies)
         self.feature = self._extract_envelope(self.frequencies)
         self.feature_info = f"""
         Custom bands envelopes 
@@ -109,7 +109,7 @@ class EEGfeatures:
 
     def run_wavelets(self: 'EEGfeatures') -> 'EEGfeatures':
 
-        self.frequencies = list(np.linspace(1,40,40))
+        self.frequencies = np.linspace(1,40,40)
         cycles = self.frequencies / 2
         self.feature = self.raw.copy().compute_tfr(freqs = self.frequencies, 
                                 n_cycles = cycles,
@@ -135,42 +135,25 @@ class EEGfeatures:
             pickle.dump(param_to_save, file)
 
 def measure_gradient_time(raw, print_results = True):
-    gradient_trigger_name = GradientRemover.extract_gradient_trigger_name(raw)
+    gradient_trigger_name = utils.extract_gradient_trigger_name(raw)
     events, event_id = mne.events_from_annotations(raw)
     picked_events = mne.pick_events(events, include=[event_id[gradient_trigger_name]])
-    average_time_space = np.mean(np.diff(picked_events[:,0] * raw.info['sfreq']))
-    std_time_space = np.std(np.diff(picked_events[:,0] * raw.info['sfreq']))
+    average_time_space = np.mean(np.diff(picked_events[:,0] / raw.info['sfreq']))
+    std_time_space = np.std(np.diff(picked_events[:,0] / raw.info['sfreq']))
     if print_results:
         print(f'Average time space between gradient triggers: {average_time_space}')
         print(f'Standard deviation of time space between gradient triggers: {std_time_space}')
-    return average_time_space
-
-class TimeFrequency:
-    def __init__(self, raw):
-        self.raw = raw
-        self.channel_names = raw.info['ch_names']
-        self.times = raw.times
-
-    
-    def save(self, filename):
-        param_to_save = {
-            'channel_names': self.channel_names,
-            'times': self.times,
-            'power': self.power.get_data(),
-            'frequencies': self.power.freqs,
-        }
-        print(f'saving into {filename}')
-        with open(filename, 'wb') as file:
-            pickle.dump(param_to_save, file)
+    return np.round(average_time_space,1)
 
 def specific_crop(raw):
     gradient_time = measure_gradient_time(raw, print_results = False)
-    gradient_trigger_name = GradientRemover.extract_gradient_trigger_name(raw)
+    gradient_trigger_name = utils.extract_gradient_trigger_name(raw)
     events, event_id = mne.events_from_annotations(raw)
     picked_events = mne.pick_events(events, include=[event_id[gradient_trigger_name]])
     picked_event_id = {gradient_trigger_name: event_id[gradient_trigger_name]}
-    start = picked_events[0][0] * raw.info['sfreq']
-    stop = picked_events[-1][0] * raw.info['sfreq'] + gradient_time
+    start = picked_events[0][0] / raw.info['sfreq']
+    stop = picked_events[-1][0] / raw.info['sfreq'] + gradient_time
+    print(f'cropping from {start} to {stop}')
     cropped = raw.copy().crop(start, stop)
     return cropped
 
@@ -187,18 +170,20 @@ def Main():
                                 datatype='eeg')
             bids_path.mkdir()
             
+            raw_cropped = specific_crop(raw)
+            features_object = EEGfeatures(raw_cropped)
+
             bids_path.update(description = 'MorletTFR')
-            tf_object = TimeFrequency(raw)
-
             saving_path = os.path.splitext(bids_path.fpath)[0] + '.pkl'
-            tf_object.run_wavelets().save(saving_path)
+            features_object.run_wavelets().save(saving_path)
 
-            envelope = Envelope(raw)
             bids_path.update(description = 'EEGbandsEnvelopes')
             bands_envelope_filename = os.path.splitext(bids_path.fpath)[0] + '.pkl'
-            envelope.extract_eeg_band_envelope().save(bands_envelope_filename)
-            custom_envelope_filename = os.path.splitext(bids_path.fpath)[0] + '_custom.pkl'
-            envelope.extract_custom_envelope().save(custom_envelope_filename)
+            features_object.extract_eeg_band_envelope().save(bands_envelope_filename)
+
+            bids_path.update(description = 'CustomEnvelopes')
+            custom_envelope_filename = os.path.splitext(bids_path.fpath)[0] + '.pkl'
+            features_object.extract_custom_envelope().save(custom_envelope_filename)
 
 if __name__ == '__main__':
     Main()
