@@ -280,9 +280,13 @@ def Main(overwrite = True):
         try: #I put a temporary error handling because some files don't have 
              #the eeg suffix and throw an error. This is just temporary for
              #the sake of productivity
+            condition_respected  = (
+                 (file_entities.get('tast') == 'checker' 
+                  or file_entities.get('task') == 'rest')
+                 and not file_entities.get('description') == 'GradientStep1'
+             )
 
-            if file_entities['task'] == 'checker' or file_entities['task'] == 'rest':
-                
+            if condition_respected:
                 raw = mne.io.read_raw_edf(raw_path / filename, preload=True)
                 bids_path = BIDSPath(**file_entities, 
                                     root=derivatives_path,
