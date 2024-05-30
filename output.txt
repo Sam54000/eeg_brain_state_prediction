@@ -4,13 +4,14 @@ Setting channel info structure...
 Creating raw.info structure...
 Reading 0 ... 169249  =      0.000 ...   676.996 secs...
 Traceback (most recent call last):
-  File "/home/slouviot/01_projects/eeg_brain_state_prediction/envelope_and_TF_pipeline.py", line 320, in <module>
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/envelope_and_TF_pipeline.py", line 323, in <module>
     Main()
-  File "/home/slouviot/01_projects/eeg_brain_state_prediction/envelope_and_TF_pipeline.py", line 315, in Main
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/envelope_and_TF_pipeline.py", line 318, in Main
     raise e
-  File "/home/slouviot/01_projects/eeg_brain_state_prediction/envelope_and_TF_pipeline.py", line 310, in Main
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/envelope_and_TF_pipeline.py", line 313, in Main
     features_object.__getattribute__(process)().save(saving_path)
-  File "/home/slouviot/01_projects/eeg_brain_state_prediction/envelope_and_TF_pipeline.py", line 231, in save
-    'times': self.times,
-             ^^^^^^^^^^
-AttributeError: 'EEGfeatures' object has no attribute 'times'
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/envelope_and_TF_pipeline.py", line 223, in run_wavelets
+    cropped_time_frequency_representation = specific_crop(TF, margin = 0)
+                                                          ^^
+NameError: name 'TF' is not defined

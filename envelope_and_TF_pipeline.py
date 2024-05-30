@@ -220,7 +220,10 @@ class EEGfeatures:
             method='morlet',
             n_jobs = -1,
             verbose = 'CRITICAL')
-        cropped_time_frequency_representation = specific_crop(TF, margin = 0)
+        cropped_time_frequency_representation = specific_crop(
+            time_frequency_representation, 
+            margin = 0
+            )
         self.times = cropped_time_frequency_representation.times
         self.feature = cropped_time_frequency_representation.get_data()
         self.feature_info = """Morlet Time-Frequency Representation
