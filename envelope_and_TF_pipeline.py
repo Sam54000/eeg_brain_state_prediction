@@ -162,7 +162,6 @@ class EEGfeatures:
     def __init__(self, raw: mne.io.Raw):
         self.raw = raw
         self.channel_names = raw.info['ch_names']
-        self.times = raw.times
         self.frequencies = list()
         
     def _extract_envelope(self, frequencies: list[tuple[float,float]])-> np.ndarray:
@@ -173,7 +172,9 @@ class EEGfeatures:
                                                      verbose = 'CRITICAL')
             envelope_cropped = specific_crop(envelope, margin = 0)
             temp_envelopes_list.append(envelope_cropped.get_data())
-        return np.stack(temp_envelopes_list, axis = -1)
+        self.times = envelope_cropped.times
+        self.feature = np.stack(temp_envelopes_list, axis = -1)
+        return self
 
     def extract_eeg_band_envelope(self: 'EEGfeatures') -> 'EEGfeatures':
 
@@ -186,7 +187,7 @@ class EEGfeatures:
                     ]
         )
     
-        self.feature = self._extract_envelope(self.frequencies)
+        self._extract_envelope(self.frequencies)
         self.feature_info = "EEG bands envelopes"
 
         return self
@@ -200,7 +201,7 @@ class EEGfeatures:
             high_frequency = low_frequency + frequency_step
             self.frequencies.append((low_frequency, high_frequency))
 
-        self.feature = self._extract_envelope(self.frequencies)
+        self._extract_envelope(self.frequencies)
         self.frequencies = np.array(self.frequencies)
         self.feature_info = f"""
         Custom bands envelopes 
@@ -213,11 +214,15 @@ class EEGfeatures:
 
         self.frequencies = np.linspace(1,40,40)
         cycles = self.frequencies / 2
-        self.feature = self.raw.copy().compute_tfr(freqs = self.frequencies, 
-                                n_cycles = cycles,
-                                method='morlet',
-                                n_jobs = -1,
-                                verbose = 'CRITICAL')
+        time_frequency_representation = self.raw.copy().compute_tfr(
+            freqs = self.frequencies, 
+            n_cycles = cycles,
+            method='morlet',
+            n_jobs = -1,
+            verbose = 'CRITICAL')
+        cropped_time_frequency_representation = specific_crop(TF, margin = 0)
+        self.times = cropped_time_frequency_representation.times
+        self.feature = cropped_time_frequency_representation.get_data()
         self.feature_info = """Morlet Time-Frequency Representation
         with 40 frequencies from 1 to 40 Hz number of cycles = frequency / 2"""
         
@@ -309,8 +314,10 @@ def Main(overwrite = True):
                     else:
                         continue
                     
-        except:
-            continue
+        except Exception as e:
+            raise e
+        
+
 
 if __name__ == '__main__':
     Main()
