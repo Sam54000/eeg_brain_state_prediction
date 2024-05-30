@@ -36,6 +36,106 @@ from pathlib import Path
 import eeg_research.preprocessing.tools.utils as utils
 import numpy as np
 import pickle
+import re
+
+def extract_number_in_string(string: str) -> int:
+    """Extract digit values in a string.
+
+    Args:
+        string (str): The string for which the digits will be extracted.
+
+    Returns:
+        int: The extracted digits
+    """
+    temp = re.findall(r'\d+', string)
+    number = list(map(int, temp))
+    return number[0]
+
+def extract_channel_laterality(channel: str) -> str:
+    """Extract the laterality of the channel.
+    
+    According to the international eeg standard, the laterality of channels
+    are defined by the number. If the number is even, the channel is on the right
+    side of the head, if the number is odd, the channel is on the left side of the
+    head. If the channel has the letter 'z' instead of a number, 
+    the channel is located on the midline.
+
+    Args:
+        channel (str): The name of the channel.
+
+    Returns:
+        str: The laterality of the corresponding channel.
+    """
+    if 'z' in channel.lower():
+        return 'midline'
+    else:
+        number = extract_number_in_string(channel)
+        if number % 2 == 0:
+            return 'right'
+        else:
+            return 'left'
+
+def extract_channel_anatomy(channel: str) -> str:
+    """Extract the anatomical location of the channel from its name.
+
+    Args:
+        channel (str): The name of the channel.
+
+    Returns:
+        str: The anatomical location of the channel.
+    """
+    letter_anatomy_relationship = {
+        'F': 'frontal',
+        'C': 'central',
+        'P': 'parietal',
+        'O': 'occipital',
+        'T': 'temporal',
+        'Fp': 'frontopolar',
+        'AF': 'anterior-frontal',
+        'FC': 'fronto-central',
+        'CP': 'centro-parietal',
+        'PO': 'parieto-occipital',
+        'FT': 'fronto-temporal',
+        'TP': 'temporo-parietal',
+    }
+    pattern = re.findall(r'[a-zA-Z]+', channel)[0]
+    pattern = pattern.replace('z', '')
+    return letter_anatomy_relationship.get(pattern)
+
+def extract_location(channels: list[str]) -> dict[str, list[str | int]]:
+    """Extract the location of the channels from their names.
+    
+    The location (anatomical region and laterality) of the channels are extracted
+    from their names.
+
+    Args:
+        channels (list[str]): The names of the channels.
+
+    Returns:
+        dict[str, list[str | int]]: A dictionary containing the index of the channel,
+                              the name of the channel, the anatomical region and 
+                              the laterality.
+    """
+    location = {
+        'index': list(),
+        'channel_name': list(),
+        'anatomy': list(),
+        'laterality': list()
+    }
+    for channel in channels:
+        if 'ecg' in channel.lower() or 'eog' in channel.lower():
+            continue
+        info = (
+            channels.index(channel),
+            channel,
+            extract_channel_anatomy(channel),
+            extract_channel_laterality(channel)
+        )
+        
+        for key, value in zip(location.keys(), info):
+            location[key].append(value)
+
+    return location
 
 def parse_file_entities(filename: str | os.PathLike) -> dict:
     file_only = Path(filename).name
@@ -64,12 +164,13 @@ class EEGfeatures:
         self.channel_names = raw.info['ch_names']
         self.times = raw.times
         self.frequencies = list()
-
+        
     def _extract_envelope(self, frequencies: list[tuple[float,float]])-> np.ndarray:
         temp_envelopes_list = list()
         for band in frequencies:
-            filtered = self.raw.copy().filter(*band)
-            envelope = filtered.copy().apply_hilbert(envelope = True)
+            filtered = self.raw.copy().filter(*band, verbose = 'CRITICAL')
+            envelope = filtered.copy().apply_hilbert(envelope = True, 
+                                                     verbose = 'CRITICAL')
             envelope_cropped = specific_crop(envelope, margin = 0)
             temp_envelopes_list.append(envelope_cropped.get_data())
         return np.stack(temp_envelopes_list, axis = -1)
@@ -115,7 +216,8 @@ class EEGfeatures:
         self.feature = self.raw.copy().compute_tfr(freqs = self.frequencies, 
                                 n_cycles = cycles,
                                 method='morlet',
-                                n_jobs = -1)
+                                n_jobs = -1,
+                                verbose = 'CRITICAL')
         self.feature_info = """Morlet Time-Frequency Representation
         with 40 frequencies from 1 to 40 Hz number of cycles = frequency / 2"""
         
@@ -123,11 +225,11 @@ class EEGfeatures:
     
     def save(self, filename):
         param_to_save = {
-            'channel_names': self.channel_names,
+            'channels_info': extract_location(self.channel_names),
             'times': self.times,
             'frequencies': self.frequencies,
             'feature': self.feature,
-            'feature_info': self.feature_info
+            'feature_info': self.feature_info,
         }
         print(f'saving into {filename}')
         with open(filename, 'wb') as file:
@@ -169,32 +271,42 @@ def specific_crop(raw: mne.io.Raw, margin: int = 1) -> mne.io.Raw:
     cropped = raw.copy().crop(start, stop)
     return cropped
 
-def Main():
+def Main(overwrite = True):
     derivatives_path = Path('/projects/EEG_FMRI/bids_eeg/BIDS/NEW/DERIVATIVES/eeg_features_extraction')
     raw_path = Path('/projects/EEG_FMRI/bids_eeg/BIDS/NEW/PREP_BV_EDF')
 
     for filename in raw_path.iterdir():
         file_entities = parse_file_entities(filename)
-        if file_entities['task'] == 'checker' or file_entities['task'] == 'rest':
-            raw = mne.io.read_raw_edf(raw_path / filename, preload=True)
-            bids_path = BIDSPath(**file_entities, 
-                                root=derivatives_path,
-                                datatype='eeg')
-            bids_path.mkdir()
-            
-            features_object = EEGfeatures(raw)
+        try: #I put a temporary error handling because some files don't have 
+             #the eeg suffix and throw an error. This is just temporary for
+             #the sake of productivity
 
-            bids_path.update(description = 'MorletTFR')
-            saving_path = os.path.splitext(bids_path.fpath)[0] + '.pkl'
-            features_object.run_wavelets().save(saving_path)
+            if file_entities['task'] == 'checker' or file_entities['task'] == 'rest':
+                
+                raw = mne.io.read_raw_edf(raw_path / filename, preload=True)
+                bids_path = BIDSPath(**file_entities, 
+                                    root=derivatives_path,
+                                    datatype='eeg')
+                bids_path.mkdir()
+                
+                features_object = EEGfeatures(raw)
 
-            bids_path.update(description = 'EEGbandsEnvelopes')
-            bands_envelope_filename = os.path.splitext(bids_path.fpath)[0] + '.pkl'
-            features_object.extract_eeg_band_envelope().save(bands_envelope_filename)
+                process_file_desc_pairs = {
+                    'run_wavelets': 'MorletTFR',
+                    'extract_eeg_band_envelope': 'EEGbandsEnvelopes',
+                    'extract_custom_band_envelope': 'CustomEnvelopes'
+                }
 
-            bids_path.update(description = 'CustomEnvelopes')
-            custom_envelope_filename = os.path.splitext(bids_path.fpath)[0] + '.pkl'
-            features_object.extract_custom_band_envelope().save(custom_envelope_filename)
+                for process, file_description in process_file_desc_pairs.items():
+                    bids_path.update(description = file_description)
+                    saving_path = Path(os.path.splitext(bids_path.fpath)[0] + '.pkl')
+                    if not saving_path.exists() or overwrite:
+                        features_object.__getattribute__(process)().save(saving_path)
+                    else:
+                        continue
+                    
+        except:
+            continue
 
 if __name__ == '__main__':
     Main()
