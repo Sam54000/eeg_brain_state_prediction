@@ -214,26 +214,28 @@ class EEGfeatures:
 
         self.frequencies = np.linspace(1,40,40)
         cycles = self.frequencies / 2
+        start, stop = specific_crop(self.raw, return_time = True, margin = 0)
         time_frequency_representation = self.raw.copy().compute_tfr(
             freqs = self.frequencies, 
             n_cycles = cycles,
             method='morlet',
             n_jobs = -1,
-            verbose = 'CRITICAL')
-        cropped_time_frequency_representation = specific_crop(
-            time_frequency_representation, 
-            margin = 0
-            )
-        self.times = cropped_time_frequency_representation.times
-        self.feature = cropped_time_frequency_representation.get_data()
+            verbose = 'CRITICAL',
+            tmin = start,
+            tmax = stop
+        )
+        
+        self.times = time_frequency_representation.times - start
+        self.feature = time_frequency_representation.get_data()
         self.feature_info = """Morlet Time-Frequency Representation
         with 40 frequencies from 1 to 40 Hz number of cycles = frequency / 2"""
         
         return self
     
     def save(self, filename):
+        channel_info = extract_location(self.channel_names)
         param_to_save = {
-            'channels_info': extract_location(self.channel_names),
+            'channels_info': channel_info,
             'times': self.times,
             'frequencies': self.frequencies,
             'feature': self.feature,
@@ -254,7 +256,9 @@ def measure_gradient_time(raw, print_results = True):
         print(f'Standard deviation of time space between gradient triggers: {std_time_space}')
     return np.round(average_time_space,1)
 
-def specific_crop(raw: mne.io.Raw, margin: int = 1) -> mne.io.Raw:
+def specific_crop(raw: mne.io.Raw, 
+                  margin: int = 1,
+                  return_time = False) -> mne.io.Raw | tuple[float,float]:
     """Crop the raw data to get only when fMRI gradient is on.
     
     The function take the time of occurence of the first and the last gradient
@@ -265,6 +269,9 @@ def specific_crop(raw: mne.io.Raw, margin: int = 1) -> mne.io.Raw:
         padding (int, optional): Add a margin in second from the first and the
                                  to anticipate process 
                                  that would induce an edge effects. Defaults to 1.
+        return_time (bool, optional): If True, the function will return the time
+                                        of the first and the last gradient 
+                                        trigger instead of the raw object.
 
     Returns:
         mne.io.Raw: _description_
@@ -276,10 +283,13 @@ def specific_crop(raw: mne.io.Raw, margin: int = 1) -> mne.io.Raw:
     start = picked_events[0][0] / raw.info['sfreq'] - margin
     stop = (picked_events[-1][0] / raw.info['sfreq'] + gradient_time) + margin
     print(f'cropping from {start} to {stop}')
-    cropped = raw.copy().crop(start, stop)
+    if return_time:
+        return (start,stop)
+    else:
+        cropped = raw.copy().crop(start, stop)
     return cropped
 
-def Main(overwrite = True):
+def Main(overwrite = True, tasks = ['checker', 'rest']):
     derivatives_path = Path('/projects/EEG_FMRI/bids_eeg/BIDS/NEW/DERIVATIVES/eeg_features_extraction')
     raw_path = Path('/projects/EEG_FMRI/bids_eeg/BIDS/NEW/PREP_BV_EDF')
 
@@ -288,35 +298,33 @@ def Main(overwrite = True):
         try: #I put a temporary error handling because some files don't have 
              #the eeg suffix and throw an error. This is just temporary for
              #the sake of productivity
-            condition_respected  = (
-                 (file_entities.get('tast') == 'checker' 
-                  or file_entities.get('task') == 'rest')
-                 and not file_entities.get('description') == 'GradientStep1'
-             )
+            condition_respected  = not file_entities.get('description') == 'GradientStep1'
 
-            if condition_respected:
-                raw = mne.io.read_raw_edf(raw_path / filename, preload=True)
-                bids_path = BIDSPath(**file_entities, 
-                                    root=derivatives_path,
-                                    datatype='eeg')
-                bids_path.mkdir()
-                
-                features_object = EEGfeatures(raw)
-
-                process_file_desc_pairs = {
-                    'run_wavelets': 'MorletTFR',
-                    'extract_eeg_band_envelope': 'EEGbandsEnvelopes',
-                    'extract_custom_band_envelope': 'CustomEnvelopes'
-                }
-
-                for process, file_description in process_file_desc_pairs.items():
-                    bids_path.update(description = file_description)
-                    saving_path = Path(os.path.splitext(bids_path.fpath)[0] + '.pkl')
-                    if not saving_path.exists() or overwrite:
-                        features_object.__getattribute__(process)().save(saving_path)
-                    else:
-                        continue
+            for task in tasks:
+                if condition_respected and file_entities.get('task') == task:
+                    raw = mne.io.read_raw_edf(raw_path / filename, preload=True)
+                    bids_path = BIDSPath(**file_entities, 
+                                        root=derivatives_path,
+                                        datatype='eeg')
+                    bids_path.mkdir()
                     
+                    features_object = EEGfeatures(raw)
+
+                    process_file_desc_pairs = {
+                        'run_wavelets': 'MorletTFR',
+                        'extract_eeg_band_envelope': 'EEGbandsEnvelopes',
+                        'extract_custom_band_envelope': 'CustomEnvelopes'
+                    }
+
+                    for process, file_description in process_file_desc_pairs.items():
+                        bids_path.update(description = file_description)
+                        saving_path = Path(os.path.splitext(bids_path.fpath)[0] + '.pkl')
+                        if not saving_path.exists() or overwrite:
+                            features_object.__getattribute__(process)().save(saving_path)
+                        else:
+                            continue
+            
+                print('Finished')
         except Exception as e:
             raise e
         
