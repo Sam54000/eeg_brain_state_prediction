@@ -33,8 +33,8 @@ import mne_bids
 from mne_bids import BIDSPath
 import os
 from pathlib import Path
-import eeg_research.preprocessing.tools.utils as utils
 import numpy as np
+import eeg_research.preprocessing.tools.utils as utils
 import pickle
 import re
 
@@ -193,9 +193,8 @@ class EEGfeatures:
             filtered = self.raw.copy().filter(*band, verbose = 'CRITICAL')
             envelope = filtered.copy().apply_hilbert(envelope = True, 
                                                      verbose = 'CRITICAL')
-            envelope_cropped = specific_crop(envelope, margin = 0)
-            temp_envelopes_list.append(envelope_cropped.get_data())
-        self.times = envelope_cropped.times
+            temp_envelopes_list.append(envelope.get_data())
+        self.times = envelope.times
         self.feature = np.stack(temp_envelopes_list, axis = -1)
         return self
 
@@ -237,18 +236,15 @@ class EEGfeatures:
 
         self.frequencies = np.linspace(1,40,40)
         cycles = self.frequencies / 2
-        start, stop = specific_crop(self.raw, return_time = True, margin = 0)
         time_frequency_representation = self.raw.copy().compute_tfr(
             freqs = self.frequencies, 
             n_cycles = cycles,
             method='morlet',
             n_jobs = -1,
             verbose = 'CRITICAL',
-            tmin = start,
-            tmax = stop
         )
         
-        self.times = time_frequency_representation.times - start
+        self.times = time_frequency_representation.times
         self.feature = time_frequency_representation.get_data()
         self.feature_info = """Morlet Time-Frequency Representation
         with 40 frequencies from 1 to 40 Hz number of cycles = frequency / 2"""
@@ -312,53 +308,45 @@ def specific_crop(raw: mne.io.Raw,
         cropped = raw.copy().crop(start, stop)
     return cropped
 
-def Main(overwrite = True, 
-         tasks = ['checker', 'rest'],
-         remove_blinks = False,):
-    #derivatives_path = Path('/projects/EEG_FMRI/bids_eeg/BIDS/NEW/DERIVATIVES/eeg_features_extraction')
-    #raw_path = Path('/projects/EEG_FMRI/bids_eeg/BIDS/NEW/PREP_BV_EDF')
-    derivatives_path = Path('/data2/Projects/NKI_RS2/MoBI/eeg_preprocessing_cst/data/BIDS/DERIVATIVES/eeg_features_extraction')
+def Main(overwrite = True,
+         remove_blinks = False):
     raw_path = Path('/data2/Projects/NKI_RS2/MoBI/eeg_preprocessing_cst/data/annotated_eeg_data/calibration_data/eeg_data')
 
-    for filename in raw_path.iterdir():
+    for filename in raw_path.rglob(pattern='*.fif'):
         file_entities = parse_file_entities(filename)
             
         try: #I put a temporary error handling because some files don't have 
              #the eeg suffix and throw an error. This is just temporary for
              #the sake of productivity
-            condition_respected  = not file_entities.get('description') == 'GradientStep1'
 
-            for task in tasks:
-                if condition_respected and file_entities.get('task') == task:
-                    raw = mne.io.read_raw_edf(raw_path / filename, preload=True)
-                    bids_path = BIDSPath(**file_entities, 
-                                        root=derivatives_path,
-                                        datatype='eeg')
-                    bids_path.mkdir()
-                    
-                    features_object = EEGfeatures(raw)
-
-                    if remove_blinks:
-                        features_object._remove_blinks(raw)
-                        added_description = 'BlinksRemoved'
-                    else:
-                        added_description = ''
-
-                    process_file_desc_pairs = {
-                        'run_wavelets': 'MorletTFR',
-                        'extract_eeg_band_envelope': 'EEGbandsEnvelopes',
-                        'extract_custom_band_envelope': 'CustomEnvelopes'
-                    }
-
-                    for process, file_description in process_file_desc_pairs.items():
-                        bids_path.update(description = file_description + added_description)
-                        saving_path = Path(os.path.splitext(bids_path.fpath)[0] + '.pkl')
-                        if not saving_path.exists() or overwrite:
-                            features_object.__getattribute__(process)().save(saving_path)
-                        else:
-                            continue
+            raw = mne.io.read_raw_fif(filename, preload=True)
+            bids_path = BIDSPath(**file_entities, 
+                                root=raw_path)
+            #bids_path.mkdir()
             
-                print('Finished')
+            features_object = EEGfeatures(raw)
+
+            if remove_blinks:
+                features_object._remove_blinks(raw)
+                added_description = 'BlinksRemoved'
+            else:
+                added_description = ''
+
+            process_file_desc_pairs = {
+                'run_wavelets': 'MorletTFR',
+                'extract_eeg_band_envelope': 'EEGbandsEnvelopes',
+                'extract_custom_band_envelope': 'CustomEnvelopes'
+            }
+
+            for process, file_description in process_file_desc_pairs.items():
+                bids_path.update(description = file_description + added_description)
+                saving_path = Path(os.path.splitext(bids_path.fpath)[0] + '.pkl')
+                if not saving_path.exists() or overwrite:
+                    features_object.__getattribute__(process)().save(saving_path)
+                else:
+                    continue
+        
+            print('Finished')
         except Exception as e:
             raise e
         
