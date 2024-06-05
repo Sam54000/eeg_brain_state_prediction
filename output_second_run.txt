@@ -1,0 +1,7 @@
+=====================================================
+
+reading /projects/EEG_FMRI/bids_eeg/BIDS/NEW/PREP_BV_EDF/sub-21_ses-01_task-checker_run-01_eeg.edf
+	processing run_wavelets
+	saving into /projects/EEG_FMRI/bids_eeg/BIDS/NEW/DERIVATIVES/eeg_features_extraction/second_run/sub-21/ses-01/eeg/sub-21_ses-01_task-checker_run-01_desc-MorletTFRBlinksRemoved_eeg.pkl
+
+cropping from 61.088 to 266.88800000000003
