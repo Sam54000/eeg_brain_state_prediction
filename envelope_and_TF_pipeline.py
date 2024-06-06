@@ -27,18 +27,23 @@ This pipeline is used in the project of brain state prediction from EEG data in
 collaboration with John Hopkins University. It is used to extract the envelope 
 of the EEG signal and the time-frequency representation of the signal.
 """
+import os
+nthreads = "32" 
+os.environ["OMP_NUM_THREADS"] = nthreads
+os.environ["OPENBLAS_NUM_THREADS"] = nthreads
+os.environ["MKL_NUM_THREADS"] = nthreads
+os.environ["VECLIB_MAXIMUM_THREADS"] = nthreads
+os.environ["NUMEXPR_NUM_THREADS"] = nthreads
 import mne
 import bids
 import mne_bids
 from mne_bids import BIDSPath
-import os
 from pathlib import Path
+import matplotlib.pyplot as plt
 import eeg_research.preprocessing.tools.utils as utils
 import numpy as np
 import pickle
 import re
-
-mne.set_log_level(verbose = 'CRITICAL')
 
 def extract_number_in_string(string: str) -> int:
     """Extract digit values in a string.
@@ -160,6 +165,25 @@ def parse_file_entities(filename: str | os.PathLike) -> dict:
         entities[key] = value
     return entities
 
+def extract_eeg_only(raw: mne.io.Raw) -> mne.io.Raw:
+    """Prepare the raw data for the processing.
+
+    The function will set the channel types, the montage and the reference of the
+    raw data.
+
+    Args:
+        raw (mne.io.Raw): The raw data that will be prepared.
+
+    Returns:
+        mne.io.Raw: The prepared raw data.
+    """
+    map = utils.map_channel_type(raw)
+    raw.set_channel_types(map)
+    montage = mne.channels.make_standard_montage('easycap-M1')
+    raw.set_montage(montage)
+    raw.pick_types(eeg = True)
+    return raw
+
 class BlinkRemover:
     def __init__(self, raw: mne.io.Raw, channels = ['Fp1', 'Fp2']):
         self.raw = raw
@@ -175,12 +199,14 @@ class BlinkRemover:
         figure.suptitle("EOG projectors")
         if saving_filename:
             figure.savefig(saving_filename)
+        plt.close()
     
     def plot_blinks_found(self, saving_filename = None):
         self._find_blinks()
         figure = self.eog_evoked.plot_joint(times = 0)
         if saving_filename:
             figure.savefig(saving_filename)
+        plt.close()
     
     def remove_blinks(self) -> mne.io.Raw:
         """Remove the EOG artifacts from the raw data.
@@ -191,10 +217,6 @@ class BlinkRemover:
         Returns:
             mne.io.Raw: The raw data without the EOG artifacts.
         """
-        map = utils.map_channel_type(self.raw)
-        self.raw.set_channel_types(map)
-        montage = mne.channels.make_standard_montage('easycap-M1')
-        self.raw.set_montage(montage)
         self.eog_projs, _ = mne.preprocessing.compute_proj_eog(
             self.raw, 
             n_eeg=1,
@@ -336,7 +358,7 @@ def specific_crop(raw: mne.io.Raw,
         cropped = raw.copy().crop(start, stop)
     return cropped
 
-def main_loop(overwrite = True, 
+def loop(overwrite = True, 
          task = ['rest', 'checker'],
          blank_run = True,
          remove_blinks = False,):
@@ -349,7 +371,7 @@ def main_loop(overwrite = True,
                         file_entities['suffix'] == 'eeg' and
                         not 'GradientStep1' in filename.name)
             if conditions:
-                main_individual(filename, 
+                individual_process(filename, 
                                 overwrite = overwrite,
                                 remove_blinks = remove_blinks,
                                 blank_run=blank_run
@@ -360,7 +382,7 @@ def main_loop(overwrite = True,
             print(e)
             print(f'\n___xxx___xxx___xxx___xxx___xxx___xxx___\n')
 
-def main_individual(filename: str, 
+def individual_process(filename: str, 
                     overwrite = True, 
                     remove_blinks = True,
                     blank_run = True):
@@ -382,19 +404,20 @@ def main_individual(filename: str,
     else:
         bids_path.mkdir()
         raw = mne.io.read_raw_edf(filename, preload=True)
+        raw = extract_eeg_only(raw)
 
         if remove_blinks:
             added_description = 'BlinksRemoved'
             blink_remover = BlinkRemover(raw)
             blink_remover.remove_blinks()
-            fname_plot_blinks_found = Path(bids_path.update(description = 'BlinksFoundResults').fpath)
-            blink_remover.plot_blinks_found(
-                saving_filename = fname_plot_blinks_found.with_suffix('.png')
-                                            )
-            fname_plot_blinks_results = Path(bids_path.update(description = 'BlinksRemovalResults').fpath)
-            blink_remover.plot_removal_results(
-                saving_filename = fname_plot_blinks_results.with_suffix('.png')
-            )
+            #fname_plot_blinks_found = Path(bids_path.update(description = 'BlinksFoundResults').fpath)
+            #blink_remover.plot_blinks_found(
+            #    saving_filename = fname_plot_blinks_found.with_suffix('.png')
+            #                                )
+            #fname_plot_blinks_results = Path(bids_path.update(description = 'BlinksRemovalResults').fpath)
+            #blink_remover.plot_removal_results(
+            #    saving_filename = fname_plot_blinks_results.with_suffix('.png')
+            #)
             features_object = EEGfeatures(blink_remover.blink_removed_raw)
         else:
             added_description = ''
@@ -420,8 +443,10 @@ def main_individual(filename: str,
         else:
             continue
 
+
 if __name__ == '__main__':
-    main_loop(blank_run = False, remove_blinks = True, overwrite = True)
+    for blink_removal in [True, False]:
+        loop(overwrite = True, blank_run = False, remove_blinks = blink_removal)
 
 # TODO The frequencies need a better handling because it changes datastructure
 #      from list of tuple to numpy array. It could be better to keep it as np.array

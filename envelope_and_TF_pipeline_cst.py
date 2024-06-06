@@ -27,14 +27,21 @@ This pipeline is used in the project of brain state prediction from EEG data in
 collaboration with John Hopkins University. It is used to extract the envelope 
 of the EEG signal and the time-frequency representation of the signal.
 """
+import os
+nthreads = "32" 
+os.environ["OMP_NUM_THREADS"] = nthreads
+os.environ["OPENBLAS_NUM_THREADS"] = nthreads
+os.environ["MKL_NUM_THREADS"] = nthreads
+os.environ["VECLIB_MAXIMUM_THREADS"] = nthreads
+os.environ["NUMEXPR_NUM_THREADS"] = nthreads
 import mne
 import bids
 import mne_bids
 from mne_bids import BIDSPath
-import os
 from pathlib import Path
-import numpy as np
+import matplotlib.pyplot as plt
 import eeg_research.preprocessing.tools.utils as utils
+import numpy as np
 import pickle
 import re
 
@@ -158,13 +165,50 @@ def parse_file_entities(filename: str | os.PathLike) -> dict:
         entities[key] = value
     return entities
 
-class EEGfeatures:
-    def __init__(self, raw: mne.io.Raw):
+def extract_eeg_only(raw: mne.io.Raw) -> mne.io.Raw:
+    """Prepare the raw data for the processing.
+
+    The function will set the channel types, the montage and the reference of the
+    raw data.
+
+    Args:
+        raw (mne.io.Raw): The raw data that will be prepared.
+
+    Returns:
+        mne.io.Raw: The prepared raw data.
+    """
+    map = utils.map_channel_type(raw)
+    raw.set_channel_types(map)
+    montage = mne.channels.make_standard_montage('easycap-M1')
+    raw.set_montage(montage)
+    raw.pick_types(eeg = True)
+    return raw
+
+class BlinkRemover:
+    def __init__(self, raw: mne.io.Raw, channels = ['Fp1', 'Fp2']):
         self.raw = raw
-        self.channel_names = raw.info['ch_names']
-        self.frequencies = list()
-        
-    def _remove_blinks(self, raw: mne.io.Raw) -> mne.io.Raw:
+        self.channels = channels
+    
+    def _find_blinks(self):
+        self.eog_evoked = mne.preprocessing.create_eog_epochs(self.raw, ch_name = self.channels).average()
+        self.eog_evoked.apply_baseline((None, None))
+        return self
+    
+    def plot_removal_results(self, saving_filename = None):
+        figure = mne.viz.plot_projs_joint(self.eog_projs, self.eog_evoked)
+        figure.suptitle("EOG projectors")
+        if saving_filename:
+            figure.savefig(saving_filename)
+        plt.close()
+    
+    def plot_blinks_found(self, saving_filename = None):
+        self._find_blinks()
+        figure = self.eog_evoked.plot_joint(times = 0)
+        if saving_filename:
+            figure.savefig(saving_filename)
+        plt.close()
+    
+    def remove_blinks(self) -> mne.io.Raw:
         """Remove the EOG artifacts from the raw data.
 
         Args:
@@ -173,28 +217,32 @@ class EEGfeatures:
         Returns:
             mne.io.Raw: The raw data without the EOG artifacts.
         """
-        map = utils.map_channel_type(raw)
-        raw.set_channel_types(map)
-        montage = mne.channels.make_standard_montage('easycap-M1')
-        raw.set_montage(montage)
-        eog_projs, _ = mne.preprocessing.compute_proj_eog(
-            raw, 
+        self.eog_projs, _ = mne.preprocessing.compute_proj_eog(
+            self.raw, 
             n_eeg=1,
             reject=None,
             no_proj=True,
-            ch_name = ["Fp1", "Fp2"]
+            ch_name = self.channels
         )
-        self.raw.add_proj(eog_projs).apply_proj()
+        self.blink_removed_raw = self.raw.copy()
+        self.blink_removed_raw.add_proj(self.eog_projs).apply_proj()
         return self
+
+class EEGfeatures:
+    def __init__(self, raw: mne.io.Raw):
+        self.raw = raw
+        self.channel_names = raw.info['ch_names']
+        self.frequencies = list()
+    
 
     def _extract_envelope(self, frequencies: list[tuple[float,float]])-> np.ndarray:
         temp_envelopes_list = list()
         for band in frequencies:
-            filtered = self.raw.copy().filter(*band, verbose = 'CRITICAL')
-            envelope = filtered.copy().apply_hilbert(envelope = True, 
-                                                     verbose = 'CRITICAL')
-            temp_envelopes_list.append(envelope.get_data())
-        self.times = envelope.times
+            filtered = self.raw.copy().filter(*band)
+            envelope = filtered.copy().apply_hilbert(envelope = True )
+            envelope_cropped = specific_crop(envelope, margin = 0)
+            temp_envelopes_list.append(envelope_cropped.get_data())
+        self.times = envelope_cropped.times
         self.feature = np.stack(temp_envelopes_list, axis = -1)
         return self
 
@@ -236,15 +284,17 @@ class EEGfeatures:
 
         self.frequencies = np.linspace(1,40,40)
         cycles = self.frequencies / 2
+        start, stop = specific_crop(self.raw, return_time = True, margin = 0)
         time_frequency_representation = self.raw.copy().compute_tfr(
             freqs = self.frequencies, 
             n_cycles = cycles,
             method='morlet',
             n_jobs = -1,
-            verbose = 'CRITICAL',
+            tmin = start,
+            tmax = stop
         )
         
-        self.times = time_frequency_representation.times
+        self.times = time_frequency_representation.times - start
         self.feature = time_frequency_representation.get_data()
         self.feature_info = """Morlet Time-Frequency Representation
         with 40 frequencies from 1 to 40 Hz number of cycles = frequency / 2"""
@@ -308,52 +358,89 @@ def specific_crop(raw: mne.io.Raw,
         cropped = raw.copy().crop(start, stop)
     return cropped
 
-def Main(overwrite = True,
-         remove_blinks = False):
-    raw_path = Path('/data2/Projects/NKI_RS2/MoBI/eeg_preprocessing_cst/data/annotated_eeg_data/calibration_data/eeg_data')
+def loop(overwrite = True, 
+         blank_run = True,
+         remove_blinks = False,):
+    raw_path = Path('/data2/Projects/NKI_RS2/MoBI/eeg_preprocessing_cst/data/annotated_eeg_data/calibration_data/eeg_data/')
 
-    for filename in raw_path.rglob(pattern='*.fif'):
-        file_entities = parse_file_entities(filename)
-            
-        try: #I put a temporary error handling because some files don't have 
-             #the eeg suffix and throw an error. This is just temporary for
-             #the sake of productivity
-
-            raw = mne.io.read_raw_fif(filename, preload=True)
-            bids_path = BIDSPath(**file_entities, 
-                                root=raw_path)
-            #bids_path.mkdir()
-            
-            features_object = EEGfeatures(raw)
-
-            if remove_blinks:
-                features_object._remove_blinks(raw)
-                added_description = 'BlinksRemoved'
-            else:
-                added_description = ''
-
-            process_file_desc_pairs = {
-                'run_wavelets': 'MorletTFR',
-                'extract_eeg_band_envelope': 'EEGbandsEnvelopes',
-                'extract_custom_band_envelope': 'CustomEnvelopes'
-            }
-
-            for process, file_description in process_file_desc_pairs.items():
-                bids_path.update(description = file_description + added_description)
-                saving_path = Path(os.path.splitext(bids_path.fpath)[0] + '.pkl')
-                if not saving_path.exists() or overwrite:
-                    features_object.__getattribute__(process)().save(saving_path)
-                else:
-                    continue
-        
-            print('Finished')
+    for filename in raw_path.rglob('*.edf'):
+        try:
+            individual_process(filename, 
+                            overwrite = overwrite,
+                            remove_blinks = remove_blinks,
+                            blank_run=blank_run
+                            )
         except Exception as e:
-            raise e
-        
+            print(f'___xxx___xxx___xxx___xxx___xxx___xxx___\n')
+            print(f'Error with {filename}\n')
+            print(e)
+            print(f'\n___xxx___xxx___xxx___xxx___xxx___xxx___\n')
+
+def individual_process(filename: Path, 
+                    overwrite = True, 
+                    remove_blinks = True,
+                    blank_run = True):
+    
+    print('=====================================================\n')
+    print(f'reading {filename}')
+
+    derivatives_path = Path('/data2/Projects/NKI_RS2/MoBI/eeg_preprocessing_cst/data/annotated_eeg_data/calibration/derivatives/')
+    file_entities = parse_file_entities(filename)
+    bids_path = BIDSPath(**file_entities, 
+                        root=derivatives_path,
+                        datatype='eeg')
+    
+
+    if blank_run and remove_blinks:
+        added_description = 'BlinksRemoved'
+    elif blank_run and not remove_blinks:
+        added_description = ''
+    else:
+        bids_path.mkdir()
+        raw = mne.io.read_raw_edf(filename, preload=True)
+        raw = extract_eeg_only(raw)
+
+        if remove_blinks:
+            added_description = 'BlinksRemoved'
+            blink_remover = BlinkRemover(raw)
+            blink_remover.remove_blinks()
+            #fname_plot_blinks_found = Path(bids_path.update(description = 'BlinksFoundResults').fpath)
+            #blink_remover.plot_blinks_found(
+            #    saving_filename = fname_plot_blinks_found.with_suffix('.png')
+            #                                )
+            #fname_plot_blinks_results = Path(bids_path.update(description = 'BlinksRemovalResults').fpath)
+            #blink_remover.plot_removal_results(
+            #    saving_filename = fname_plot_blinks_results.with_suffix('.png')
+            #)
+            features_object = EEGfeatures(blink_remover.blink_removed_raw)
+        else:
+            added_description = ''
+            features_object = EEGfeatures(raw)
+            
+
+    process_file_desc_pairs = {
+        'run_wavelets': 'MorletTFR',
+        'extract_eeg_band_envelope': 'EEGbandsEnvelopes',
+        'extract_custom_band_envelope': 'CustomEnvelopes'
+    }
+
+    for process, file_description in process_file_desc_pairs.items():
+        bids_path.update(description = file_description + added_description)
+        saving_path = Path(os.path.splitext(bids_path.fpath)[0] + '.pkl')
+        if not saving_path.exists() or overwrite:
+            print(f'\tprocessing {process}')
+            print(f'\tsaving into {saving_path}\n')
+            if blank_run:
+                continue
+            else: 
+                features_object.__getattribute__(process)().save(saving_path)
+        else:
+            continue
 
 
 if __name__ == '__main__':
-    Main()
+    for blink_removal in [True, False]:
+        loop(overwrite = True, blank_run = True, remove_blinks = blink_removal)
 
 # TODO The frequencies need a better handling because it changes datastructure
 #      from list of tuple to numpy array. It could be better to keep it as np.array
