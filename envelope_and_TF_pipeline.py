@@ -435,11 +435,11 @@ def individual_process(filename: str,
         saving_path = Path(os.path.splitext(bids_path.fpath)[0] + '.pkl')
         if not saving_path.exists() or overwrite:
             print(f'\tprocessing {process}')
-            print(f'\tsaving into {saving_path}\n')
             if blank_run:
-                continue
+                pass
             else: 
                 features_object.__getattribute__(process)().save(saving_path)
+            print(f'\tsaving into {saving_path}\n')
         else:
             continue
 

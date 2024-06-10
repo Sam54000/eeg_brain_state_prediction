@@ -240,9 +240,8 @@ class EEGfeatures:
         for band in frequencies:
             filtered = self.raw.copy().filter(*band)
             envelope = filtered.copy().apply_hilbert(envelope = True )
-            envelope_cropped = specific_crop(envelope, margin = 0)
-            temp_envelopes_list.append(envelope_cropped.get_data())
-        self.times = envelope_cropped.times
+            temp_envelopes_list.append(envelope.get_data())
+        self.times = envelope.times
         self.feature = np.stack(temp_envelopes_list, axis = -1)
         return self
 
@@ -284,17 +283,14 @@ class EEGfeatures:
 
         self.frequencies = np.linspace(1,40,40)
         cycles = self.frequencies / 2
-        start, stop = specific_crop(self.raw, return_time = True, margin = 0)
         time_frequency_representation = self.raw.copy().compute_tfr(
             freqs = self.frequencies, 
             n_cycles = cycles,
             method='morlet',
             n_jobs = -1,
-            tmin = start,
-            tmax = stop
         )
         
-        self.times = time_frequency_representation.times - start
+        self.times = self.raw.times
         self.feature = time_frequency_representation.get_data()
         self.feature_info = """Morlet Time-Frequency Representation
         with 40 frequencies from 1 to 40 Hz number of cycles = frequency / 2"""
@@ -314,56 +310,12 @@ class EEGfeatures:
         with open(filename, 'wb') as file:
             pickle.dump(param_to_save, file)
 
-def measure_gradient_time(raw, print_results = True):
-    gradient_trigger_name = utils.extract_gradient_trigger_name(raw)
-    events, event_id = mne.events_from_annotations(raw)
-    picked_events = mne.pick_events(events, include=[event_id[gradient_trigger_name]])
-    average_time_space = np.mean(np.diff(picked_events[:,0] / raw.info['sfreq']))
-    std_time_space = np.std(np.diff(picked_events[:,0] / raw.info['sfreq']))
-    if print_results:
-        print(f'Average time space between gradient triggers: {average_time_space}')
-        print(f'Standard deviation of time space between gradient triggers: {std_time_space}')
-    return np.round(average_time_space,1)
-
-def specific_crop(raw: mne.io.Raw, 
-                  margin: int = 1,
-                  return_time = False) -> mne.io.Raw | tuple[float,float]:
-    """Crop the raw data to get only when fMRI gradient is on.
-    
-    The function take the time of occurence of the first and the last gradient
-    trigger to get raw data only between these two triggers. It also add a margin
-    to anticipate edge effect that would be cropped after processing.
-    Args:
-        raw (mne.io.Raw): _description_
-        padding (int, optional): Add a margin in second from the first and the
-                                 to anticipate process 
-                                 that would induce an edge effects. Defaults to 1.
-        return_time (bool, optional): If True, the function will return the time
-                                        of the first and the last gradient 
-                                        trigger instead of the raw object.
-
-    Returns:
-        mne.io.Raw: _description_
-    """
-    gradient_time = measure_gradient_time(raw, print_results = False)
-    gradient_trigger_name = utils.extract_gradient_trigger_name(raw)
-    events, event_id = mne.events_from_annotations(raw)
-    picked_events = mne.pick_events(events, include=[event_id[gradient_trigger_name]])
-    start = picked_events[0][0] / raw.info['sfreq'] - margin
-    stop = (picked_events[-1][0] / raw.info['sfreq'] + gradient_time) + margin
-    print(f'cropping from {start} to {stop}')
-    if return_time:
-        return (start,stop)
-    else:
-        cropped = raw.copy().crop(start, stop)
-    return cropped
-
 def loop(overwrite = True, 
          blank_run = True,
          remove_blinks = False,):
-    raw_path = Path('/data2/Projects/NKI_RS2/MoBI/eeg_preprocessing_cst/data/annotated_eeg_data/calibration_data/eeg_data/')
+    raw_path = Path('/data2/Projects/NKI_RS2/MoBI/Extract_Mobi_Data/eeg_preprocessing_cst/data/annotated_eeg_data/calibration_data/eeg_data/')
 
-    for filename in raw_path.rglob('*.edf'):
+    for filename in raw_path.rglob('*.fif'):
         try:
             individual_process(filename, 
                             overwrite = overwrite,
@@ -384,7 +336,7 @@ def individual_process(filename: Path,
     print('=====================================================\n')
     print(f'reading {filename}')
 
-    derivatives_path = Path('/data2/Projects/NKI_RS2/MoBI/eeg_preprocessing_cst/data/annotated_eeg_data/calibration/derivatives/')
+    derivatives_path = filename.parents[3] / 'eeg_features_extraction'
     file_entities = parse_file_entities(filename)
     bids_path = BIDSPath(**file_entities, 
                         root=derivatives_path,
@@ -397,7 +349,7 @@ def individual_process(filename: Path,
         added_description = ''
     else:
         bids_path.mkdir()
-        raw = mne.io.read_raw_edf(filename, preload=True)
+        raw = mne.io.read_raw_fif(filename, preload=True)
         raw = extract_eeg_only(raw)
 
         if remove_blinks:
@@ -429,18 +381,20 @@ def individual_process(filename: Path,
         saving_path = Path(os.path.splitext(bids_path.fpath)[0] + '.pkl')
         if not saving_path.exists() or overwrite:
             print(f'\tprocessing {process}')
-            print(f'\tsaving into {saving_path}\n')
             if blank_run:
-                continue
+                pass
             else: 
                 features_object.__getattribute__(process)().save(saving_path)
+            print(f'\tsaving into {saving_path}\n')
         else:
             continue
 
 
 if __name__ == '__main__':
     for blink_removal in [True, False]:
-        loop(overwrite = True, blank_run = True, remove_blinks = blink_removal)
+        loop(overwrite = True, 
+             blank_run = False, 
+             remove_blinks = blink_removal)
 
 # TODO The frequencies need a better handling because it changes datastructure
 #      from list of tuple to numpy array. It could be better to keep it as np.array
