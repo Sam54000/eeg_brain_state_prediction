@@ -27,7 +27,7 @@ importlib.reload(pf)
 
 #%% =======================================================================================
 
-base_dir = '/data2/Projects/knenning/natview_eeg'
+base_dir = '/data2/Projects/eeg_fmri_natview/derivatives/multimodal_prediction_models'
 
 predHz = 3.8
 do_HRF = 0
@@ -52,7 +52,7 @@ data = np.load(filename, allow_pickle=True)
 data = data.item()
 print("...done")
 
-# print( data.keys() )
+print( data.keys() )
 # -------------------------
 
 subjects = data['subjects']

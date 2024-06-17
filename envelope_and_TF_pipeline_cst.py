@@ -184,6 +184,14 @@ def extract_eeg_only(raw: mne.io.Raw) -> mne.io.Raw:
     raw.pick_types(eeg = True)
     return raw
 
+def specific_crop(raw: mne.io.Raw, 
+                  start_annotation: str,
+                  stop_annotation) -> mne.io.Raw:
+    start_onset = raw.annotations.onset[raw.annotations.description == start_annotation][0]
+    stop_onset = raw.annotations.onset[raw.annotations.description == stop_annotation][0]
+    raw.crop(start_onset, stop_onset)
+    return raw
+
 class BlinkRemover:
     def __init__(self, raw: mne.io.Raw, channels = ['Fp1', 'Fp2']):
         self.raw = raw
@@ -351,6 +359,7 @@ def individual_process(filename: Path,
         bids_path.mkdir()
         raw = mne.io.read_raw_fif(filename, preload=True)
         raw = extract_eeg_only(raw)
+        raw = specific_crop(raw, 'Onset CALIBRATE', 'TaskEnded CALIBRATE')
 
         if remove_blinks:
             added_description = 'BlinksRemoved'
