@@ -25,17 +25,19 @@ respiration_data_dir = '/home/thoppe/physio-analysis/resp-analysis/resp_stdevs'
 
 #%% =======================================================================================
 
-predHz = 3.8
+TR_PERIOD_DIVIDING = 8
+TR_PERIOD = 2.1
+PREDHZ = np.round(TR_PERIOD_DIVIDING/TR_PERIOD, 1)
 
 #2.1/8 = 0.2625
 
 base_out_dir = os.path.join(base_dir,'data_prep', 'prediction_model_data_eeg_features_v2')
 
-out_dir = os.path.join(base_out_dir, f"group_data_Hz-{predHz}")
+out_dir = os.path.join(base_out_dir, f"group_data_Hz-{PREDHZ}")
 if not os.path.exists(out_dir):
    os.makedirs(out_dir)
 
-dict_out_dir = os.path.join(base_out_dir, f"dictionary_group_data_Hz-{predHz}")
+dict_out_dir = os.path.join(base_out_dir, f"dictionary_group_data_Hz-{PREDHZ}")
 if not os.path.exists(dict_out_dir):
    os.makedirs(dict_out_dir)
 
@@ -95,7 +97,7 @@ for sub in subjects:
             if bstate_data:
                 resampled_time = hf.resample_time(bstate_data['time'].values,
                                                   tr_value=bold_tr,
-                                                  resampling_factor=8)
+                                                  resampling_factor=TR_PERIOD_DIVIDING)
                 resampled_fmri_data = hf.resample_data(
                     bstate,
                     time_resampled = resampled_time,

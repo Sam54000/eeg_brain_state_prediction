@@ -146,11 +146,11 @@ def resample_time(time: np.ndarray,
         data are downsampled. 
         
         Example 1:
-        If the periode of the TR is 2 seconds and the resampling factor is 2, 
+        If the period of the TR is 2 seconds and the resampling factor is 2, 
         then data will be upsampled to 1 second period (so 1 Hz).
         
         Example 2:
-        If the periode of the TR is 2 seconds and the resampling factor is 0.5,
+        If the period of the TR is 2 seconds and the resampling factor is 0.5,
         then data will be downsampled to 4 seconds period (so 0.25 Hz).
         
         Example 3:
