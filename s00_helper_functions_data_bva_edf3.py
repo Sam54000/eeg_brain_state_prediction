@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 import os
 from scipy.interpolate import CubicSpline
+import matplotlib.pyplot as plt
 # ==============================================================================================================================
 # ==============================================================================================================================
 # Checking the existence of the file shouldn't be done in the same function that reads the data
@@ -33,6 +34,37 @@ def get_brainstate_data(sub: str,
 
     return ( os.path.exists(brainstate_data_file) ), brainstate_data
 
+
+def crop_data(data: pd.DataFrame | np.ndarray | dict[str,np.ndarray],
+              dict_keys: list[str] = None,
+              id_min: int = None,
+              id_max: int = None,
+              axis: int = 0) -> pd.DataFrame | np.ndarray | dict[str,np.ndarray]:
+    """Crop the data to the same length.
+    
+    Args:
+        data (pd.DataFrame | np.ndarray | dict[str,np.ndarray]): The data to be cropped
+        dict_key (list[str]): The key where the data have to be croped
+        id_min (int): The minimum index to crop the data
+        id_max (int): The maximum index to crop the data
+        
+    
+    Returns:
+        pd.DataFrame | np.ndarray | dict[str,np.ndarray]: The cropped data
+    """
+    if isinstance(data, pd.DataFrame):
+        data = data.truncate(before=id_min, after=id_max, axis=axis)
+    elif isinstance(data, np.ndarray):
+        slices = [slice(None)] * data.ndim
+        slices[axis] = slice(id_min, id_max)
+        data = data[tuple(slices)]
+    elif isinstance(data, dict):
+        for key in dict_keys:
+            slices = [slice(None)] * data[key].ndim
+            slices[axis] = slices(id_min, id_max)
+            data[key] = data[key][tuple(slices)]
+    
+    return data
 
 def get_brainstate_data_all(sub: str,
                             ses: str,
@@ -176,6 +208,67 @@ def resample_time(time: np.ndarray,
         raise ValueError("You must provide the TR value and the resampling factor")
 
 
+def save_resampled_data(data: pd.DataFrame | np.ndarray,
+                        filename: str | os.PathLike) -> None:
+    """Save the resampled data to a file whatever the instance is."
+    
+    Args:
+        data (pd.DataFrame | np.ndarray): The data to be saved
+        filename (str | os.PathLike): The name of the file to save the data
+    """
+    
+    if isinstance(data, pd.DataFrame):
+        data.to_csv(filename, index=False)
+    elif isinstance(data, np.ndarray):
+        np.save(filename, data)
+
+
+def resample_eeg_features(features_dict: dict[str, np.ndarray],
+                          time_resampled: np.ndarray,
+                          plot: bool = False,
+                          verbose: bool = False,
+                          inplace = False) -> dict[str, np.ndarray]:
+    """Resample the EEG features to the time points of the brainstate data
+    
+    Args:
+        features (dict[str, np.ndarray]): The EEG features to be resampled
+        time_resampled (np.ndarray): The time points to resample the EEG features to
+        verbose (bool): Whether to print the shape of the resampled features
+    
+    Returns:
+        dict[str, np.ndarray]: The resampled EEG features
+    """
+    if verbose:
+        features_dict.keys()
+        print(f"{features_dict['feature'].shape}")
+        print(f"{features_dict['times'].shape}")
+    
+    
+        interpolator = CubicSpline(features_dict['times'],
+                                   features_dict['feature'], 
+                                   axis=1)
+    features_data_array_resampled = interpolator(time_resampled)
+        
+    if plot:
+        plt.imshow(features_dict['feature'][1,:,:].T, aspect='auto', vmax=1e-3)
+        plt.imshow(features_data_array_resampled[10,:,:].T, aspect='auto', vmax=1e-4)
+    
+    if inplace:
+        features_dict |= {'feature': features_data_array_resampled,
+                         'times': time_resampled}
+    
+    else:
+        return features_dict | {'feature': features_data_array_resampled,
+                                 'times': time_resampled}
+
+def get_real_column_name(data: pd.DataFrame,
+                         substring: str) -> str:
+    real_column_name = [column_name
+                        for column_name in data.columns
+                        if substring.lower() in column_name.lower()][0]
+    
+    return real_column_name
+
 def resample_data(data: pd.DataFrame,
                   time_resampled: np.ndarray,
                   fill_nan = False) -> pd.DataFrame | None:
@@ -194,16 +287,14 @@ def resample_data(data: pd.DataFrame,
     data_resampled = {
         'time': time_resampled,
         }
-    time_column_name = [time_name 
-                        for time_name in data.columns 
-                        if 'time' in time_name.lower()][0]
+    time_column_name = get_real_column_name(data, 'time')
     
     for column in data.columns:
         if column == time_column_name:
             continue
         else:
-            pd_spline = CubicSpline(data[time_column_name], data[column])
-            data_resampled[column] = pd_spline(time_resampled)
+            interpolator = CubicSpline(data[time_column_name], data[column])
+            data_resampled[column] = interpolator(time_resampled)
     
     return pd.DataFrame(data_resampled)
 

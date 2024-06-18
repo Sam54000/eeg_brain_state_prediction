@@ -63,9 +63,6 @@ s = {
     'tasks': tasks
 }
 
-bold_tr = 2.1
-pd_tr = 1.05
-
 sub = '01' # 
 ses = '01' # 01 021
 task = 'checker_run-01' #'checker_run-01' 'rest_run-01' , 'tp_run-01', 'tp_run-02'
@@ -84,94 +81,87 @@ for sub in subjects:
             # ----------------------------------------------------------------------------
             # check if EEG or fMRI data exists
             
-            has_fmri, has_eeg, has_pd, has_resp = hf.check_data_exists(sub, ses, task, fmri_data_dir, eeg_proc_data_dir, eyetrack_data_dir, respiration_data_dir)
-            bstate_data = hf.get_brainstate_data_all(sub, ses, task, fmri_data_dir, bold_tr)
+            (has_fmri, 
+             has_eeg_data, 
+             has_pupil_data, 
+             has_resp_data) = hf.check_data_exists(sub, 
+                                                   ses, 
+                                                   task, 
+                                                   fmri_data_dir, 
+                                                   eeg_proc_data_dir, 
+                                                   eyetrack_data_dir, 
+                                                   respiration_data_dir
+                                                   )
+             
+            brainstate_data = hf.get_brainstate_data_all(sub, 
+                                                         ses, 
+                                                         task, 
+                                                         fmri_data_dir, 
+                                                         TR_PERIOD)
             
             #if not ( has_eeg & has_fmri & has_pd & has_resp ):
+
             #    print("---> not all features <---")
             #    continue
             
             # ----------------------------------------------------------------------------
             # FMRI DATA
 
-            if bstate_data:
-                resampled_time = hf.resample_time(bstate_data['time'].values,
-                                                  tr_value=bold_tr,
+            if all([brainstate_data, 
+                    has_pupil_data,
+                    has_resp_data,
+                    has_eeg_data]):
+
+                resampled_time = hf.resample_time(brainstate_data['time'].values,
+                                                  tr_value=TR_PERIOD,
                                                   resampling_factor=TR_PERIOD_DIVIDING)
-                resampled_fmri_data = hf.resample_data(
-                    bstate,
+                brainstate_data_resampled = hf.resample_data(
+                    brainstate_data,
                     time_resampled = resampled_time,
                     fill_nan = True
                     )
-            else:
-                print(f"-- no brain state")
-                continue
 
                 
             # ----------------------------------------------------------------------------
             # EYETRACKING DATA
-            if has_pd:
                 eyetrack_data_file = os.path.join(eyetrack_data_dir, f"sub-{sub}_ses-{ses}_task-{task}_eyelink-pupil-eye-position.tsv")
-                pd_df = pd.read_csv(eyetrack_data_file, sep='\t', index_col=0)
-                pupil = hf.resample_data(pd_df, time_resampled=resampled_time)
+                pupil_data = pd.read_csv(eyetrack_data_file, sep='\t', index_col=0)
+                pupil_data_resampled = hf.resample_data(pupil_data, time_resampled=resampled_time)
             
             # ----------------------------------------------------------------------------
             # RESPIRATION DATA
-
-            if has_resp:
                 if (task[:2]=='tp'):
                     bstask = task
                 else:
                     bstask = task[:(len(task)-7)]
                 respiration_data_file = os.path.join(respiration_data_dir, f"sub-{sub}_ses-{ses}_task-{bstask}_resp_stdevs.csv")
-                resp_df = pd.read_csv(respiration_data_file, sep=',', index_col=0)
-
-                respiration_data_resampled = hf.resample_data(resp_df, time_resampled=resampled_time)
+                respiration_data = pd.read_csv(respiration_data_file, sep=',', index_col=0)
+                respiration_data_resampled = hf.resample_data(respiration_data, time_resampled=resampled_time)
                 # change the column name StdDev_6s to respiration
 
             # ----------------------------------------------------------------------------
             # EEG DATA
 
-            sub_dir_eeg = os.path.join(eeg_proc_data_dir, f"sub-{sub}", f"ses-{ses}", "eeg")
-            DATA_EEGbandsEnvelopes  = []
-            DATA_CustomEnvelopes  = []
-            DATA_MorletTFR  = []
-            if has_eeg:
+                sub_dir_eeg = os.path.join(eeg_proc_data_dir, f"sub-{sub}", f"ses-{ses}", "eeg")
+                eeg_features = {
+                    'EEGbandsEnvelopes': None,
+                    'CustomEnvelopes': None,
+                    'MorletTFR': None
+                }
                 if (task[:2]=='tp'):
                     bstask = task
                 else:
                     bstask = task[:(len(task)-7)]
+                
+                for key in eeg_features.keys():
+                    filename = os.path.join(
+                        sub_dir_eeg, 
+                        f"sub-{sub}_ses-{ses}_task-{task}_desc-{key}_eeg.pkl")
+                    
+                    data = np.load(filename, allow_pickle=True)
+                    eeg_features[key] = hf.resample_eeg_features(data, 
+                                                                 resampled_time)
 
-                #sub_dir_eeg = os.path.join(eeg_proc_data_dir, f"sub-{sub}", f"ses-{ses}", "eeg")
-                EEGbandsEnvelopes_data_file = os.path.join(sub_dir_eeg, f"sub-{sub}_ses-{ses}_task-{task}_desc-EEGbandsEnvelopes_eeg.pkl")
-                EEGbandsEnvelopes_data = np.load(EEGbandsEnvelopes_data_file, allow_pickle=True)
-                EEGbandsEnvelopes_data.keys()
-                print(f"{EEGbandsEnvelopes_data['feature'].shape}")
-                print(f"{EEGbandsEnvelopes_data['times'].shape}")
-                #plt.imshow(EEGbandsEnvelopes_data['feature'][1,:,:].T, aspect='auto', vmax=1e-3)
-                EEGbandsEnvelopes_spline = CubicSpline(EEGbandsEnvelopes_data['times'], EEGbandsEnvelopes_data['feature'], axis=1)
-                EEGbandsEnvelopes_resampled = EEGbandsEnvelopes_spline(fmri_time_resampled)
-                #plt.imshow(EEGbandsEnvelopes_resampled[10,:,:].T, aspect='auto', vmax=1e-4)
-                
-                CustomEnvelopes_data_file = os.path.join(sub_dir_eeg, f"sub-{sub}_ses-{ses}_task-{task}_desc-CustomEnvelopes_eeg.pkl")
-                CustomEnvelopes_data = np.load(CustomEnvelopes_data_file, allow_pickle=True)
-                CustomEnvelopes_data.keys()
-                print(f"{CustomEnvelopes_data['feature'].shape}")
-                print(f"{CustomEnvelopes_data['times'].shape}")
-                #plt.imshow(CustomEnvelopes_data['feature'][1,:,:].T, aspect='auto', vmax=1e-3)
-                CustomEnvelopes_spline = CubicSpline(CustomEnvelopes_data['times'], CustomEnvelopes_data['feature'], axis=1)
-                CustomEnvelopes_resampled = CustomEnvelopes_spline(fmri_time_resampled)
-            
-                MorletTFR_data_file = os.path.join(sub_dir_eeg, f"sub-{sub}_ses-{ses}_task-{task}_desc-MorletTFR_eeg.pkl")
-                MorletTFR_data = np.load(MorletTFR_data_file, allow_pickle=True)
-                MorletTFR_data.keys()
-                print(f"{MorletTFR_data['feature'].shape}")
-                print(f"{MorletTFR_data['times'].shape}")
-                #plt.imshow(MorletTFR_data['feature'][1,:,:].T, aspect='auto', vmax=1e-3)
-                MorletTFR_spline = CubicSpline(MorletTFR_data['times'], MorletTFR_data['feature'], axis=2)
-                MorletTFR_resampled = MorletTFR_spline(fmri_time_resampled)
-                MorletTFR_resampled = np.moveaxis(MorletTFR_resampled, 2, 1)
-                
             # ----------------------------------------------------------------------------
 
             print(f"fmri_time_resampled {fmri_time_resampled.shape}")
@@ -183,45 +173,43 @@ for sub in subjects:
             print(f"MorletTFR_resampled {MorletTFR_resampled.shape}")
             print(f"cropping it ...")
             #min_length = np.min( [ len(FMRI_TARGET_RESAMPLED), len(PUPIL_DATA_RESAMPLED), len(RESPIRATION_DATA_RESAMPLED) ] )
-            max_time = np.min( [ fmri_time[-1], pd_time[-1], resp_time[-1], EEGbandsEnvelopes_data['times'][-1], CustomEnvelopes_data['times'][-1], MorletTFR_data['times'][-1] ] )
-            min_length = np.where((FMRI_TARGET_RESAMPLED['time'] < max_time) == 0)[0][0]
+            
+            end_times = []
+            data_dict = {
+                "brainstate": brainstate_data_resampled, 
+                "pupil": pupil_data_resampled, 
+                "respiration": respiration_data_resampled
+            } | eeg_features
+            
 
-            FMRI_TARGET_RESAMPLED = FMRI_TARGET_RESAMPLED.iloc[:min_length, :]
-            PUPIL_DATA_RESAMPLED = PUPIL_DATA_RESAMPLED.iloc[:min_length, :]
-            RESPIRATION_DATA_RESAMPLED = RESPIRATION_DATA_RESAMPLED.iloc[:min_length, :]
+            for data in data_dict.items():
+                if isinstance(data, pd.DataFrame):
+                    time_name = hf.get_real_column_name(data, 'time')
+                else:
+                    time_name = "times"
+                end_times.append(data[time_name].values[-1])
 
-            fmri_time_resampled = fmri_time_resampled[:min_length]
-            EEGbandsEnvelopes_resampled = EEGbandsEnvelopes_resampled[:, :min_length, :]
-            CustomEnvelopes_resampled = CustomEnvelopes_resampled[:, :min_length, :]
-            MorletTFR_resampled = MorletTFR_resampled[:, :min_length, :]
+            end_times = np.concatenate(end_times)
+            time_to_crop = np.min(end_times)
+                
+            min_length = np.argmin(abs(brain_state_data_resampled['time'] - time_to_crop))
 
-            DATA_EEGbandsEnvelopes = {
-                'data': EEGbandsEnvelopes_resampled,
-                'frequencies': EEGbandsEnvelopes_data['frequencies'],
-                'channel_info': EEGbandsEnvelopes_data['channels_info'],
-                'time': fmri_time_resampled
-                }
-
-            DATA_CustomEnvelopes = {
-                'data': CustomEnvelopes_resampled,
-                'frequencies': CustomEnvelopes_data['frequencies'],
-                'channel_info': CustomEnvelopes_data['channels_info'],
-                'time': fmri_time_resampled
-                }
-
-            DATA_MorletTFR = {
-                    'data': MorletTFR_resampled,
-                    'frequencies': MorletTFR_data['frequencies'],
-                    'channel_info': MorletTFR_data['channels_info'],
-                    'time': fmri_time_resampled
-                    }
-
+            for data_index, data in enumerate(data_list):
+                if data_index < 3:
+                    axis = 0
+                else:
+                    axis = 1
+                    
+                data = hf.crop_data(data, 
+                                    id_max = min_length, 
+                                    axis = axis)
+            
             # # add to one dictionary
             key_name = f"sub-{sub}_ses-{ses}_task-{task}"
 
             data_fmri[key_name] = FMRI_TARGET_RESAMPLED
             data_eyetracking[key_name] = PUPIL_DATA_RESAMPLED 
-            data_respiration[key_name] = RESPIRATION_DATA_RESAMPLED     
+            data_respiration[key_name] = RESPIRATION_DATA_RESAMPLED
             data_eeg_bands_envelope[key_name] = (EEGbandsEnvelopes_resampled, fmri_time_resampled, EEGbandsEnvelopes_data['frequencies'], EEGbandsEnvelopes_data['channels_info'])
             data_eeg_custom_envelope[key_name] = (CustomEnvelopes_resampled, fmri_time_resampled, CustomEnvelopes_data['frequencies'], CustomEnvelopes_data['channels_info'])
             data_eeg_morlet_tfr[key_name]   = (MorletTFR_resampled, fmri_time_resampled, MorletTFR_data['frequencies'], MorletTFR_data['channels_info'])
@@ -243,6 +231,9 @@ for sub in subjects:
             print(f"CustomEnvelopes_resampled {CustomEnvelopes_resampled.shape}")
             print(f"MorletTFR_resampled {MorletTFR_resampled.shape}")
             print(f"===================================================================")
+            else:
+                print(f"-- no brain state")
+                continue
 
             # ----------------------------------------------------------------------------
         # ----------------------------------------------------------------------------

@@ -293,9 +293,10 @@ class EEGfeatures:
             tmin = start,
             tmax = stop
         )
-        
+    
         self.times = time_frequency_representation.times - start
-        self.feature = time_frequency_representation.get_data()
+        data_array = time_frequency_representation.get_data()
+        self.feature = np.moveaxis(data_array, 2, 1)
         self.feature_info = """Morlet Time-Frequency Representation
         with 40 frequencies from 1 to 40 Hz number of cycles = frequency / 2"""
         
@@ -426,8 +427,8 @@ def individual_process(filename: str,
 
     process_file_desc_pairs = {
         'run_wavelets': 'MorletTFR',
-        'extract_eeg_band_envelope': 'EEGbandsEnvelopes',
-        'extract_custom_band_envelope': 'CustomEnvelopes'
+        #'extract_eeg_band_envelope': 'EEGbandsEnvelopes',
+        #'extract_custom_band_envelope': 'CustomEnvelopes'
     }
 
     for process, file_description in process_file_desc_pairs.items():
