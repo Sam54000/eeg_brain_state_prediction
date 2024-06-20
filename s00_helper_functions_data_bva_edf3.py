@@ -35,11 +35,11 @@ def get_brainstate_data(sub: str,
     return ( os.path.exists(brainstate_data_file) ), brainstate_data
 
 
-def crop_data(data: pd.DataFrame | np.ndarray | dict[str,np.ndarray],
+def crop_data(data: pd.DataFrame | np.ndarray,
               dict_keys: list[str] = None,
               id_min: int = None,
               id_max: int = None,
-              axis: int = 0) -> pd.DataFrame | np.ndarray | dict[str,np.ndarray]:
+              axis: int = 0) -> pd.DataFrame | np.ndarray:
     """Crop the data to the same length.
     
     Args:
@@ -50,7 +50,7 @@ def crop_data(data: pd.DataFrame | np.ndarray | dict[str,np.ndarray],
         
     
     Returns:
-        pd.DataFrame | np.ndarray | dict[str,np.ndarray]: The cropped data
+        pd.DataFrame | np.ndarray: The cropped data
     """
     if isinstance(data, pd.DataFrame):
         data = data.truncate(before=id_min, after=id_max, axis=axis)
@@ -58,11 +58,6 @@ def crop_data(data: pd.DataFrame | np.ndarray | dict[str,np.ndarray],
         slices = [slice(None)] * data.ndim
         slices[axis] = slice(id_min, id_max)
         data = data[tuple(slices)]
-    elif isinstance(data, dict):
-        for key in dict_keys:
-            slices = [slice(None)] * data[key].ndim
-            slices[axis] = slices(id_min, id_max)
-            data[key] = data[key][tuple(slices)]
     
     return data
 
@@ -244,9 +239,9 @@ def resample_eeg_features(features_dict: dict[str, np.ndarray],
         print(f"{features_dict['times'].shape}")
     
     
-        interpolator = CubicSpline(features_dict['times'],
-                                   features_dict['feature'], 
-                                   axis=1)
+    interpolator = CubicSpline(features_dict['times'],
+                                features_dict['feature'], 
+                                axis=1)
     features_data_array_resampled = interpolator(time_resampled)
         
     if plot:

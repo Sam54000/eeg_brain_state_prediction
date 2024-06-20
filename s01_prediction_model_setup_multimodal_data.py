@@ -7,6 +7,7 @@ import numpy as np
 from scipy.interpolate import CubicSpline
 import pandas as pd
 from scipy.stats import zscore
+import pickle
 
 import matplotlib.pyplot as plt
 
@@ -107,7 +108,7 @@ for sub in subjects:
             # ----------------------------------------------------------------------------
             # FMRI DATA
 
-            if all([brainstate_data, 
+            if all([isinstance(brainstate_data, pd.DataFrame), 
                     has_pupil_data,
                     has_resp_data,
                     has_eeg_data]):
@@ -164,16 +165,6 @@ for sub in subjects:
 
             # ----------------------------------------------------------------------------
 
-            print(f"fmri_time_resampled {fmri_time_resampled.shape}")
-            print(f"FMRI_TARGET_RESAMPLED {FMRI_TARGET_RESAMPLED.shape}")
-            print(f"PUPIL_DATA_RESAMPLED {PUPIL_DATA_RESAMPLED.shape}")
-            print(f"RESPIRATION_DATA_RESAMPLED {RESPIRATION_DATA_RESAMPLED.shape}")
-            print(f"EEGbandsEnvelopes_resampled {EEGbandsEnvelopes_resampled.shape}")
-            print(f"CustomEnvelopes_resampled {CustomEnvelopes_resampled.shape}")
-            print(f"MorletTFR_resampled {MorletTFR_resampled.shape}")
-            print(f"cropping it ...")
-            #min_length = np.min( [ len(FMRI_TARGET_RESAMPLED), len(PUPIL_DATA_RESAMPLED), len(RESPIRATION_DATA_RESAMPLED) ] )
-            
             end_times = []
             data_dict = {
                 "brainstate": brainstate_data_resampled, 
@@ -182,77 +173,42 @@ for sub in subjects:
             } | eeg_features
             
 
-            for data in data_dict.items():
+            for data_name, data in data_dict.items():
                 if isinstance(data, pd.DataFrame):
                     time_name = hf.get_real_column_name(data, 'time')
+                    data_shape = data.shape
+                    data = data[time_name].values
                 else:
-                    time_name = "times"
-                end_times.append(data[time_name].values[-1])
+                    data_shape = data["feature"].shape
+                    data = data["times"]
+                print(f"Shape of {data_name} resampled: {data_shape}")
+                end_times.append(data[-1])
 
-            end_times = np.concatenate(end_times)
             time_to_crop = np.min(end_times)
+            min_length = np.argmin(abs(brainstate_data_resampled['time'] - time_to_crop))
+
+            for data_name, data in data_dict.items():
+                if isinstance(data,pd.DataFrame):
+                    data = hf.crop_data(data,
+                                        id_max = min_length,
+                                        axis = 0,
+                                        )
+                    data_cropped_shape = data.shape
+                    print(f"{data_name} shape after cropping: {data_cropped_shape}")
+
+                elif isinstance(data, dict):
+                    for index, key_value in enumerate(["times", "feature"]):
+                        kwargs = {"dict_keys": key_value,
+                                  "axis": index}
+                        data_cropped = hf.crop_data(data[key_value],
+                                            id_max = min_length,
+                                            axis = index)
+                        data.update({key_value:data_cropped})
+                        data_cropped_shape = data_cropped.shape
+                        print(f"{data_name} {key_value} shape after cropping: {data_cropped_shape}")
                 
-            min_length = np.argmin(abs(brain_state_data_resampled['time'] - time_to_crop))
+                data_dict.update({data_name:data})
 
-            for data_index, data in enumerate(data_list):
-                if data_index < 3:
-                    axis = 0
-                else:
-                    axis = 1
-                    
-                data = hf.crop_data(data, 
-                                    id_max = min_length, 
-                                    axis = axis)
-            
-            # # add to one dictionary
             key_name = f"sub-{sub}_ses-{ses}_task-{task}"
-
-            data_fmri[key_name] = FMRI_TARGET_RESAMPLED
-            data_eyetracking[key_name] = PUPIL_DATA_RESAMPLED 
-            data_respiration[key_name] = RESPIRATION_DATA_RESAMPLED
-            data_eeg_bands_envelope[key_name] = (EEGbandsEnvelopes_resampled, fmri_time_resampled, EEGbandsEnvelopes_data['frequencies'], EEGbandsEnvelopes_data['channels_info'])
-            data_eeg_custom_envelope[key_name] = (CustomEnvelopes_resampled, fmri_time_resampled, CustomEnvelopes_data['frequencies'], CustomEnvelopes_data['channels_info'])
-            data_eeg_morlet_tfr[key_name]   = (MorletTFR_resampled, fmri_time_resampled, MorletTFR_data['frequencies'], MorletTFR_data['channels_info'])
-
-            # save individual files
-            FMRI_TARGET_RESAMPLED.to_csv(os.path.join(out_dir, f"sub-{sub}_ses-{ses}_task-{task}_fmri-brainstates-networks.csv"), index=False)
-            PUPIL_DATA_RESAMPLED.to_csv(os.path.join(out_dir, f"sub-{sub}_ses-{ses}_task-{task}_eyelink-pupil-eye-position.csv"), index=False)
-            RESPIRATION_DATA_RESAMPLED.to_csv(os.path.join(out_dir, f"sub-{sub}_ses-{ses}_task-{task}_respiration-variation.csv"), index=False)
-            np.save(os.path.join(out_dir, f"sub-{sub}_ses-{ses}_task-{task}_eeg-eegbands-envelopes.npy"), DATA_EEGbandsEnvelopes)
-            np.save(os.path.join(out_dir, f"sub-{sub}_ses-{ses}_task-{task}_eeg-custom-envelopes.npy"), DATA_CustomEnvelopes)
-            np.save(os.path.join(out_dir, f"sub-{sub}_ses-{ses}_task-{task}_eeg-morlet-tfr.npy"), DATA_MorletTFR)
-
-            print(f"===================================================================")
-            print(f"fmri_time_resampled {fmri_time_resampled.shape}")
-            print(f"FMRI_TARGET_RESAMPLED {FMRI_TARGET_RESAMPLED.shape}")
-            print(f"PUPIL_DATA_RESAMPLED {PUPIL_DATA_RESAMPLED.shape}")
-            print(f"RESPIRATION_DATA_RESAMPLED {RESPIRATION_DATA_RESAMPLED.shape}")
-            print(f"EEGbandsEnvelopes_resampled {EEGbandsEnvelopes_resampled.shape}")
-            print(f"CustomEnvelopes_resampled {CustomEnvelopes_resampled.shape}")
-            print(f"MorletTFR_resampled {MorletTFR_resampled.shape}")
-            print(f"===================================================================")
-            else:
-                print(f"-- no brain state")
-                continue
-
-            # ----------------------------------------------------------------------------
-        # ----------------------------------------------------------------------------
-    # ----------------------------------------------------------------------------
-# ----------------------------------------------------------------------------
-
-s['data_fmri'] = data_fmri
-s['data_eyetracking'] = data_eyetracking
-s['data_respiration'] = data_respiration
-s['data_eeg_bands_envelope'] = data_eeg_bands_envelope
-s['data_eeg_custom_envelope'] = data_eeg_custom_envelope
-s['data_eeg_morlet_tfr'] = data_eeg_morlet_tfr
-
-print("saving...") # added last 2
-file_str = f"group_data_natview_data_fmri_eyetracking_respiration"
-filename = os.path.join(dict_out_dir,f"{file_str}.npy")
-np.save(filename, s)
-print("...done")
-
-print(len(data_fmri))
-
-#%% =======================================================================================
+            with open(os.path.join(out_dir, f"{key_name}_multimodal_data.pkl"), "wb") as file:
+                pickle.dump(data_dict, file)
