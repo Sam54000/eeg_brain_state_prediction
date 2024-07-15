@@ -103,7 +103,7 @@ def get_brainstate_data_all(sub: str,
     print(f"global_signal_raw_file exists - {os.path.exists(global_signal_raw_file)}")
 
     #  & os.path.exists(caps_pca_file)
-    all_brainstates_extists = (os.path.exists(caps_ts_file) & 
+    all_brainstates_exists = (os.path.exists(caps_ts_file) & 
                                #os.path.exists(net_yeo7_file) &
                                #os.path.exists(net_yeo17_file) &
                                os.path.exists(global_signal_file) &
@@ -149,8 +149,8 @@ def get_brainstate_data_all(sub: str,
     return brainstate_data
 
 def resample_time(time: np.ndarray,
-                  tr_value: float = None,
-                  resampling_factor: float = None,
+                  tr_value: float = 2.1,
+                  resampling_factor: float = 8,
                   units: str = 'seconds') -> np.ndarray:
     """Resample the time points of the data to a desired number of time points
     
@@ -236,10 +236,10 @@ def resample_eeg_features(features_dict: dict[str, np.ndarray],
     if verbose:
         features_dict.keys()
         print(f"{features_dict['feature'].shape}")
-        print(f"{features_dict['times'].shape}")
+        print(f"{features_dict['time'].shape}")
     
     
-    interpolator = CubicSpline(features_dict['times'],
+    interpolator = CubicSpline(features_dict['time'],
                                 features_dict['feature'], 
                                 axis=1)
     features_data_array_resampled = interpolator(time_resampled)
@@ -250,11 +250,13 @@ def resample_eeg_features(features_dict: dict[str, np.ndarray],
     
     if inplace:
         features_dict |= {'feature': features_data_array_resampled,
-                         'times': time_resampled}
+                         'time': time_resampled}
     
     else:
-        return features_dict | {'feature': features_data_array_resampled,
-                                 'times': time_resampled}
+        features_dict | {'feature': features_data_array_resampled,
+                                 'time': time_resampled}
+    
+    return features_dict
 
 def get_real_column_name(data: pd.DataFrame,
                          substring: str) -> str:
@@ -263,6 +265,31 @@ def get_real_column_name(data: pd.DataFrame,
                         if substring.lower() in column_name.lower()][0]
     
     return real_column_name
+
+def dataframe_to_dict(df: pd.DataFrame, 
+                     column_names: list[str],
+                     info: str
+                     ) -> dict[str, list | np.ndarray]:
+    """Convert a dataframe to a specific directory.
+    
+    This fills the purpose to generate a datastructure that is consistent across
+    modality and to get rid of dataframes.
+
+    Args:
+        df (pd.DataFrame): The dataframe to convert
+        column_names (list[str]): The name of the columns to extract
+        info (str): A brief description on what data the input is
+
+    Returns:
+        dict[str, list | np.ndarray]: The dataframe converted
+    """
+    time_column_name = get_real_column_name(df, 'time')
+    out_dictionary = dict(time = df[time_column_name].values,
+                          labels = column_names)
+    f = df[column_names].to_numpy()
+    out_dictionary.update(dict(feature = f.T,
+                               features_info = info))
+    return out_dictionary
 
 def resample_data(data: pd.DataFrame,
                   time_resampled: np.ndarray,

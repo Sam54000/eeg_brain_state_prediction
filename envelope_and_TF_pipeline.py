@@ -235,7 +235,7 @@ class EEGfeatures:
         self.frequencies = list()
     
 
-    def _extract_envelope(self, frequencies: list[tuple[float,float]])-> np.ndarray:
+    def _extract_envelope(self, frequencies: list[tuple[float,float]])-> 'EEGfeatures':
         temp_envelopes_list = list()
         for band in frequencies:
             filtered = self.raw.copy().filter(*band)
@@ -269,7 +269,7 @@ class EEGfeatures:
         self.frequencies = list()
         for low_frequency in range(lowest_frequency, highest_frequency, frequency_step):
             high_frequency = low_frequency + frequency_step
-            self.frequencies.append((low_frequency, high_frequency))
+            self.frequencies.append((low_frequency - 1, high_frequency))
 
         self._extract_envelope(self.frequencies)
         self.frequencies = np.array(self.frequencies)
@@ -305,9 +305,10 @@ class EEGfeatures:
     def save(self, filename):
         channel_info = extract_location(self.channel_names)
         param_to_save = {
-            'channels_info': channel_info,
-            'times': self.times,
-            'frequencies': self.frequencies,
+            'time': self.times,
+            'labels':{'channels_info': channel_info,
+                      'frequencies': self.frequencies,
+            },
             'feature': self.feature,
             'feature_info': self.feature_info,
         }
@@ -388,7 +389,7 @@ def individual_process(filename: str,
                     remove_blinks = True,
                     blank_run = True):
     
-    derivatives_path = Path('/projects/EEG_FMRI/bids_eeg/BIDS/NEW/DERIVATIVES/eeg_features_extraction/second_run')
+    derivatives_path = Path('/projects/EEG_FMRI/bids_eeg/BIDS/NEW/DERIVATIVES/eeg_features_extraction/third_run')
     print('=====================================================\n')
     print(f'reading {filename}')
 
@@ -427,8 +428,8 @@ def individual_process(filename: str,
 
     process_file_desc_pairs = {
         'run_wavelets': 'MorletTFR',
-        #'extract_eeg_band_envelope': 'EEGbandsEnvelopes',
-        #'extract_custom_band_envelope': 'CustomEnvelopes'
+        'extract_eeg_band_envelope': 'EEGbandsEnvelopes',
+        'extract_custom_band_envelope': 'CustomEnvelopes'
     }
 
     for process, file_description in process_file_desc_pairs.items():

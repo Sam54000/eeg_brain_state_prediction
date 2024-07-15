@@ -20,7 +20,7 @@ importlib.reload(hf)
 base_dir = '/data2/Projects/eeg_fmri_natview/derivatives/multimodal_prediction_models'
 fmri_data_dir = '/data2/Projects/eeg_fmri_natview/data/fmriprep/derivatives'
 #eeg_data_dir = '/projects/EEG_FMRI/bids_eeg/BIDS/NEW/PREP_BV_EDF'
-eeg_proc_data_dir = '/projects/EEG_FMRI/bids_eeg/BIDS/NEW/DERIVATIVES/eeg_features_extraction/second_run'
+eeg_proc_data_dir = '/projects/EEG_FMRI/bids_eeg/BIDS/NEW/DERIVATIVES/eeg_features_extraction/third_run'
 eyetrack_data_dir = '/home/atambini/natview/eyetracking_resampled'
 respiration_data_dir = '/home/thoppe/physio-analysis/resp-analysis/resp_stdevs'
 
@@ -74,6 +74,7 @@ data_respiration = {}
 data_eeg_bands_envelope = {}
 data_eeg_custom_envelope = {}
 data_eeg_morlet_tfr = {}
+
 for sub in subjects:
     print(f"===============================================")
     for ses in sessions:
@@ -121,6 +122,15 @@ for sub in subjects:
                     time_resampled = resampled_time,
                     fill_nan = True
                     )
+                
+                multimodal_data_dict = hf.dataframe_to_dict(
+                    brainstate_data_resampled,
+                    column_names = [col 
+                                    for col in brainstate_data_resampled.columns
+                                    if hf.get_real_column_name(brainstate_data_resampled, 'time')
+                                    not in col],
+                    info = 'brain states'
+                )
 
                 
             # ----------------------------------------------------------------------------
@@ -128,6 +138,12 @@ for sub in subjects:
                 eyetrack_data_file = os.path.join(eyetrack_data_dir, f"sub-{sub}_ses-{ses}_task-{task}_eyelink-pupil-eye-position.tsv")
                 pupil_data = pd.read_csv(eyetrack_data_file, sep='\t', index_col=0)
                 pupil_data_resampled = hf.resample_data(pupil_data, time_resampled=resampled_time)
+                multimodal_data_dict |= hf.dataframe_to_dict(
+                    pupil_data_resampled,
+                    column_names=[col for col in pupil_data_resampled.columns 
+                                  if 'time' not in col.lower()],
+                    info = 'Pupil data'
+                )
             
             # ----------------------------------------------------------------------------
             # RESPIRATION DATA
@@ -165,50 +181,48 @@ for sub in subjects:
 
             # ----------------------------------------------------------------------------
 
-            end_times = []
-            data_dict = {
-                "brainstate": brainstate_data_resampled, 
-                "pupil": pupil_data_resampled, 
-                "respiration": respiration_data_resampled
-            } | eeg_features
-            
+                data_names = ["brainstate", 'pupil', 'respiration']
+                data_variables = [brainstate_data_resampled,
+                                pupil_data_resampled,
+                                respiration_data_resampled]
+                data_dict = {}
+                for name, variable in zip(data_names, data_variables):
+                    data_dict = {name: hf.dataframe_to_dict(
+                        variable,
+                        column_names = [col 
+                                        for col in variable.columns
+                                        if hf.get_real_column_name(variable, 'time')
+                                        not in col],
+                        info = 'brain states'
+                    )
+                    }
 
-            for data_name, data in data_dict.items():
-                if isinstance(data, pd.DataFrame):
-                    time_name = hf.get_real_column_name(data, 'time')
-                    data_shape = data.shape
-                    data = data[time_name].values
-                else:
+                end_times = []
+                data_dict |= eeg_features
+                
+
+                for data_name, data in data_dict.items():
                     data_shape = data["feature"].shape
-                    data = data["times"]
-                print(f"Shape of {data_name} resampled: {data_shape}")
-                end_times.append(data[-1])
+                    data = data["time"]
+                    print(f"Shape of {data_name} resampled: {data_shape}")
+                    end_times.append(data[-1])
 
-            time_to_crop = np.min(end_times)
-            min_length = np.argmin(abs(brainstate_data_resampled['time'] - time_to_crop))
+                time_to_crop = np.min(end_times)
+                min_length = np.argmin(abs(brainstate_data_resampled['time'] - time_to_crop))
 
-            for data_name, data in data_dict.items():
-                if isinstance(data,pd.DataFrame):
-                    data = hf.crop_data(data,
-                                        id_max = min_length,
-                                        axis = 0,
-                                        )
-                    data_cropped_shape = data.shape
-                    print(f"{data_name} shape after cropping: {data_cropped_shape}")
-
-                elif isinstance(data, dict):
-                    for index, key_value in enumerate(["times", "feature"]):
+                for data_name, data in data_dict.items():
+                    for index, key_value in enumerate(["time", "feature"]):
                         kwargs = {"dict_keys": key_value,
-                                  "axis": index}
+                                    "axis": index}
                         data_cropped = hf.crop_data(data[key_value],
                                             id_max = min_length,
                                             axis = index)
                         data.update({key_value:data_cropped})
                         data_cropped_shape = data_cropped.shape
                         print(f"{data_name} {key_value} shape after cropping: {data_cropped_shape}")
-                
-                data_dict.update({data_name:data})
+                    
+                    data_dict.update({data_name:data})
 
-            key_name = f"sub-{sub}_ses-{ses}_task-{task}"
-            with open(os.path.join(out_dir, f"{key_name}_multimodal_data.pkl"), "wb") as file:
-                pickle.dump(data_dict, file)
+                key_name = f"sub-{sub}_ses-{ses}_task-{task}"
+                with open(os.path.join(out_dir, f"{key_name}_multimodal_data.pkl"), "wb") as file:
+                    pickle.dump(data_dict, file)
