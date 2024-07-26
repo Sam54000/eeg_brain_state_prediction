@@ -1,0 +1,2526 @@
+===============================================
+- 01 - 01 - checker_run-01
+fmri data exists - True
+eeg data exists - True
+pd data exists - True
+resp data exists - True
+caps_ts_file exists - True
+caps_pca_file exists - True
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+EEGbandsEnvelopes
+(61, 51451, 5)
+(51451,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 2.05792e+02 2.05796e+02
+ 2.05800e+02]
+CustomEnvelopes
+(61, 51451, 39)
+(51451,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 2.05792e+02 2.05796e+02
+ 2.05800e+02]
+MorletTFR
+(61, 51451, 40)
+(51451,)
+[-31.288 -31.284 -31.28  ... 174.504 174.508 174.512]
+Shape of brainstates resampled: (9, 777)
+Shape of pupil resampled: (4, 777)
+Shape of respiration resampled: (1, 777)
+Shape of EEGbandsEnvelopes resampled: (61, 51451, 5)
+Shape of CustomEnvelopes resampled: (61, 51451, 39)
+Shape of MorletTFR resampled: (61, 51451, 40)
+brainstates time shape after cropping: (661,)
+brainstates feature shape after cropping: (9, 661)
+pupil time shape after cropping: (661,)
+pupil feature shape after cropping: (4, 661)
+respiration time shape after cropping: (661,)
+respiration feature shape after cropping: (1, 661)
+EEGbandsEnvelopes time shape after cropping: (661,)
+EEGbandsEnvelopes feature shape after cropping: (61, 661, 5)
+CustomEnvelopes time shape after cropping: (661,)
+CustomEnvelopes feature shape after cropping: (61, 661, 39)
+MorletTFR time shape after cropping: (661,)
+MorletTFR feature shape after cropping: (61, 661, 40)
+- 01 - 01 - rest_run-01
+fmri data exists - True
+eeg data exists - True
+pd data exists - True
+resp data exists - True
+caps_ts_file exists - True
+caps_pca_file exists - True
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+EEGbandsEnvelopes
+(61, 151201, 5)
+(151201,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 6.04792e+02 6.04796e+02
+ 6.04800e+02]
+CustomEnvelopes
+(61, 151201, 39)
+(151201,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 6.04792e+02 6.04796e+02
+ 6.04800e+02]
+MorletTFR
+(61, 151201, 40)
+(151201,)
+[ -7.888  -7.884  -7.88  ... 596.904 596.908 596.912]
+Shape of brainstates resampled: (9, 2298)
+Shape of pupil resampled: (4, 2298)
+Shape of respiration resampled: (1, 2298)
+Shape of EEGbandsEnvelopes resampled: (61, 151201, 5)
+Shape of CustomEnvelopes resampled: (61, 151201, 39)
+Shape of MorletTFR resampled: (61, 151201, 40)
+brainstates time shape after cropping: (2270,)
+brainstates feature shape after cropping: (9, 2270)
+pupil time shape after cropping: (2270,)
+pupil feature shape after cropping: (4, 2270)
+respiration time shape after cropping: (2270,)
+respiration feature shape after cropping: (1, 2270)
+EEGbandsEnvelopes time shape after cropping: (2270,)
+EEGbandsEnvelopes feature shape after cropping: (61, 2270, 5)
+CustomEnvelopes time shape after cropping: (2270,)
+CustomEnvelopes feature shape after cropping: (61, 2270, 39)
+MorletTFR time shape after cropping: (2270,)
+MorletTFR feature shape after cropping: (61, 2270, 40)
+- 01 - 02 - checker_run-01
+fmri data exists - False
+eeg data exists - False
+pd data exists - False
+resp data exists - False
+caps_ts_file exists - False
+caps_pca_file exists - False
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+- 01 - 02 - rest_run-01
+fmri data exists - False
+eeg data exists - False
+pd data exists - False
+resp data exists - False
+caps_ts_file exists - False
+caps_pca_file exists - False
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+===============================================
+- 02 - 01 - checker_run-01
+fmri data exists - True
+eeg data exists - True
+pd data exists - True
+resp data exists - True
+caps_ts_file exists - True
+caps_pca_file exists - True
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+EEGbandsEnvelopes
+(61, 51451, 5)
+(51451,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 2.05792e+02 2.05796e+02
+ 2.05800e+02]
+CustomEnvelopes
+(61, 51451, 39)
+(51451,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 2.05792e+02 2.05796e+02
+ 2.05800e+02]
+MorletTFR
+(61, 51451, 40)
+(51451,)
+[-37.568 -37.564 -37.56  ... 168.224 168.228 168.232]
+Shape of brainstates resampled: (9, 777)
+Shape of pupil resampled: (4, 777)
+Shape of respiration resampled: (1, 777)
+Shape of EEGbandsEnvelopes resampled: (61, 51451, 5)
+Shape of CustomEnvelopes resampled: (61, 51451, 39)
+Shape of MorletTFR resampled: (61, 51451, 40)
+brainstates time shape after cropping: (637,)
+brainstates feature shape after cropping: (9, 637)
+pupil time shape after cropping: (637,)
+pupil feature shape after cropping: (4, 637)
+respiration time shape after cropping: (637,)
+respiration feature shape after cropping: (1, 637)
+EEGbandsEnvelopes time shape after cropping: (637,)
+EEGbandsEnvelopes feature shape after cropping: (61, 637, 5)
+CustomEnvelopes time shape after cropping: (637,)
+CustomEnvelopes feature shape after cropping: (61, 637, 39)
+MorletTFR time shape after cropping: (637,)
+MorletTFR feature shape after cropping: (61, 637, 40)
+- 02 - 01 - rest_run-01
+fmri data exists - True
+eeg data exists - True
+pd data exists - True
+resp data exists - True
+caps_ts_file exists - True
+caps_pca_file exists - True
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+EEGbandsEnvelopes
+(61, 151201, 5)
+(151201,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 6.04792e+02 6.04796e+02
+ 6.04800e+02]
+CustomEnvelopes
+(61, 151201, 39)
+(151201,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 6.04792e+02 6.04796e+02
+ 6.04800e+02]
+MorletTFR
+(61, 151201, 40)
+(151201,)
+[-11.08  -11.076 -11.072 ... 593.712 593.716 593.72 ]
+Shape of brainstates resampled: (9, 2298)
+Shape of pupil resampled: (4, 2298)
+Shape of respiration resampled: (1, 2298)
+Shape of EEGbandsEnvelopes resampled: (61, 151201, 5)
+Shape of CustomEnvelopes resampled: (61, 151201, 39)
+Shape of MorletTFR resampled: (61, 151201, 40)
+brainstates time shape after cropping: (2258,)
+brainstates feature shape after cropping: (9, 2258)
+pupil time shape after cropping: (2258,)
+pupil feature shape after cropping: (4, 2258)
+respiration time shape after cropping: (2258,)
+respiration feature shape after cropping: (1, 2258)
+EEGbandsEnvelopes time shape after cropping: (2258,)
+EEGbandsEnvelopes feature shape after cropping: (61, 2258, 5)
+CustomEnvelopes time shape after cropping: (2258,)
+CustomEnvelopes feature shape after cropping: (61, 2258, 39)
+MorletTFR time shape after cropping: (2258,)
+MorletTFR feature shape after cropping: (61, 2258, 40)
+- 02 - 02 - checker_run-01
+fmri data exists - False
+eeg data exists - False
+pd data exists - False
+resp data exists - False
+caps_ts_file exists - False
+caps_pca_file exists - False
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+- 02 - 02 - rest_run-01
+fmri data exists - False
+eeg data exists - False
+pd data exists - False
+resp data exists - False
+caps_ts_file exists - False
+caps_pca_file exists - False
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+===============================================
+- 03 - 01 - checker_run-01
+fmri data exists - True
+eeg data exists - True
+pd data exists - True
+resp data exists - True
+caps_ts_file exists - True
+caps_pca_file exists - True
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+EEGbandsEnvelopes
+(61, 51451, 5)
+(51451,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 2.05792e+02 2.05796e+02
+ 2.05800e+02]
+CustomEnvelopes
+(61, 51451, 39)
+(51451,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 2.05792e+02 2.05796e+02
+ 2.05800e+02]
+MorletTFR
+(61, 51451, 40)
+(51451,)
+[-28.524 -28.52  -28.516 ... 177.268 177.272 177.276]
+Shape of brainstates resampled: (9, 777)
+Shape of pupil resampled: (4, 777)
+Shape of respiration resampled: (1, 777)
+Shape of EEGbandsEnvelopes resampled: (61, 51451, 5)
+Shape of CustomEnvelopes resampled: (61, 51451, 39)
+Shape of MorletTFR resampled: (61, 51451, 40)
+brainstates time shape after cropping: (671,)
+brainstates feature shape after cropping: (9, 671)
+pupil time shape after cropping: (671,)
+pupil feature shape after cropping: (4, 671)
+respiration time shape after cropping: (671,)
+respiration feature shape after cropping: (1, 671)
+EEGbandsEnvelopes time shape after cropping: (671,)
+EEGbandsEnvelopes feature shape after cropping: (61, 671, 5)
+CustomEnvelopes time shape after cropping: (671,)
+CustomEnvelopes feature shape after cropping: (61, 671, 39)
+MorletTFR time shape after cropping: (671,)
+MorletTFR feature shape after cropping: (61, 671, 40)
+- 03 - 01 - rest_run-01
+fmri data exists - True
+eeg data exists - True
+pd data exists - True
+resp data exists - True
+caps_ts_file exists - False
+caps_pca_file exists - False
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+- 03 - 02 - checker_run-01
+fmri data exists - False
+eeg data exists - False
+pd data exists - False
+resp data exists - False
+caps_ts_file exists - False
+caps_pca_file exists - False
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+- 03 - 02 - rest_run-01
+fmri data exists - False
+eeg data exists - False
+pd data exists - False
+resp data exists - False
+caps_ts_file exists - False
+caps_pca_file exists - False
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+===============================================
+- 04 - 01 - checker_run-01
+fmri data exists - True
+eeg data exists - False
+pd data exists - False
+resp data exists - True
+caps_ts_file exists - True
+caps_pca_file exists - True
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+- 04 - 01 - rest_run-01
+fmri data exists - True
+eeg data exists - True
+pd data exists - True
+resp data exists - True
+caps_ts_file exists - True
+caps_pca_file exists - True
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+EEGbandsEnvelopes
+(61, 151201, 5)
+(151201,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 6.04792e+02 6.04796e+02
+ 6.04800e+02]
+CustomEnvelopes
+(61, 151201, 39)
+(151201,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 6.04792e+02 6.04796e+02
+ 6.04800e+02]
+MorletTFR
+(61, 151201, 40)
+(151201,)
+[-56.352 -56.348 -56.344 ... 548.44  548.444 548.448]
+Shape of brainstates resampled: (9, 2298)
+Shape of pupil resampled: (4, 2298)
+Shape of respiration resampled: (1, 2298)
+Shape of EEGbandsEnvelopes resampled: (61, 151201, 5)
+Shape of CustomEnvelopes resampled: (61, 151201, 39)
+Shape of MorletTFR resampled: (61, 151201, 40)
+brainstates time shape after cropping: (2085,)
+brainstates feature shape after cropping: (9, 2085)
+pupil time shape after cropping: (2085,)
+pupil feature shape after cropping: (4, 2085)
+respiration time shape after cropping: (2085,)
+respiration feature shape after cropping: (1, 2085)
+EEGbandsEnvelopes time shape after cropping: (2085,)
+EEGbandsEnvelopes feature shape after cropping: (61, 2085, 5)
+CustomEnvelopes time shape after cropping: (2085,)
+CustomEnvelopes feature shape after cropping: (61, 2085, 39)
+MorletTFR time shape after cropping: (2085,)
+MorletTFR feature shape after cropping: (61, 2085, 40)
+- 04 - 02 - checker_run-01
+fmri data exists - True
+eeg data exists - False
+pd data exists - False
+resp data exists - True
+caps_ts_file exists - True
+caps_pca_file exists - True
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+- 04 - 02 - rest_run-01
+fmri data exists - True
+eeg data exists - True
+pd data exists - True
+resp data exists - True
+caps_ts_file exists - True
+caps_pca_file exists - True
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+EEGbandsEnvelopes
+(61, 151201, 5)
+(151201,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 6.04792e+02 6.04796e+02
+ 6.04800e+02]
+CustomEnvelopes
+(61, 151201, 39)
+(151201,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 6.04792e+02 6.04796e+02
+ 6.04800e+02]
+MorletTFR
+(61, 151201, 40)
+(151201,)
+[-75.36  -75.356 -75.352 ... 529.432 529.436 529.44 ]
+Shape of brainstates resampled: (9, 2298)
+Shape of pupil resampled: (4, 2298)
+Shape of respiration resampled: (1, 2298)
+Shape of EEGbandsEnvelopes resampled: (61, 151201, 5)
+Shape of CustomEnvelopes resampled: (61, 151201, 39)
+Shape of MorletTFR resampled: (61, 151201, 40)
+brainstates time shape after cropping: (2013,)
+brainstates feature shape after cropping: (9, 2013)
+pupil time shape after cropping: (2013,)
+pupil feature shape after cropping: (4, 2013)
+respiration time shape after cropping: (2013,)
+respiration feature shape after cropping: (1, 2013)
+EEGbandsEnvelopes time shape after cropping: (2013,)
+EEGbandsEnvelopes feature shape after cropping: (61, 2013, 5)
+CustomEnvelopes time shape after cropping: (2013,)
+CustomEnvelopes feature shape after cropping: (61, 2013, 39)
+MorletTFR time shape after cropping: (2013,)
+MorletTFR feature shape after cropping: (61, 2013, 40)
+===============================================
+- 05 - 01 - checker_run-01
+fmri data exists - True
+eeg data exists - True
+pd data exists - True
+resp data exists - True
+caps_ts_file exists - False
+caps_pca_file exists - False
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+- 05 - 01 - rest_run-01
+fmri data exists - True
+eeg data exists - False
+pd data exists - True
+resp data exists - True
+caps_ts_file exists - False
+caps_pca_file exists - False
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+- 05 - 02 - checker_run-01
+fmri data exists - True
+eeg data exists - True
+pd data exists - True
+resp data exists - True
+caps_ts_file exists - True
+caps_pca_file exists - True
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+EEGbandsEnvelopes
+(61, 51451, 5)
+(51451,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 2.05792e+02 2.05796e+02
+ 2.05800e+02]
+CustomEnvelopes
+(61, 51451, 39)
+(51451,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 2.05792e+02 2.05796e+02
+ 2.05800e+02]
+MorletTFR
+(61, 51451, 40)
+(51451,)
+[-35.236 -35.232 -35.228 ... 170.556 170.56  170.564]
+Shape of brainstates resampled: (9, 777)
+Shape of pupil resampled: (4, 777)
+Shape of respiration resampled: (1, 777)
+Shape of EEGbandsEnvelopes resampled: (61, 51451, 5)
+Shape of CustomEnvelopes resampled: (61, 51451, 39)
+Shape of MorletTFR resampled: (61, 51451, 40)
+brainstates time shape after cropping: (646,)
+brainstates feature shape after cropping: (9, 646)
+pupil time shape after cropping: (646,)
+pupil feature shape after cropping: (4, 646)
+respiration time shape after cropping: (646,)
+respiration feature shape after cropping: (1, 646)
+EEGbandsEnvelopes time shape after cropping: (646,)
+EEGbandsEnvelopes feature shape after cropping: (61, 646, 5)
+CustomEnvelopes time shape after cropping: (646,)
+CustomEnvelopes feature shape after cropping: (61, 646, 39)
+MorletTFR time shape after cropping: (646,)
+MorletTFR feature shape after cropping: (61, 646, 40)
+- 05 - 02 - rest_run-01
+fmri data exists - True
+eeg data exists - True
+pd data exists - True
+resp data exists - True
+caps_ts_file exists - False
+caps_pca_file exists - False
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+===============================================
+- 06 - 01 - checker_run-01
+fmri data exists - True
+eeg data exists - True
+pd data exists - True
+resp data exists - True
+caps_ts_file exists - True
+caps_pca_file exists - True
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+EEGbandsEnvelopes
+(61, 51451, 5)
+(51451,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 2.05792e+02 2.05796e+02
+ 2.05800e+02]
+CustomEnvelopes
+(61, 51451, 39)
+(51451,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 2.05792e+02 2.05796e+02
+ 2.05800e+02]
+MorletTFR
+(61, 51451, 40)
+(51451,)
+[-29.616 -29.612 -29.608 ... 176.176 176.18  176.184]
+Shape of brainstates resampled: (9, 777)
+Shape of pupil resampled: (4, 777)
+Shape of respiration resampled: (1, 777)
+Shape of EEGbandsEnvelopes resampled: (61, 51451, 5)
+Shape of CustomEnvelopes resampled: (61, 51451, 39)
+Shape of MorletTFR resampled: (61, 51451, 40)
+brainstates time shape after cropping: (667,)
+brainstates feature shape after cropping: (9, 667)
+pupil time shape after cropping: (667,)
+pupil feature shape after cropping: (4, 667)
+respiration time shape after cropping: (667,)
+respiration feature shape after cropping: (1, 667)
+EEGbandsEnvelopes time shape after cropping: (667,)
+EEGbandsEnvelopes feature shape after cropping: (61, 667, 5)
+CustomEnvelopes time shape after cropping: (667,)
+CustomEnvelopes feature shape after cropping: (61, 667, 39)
+MorletTFR time shape after cropping: (667,)
+MorletTFR feature shape after cropping: (61, 667, 40)
+- 06 - 01 - rest_run-01
+fmri data exists - True
+eeg data exists - True
+pd data exists - True
+resp data exists - True
+caps_ts_file exists - True
+caps_pca_file exists - True
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+EEGbandsEnvelopes
+(61, 151201, 5)
+(151201,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 6.04792e+02 6.04796e+02
+ 6.04800e+02]
+CustomEnvelopes
+(61, 151201, 39)
+(151201,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 6.04792e+02 6.04796e+02
+ 6.04800e+02]
+MorletTFR
+(61, 151201, 40)
+(151201,)
+[-19.568 -19.564 -19.56  ... 585.224 585.228 585.232]
+Shape of brainstates resampled: (9, 2298)
+Shape of pupil resampled: (4, 2298)
+Shape of respiration resampled: (1, 2298)
+Shape of EEGbandsEnvelopes resampled: (61, 151201, 5)
+Shape of CustomEnvelopes resampled: (61, 151201, 39)
+Shape of MorletTFR resampled: (61, 151201, 40)
+brainstates time shape after cropping: (2225,)
+brainstates feature shape after cropping: (9, 2225)
+pupil time shape after cropping: (2225,)
+pupil feature shape after cropping: (4, 2225)
+respiration time shape after cropping: (2225,)
+respiration feature shape after cropping: (1, 2225)
+EEGbandsEnvelopes time shape after cropping: (2225,)
+EEGbandsEnvelopes feature shape after cropping: (61, 2225, 5)
+CustomEnvelopes time shape after cropping: (2225,)
+CustomEnvelopes feature shape after cropping: (61, 2225, 39)
+MorletTFR time shape after cropping: (2225,)
+MorletTFR feature shape after cropping: (61, 2225, 40)
+- 06 - 02 - checker_run-01
+fmri data exists - True
+eeg data exists - True
+pd data exists - True
+resp data exists - True
+caps_ts_file exists - True
+caps_pca_file exists - True
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+EEGbandsEnvelopes
+(61, 51451, 5)
+(51451,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 2.05792e+02 2.05796e+02
+ 2.05800e+02]
+CustomEnvelopes
+(61, 51451, 39)
+(51451,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 2.05792e+02 2.05796e+02
+ 2.05800e+02]
+MorletTFR
+(61, 51451, 40)
+(51451,)
+[-50.688 -50.684 -50.68  ... 155.104 155.108 155.112]
+Shape of brainstates resampled: (9, 777)
+Shape of pupil resampled: (4, 777)
+Shape of respiration resampled: (1, 777)
+Shape of EEGbandsEnvelopes resampled: (61, 51451, 5)
+Shape of CustomEnvelopes resampled: (61, 51451, 39)
+Shape of MorletTFR resampled: (61, 51451, 40)
+brainstates time shape after cropping: (587,)
+brainstates feature shape after cropping: (9, 587)
+pupil time shape after cropping: (587,)
+pupil feature shape after cropping: (4, 587)
+respiration time shape after cropping: (587,)
+respiration feature shape after cropping: (1, 587)
+EEGbandsEnvelopes time shape after cropping: (587,)
+EEGbandsEnvelopes feature shape after cropping: (61, 587, 5)
+CustomEnvelopes time shape after cropping: (587,)
+CustomEnvelopes feature shape after cropping: (61, 587, 39)
+MorletTFR time shape after cropping: (587,)
+MorletTFR feature shape after cropping: (61, 587, 40)
+- 06 - 02 - rest_run-01
+fmri data exists - True
+eeg data exists - True
+pd data exists - True
+resp data exists - True
+caps_ts_file exists - True
+caps_pca_file exists - True
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+EEGbandsEnvelopes
+(61, 151201, 5)
+(151201,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 6.04792e+02 6.04796e+02
+ 6.04800e+02]
+CustomEnvelopes
+(61, 151201, 39)
+(151201,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 6.04792e+02 6.04796e+02
+ 6.04800e+02]
+MorletTFR
+(61, 151201, 40)
+(151201,)
+[-31.828 -31.824 -31.82  ... 572.964 572.968 572.972]
+Shape of brainstates resampled: (9, 2298)
+Shape of pupil resampled: (4, 2298)
+Shape of respiration resampled: (1, 2298)
+Shape of EEGbandsEnvelopes resampled: (61, 151201, 5)
+Shape of CustomEnvelopes resampled: (61, 151201, 39)
+Shape of MorletTFR resampled: (61, 151201, 40)
+brainstates time shape after cropping: (2179,)
+brainstates feature shape after cropping: (9, 2179)
+pupil time shape after cropping: (2179,)
+pupil feature shape after cropping: (4, 2179)
+respiration time shape after cropping: (2179,)
+respiration feature shape after cropping: (1, 2179)
+EEGbandsEnvelopes time shape after cropping: (2179,)
+EEGbandsEnvelopes feature shape after cropping: (61, 2179, 5)
+CustomEnvelopes time shape after cropping: (2179,)
+CustomEnvelopes feature shape after cropping: (61, 2179, 39)
+MorletTFR time shape after cropping: (2179,)
+MorletTFR feature shape after cropping: (61, 2179, 40)
+===============================================
+- 07 - 01 - checker_run-01
+fmri data exists - True
+eeg data exists - True
+pd data exists - True
+resp data exists - False
+caps_ts_file exists - True
+caps_pca_file exists - True
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+- 07 - 01 - rest_run-01
+fmri data exists - True
+eeg data exists - True
+pd data exists - True
+resp data exists - False
+caps_ts_file exists - True
+caps_pca_file exists - True
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+- 07 - 02 - checker_run-01
+fmri data exists - True
+eeg data exists - True
+pd data exists - True
+resp data exists - True
+caps_ts_file exists - True
+caps_pca_file exists - True
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+EEGbandsEnvelopes
+(61, 51451, 5)
+(51451,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 2.05792e+02 2.05796e+02
+ 2.05800e+02]
+CustomEnvelopes
+(61, 51451, 39)
+(51451,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 2.05792e+02 2.05796e+02
+ 2.05800e+02]
+MorletTFR
+(61, 51451, 40)
+(51451,)
+[-58.    -57.996 -57.992 ... 147.792 147.796 147.8  ]
+Shape of brainstates resampled: (9, 777)
+Shape of pupil resampled: (4, 777)
+Shape of respiration resampled: (1, 777)
+Shape of EEGbandsEnvelopes resampled: (61, 51451, 5)
+Shape of CustomEnvelopes resampled: (61, 51451, 39)
+Shape of MorletTFR resampled: (61, 51451, 40)
+brainstates time shape after cropping: (559,)
+brainstates feature shape after cropping: (9, 559)
+pupil time shape after cropping: (559,)
+pupil feature shape after cropping: (4, 559)
+respiration time shape after cropping: (559,)
+respiration feature shape after cropping: (1, 559)
+EEGbandsEnvelopes time shape after cropping: (559,)
+EEGbandsEnvelopes feature shape after cropping: (61, 559, 5)
+CustomEnvelopes time shape after cropping: (559,)
+CustomEnvelopes feature shape after cropping: (61, 559, 39)
+MorletTFR time shape after cropping: (559,)
+MorletTFR feature shape after cropping: (61, 559, 40)
+- 07 - 02 - rest_run-01
+fmri data exists - True
+eeg data exists - True
+pd data exists - True
+resp data exists - True
+caps_ts_file exists - True
+caps_pca_file exists - True
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+EEGbandsEnvelopes
+(61, 151201, 5)
+(151201,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 6.04792e+02 6.04796e+02
+ 6.04800e+02]
+CustomEnvelopes
+(61, 151201, 39)
+(151201,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 6.04792e+02 6.04796e+02
+ 6.04800e+02]
+MorletTFR
+(61, 151201, 40)
+(151201,)
+[-11.76  -11.756 -11.752 ... 593.032 593.036 593.04 ]
+Shape of brainstates resampled: (9, 2298)
+Shape of pupil resampled: (4, 2298)
+Shape of respiration resampled: (1, 2298)
+Shape of EEGbandsEnvelopes resampled: (61, 151201, 5)
+Shape of CustomEnvelopes resampled: (61, 151201, 39)
+Shape of MorletTFR resampled: (61, 151201, 40)
+brainstates time shape after cropping: (2255,)
+brainstates feature shape after cropping: (9, 2255)
+pupil time shape after cropping: (2255,)
+pupil feature shape after cropping: (4, 2255)
+respiration time shape after cropping: (2255,)
+respiration feature shape after cropping: (1, 2255)
+EEGbandsEnvelopes time shape after cropping: (2255,)
+EEGbandsEnvelopes feature shape after cropping: (61, 2255, 5)
+CustomEnvelopes time shape after cropping: (2255,)
+CustomEnvelopes feature shape after cropping: (61, 2255, 39)
+MorletTFR time shape after cropping: (2255,)
+MorletTFR feature shape after cropping: (61, 2255, 40)
+===============================================
+- 08 - 01 - checker_run-01
+fmri data exists - True
+eeg data exists - True
+pd data exists - True
+resp data exists - True
+caps_ts_file exists - True
+caps_pca_file exists - True
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+EEGbandsEnvelopes
+(61, 51451, 5)
+(51451,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 2.05792e+02 2.05796e+02
+ 2.05800e+02]
+CustomEnvelopes
+(61, 51451, 39)
+(51451,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 2.05792e+02 2.05796e+02
+ 2.05800e+02]
+MorletTFR
+(61, 51451, 40)
+(51451,)
+[-36.856 -36.852 -36.848 ... 168.936 168.94  168.944]
+Shape of brainstates resampled: (9, 777)
+Shape of pupil resampled: (4, 777)
+Shape of respiration resampled: (1, 777)
+Shape of EEGbandsEnvelopes resampled: (61, 51451, 5)
+Shape of CustomEnvelopes resampled: (61, 51451, 39)
+Shape of MorletTFR resampled: (61, 51451, 40)
+brainstates time shape after cropping: (640,)
+brainstates feature shape after cropping: (9, 640)
+pupil time shape after cropping: (640,)
+pupil feature shape after cropping: (4, 640)
+respiration time shape after cropping: (640,)
+respiration feature shape after cropping: (1, 640)
+EEGbandsEnvelopes time shape after cropping: (640,)
+EEGbandsEnvelopes feature shape after cropping: (61, 640, 5)
+CustomEnvelopes time shape after cropping: (640,)
+CustomEnvelopes feature shape after cropping: (61, 640, 39)
+MorletTFR time shape after cropping: (640,)
+MorletTFR feature shape after cropping: (61, 640, 40)
+- 08 - 01 - rest_run-01
+fmri data exists - True
+eeg data exists - True
+pd data exists - True
+resp data exists - True
+caps_ts_file exists - True
+caps_pca_file exists - True
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+EEGbandsEnvelopes
+(61, 151201, 5)
+(151201,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 6.04792e+02 6.04796e+02
+ 6.04800e+02]
+CustomEnvelopes
+(61, 151201, 39)
+(151201,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 6.04792e+02 6.04796e+02
+ 6.04800e+02]
+MorletTFR
+(61, 151201, 40)
+(151201,)
+[-12.552 -12.548 -12.544 ... 592.24  592.244 592.248]
+Shape of brainstates resampled: (9, 2298)
+Shape of pupil resampled: (4, 2298)
+Shape of respiration resampled: (1, 2298)
+Shape of EEGbandsEnvelopes resampled: (61, 151201, 5)
+Shape of CustomEnvelopes resampled: (61, 151201, 39)
+Shape of MorletTFR resampled: (61, 151201, 40)
+brainstates time shape after cropping: (2252,)
+brainstates feature shape after cropping: (9, 2252)
+pupil time shape after cropping: (2252,)
+pupil feature shape after cropping: (4, 2252)
+respiration time shape after cropping: (2252,)
+respiration feature shape after cropping: (1, 2252)
+EEGbandsEnvelopes time shape after cropping: (2252,)
+EEGbandsEnvelopes feature shape after cropping: (61, 2252, 5)
+CustomEnvelopes time shape after cropping: (2252,)
+CustomEnvelopes feature shape after cropping: (61, 2252, 39)
+MorletTFR time shape after cropping: (2252,)
+MorletTFR feature shape after cropping: (61, 2252, 40)
+- 08 - 02 - checker_run-01
+fmri data exists - True
+eeg data exists - True
+pd data exists - True
+resp data exists - True
+caps_ts_file exists - True
+caps_pca_file exists - True
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+EEGbandsEnvelopes
+(61, 51451, 5)
+(51451,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 2.05792e+02 2.05796e+02
+ 2.05800e+02]
+CustomEnvelopes
+(61, 51451, 39)
+(51451,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 2.05792e+02 2.05796e+02
+ 2.05800e+02]
+MorletTFR
+(61, 51451, 40)
+(51451,)
+[-27.564 -27.56  -27.556 ... 178.228 178.232 178.236]
+Shape of brainstates resampled: (9, 777)
+Shape of pupil resampled: (4, 777)
+Shape of respiration resampled: (1, 777)
+Shape of EEGbandsEnvelopes resampled: (61, 51451, 5)
+Shape of CustomEnvelopes resampled: (61, 51451, 39)
+Shape of MorletTFR resampled: (61, 51451, 40)
+brainstates time shape after cropping: (675,)
+brainstates feature shape after cropping: (9, 675)
+pupil time shape after cropping: (675,)
+pupil feature shape after cropping: (4, 675)
+respiration time shape after cropping: (675,)
+respiration feature shape after cropping: (1, 675)
+EEGbandsEnvelopes time shape after cropping: (675,)
+EEGbandsEnvelopes feature shape after cropping: (61, 675, 5)
+CustomEnvelopes time shape after cropping: (675,)
+CustomEnvelopes feature shape after cropping: (61, 675, 39)
+MorletTFR time shape after cropping: (675,)
+MorletTFR feature shape after cropping: (61, 675, 40)
+- 08 - 02 - rest_run-01
+fmri data exists - True
+eeg data exists - True
+pd data exists - True
+resp data exists - True
+caps_ts_file exists - True
+caps_pca_file exists - True
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+EEGbandsEnvelopes
+(61, 151201, 5)
+(151201,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 6.04792e+02 6.04796e+02
+ 6.04800e+02]
+CustomEnvelopes
+(61, 151201, 39)
+(151201,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 6.04792e+02 6.04796e+02
+ 6.04800e+02]
+MorletTFR
+(61, 151201, 40)
+(151201,)
+[-10.084 -10.08  -10.076 ... 594.708 594.712 594.716]
+Shape of brainstates resampled: (9, 2298)
+Shape of pupil resampled: (4, 2298)
+Shape of respiration resampled: (1, 2298)
+Shape of EEGbandsEnvelopes resampled: (61, 151201, 5)
+Shape of CustomEnvelopes resampled: (61, 151201, 39)
+Shape of MorletTFR resampled: (61, 151201, 40)
+brainstates time shape after cropping: (2262,)
+brainstates feature shape after cropping: (9, 2262)
+pupil time shape after cropping: (2262,)
+pupil feature shape after cropping: (4, 2262)
+respiration time shape after cropping: (2262,)
+respiration feature shape after cropping: (1, 2262)
+EEGbandsEnvelopes time shape after cropping: (2262,)
+EEGbandsEnvelopes feature shape after cropping: (61, 2262, 5)
+CustomEnvelopes time shape after cropping: (2262,)
+CustomEnvelopes feature shape after cropping: (61, 2262, 39)
+MorletTFR time shape after cropping: (2262,)
+MorletTFR feature shape after cropping: (61, 2262, 40)
+===============================================
+- 09 - 01 - checker_run-01
+fmri data exists - True
+eeg data exists - True
+pd data exists - True
+resp data exists - True
+caps_ts_file exists - True
+caps_pca_file exists - True
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+EEGbandsEnvelopes
+(61, 51451, 5)
+(51451,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 2.05792e+02 2.05796e+02
+ 2.05800e+02]
+CustomEnvelopes
+(61, 51451, 39)
+(51451,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 2.05792e+02 2.05796e+02
+ 2.05800e+02]
+MorletTFR
+(61, 51451, 40)
+(51451,)
+[-35.544 -35.54  -35.536 ... 170.248 170.252 170.256]
+Shape of brainstates resampled: (9, 777)
+Shape of pupil resampled: (4, 777)
+Shape of respiration resampled: (1, 777)
+Shape of EEGbandsEnvelopes resampled: (61, 51451, 5)
+Shape of CustomEnvelopes resampled: (61, 51451, 39)
+Shape of MorletTFR resampled: (61, 51451, 40)
+brainstates time shape after cropping: (645,)
+brainstates feature shape after cropping: (9, 645)
+pupil time shape after cropping: (645,)
+pupil feature shape after cropping: (4, 645)
+respiration time shape after cropping: (645,)
+respiration feature shape after cropping: (1, 645)
+EEGbandsEnvelopes time shape after cropping: (645,)
+EEGbandsEnvelopes feature shape after cropping: (61, 645, 5)
+CustomEnvelopes time shape after cropping: (645,)
+CustomEnvelopes feature shape after cropping: (61, 645, 39)
+MorletTFR time shape after cropping: (645,)
+MorletTFR feature shape after cropping: (61, 645, 40)
+- 09 - 01 - rest_run-01
+fmri data exists - True
+eeg data exists - True
+pd data exists - True
+resp data exists - True
+caps_ts_file exists - True
+caps_pca_file exists - True
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+EEGbandsEnvelopes
+(61, 151201, 5)
+(151201,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 6.04792e+02 6.04796e+02
+ 6.04800e+02]
+CustomEnvelopes
+(61, 151201, 39)
+(151201,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 6.04792e+02 6.04796e+02
+ 6.04800e+02]
+MorletTFR
+(61, 151201, 40)
+(151201,)
+[-34.6   -34.596 -34.592 ... 570.192 570.196 570.2  ]
+Shape of brainstates resampled: (9, 2298)
+Shape of pupil resampled: (4, 2298)
+Shape of respiration resampled: (1, 2298)
+Shape of EEGbandsEnvelopes resampled: (61, 151201, 5)
+Shape of CustomEnvelopes resampled: (61, 151201, 39)
+Shape of MorletTFR resampled: (61, 151201, 40)
+brainstates time shape after cropping: (2168,)
+brainstates feature shape after cropping: (9, 2168)
+pupil time shape after cropping: (2168,)
+pupil feature shape after cropping: (4, 2168)
+respiration time shape after cropping: (2168,)
+respiration feature shape after cropping: (1, 2168)
+EEGbandsEnvelopes time shape after cropping: (2168,)
+EEGbandsEnvelopes feature shape after cropping: (61, 2168, 5)
+CustomEnvelopes time shape after cropping: (2168,)
+CustomEnvelopes feature shape after cropping: (61, 2168, 39)
+MorletTFR time shape after cropping: (2168,)
+MorletTFR feature shape after cropping: (61, 2168, 40)
+- 09 - 02 - checker_run-01
+fmri data exists - False
+eeg data exists - False
+pd data exists - False
+resp data exists - False
+caps_ts_file exists - False
+caps_pca_file exists - False
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+- 09 - 02 - rest_run-01
+fmri data exists - False
+eeg data exists - False
+pd data exists - False
+resp data exists - False
+caps_ts_file exists - False
+caps_pca_file exists - False
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+===============================================
+- 10 - 01 - checker_run-01
+fmri data exists - True
+eeg data exists - True
+pd data exists - True
+resp data exists - True
+caps_ts_file exists - False
+caps_pca_file exists - False
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+- 10 - 01 - rest_run-01
+fmri data exists - True
+eeg data exists - True
+pd data exists - True
+resp data exists - True
+caps_ts_file exists - False
+caps_pca_file exists - False
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+- 10 - 02 - checker_run-01
+fmri data exists - True
+eeg data exists - True
+pd data exists - True
+resp data exists - False
+caps_ts_file exists - False
+caps_pca_file exists - False
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+- 10 - 02 - rest_run-01
+fmri data exists - True
+eeg data exists - True
+pd data exists - True
+resp data exists - True
+caps_ts_file exists - False
+caps_pca_file exists - False
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+===============================================
+- 11 - 01 - checker_run-01
+fmri data exists - True
+eeg data exists - True
+pd data exists - True
+resp data exists - False
+caps_ts_file exists - True
+caps_pca_file exists - True
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+- 11 - 01 - rest_run-01
+fmri data exists - True
+eeg data exists - True
+pd data exists - True
+resp data exists - False
+caps_ts_file exists - False
+caps_pca_file exists - False
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+- 11 - 02 - checker_run-01
+fmri data exists - True
+eeg data exists - True
+pd data exists - True
+resp data exists - False
+caps_ts_file exists - True
+caps_pca_file exists - True
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+- 11 - 02 - rest_run-01
+fmri data exists - True
+eeg data exists - True
+pd data exists - True
+resp data exists - False
+caps_ts_file exists - True
+caps_pca_file exists - True
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+===============================================
+- 12 - 01 - checker_run-01
+fmri data exists - True
+eeg data exists - True
+pd data exists - True
+resp data exists - False
+caps_ts_file exists - True
+caps_pca_file exists - True
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+- 12 - 01 - rest_run-01
+fmri data exists - True
+eeg data exists - True
+pd data exists - True
+resp data exists - False
+caps_ts_file exists - True
+caps_pca_file exists - True
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+- 12 - 02 - checker_run-01
+fmri data exists - True
+eeg data exists - True
+pd data exists - True
+resp data exists - False
+caps_ts_file exists - True
+caps_pca_file exists - True
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+- 12 - 02 - rest_run-01
+fmri data exists - True
+eeg data exists - True
+pd data exists - True
+resp data exists - False
+caps_ts_file exists - True
+caps_pca_file exists - True
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+===============================================
+- 13 - 01 - checker_run-01
+fmri data exists - True
+eeg data exists - True
+pd data exists - True
+resp data exists - True
+caps_ts_file exists - True
+caps_pca_file exists - True
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+EEGbandsEnvelopes
+(61, 51451, 5)
+(51451,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 2.05792e+02 2.05796e+02
+ 2.05800e+02]
+CustomEnvelopes
+(61, 51451, 39)
+(51451,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 2.05792e+02 2.05796e+02
+ 2.05800e+02]
+MorletTFR
+(61, 51451, 40)
+(51451,)
+[-44.984 -44.98  -44.976 ... 160.808 160.812 160.816]
+Shape of brainstates resampled: (9, 777)
+Shape of pupil resampled: (4, 777)
+Shape of respiration resampled: (1, 777)
+Shape of EEGbandsEnvelopes resampled: (61, 51451, 5)
+Shape of CustomEnvelopes resampled: (61, 51451, 39)
+Shape of MorletTFR resampled: (61, 51451, 40)
+brainstates time shape after cropping: (609,)
+brainstates feature shape after cropping: (9, 609)
+pupil time shape after cropping: (609,)
+pupil feature shape after cropping: (4, 609)
+respiration time shape after cropping: (609,)
+respiration feature shape after cropping: (1, 609)
+EEGbandsEnvelopes time shape after cropping: (609,)
+EEGbandsEnvelopes feature shape after cropping: (61, 609, 5)
+CustomEnvelopes time shape after cropping: (609,)
+CustomEnvelopes feature shape after cropping: (61, 609, 39)
+MorletTFR time shape after cropping: (609,)
+MorletTFR feature shape after cropping: (61, 609, 40)
+- 13 - 01 - rest_run-01
+fmri data exists - True
+eeg data exists - True
+pd data exists - True
+resp data exists - True
+caps_ts_file exists - True
+caps_pca_file exists - True
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+EEGbandsEnvelopes
+(61, 151201, 5)
+(151201,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 6.04792e+02 6.04796e+02
+ 6.04800e+02]
+CustomEnvelopes
+(61, 151201, 39)
+(151201,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 6.04792e+02 6.04796e+02
+ 6.04800e+02]
+MorletTFR
+(61, 151201, 40)
+(151201,)
+[-30.78  -30.776 -30.772 ... 574.012 574.016 574.02 ]
+Shape of brainstates resampled: (9, 2298)
+Shape of pupil resampled: (4, 2298)
+Shape of respiration resampled: (1, 2298)
+Shape of EEGbandsEnvelopes resampled: (61, 151201, 5)
+Shape of CustomEnvelopes resampled: (61, 151201, 39)
+Shape of MorletTFR resampled: (61, 151201, 40)
+brainstates time shape after cropping: (2183,)
+brainstates feature shape after cropping: (9, 2183)
+pupil time shape after cropping: (2183,)
+pupil feature shape after cropping: (4, 2183)
+respiration time shape after cropping: (2183,)
+respiration feature shape after cropping: (1, 2183)
+EEGbandsEnvelopes time shape after cropping: (2183,)
+EEGbandsEnvelopes feature shape after cropping: (61, 2183, 5)
+CustomEnvelopes time shape after cropping: (2183,)
+CustomEnvelopes feature shape after cropping: (61, 2183, 39)
+MorletTFR time shape after cropping: (2183,)
+MorletTFR feature shape after cropping: (61, 2183, 40)
+- 13 - 02 - checker_run-01
+fmri data exists - True
+eeg data exists - True
+pd data exists - True
+resp data exists - True
+caps_ts_file exists - True
+caps_pca_file exists - True
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+EEGbandsEnvelopes
+(61, 51451, 5)
+(51451,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 2.05792e+02 2.05796e+02
+ 2.05800e+02]
+CustomEnvelopes
+(61, 51451, 39)
+(51451,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 2.05792e+02 2.05796e+02
+ 2.05800e+02]
+MorletTFR
+(61, 51451, 40)
+(51451,)
+[-15.188 -15.184 -15.18  ... 190.604 190.608 190.612]
+Shape of brainstates resampled: (9, 777)
+Shape of pupil resampled: (4, 777)
+Shape of respiration resampled: (1, 777)
+Shape of EEGbandsEnvelopes resampled: (61, 51451, 5)
+Shape of CustomEnvelopes resampled: (61, 51451, 39)
+Shape of MorletTFR resampled: (61, 51451, 40)
+brainstates time shape after cropping: (722,)
+brainstates feature shape after cropping: (9, 722)
+pupil time shape after cropping: (722,)
+pupil feature shape after cropping: (4, 722)
+respiration time shape after cropping: (722,)
+respiration feature shape after cropping: (1, 722)
+EEGbandsEnvelopes time shape after cropping: (722,)
+EEGbandsEnvelopes feature shape after cropping: (61, 722, 5)
+CustomEnvelopes time shape after cropping: (722,)
+CustomEnvelopes feature shape after cropping: (61, 722, 39)
+MorletTFR time shape after cropping: (722,)
+MorletTFR feature shape after cropping: (61, 722, 40)
+- 13 - 02 - rest_run-01
+fmri data exists - True
+eeg data exists - True
+pd data exists - True
+resp data exists - True
+caps_ts_file exists - True
+caps_pca_file exists - True
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+EEGbandsEnvelopes
+(61, 151201, 5)
+(151201,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 6.04792e+02 6.04796e+02
+ 6.04800e+02]
+CustomEnvelopes
+(61, 151201, 39)
+(151201,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 6.04792e+02 6.04796e+02
+ 6.04800e+02]
+MorletTFR
+(61, 151201, 40)
+(151201,)
+[-55.864 -55.86  -55.856 ... 548.928 548.932 548.936]
+Shape of brainstates resampled: (9, 2298)
+Shape of pupil resampled: (4, 2298)
+Shape of respiration resampled: (1, 2298)
+Shape of EEGbandsEnvelopes resampled: (61, 151201, 5)
+Shape of CustomEnvelopes resampled: (61, 151201, 39)
+Shape of MorletTFR resampled: (61, 151201, 40)
+brainstates time shape after cropping: (2087,)
+brainstates feature shape after cropping: (9, 2087)
+pupil time shape after cropping: (2087,)
+pupil feature shape after cropping: (4, 2087)
+respiration time shape after cropping: (2087,)
+respiration feature shape after cropping: (1, 2087)
+EEGbandsEnvelopes time shape after cropping: (2087,)
+EEGbandsEnvelopes feature shape after cropping: (61, 2087, 5)
+CustomEnvelopes time shape after cropping: (2087,)
+CustomEnvelopes feature shape after cropping: (61, 2087, 39)
+MorletTFR time shape after cropping: (2087,)
+MorletTFR feature shape after cropping: (61, 2087, 40)
+===============================================
+- 14 - 01 - checker_run-01
+fmri data exists - True
+eeg data exists - True
+pd data exists - True
+resp data exists - True
+caps_ts_file exists - True
+caps_pca_file exists - True
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+EEGbandsEnvelopes
+(61, 51201, 5)
+(51201,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 2.04792e+02 2.04796e+02
+ 2.04800e+02]
+CustomEnvelopes
+(61, 51201, 39)
+(51201,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 2.04792e+02 2.04796e+02
+ 2.04800e+02]
+MorletTFR
+(61, 51201, 40)
+(51201,)
+[-68.72  -68.716 -68.712 ... 136.072 136.076 136.08 ]
+Shape of brainstates resampled: (9, 777)
+Shape of pupil resampled: (4, 777)
+Shape of respiration resampled: (1, 777)
+Shape of EEGbandsEnvelopes resampled: (61, 51201, 5)
+Shape of CustomEnvelopes resampled: (61, 51201, 39)
+Shape of MorletTFR resampled: (61, 51201, 40)
+brainstates time shape after cropping: (514,)
+brainstates feature shape after cropping: (9, 514)
+pupil time shape after cropping: (514,)
+pupil feature shape after cropping: (4, 514)
+respiration time shape after cropping: (514,)
+respiration feature shape after cropping: (1, 514)
+EEGbandsEnvelopes time shape after cropping: (514,)
+EEGbandsEnvelopes feature shape after cropping: (61, 514, 5)
+CustomEnvelopes time shape after cropping: (514,)
+CustomEnvelopes feature shape after cropping: (61, 514, 39)
+MorletTFR time shape after cropping: (514,)
+MorletTFR feature shape after cropping: (61, 514, 40)
+- 14 - 01 - rest_run-01
+fmri data exists - True
+eeg data exists - True
+pd data exists - True
+resp data exists - True
+caps_ts_file exists - True
+caps_pca_file exists - True
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+EEGbandsEnvelopes
+(61, 151201, 5)
+(151201,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 6.04792e+02 6.04796e+02
+ 6.04800e+02]
+CustomEnvelopes
+(61, 151201, 39)
+(151201,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 6.04792e+02 6.04796e+02
+ 6.04800e+02]
+MorletTFR
+(61, 151201, 40)
+(151201,)
+[-14.36  -14.356 -14.352 ... 590.432 590.436 590.44 ]
+Shape of brainstates resampled: (9, 2298)
+Shape of pupil resampled: (4, 2298)
+Shape of respiration resampled: (1, 2298)
+Shape of EEGbandsEnvelopes resampled: (61, 151201, 5)
+Shape of CustomEnvelopes resampled: (61, 151201, 39)
+Shape of MorletTFR resampled: (61, 151201, 40)
+brainstates time shape after cropping: (2245,)
+brainstates feature shape after cropping: (9, 2245)
+pupil time shape after cropping: (2245,)
+pupil feature shape after cropping: (4, 2245)
+respiration time shape after cropping: (2245,)
+respiration feature shape after cropping: (1, 2245)
+EEGbandsEnvelopes time shape after cropping: (2245,)
+EEGbandsEnvelopes feature shape after cropping: (61, 2245, 5)
+CustomEnvelopes time shape after cropping: (2245,)
+CustomEnvelopes feature shape after cropping: (61, 2245, 39)
+MorletTFR time shape after cropping: (2245,)
+MorletTFR feature shape after cropping: (61, 2245, 40)
+- 14 - 02 - checker_run-01
+fmri data exists - True
+eeg data exists - True
+pd data exists - True
+resp data exists - True
+caps_ts_file exists - True
+caps_pca_file exists - True
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+EEGbandsEnvelopes
+(61, 51451, 5)
+(51451,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 2.05792e+02 2.05796e+02
+ 2.05800e+02]
+CustomEnvelopes
+(61, 51451, 39)
+(51451,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 2.05792e+02 2.05796e+02
+ 2.05800e+02]
+MorletTFR
+(61, 51451, 40)
+(51451,)
+[-28.556 -28.552 -28.548 ... 177.236 177.24  177.244]
+Shape of brainstates resampled: (9, 777)
+Shape of pupil resampled: (4, 777)
+Shape of respiration resampled: (1, 777)
+Shape of EEGbandsEnvelopes resampled: (61, 51451, 5)
+Shape of CustomEnvelopes resampled: (61, 51451, 39)
+Shape of MorletTFR resampled: (61, 51451, 40)
+brainstates time shape after cropping: (671,)
+brainstates feature shape after cropping: (9, 671)
+pupil time shape after cropping: (671,)
+pupil feature shape after cropping: (4, 671)
+respiration time shape after cropping: (671,)
+respiration feature shape after cropping: (1, 671)
+EEGbandsEnvelopes time shape after cropping: (671,)
+EEGbandsEnvelopes feature shape after cropping: (61, 671, 5)
+CustomEnvelopes time shape after cropping: (671,)
+CustomEnvelopes feature shape after cropping: (61, 671, 39)
+MorletTFR time shape after cropping: (671,)
+MorletTFR feature shape after cropping: (61, 671, 40)
+- 14 - 02 - rest_run-01
+fmri data exists - True
+eeg data exists - True
+pd data exists - True
+resp data exists - True
+caps_ts_file exists - True
+caps_pca_file exists - True
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+EEGbandsEnvelopes
+(61, 151201, 5)
+(151201,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 6.04792e+02 6.04796e+02
+ 6.04800e+02]
+CustomEnvelopes
+(61, 151201, 39)
+(151201,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 6.04792e+02 6.04796e+02
+ 6.04800e+02]
+MorletTFR
+(61, 151201, 40)
+(151201,)
+[ -8.48   -8.476  -8.472 ... 596.312 596.316 596.32 ]
+Shape of brainstates resampled: (9, 2298)
+Shape of pupil resampled: (4, 2298)
+Shape of respiration resampled: (1, 2298)
+Shape of EEGbandsEnvelopes resampled: (61, 151201, 5)
+Shape of CustomEnvelopes resampled: (61, 151201, 39)
+Shape of MorletTFR resampled: (61, 151201, 40)
+brainstates time shape after cropping: (2268,)
+brainstates feature shape after cropping: (9, 2268)
+pupil time shape after cropping: (2268,)
+pupil feature shape after cropping: (4, 2268)
+respiration time shape after cropping: (2268,)
+respiration feature shape after cropping: (1, 2268)
+EEGbandsEnvelopes time shape after cropping: (2268,)
+EEGbandsEnvelopes feature shape after cropping: (61, 2268, 5)
+CustomEnvelopes time shape after cropping: (2268,)
+CustomEnvelopes feature shape after cropping: (61, 2268, 39)
+MorletTFR time shape after cropping: (2268,)
+MorletTFR feature shape after cropping: (61, 2268, 40)
+===============================================
+- 15 - 01 - checker_run-01
+fmri data exists - True
+eeg data exists - True
+pd data exists - True
+resp data exists - True
+caps_ts_file exists - True
+caps_pca_file exists - True
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+EEGbandsEnvelopes
+(61, 51201, 5)
+(51201,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 2.04792e+02 2.04796e+02
+ 2.04800e+02]
+CustomEnvelopes
+(61, 51201, 39)
+(51201,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 2.04792e+02 2.04796e+02
+ 2.04800e+02]
+MorletTFR
+(61, 51201, 40)
+(51201,)
+[-25.396 -25.392 -25.388 ... 179.396 179.4   179.404]
+Shape of brainstates resampled: (9, 777)
+Shape of pupil resampled: (4, 777)
+Shape of respiration resampled: (1, 777)
+Shape of EEGbandsEnvelopes resampled: (61, 51201, 5)
+Shape of CustomEnvelopes resampled: (61, 51201, 39)
+Shape of MorletTFR resampled: (61, 51201, 40)
+brainstates time shape after cropping: (679,)
+brainstates feature shape after cropping: (9, 679)
+pupil time shape after cropping: (679,)
+pupil feature shape after cropping: (4, 679)
+respiration time shape after cropping: (679,)
+respiration feature shape after cropping: (1, 679)
+EEGbandsEnvelopes time shape after cropping: (679,)
+EEGbandsEnvelopes feature shape after cropping: (61, 679, 5)
+CustomEnvelopes time shape after cropping: (679,)
+CustomEnvelopes feature shape after cropping: (61, 679, 39)
+MorletTFR time shape after cropping: (679,)
+MorletTFR feature shape after cropping: (61, 679, 40)
+- 15 - 01 - rest_run-01
+fmri data exists - True
+eeg data exists - True
+pd data exists - True
+resp data exists - True
+caps_ts_file exists - True
+caps_pca_file exists - True
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+EEGbandsEnvelopes
+(61, 151201, 5)
+(151201,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 6.04792e+02 6.04796e+02
+ 6.04800e+02]
+CustomEnvelopes
+(61, 151201, 39)
+(151201,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 6.04792e+02 6.04796e+02
+ 6.04800e+02]
+MorletTFR
+(61, 151201, 40)
+(151201,)
+[-45.732 -45.728 -45.724 ... 559.06  559.064 559.068]
+Shape of brainstates resampled: (9, 2298)
+Shape of pupil resampled: (4, 2298)
+Shape of respiration resampled: (1, 2298)
+Shape of EEGbandsEnvelopes resampled: (61, 151201, 5)
+Shape of CustomEnvelopes resampled: (61, 151201, 39)
+Shape of MorletTFR resampled: (61, 151201, 40)
+brainstates time shape after cropping: (2126,)
+brainstates feature shape after cropping: (9, 2126)
+pupil time shape after cropping: (2126,)
+pupil feature shape after cropping: (4, 2126)
+respiration time shape after cropping: (2126,)
+respiration feature shape after cropping: (1, 2126)
+EEGbandsEnvelopes time shape after cropping: (2126,)
+EEGbandsEnvelopes feature shape after cropping: (61, 2126, 5)
+CustomEnvelopes time shape after cropping: (2126,)
+CustomEnvelopes feature shape after cropping: (61, 2126, 39)
+MorletTFR time shape after cropping: (2126,)
+MorletTFR feature shape after cropping: (61, 2126, 40)
+- 15 - 02 - checker_run-01
+fmri data exists - True
+eeg data exists - True
+pd data exists - True
+resp data exists - True
+caps_ts_file exists - True
+caps_pca_file exists - True
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+EEGbandsEnvelopes
+(61, 51201, 5)
+(51201,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 2.04792e+02 2.04796e+02
+ 2.04800e+02]
+CustomEnvelopes
+(61, 51201, 39)
+(51201,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 2.04792e+02 2.04796e+02
+ 2.04800e+02]
+MorletTFR
+(61, 51201, 40)
+(51201,)
+[-325.612 -325.608 -325.604 ... -120.82  -120.816 -120.812]
+Shape of brainstates resampled: (9, 777)
+Shape of pupil resampled: (4, 777)
+Shape of respiration resampled: (1, 777)
+Shape of EEGbandsEnvelopes resampled: (61, 51201, 5)
+Shape of CustomEnvelopes resampled: (61, 51201, 39)
+Shape of MorletTFR resampled: (61, 51201, 40)
+brainstates time shape after cropping: (0,)
+brainstates feature shape after cropping: (9, 0)
+pupil time shape after cropping: (0,)
+pupil feature shape after cropping: (4, 0)
+respiration time shape after cropping: (0,)
+respiration feature shape after cropping: (1, 0)
+EEGbandsEnvelopes time shape after cropping: (0,)
+EEGbandsEnvelopes feature shape after cropping: (61, 0, 5)
+CustomEnvelopes time shape after cropping: (0,)
+CustomEnvelopes feature shape after cropping: (61, 0, 39)
+MorletTFR time shape after cropping: (0,)
+MorletTFR feature shape after cropping: (61, 0, 40)
+- 15 - 02 - rest_run-01
+fmri data exists - True
+eeg data exists - True
+pd data exists - True
+resp data exists - True
+caps_ts_file exists - True
+caps_pca_file exists - True
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+EEGbandsEnvelopes
+(61, 151201, 5)
+(151201,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 6.04792e+02 6.04796e+02
+ 6.04800e+02]
+CustomEnvelopes
+(61, 151201, 39)
+(151201,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 6.04792e+02 6.04796e+02
+ 6.04800e+02]
+MorletTFR
+(61, 151201, 40)
+(151201,)
+[-11.9   -11.896 -11.892 ... 592.892 592.896 592.9  ]
+Shape of brainstates resampled: (9, 2298)
+Shape of pupil resampled: (4, 2298)
+Shape of respiration resampled: (1, 2298)
+Shape of EEGbandsEnvelopes resampled: (61, 151201, 5)
+Shape of CustomEnvelopes resampled: (61, 151201, 39)
+Shape of MorletTFR resampled: (61, 151201, 40)
+brainstates time shape after cropping: (2255,)
+brainstates feature shape after cropping: (9, 2255)
+pupil time shape after cropping: (2255,)
+pupil feature shape after cropping: (4, 2255)
+respiration time shape after cropping: (2255,)
+respiration feature shape after cropping: (1, 2255)
+EEGbandsEnvelopes time shape after cropping: (2255,)
+EEGbandsEnvelopes feature shape after cropping: (61, 2255, 5)
+CustomEnvelopes time shape after cropping: (2255,)
+CustomEnvelopes feature shape after cropping: (61, 2255, 39)
+MorletTFR time shape after cropping: (2255,)
+MorletTFR feature shape after cropping: (61, 2255, 40)
+===============================================
+- 16 - 01 - checker_run-01
+fmri data exists - True
+eeg data exists - True
+pd data exists - False
+resp data exists - True
+caps_ts_file exists - True
+caps_pca_file exists - True
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+- 16 - 01 - rest_run-01
+fmri data exists - True
+eeg data exists - True
+pd data exists - True
+resp data exists - True
+caps_ts_file exists - True
+caps_pca_file exists - True
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+EEGbandsEnvelopes
+(61, 151201, 5)
+(151201,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 6.04792e+02 6.04796e+02
+ 6.04800e+02]
+CustomEnvelopes
+(61, 151201, 39)
+(151201,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 6.04792e+02 6.04796e+02
+ 6.04800e+02]
+MorletTFR
+(61, 151201, 40)
+(151201,)
+[-10.352 -10.348 -10.344 ... 594.44  594.444 594.448]
+Shape of brainstates resampled: (9, 2298)
+Shape of pupil resampled: (4, 2298)
+Shape of respiration resampled: (1, 2298)
+Shape of EEGbandsEnvelopes resampled: (61, 151201, 5)
+Shape of CustomEnvelopes resampled: (61, 151201, 39)
+Shape of MorletTFR resampled: (61, 151201, 40)
+brainstates time shape after cropping: (2261,)
+brainstates feature shape after cropping: (9, 2261)
+pupil time shape after cropping: (2261,)
+pupil feature shape after cropping: (4, 2261)
+respiration time shape after cropping: (2261,)
+respiration feature shape after cropping: (1, 2261)
+EEGbandsEnvelopes time shape after cropping: (2261,)
+EEGbandsEnvelopes feature shape after cropping: (61, 2261, 5)
+CustomEnvelopes time shape after cropping: (2261,)
+CustomEnvelopes feature shape after cropping: (61, 2261, 39)
+MorletTFR time shape after cropping: (2261,)
+MorletTFR feature shape after cropping: (61, 2261, 40)
+- 16 - 02 - checker_run-01
+fmri data exists - True
+eeg data exists - True
+pd data exists - True
+resp data exists - True
+caps_ts_file exists - True
+caps_pca_file exists - True
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+EEGbandsEnvelopes
+(61, 51451, 5)
+(51451,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 2.05792e+02 2.05796e+02
+ 2.05800e+02]
+CustomEnvelopes
+(61, 51451, 39)
+(51451,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 2.05792e+02 2.05796e+02
+ 2.05800e+02]
+MorletTFR
+(61, 51451, 40)
+(51451,)
+[-25.148 -25.144 -25.14  ... 180.644 180.648 180.652]
+Shape of brainstates resampled: (9, 777)
+Shape of pupil resampled: (4, 777)
+Shape of respiration resampled: (1, 777)
+Shape of EEGbandsEnvelopes resampled: (61, 51451, 5)
+Shape of CustomEnvelopes resampled: (61, 51451, 39)
+Shape of MorletTFR resampled: (61, 51451, 40)
+brainstates time shape after cropping: (684,)
+brainstates feature shape after cropping: (9, 684)
+pupil time shape after cropping: (684,)
+pupil feature shape after cropping: (4, 684)
+respiration time shape after cropping: (684,)
+respiration feature shape after cropping: (1, 684)
+EEGbandsEnvelopes time shape after cropping: (684,)
+EEGbandsEnvelopes feature shape after cropping: (61, 684, 5)
+CustomEnvelopes time shape after cropping: (684,)
+CustomEnvelopes feature shape after cropping: (61, 684, 39)
+MorletTFR time shape after cropping: (684,)
+MorletTFR feature shape after cropping: (61, 684, 40)
+- 16 - 02 - rest_run-01
+fmri data exists - True
+eeg data exists - True
+pd data exists - True
+resp data exists - True
+caps_ts_file exists - True
+caps_pca_file exists - True
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+EEGbandsEnvelopes
+(61, 150951, 5)
+(150951,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 6.03792e+02 6.03796e+02
+ 6.03800e+02]
+CustomEnvelopes
+(61, 150951, 39)
+(150951,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 6.03792e+02 6.03796e+02
+ 6.03800e+02]
+MorletTFR
+(61, 150951, 40)
+(150951,)
+[-10.808 -10.804 -10.8   ... 592.984 592.988 592.992]
+Shape of brainstates resampled: (9, 2298)
+Shape of pupil resampled: (4, 2298)
+Shape of respiration resampled: (1, 2298)
+Shape of EEGbandsEnvelopes resampled: (61, 150951, 5)
+Shape of CustomEnvelopes resampled: (61, 150951, 39)
+Shape of MorletTFR resampled: (61, 150951, 40)
+brainstates time shape after cropping: (2255,)
+brainstates feature shape after cropping: (9, 2255)
+pupil time shape after cropping: (2255,)
+pupil feature shape after cropping: (4, 2255)
+respiration time shape after cropping: (2255,)
+respiration feature shape after cropping: (1, 2255)
+EEGbandsEnvelopes time shape after cropping: (2255,)
+EEGbandsEnvelopes feature shape after cropping: (61, 2255, 5)
+CustomEnvelopes time shape after cropping: (2255,)
+CustomEnvelopes feature shape after cropping: (61, 2255, 39)
+MorletTFR time shape after cropping: (2255,)
+MorletTFR feature shape after cropping: (61, 2255, 40)
+===============================================
+- 17 - 01 - checker_run-01
+fmri data exists - True
+eeg data exists - False
+pd data exists - True
+resp data exists - True
+caps_ts_file exists - True
+caps_pca_file exists - True
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+- 17 - 01 - rest_run-01
+fmri data exists - True
+eeg data exists - False
+pd data exists - True
+resp data exists - True
+caps_ts_file exists - True
+caps_pca_file exists - True
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+- 17 - 02 - checker_run-01
+fmri data exists - True
+eeg data exists - False
+pd data exists - True
+resp data exists - True
+caps_ts_file exists - True
+caps_pca_file exists - True
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+- 17 - 02 - rest_run-01
+fmri data exists - True
+eeg data exists - False
+pd data exists - True
+resp data exists - True
+caps_ts_file exists - True
+caps_pca_file exists - True
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+===============================================
+- 18 - 01 - checker_run-01
+fmri data exists - True
+eeg data exists - True
+pd data exists - True
+resp data exists - True
+caps_ts_file exists - True
+caps_pca_file exists - True
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+EEGbandsEnvelopes
+(61, 51451, 5)
+(51451,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 2.05792e+02 2.05796e+02
+ 2.05800e+02]
+CustomEnvelopes
+(61, 51451, 39)
+(51451,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 2.05792e+02 2.05796e+02
+ 2.05800e+02]
+MorletTFR
+(61, 51451, 40)
+(51451,)
+[-96.44  -96.436 -96.432 ... 109.352 109.356 109.36 ]
+Shape of brainstates resampled: (9, 777)
+Shape of pupil resampled: (4, 777)
+Shape of respiration resampled: (1, 777)
+Shape of EEGbandsEnvelopes resampled: (61, 51451, 5)
+Shape of CustomEnvelopes resampled: (61, 51451, 39)
+Shape of MorletTFR resampled: (61, 51451, 40)
+brainstates time shape after cropping: (413,)
+brainstates feature shape after cropping: (9, 413)
+pupil time shape after cropping: (413,)
+pupil feature shape after cropping: (4, 413)
+respiration time shape after cropping: (413,)
+respiration feature shape after cropping: (1, 413)
+EEGbandsEnvelopes time shape after cropping: (413,)
+EEGbandsEnvelopes feature shape after cropping: (61, 413, 5)
+CustomEnvelopes time shape after cropping: (413,)
+CustomEnvelopes feature shape after cropping: (61, 413, 39)
+MorletTFR time shape after cropping: (413,)
+MorletTFR feature shape after cropping: (61, 413, 40)
+- 18 - 01 - rest_run-01
+fmri data exists - True
+eeg data exists - True
+pd data exists - True
+resp data exists - True
+caps_ts_file exists - True
+caps_pca_file exists - True
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+EEGbandsEnvelopes
+(61, 151201, 5)
+(151201,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 6.04792e+02 6.04796e+02
+ 6.04800e+02]
+CustomEnvelopes
+(61, 151201, 39)
+(151201,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 6.04792e+02 6.04796e+02
+ 6.04800e+02]
+MorletTFR
+(61, 151201, 40)
+(151201,)
+[-26.556 -26.552 -26.548 ... 578.236 578.24  578.244]
+Shape of brainstates resampled: (9, 2298)
+Shape of pupil resampled: (4, 2298)
+Shape of respiration resampled: (1, 2298)
+Shape of EEGbandsEnvelopes resampled: (61, 151201, 5)
+Shape of CustomEnvelopes resampled: (61, 151201, 39)
+Shape of MorletTFR resampled: (61, 151201, 40)
+brainstates time shape after cropping: (2199,)
+brainstates feature shape after cropping: (9, 2199)
+pupil time shape after cropping: (2199,)
+pupil feature shape after cropping: (4, 2199)
+respiration time shape after cropping: (2199,)
+respiration feature shape after cropping: (1, 2199)
+EEGbandsEnvelopes time shape after cropping: (2199,)
+EEGbandsEnvelopes feature shape after cropping: (61, 2199, 5)
+CustomEnvelopes time shape after cropping: (2199,)
+CustomEnvelopes feature shape after cropping: (61, 2199, 39)
+MorletTFR time shape after cropping: (2199,)
+MorletTFR feature shape after cropping: (61, 2199, 40)
+- 18 - 02 - checker_run-01
+fmri data exists - False
+eeg data exists - False
+pd data exists - False
+resp data exists - False
+caps_ts_file exists - False
+caps_pca_file exists - False
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+- 18 - 02 - rest_run-01
+fmri data exists - False
+eeg data exists - False
+pd data exists - False
+resp data exists - False
+caps_ts_file exists - False
+caps_pca_file exists - False
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+===============================================
+- 19 - 01 - checker_run-01
+fmri data exists - True
+eeg data exists - True
+pd data exists - True
+resp data exists - True
+caps_ts_file exists - False
+caps_pca_file exists - False
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+- 19 - 01 - rest_run-01
+fmri data exists - True
+eeg data exists - True
+pd data exists - True
+resp data exists - True
+caps_ts_file exists - False
+caps_pca_file exists - False
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+- 19 - 02 - checker_run-01
+fmri data exists - True
+eeg data exists - True
+pd data exists - True
+resp data exists - True
+caps_ts_file exists - False
+caps_pca_file exists - False
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+- 19 - 02 - rest_run-01
+fmri data exists - True
+eeg data exists - True
+pd data exists - True
+resp data exists - True
+caps_ts_file exists - False
+caps_pca_file exists - False
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+===============================================
+- 20 - 01 - checker_run-01
+fmri data exists - True
+eeg data exists - True
+pd data exists - True
+resp data exists - True
+caps_ts_file exists - True
+caps_pca_file exists - True
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+EEGbandsEnvelopes
+(61, 51451, 5)
+(51451,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 2.05792e+02 2.05796e+02
+ 2.05800e+02]
+CustomEnvelopes
+(61, 51451, 39)
+(51451,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 2.05792e+02 2.05796e+02
+ 2.05800e+02]
+MorletTFR
+(61, 51451, 40)
+(51451,)
+[-22.332 -22.328 -22.324 ... 183.46  183.464 183.468]
+Shape of brainstates resampled: (9, 777)
+Shape of pupil resampled: (4, 777)
+Shape of respiration resampled: (1, 777)
+Shape of EEGbandsEnvelopes resampled: (61, 51451, 5)
+Shape of CustomEnvelopes resampled: (61, 51451, 39)
+Shape of MorletTFR resampled: (61, 51451, 40)
+brainstates time shape after cropping: (695,)
+brainstates feature shape after cropping: (9, 695)
+pupil time shape after cropping: (695,)
+pupil feature shape after cropping: (4, 695)
+respiration time shape after cropping: (695,)
+respiration feature shape after cropping: (1, 695)
+EEGbandsEnvelopes time shape after cropping: (695,)
+EEGbandsEnvelopes feature shape after cropping: (61, 695, 5)
+CustomEnvelopes time shape after cropping: (695,)
+CustomEnvelopes feature shape after cropping: (61, 695, 39)
+MorletTFR time shape after cropping: (695,)
+MorletTFR feature shape after cropping: (61, 695, 40)
+- 20 - 01 - rest_run-01
+fmri data exists - True
+eeg data exists - True
+pd data exists - True
+resp data exists - True
+caps_ts_file exists - True
+caps_pca_file exists - True
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+EEGbandsEnvelopes
+(61, 151201, 5)
+(151201,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 6.04792e+02 6.04796e+02
+ 6.04800e+02]
+CustomEnvelopes
+(61, 151201, 39)
+(151201,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 6.04792e+02 6.04796e+02
+ 6.04800e+02]
+MorletTFR
+(61, 151201, 40)
+(151201,)
+[-45.804 -45.8   -45.796 ... 558.988 558.992 558.996]
+Shape of brainstates resampled: (9, 2298)
+Shape of pupil resampled: (4, 2298)
+Shape of respiration resampled: (1, 2298)
+Shape of EEGbandsEnvelopes resampled: (61, 151201, 5)
+Shape of CustomEnvelopes resampled: (61, 151201, 39)
+Shape of MorletTFR resampled: (61, 151201, 40)
+brainstates time shape after cropping: (2126,)
+brainstates feature shape after cropping: (9, 2126)
+pupil time shape after cropping: (2126,)
+pupil feature shape after cropping: (4, 2126)
+respiration time shape after cropping: (2126,)
+respiration feature shape after cropping: (1, 2126)
+EEGbandsEnvelopes time shape after cropping: (2126,)
+EEGbandsEnvelopes feature shape after cropping: (61, 2126, 5)
+CustomEnvelopes time shape after cropping: (2126,)
+CustomEnvelopes feature shape after cropping: (61, 2126, 39)
+MorletTFR time shape after cropping: (2126,)
+MorletTFR feature shape after cropping: (61, 2126, 40)
+- 20 - 02 - checker_run-01
+fmri data exists - True
+eeg data exists - True
+pd data exists - True
+resp data exists - True
+caps_ts_file exists - True
+caps_pca_file exists - True
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+EEGbandsEnvelopes
+(61, 51451, 5)
+(51451,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 2.05792e+02 2.05796e+02
+ 2.05800e+02]
+CustomEnvelopes
+(61, 51451, 39)
+(51451,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 2.05792e+02 2.05796e+02
+ 2.05800e+02]
+MorletTFR
+(61, 51451, 40)
+(51451,)
+[-13.564 -13.56  -13.556 ... 192.228 192.232 192.236]
+Shape of brainstates resampled: (9, 777)
+Shape of pupil resampled: (4, 777)
+Shape of respiration resampled: (1, 777)
+Shape of EEGbandsEnvelopes resampled: (61, 51451, 5)
+Shape of CustomEnvelopes resampled: (61, 51451, 39)
+Shape of MorletTFR resampled: (61, 51451, 40)
+brainstates time shape after cropping: (728,)
+brainstates feature shape after cropping: (9, 728)
+pupil time shape after cropping: (728,)
+pupil feature shape after cropping: (4, 728)
+respiration time shape after cropping: (728,)
+respiration feature shape after cropping: (1, 728)
+EEGbandsEnvelopes time shape after cropping: (728,)
+EEGbandsEnvelopes feature shape after cropping: (61, 728, 5)
+CustomEnvelopes time shape after cropping: (728,)
+CustomEnvelopes feature shape after cropping: (61, 728, 39)
+MorletTFR time shape after cropping: (728,)
+MorletTFR feature shape after cropping: (61, 728, 40)
+- 20 - 02 - rest_run-01
+fmri data exists - True
+eeg data exists - True
+pd data exists - True
+resp data exists - True
+caps_ts_file exists - True
+caps_pca_file exists - True
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+EEGbandsEnvelopes
+(61, 151201, 5)
+(151201,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 6.04792e+02 6.04796e+02
+ 6.04800e+02]
+CustomEnvelopes
+(61, 151201, 39)
+(151201,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 6.04792e+02 6.04796e+02
+ 6.04800e+02]
+MorletTFR
+(61, 151201, 40)
+(151201,)
+[-29.216 -29.212 -29.208 ... 575.576 575.58  575.584]
+Shape of brainstates resampled: (9, 2298)
+Shape of pupil resampled: (4, 2298)
+Shape of respiration resampled: (1, 2298)
+Shape of EEGbandsEnvelopes resampled: (61, 151201, 5)
+Shape of CustomEnvelopes resampled: (61, 151201, 39)
+Shape of MorletTFR resampled: (61, 151201, 40)
+brainstates time shape after cropping: (2189,)
+brainstates feature shape after cropping: (9, 2189)
+pupil time shape after cropping: (2189,)
+pupil feature shape after cropping: (4, 2189)
+respiration time shape after cropping: (2189,)
+respiration feature shape after cropping: (1, 2189)
+EEGbandsEnvelopes time shape after cropping: (2189,)
+EEGbandsEnvelopes feature shape after cropping: (61, 2189, 5)
+CustomEnvelopes time shape after cropping: (2189,)
+CustomEnvelopes feature shape after cropping: (61, 2189, 39)
+MorletTFR time shape after cropping: (2189,)
+MorletTFR feature shape after cropping: (61, 2189, 40)
+===============================================
+- 21 - 01 - checker_run-01
+fmri data exists - True
+eeg data exists - True
+pd data exists - True
+resp data exists - True
+caps_ts_file exists - True
+caps_pca_file exists - True
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+EEGbandsEnvelopes
+(61, 51451, 5)
+(51451,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 2.05792e+02 2.05796e+02
+ 2.05800e+02]
+CustomEnvelopes
+(61, 51451, 39)
+(51451,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 2.05792e+02 2.05796e+02
+ 2.05800e+02]
+MorletTFR
+(61, 51451, 40)
+(51451,)
+[-61.088 -61.084 -61.08  ... 144.704 144.708 144.712]
+Shape of brainstates resampled: (9, 777)
+Shape of pupil resampled: (4, 777)
+Shape of respiration resampled: (1, 777)
+Shape of EEGbandsEnvelopes resampled: (61, 51451, 5)
+Shape of CustomEnvelopes resampled: (61, 51451, 39)
+Shape of MorletTFR resampled: (61, 51451, 40)
+brainstates time shape after cropping: (547,)
+brainstates feature shape after cropping: (9, 547)
+pupil time shape after cropping: (547,)
+pupil feature shape after cropping: (4, 547)
+respiration time shape after cropping: (547,)
+respiration feature shape after cropping: (1, 547)
+EEGbandsEnvelopes time shape after cropping: (547,)
+EEGbandsEnvelopes feature shape after cropping: (61, 547, 5)
+CustomEnvelopes time shape after cropping: (547,)
+CustomEnvelopes feature shape after cropping: (61, 547, 39)
+MorletTFR time shape after cropping: (547,)
+MorletTFR feature shape after cropping: (61, 547, 40)
+- 21 - 01 - rest_run-01
+fmri data exists - True
+eeg data exists - True
+pd data exists - True
+resp data exists - True
+caps_ts_file exists - True
+caps_pca_file exists - True
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+EEGbandsEnvelopes
+(61, 151201, 5)
+(151201,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 6.04792e+02 6.04796e+02
+ 6.04800e+02]
+CustomEnvelopes
+(61, 151201, 39)
+(151201,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 6.04792e+02 6.04796e+02
+ 6.04800e+02]
+MorletTFR
+(61, 151201, 40)
+(151201,)
+[-12.688 -12.684 -12.68  ... 592.104 592.108 592.112]
+Shape of brainstates resampled: (9, 2298)
+Shape of pupil resampled: (4, 2298)
+Shape of respiration resampled: (1, 2298)
+Shape of EEGbandsEnvelopes resampled: (61, 151201, 5)
+Shape of CustomEnvelopes resampled: (61, 151201, 39)
+Shape of MorletTFR resampled: (61, 151201, 40)
+brainstates time shape after cropping: (2252,)
+brainstates feature shape after cropping: (9, 2252)
+pupil time shape after cropping: (2252,)
+pupil feature shape after cropping: (4, 2252)
+respiration time shape after cropping: (2252,)
+respiration feature shape after cropping: (1, 2252)
+EEGbandsEnvelopes time shape after cropping: (2252,)
+EEGbandsEnvelopes feature shape after cropping: (61, 2252, 5)
+CustomEnvelopes time shape after cropping: (2252,)
+CustomEnvelopes feature shape after cropping: (61, 2252, 39)
+MorletTFR time shape after cropping: (2252,)
+MorletTFR feature shape after cropping: (61, 2252, 40)
+- 21 - 02 - checker_run-01
+fmri data exists - True
+eeg data exists - False
+pd data exists - True
+resp data exists - True
+caps_ts_file exists - True
+caps_pca_file exists - True
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+- 21 - 02 - rest_run-01
+fmri data exists - True
+eeg data exists - True
+pd data exists - True
+resp data exists - True
+caps_ts_file exists - True
+caps_pca_file exists - True
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+EEGbandsEnvelopes
+(61, 151201, 5)
+(151201,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 6.04792e+02 6.04796e+02
+ 6.04800e+02]
+CustomEnvelopes
+(61, 151201, 39)
+(151201,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 6.04792e+02 6.04796e+02
+ 6.04800e+02]
+MorletTFR
+(61, 151201, 40)
+(151201,)
+[ -8.336  -8.332  -8.328 ... 596.456 596.46  596.464]
+Shape of brainstates resampled: (9, 2298)
+Shape of pupil resampled: (4, 2298)
+Shape of respiration resampled: (1, 2298)
+Shape of EEGbandsEnvelopes resampled: (61, 151201, 5)
+Shape of CustomEnvelopes resampled: (61, 151201, 39)
+Shape of MorletTFR resampled: (61, 151201, 40)
+brainstates time shape after cropping: (2268,)
+brainstates feature shape after cropping: (9, 2268)
+pupil time shape after cropping: (2268,)
+pupil feature shape after cropping: (4, 2268)
+respiration time shape after cropping: (2268,)
+respiration feature shape after cropping: (1, 2268)
+EEGbandsEnvelopes time shape after cropping: (2268,)
+EEGbandsEnvelopes feature shape after cropping: (61, 2268, 5)
+CustomEnvelopes time shape after cropping: (2268,)
+CustomEnvelopes feature shape after cropping: (61, 2268, 39)
+MorletTFR time shape after cropping: (2268,)
+MorletTFR feature shape after cropping: (61, 2268, 40)
+===============================================
+- 22 - 01 - checker_run-01
+fmri data exists - True
+eeg data exists - True
+pd data exists - True
+resp data exists - True
+caps_ts_file exists - True
+caps_pca_file exists - True
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+EEGbandsEnvelopes
+(61, 51451, 5)
+(51451,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 2.05792e+02 2.05796e+02
+ 2.05800e+02]
+CustomEnvelopes
+(61, 51451, 39)
+(51451,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 2.05792e+02 2.05796e+02
+ 2.05800e+02]
+MorletTFR
+(61, 51451, 40)
+(51451,)
+[-46.812 -46.808 -46.804 ... 158.98  158.984 158.988]
+Shape of brainstates resampled: (9, 777)
+Shape of pupil resampled: (4, 777)
+Shape of respiration resampled: (1, 777)
+Shape of EEGbandsEnvelopes resampled: (61, 51451, 5)
+Shape of CustomEnvelopes resampled: (61, 51451, 39)
+Shape of MorletTFR resampled: (61, 51451, 40)
+brainstates time shape after cropping: (602,)
+brainstates feature shape after cropping: (9, 602)
+pupil time shape after cropping: (602,)
+pupil feature shape after cropping: (4, 602)
+respiration time shape after cropping: (602,)
+respiration feature shape after cropping: (1, 602)
+EEGbandsEnvelopes time shape after cropping: (602,)
+EEGbandsEnvelopes feature shape after cropping: (61, 602, 5)
+CustomEnvelopes time shape after cropping: (602,)
+CustomEnvelopes feature shape after cropping: (61, 602, 39)
+MorletTFR time shape after cropping: (602,)
+MorletTFR feature shape after cropping: (61, 602, 40)
+- 22 - 01 - rest_run-01
+fmri data exists - True
+eeg data exists - True
+pd data exists - True
+resp data exists - True
+caps_ts_file exists - True
+caps_pca_file exists - True
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+EEGbandsEnvelopes
+(61, 151201, 5)
+(151201,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 6.04792e+02 6.04796e+02
+ 6.04800e+02]
+CustomEnvelopes
+(61, 151201, 39)
+(151201,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 6.04792e+02 6.04796e+02
+ 6.04800e+02]
+MorletTFR
+(61, 151201, 40)
+(151201,)
+[ -8.556  -8.552  -8.548 ... 596.236 596.24  596.244]
+Shape of brainstates resampled: (9, 2298)
+Shape of pupil resampled: (4, 2298)
+Shape of respiration resampled: (1, 2298)
+Shape of EEGbandsEnvelopes resampled: (61, 151201, 5)
+Shape of CustomEnvelopes resampled: (61, 151201, 39)
+Shape of MorletTFR resampled: (61, 151201, 40)
+brainstates time shape after cropping: (2267,)
+brainstates feature shape after cropping: (9, 2267)
+pupil time shape after cropping: (2267,)
+pupil feature shape after cropping: (4, 2267)
+respiration time shape after cropping: (2267,)
+respiration feature shape after cropping: (1, 2267)
+EEGbandsEnvelopes time shape after cropping: (2267,)
+EEGbandsEnvelopes feature shape after cropping: (61, 2267, 5)
+CustomEnvelopes time shape after cropping: (2267,)
+CustomEnvelopes feature shape after cropping: (61, 2267, 39)
+MorletTFR time shape after cropping: (2267,)
+MorletTFR feature shape after cropping: (61, 2267, 40)
+- 22 - 02 - checker_run-01
+fmri data exists - True
+eeg data exists - True
+pd data exists - True
+resp data exists - True
+caps_ts_file exists - True
+caps_pca_file exists - True
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+EEGbandsEnvelopes
+(61, 51451, 5)
+(51451,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 2.05792e+02 2.05796e+02
+ 2.05800e+02]
+CustomEnvelopes
+(61, 51451, 39)
+(51451,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 2.05792e+02 2.05796e+02
+ 2.05800e+02]
+MorletTFR
+(61, 51451, 40)
+(51451,)
+[-27.716 -27.712 -27.708 ... 178.076 178.08  178.084]
+Shape of brainstates resampled: (9, 777)
+Shape of pupil resampled: (4, 777)
+Shape of respiration resampled: (1, 777)
+Shape of EEGbandsEnvelopes resampled: (61, 51451, 5)
+Shape of CustomEnvelopes resampled: (61, 51451, 39)
+Shape of MorletTFR resampled: (61, 51451, 40)
+brainstates time shape after cropping: (674,)
+brainstates feature shape after cropping: (9, 674)
+pupil time shape after cropping: (674,)
+pupil feature shape after cropping: (4, 674)
+respiration time shape after cropping: (674,)
+respiration feature shape after cropping: (1, 674)
+EEGbandsEnvelopes time shape after cropping: (674,)
+EEGbandsEnvelopes feature shape after cropping: (61, 674, 5)
+CustomEnvelopes time shape after cropping: (674,)
+CustomEnvelopes feature shape after cropping: (61, 674, 39)
+MorletTFR time shape after cropping: (674,)
+MorletTFR feature shape after cropping: (61, 674, 40)
+- 22 - 02 - rest_run-01
+fmri data exists - True
+eeg data exists - True
+pd data exists - True
+resp data exists - True
+caps_ts_file exists - True
+caps_pca_file exists - True
+net_yeo7_file exists - False
+net_yeo17_file exists - False
+global_signal_file exists - False
+global_signal_raw_file exists - False
+EEGbandsEnvelopes
+(61, 151201, 5)
+(151201,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 6.04792e+02 6.04796e+02
+ 6.04800e+02]
+CustomEnvelopes
+(61, 151201, 39)
+(151201,)
+[0.00000e+00 4.00000e-03 8.00000e-03 ... 6.04792e+02 6.04796e+02
+ 6.04800e+02]
+MorletTFR
+(61, 151201, 40)
+(151201,)
+[-18.24  -18.236 -18.232 ... 586.552 586.556 586.56 ]
+Shape of brainstates resampled: (9, 2298)
+Shape of pupil resampled: (4, 2298)
+Shape of respiration resampled: (1, 2298)
+Shape of EEGbandsEnvelopes resampled: (61, 151201, 5)
+Shape of CustomEnvelopes resampled: (61, 151201, 39)
+Shape of MorletTFR resampled: (61, 151201, 40)
+brainstates time shape after cropping: (2231,)
+brainstates feature shape after cropping: (9, 2231)
+pupil time shape after cropping: (2231,)
+pupil feature shape after cropping: (4, 2231)
+respiration time shape after cropping: (2231,)
+respiration feature shape after cropping: (1, 2231)
+EEGbandsEnvelopes time shape after cropping: (2231,)
+EEGbandsEnvelopes feature shape after cropping: (61, 2231, 5)
+CustomEnvelopes time shape after cropping: (2231,)
+CustomEnvelopes feature shape after cropping: (61, 2231, 39)
+MorletTFR time shape after cropping: (2231,)
+MorletTFR feature shape after cropping: (61, 2231, 40)

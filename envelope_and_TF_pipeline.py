@@ -41,6 +41,8 @@ from mne_bids import BIDSPath
 from pathlib import Path
 import matplotlib.pyplot as plt
 import eeg_research.preprocessing.tools.utils as utils
+import eeg_research.preprocessing.pipelines.eeg_preprocessing_pipeline as pipe
+import eeg_research.preprocessing.tools.artifacts_annotator as annotator
 import numpy as np
 import pickle
 import re
@@ -233,16 +235,20 @@ class EEGfeatures:
         self.raw = raw
         self.channel_names = raw.info['ch_names']
         self.frequencies = list()
+        self.croping_values = specific_crop(raw,
+                                            margin = 0,
+                                            return_time = True)
     
 
     def _extract_envelope(self, frequencies: list[tuple[float,float]])-> 'EEGfeatures':
         temp_envelopes_list = list()
         for band in frequencies:
             filtered = self.raw.copy().filter(*band)
-            envelope = filtered.copy().apply_hilbert(envelope = True )
-            envelope_cropped = specific_crop(envelope, margin = 0)
-            temp_envelopes_list.append(envelope_cropped.get_data())
-        self.times = envelope_cropped.times
+            envelope = filtered.copy().apply_hilbert(envelope = True ).crop(
+                *self.croping_values
+            )
+            temp_envelopes_list.append(envelope.get_data())
+        self.times = envelope.times
         self.feature = np.stack(temp_envelopes_list, axis = -1)
         return self
 
@@ -284,14 +290,15 @@ class EEGfeatures:
 
         self.frequencies = np.linspace(1,40,40)
         cycles = self.frequencies / 2
-        start, stop = specific_crop(self.raw, return_time = True, margin = 0)
-        time_frequency_representation = self.raw.copy().compute_tfr(
+        start, stop = self.croping_values
+        time_frequency_representation = self.raw.copy().crop(
+            *self.croping_values
+            ).compute_tfr(
             freqs = self.frequencies, 
             n_cycles = cycles,
             method='morlet',
             n_jobs = -1,
-            tmin = start,
-            tmax = stop
+            reject_by_annotation=False
         )
     
         self.times = time_frequency_representation.times - start
@@ -302,6 +309,16 @@ class EEGfeatures:
         
         return self
     
+    def annotate_artifacts(self):
+        annotator_instance = annotator.ZscoreAnnotator(
+            self.raw.copy().crop(*self.croping_values)
+            )
+        annotator_instance.detect_muscles(filter_freq=(30, None)
+                                          ).detect_other().merge_annotations()
+        annotator_instance.compute_statistics().print_statistics()
+        annotator_instance.generate_mask()
+        self.mask = annotator_instance.mask
+        
     def save(self, filename):
         channel_info = extract_location(self.channel_names)
         param_to_save = {
@@ -311,6 +328,7 @@ class EEGfeatures:
             },
             'feature': self.feature,
             'feature_info': self.feature_info,
+            'artifact_mask': self.mask
         }
         print(f'saving into {filename}')
         with open(filename, 'wb') as file:
@@ -367,22 +385,22 @@ def loop(overwrite = True,
     raw_path = Path('/projects/EEG_FMRI/bids_eeg/BIDS/NEW/PREP_BV_EDF')
 
     for filename in raw_path.iterdir():
-        try:
-            file_entities = parse_file_entities(filename)
-            conditions = (file_entities['task'] in task and
-                        file_entities['suffix'] == 'eeg' and
-                        not 'GradientStep1' in filename.name)
-            if conditions:
-                individual_process(filename, 
-                                overwrite = overwrite,
-                                remove_blinks = remove_blinks,
-                                blank_run=blank_run
-                                )
-        except Exception as e:
-            print(f'___xxx___xxx___xxx___xxx___xxx___xxx___\n')
-            print(f'Error with {filename}\n')
-            print(e)
-            print(f'\n___xxx___xxx___xxx___xxx___xxx___xxx___\n')
+        #try:
+        file_entities = parse_file_entities(filename)
+        conditions = (file_entities['task'] in task and
+                    file_entities['suffix'] == 'eeg' and
+                    not 'GradientStep1' in filename.name)
+        if conditions:
+            individual_process(filename, 
+                            overwrite = overwrite,
+                            remove_blinks = remove_blinks,
+                            blank_run=blank_run
+                            )
+        #except Exception as e:
+        #    print(f'___xxx___xxx___xxx___xxx___xxx___xxx___\n')
+        #    print(f'Error with {filename}\n')
+        #    print(e)
+        #    print(f'\n___xxx___xxx___xxx___xxx___xxx___xxx___\n')
 
 def individual_process(filename: str, 
                     overwrite = True, 
@@ -440,7 +458,11 @@ def individual_process(filename: str,
             if blank_run:
                 pass
             else: 
-                features_object.__getattribute__(process)().save(saving_path)
+                features_object.__getattribute__(process)()
+                features_object.annotate_artifacts()
+                if any(np.isnan(features_object.feature.flatten())):
+                    raise Exception('ERROR: NAN GENERATED')
+                features_object.save(saving_path)
             print(f'\tsaving into {saving_path}\n')
         else:
             continue

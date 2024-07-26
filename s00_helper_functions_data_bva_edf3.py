@@ -36,7 +36,6 @@ def get_brainstate_data(sub: str,
 
 
 def crop_data(data: pd.DataFrame | np.ndarray,
-              dict_keys: list[str] = None,
               id_min: int = None,
               id_max: int = None,
               axis: int = 0) -> pd.DataFrame | np.ndarray:
@@ -221,7 +220,7 @@ def save_resampled_data(data: pd.DataFrame | np.ndarray,
 def resample_eeg_features(features_dict: dict[str, np.ndarray],
                           time_resampled: np.ndarray,
                           plot: bool = False,
-                          verbose: bool = False,
+                          verbose: bool = True,
                           inplace = False) -> dict[str, np.ndarray]:
     """Resample the EEG features to the time points of the brainstate data
     
@@ -235,8 +234,9 @@ def resample_eeg_features(features_dict: dict[str, np.ndarray],
     """
     if verbose:
         features_dict.keys()
-        print(f"{features_dict['feature'].shape}")
-        print(f"{features_dict['time'].shape}")
+        print(features_dict['feature'].shape)
+        print(features_dict['time'].shape)
+        print(features_dict['time'])
     
     
     interpolator = CubicSpline(features_dict['time'],
@@ -268,7 +268,7 @@ def get_real_column_name(data: pd.DataFrame,
 
 def dataframe_to_dict(df: pd.DataFrame, 
                      column_names: list[str],
-                     info: str
+                     info: str = 'brainstate'
                      ) -> dict[str, list | np.ndarray]:
     """Convert a dataframe to a specific directory.
     
@@ -288,7 +288,7 @@ def dataframe_to_dict(df: pd.DataFrame,
                           labels = column_names)
     f = df[column_names].to_numpy()
     out_dictionary.update(dict(feature = f.T,
-                               features_info = info))
+                               feature_info = info))
     return out_dictionary
 
 def resample_data(data: pd.DataFrame,

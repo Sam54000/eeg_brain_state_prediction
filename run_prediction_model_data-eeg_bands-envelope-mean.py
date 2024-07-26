@@ -61,6 +61,7 @@ tasks = data['tasks']
 
 data_brainstates = data['data_fmri']
 data_eyetracking = data['data_eyetracking']
+
 data_respiration = data['data_respiration']
 data_eeg_bands_envelope = data['data_eeg_bands_envelope']
 data_eeg_custom_envelope = data['data_eeg_custom_envelope']
@@ -243,9 +244,13 @@ for test_task in tasks:
                 train_subject_index = np.frompyfunc(lambda x: f"sub-{test_sub}" in x, 1, 1)(SUBJECT_KEYS)
 
                 TRAINING_EEG_FEATURES = STACKED_FEATURES[ train_subject_index==False, :]
+
+
                 TEST_EEG_FEATURES = STACKED_FEATURES[ test_subject_index==True, :]
 
                 TRAINING_FMRI_TARGETS = STACKED_TARGETS[ train_subject_index==False ]
+                
+                
                 TEST_FMRI_TARGETS = STACKED_TARGETS[ test_subject_index==True ]
 
                 test_subject_orig_index = (SUBJECT_KEYS_ORIG == test_key)

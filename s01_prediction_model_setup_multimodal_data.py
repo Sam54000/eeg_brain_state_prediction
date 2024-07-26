@@ -110,6 +110,7 @@ for sub in subjects:
             # FMRI DATA
 
             if all([isinstance(brainstate_data, pd.DataFrame), 
+                    has_fmri,
                     has_pupil_data,
                     has_resp_data,
                     has_eeg_data]):
@@ -123,7 +124,7 @@ for sub in subjects:
                     fill_nan = True
                     )
                 
-                multimodal_data_dict = hf.dataframe_to_dict(
+                multimodal_data_dict = {'brainstates': hf.dataframe_to_dict(
                     brainstate_data_resampled,
                     column_names = [col 
                                     for col in brainstate_data_resampled.columns
@@ -131,6 +132,7 @@ for sub in subjects:
                                     not in col],
                     info = 'brain states'
                 )
+                }
 
                 
             # ----------------------------------------------------------------------------
@@ -138,7 +140,7 @@ for sub in subjects:
                 eyetrack_data_file = os.path.join(eyetrack_data_dir, f"sub-{sub}_ses-{ses}_task-{task}_eyelink-pupil-eye-position.tsv")
                 pupil_data = pd.read_csv(eyetrack_data_file, sep='\t', index_col=0)
                 pupil_data_resampled = hf.resample_data(pupil_data, time_resampled=resampled_time)
-                multimodal_data_dict |= hf.dataframe_to_dict(
+                multimodal_data_dict['pupil'] = hf.dataframe_to_dict(
                     pupil_data_resampled,
                     column_names=[col for col in pupil_data_resampled.columns 
                                   if 'time' not in col.lower()],
@@ -154,6 +156,12 @@ for sub in subjects:
                 respiration_data_file = os.path.join(respiration_data_dir, f"sub-{sub}_ses-{ses}_task-{bstask}_resp_stdevs.csv")
                 respiration_data = pd.read_csv(respiration_data_file, sep=',', index_col=0)
                 respiration_data_resampled = hf.resample_data(respiration_data, time_resampled=resampled_time)
+                multimodal_data_dict['respiration'] = hf.dataframe_to_dict(
+                    respiration_data_resampled,
+                    column_names=[col for col in respiration_data_resampled.columns
+                                  if 'time' not in col.lower()],
+                    info = 'Respiration data'
+                )
                 # change the column name StdDev_6s to respiration
 
             # ----------------------------------------------------------------------------
@@ -175,54 +183,37 @@ for sub in subjects:
                         sub_dir_eeg, 
                         f"sub-{sub}_ses-{ses}_task-{task}_desc-{key}_eeg.pkl")
                     
+                    print(key)
                     data = np.load(filename, allow_pickle=True)
                     eeg_features[key] = hf.resample_eeg_features(data, 
                                                                  resampled_time)
 
             # ----------------------------------------------------------------------------
 
-                data_names = ["brainstate", 'pupil', 'respiration']
-                data_variables = [brainstate_data_resampled,
-                                pupil_data_resampled,
-                                respiration_data_resampled]
-                data_dict = {}
-                for name, variable in zip(data_names, data_variables):
-                    data_dict = {name: hf.dataframe_to_dict(
-                        variable,
-                        column_names = [col 
-                                        for col in variable.columns
-                                        if hf.get_real_column_name(variable, 'time')
-                                        not in col],
-                        info = 'brain states'
-                    )
-                    }
-
                 end_times = []
-                data_dict |= eeg_features
-                
+                multimodal_data_dict|= eeg_features
 
-                for data_name, data in data_dict.items():
+                for data_name, data in multimodal_data_dict.items():
                     data_shape = data["feature"].shape
-                    data = data["time"]
+                    time = data["time"]
                     print(f"Shape of {data_name} resampled: {data_shape}")
-                    end_times.append(data[-1])
+                    end_times.append(time[-1])
 
                 time_to_crop = np.min(end_times)
-                min_length = np.argmin(abs(brainstate_data_resampled['time'] - time_to_crop))
+                min_length = np.argmin(abs(
+                    multimodal_data_dict['brainstates']['time'] - time_to_crop
+                    ))
 
-                for data_name, data in data_dict.items():
+                for data_name, data in multimodal_data_dict.items():
                     for index, key_value in enumerate(["time", "feature"]):
-                        kwargs = {"dict_keys": key_value,
-                                    "axis": index}
                         data_cropped = hf.crop_data(data[key_value],
                                             id_max = min_length,
                                             axis = index)
                         data.update({key_value:data_cropped})
-                        data_cropped_shape = data_cropped.shape
-                        print(f"{data_name} {key_value} shape after cropping: {data_cropped_shape}")
+                        print(f"{data_name} {key_value} shape after cropping: {data_cropped.shape}")
                     
-                    data_dict.update({data_name:data})
+                    multimodal_data_dict.update({data_name:data})
 
                 key_name = f"sub-{sub}_ses-{ses}_task-{task}"
-                with open(os.path.join(out_dir, f"{key_name}_multimodal_data.pkl"), "wb") as file:
-                    pickle.dump(data_dict, file)
+                with open(os.path.join(dict_out_dir, f"{key_name}_multimodal_data.pkl"), "wb") as file:
+                    pickle.dump( multimodal_data_dict, file)
