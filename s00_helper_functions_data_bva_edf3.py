@@ -219,9 +219,7 @@ def save_resampled_data(data: pd.DataFrame | np.ndarray,
 
 def resample_eeg_features(features_dict: dict[str, np.ndarray],
                           time_resampled: np.ndarray,
-                          plot: bool = False,
-                          verbose: bool = True,
-                          inplace = False) -> dict[str, np.ndarray]:
+                          verbose: bool = True) -> dict[str, np.ndarray]:
     """Resample the EEG features to the time points of the brainstate data
     
     Args:
@@ -239,22 +237,17 @@ def resample_eeg_features(features_dict: dict[str, np.ndarray],
         print(features_dict['time'])
     
     
-    interpolator = CubicSpline(features_dict['time'],
-                                features_dict['feature'], 
-                                axis=1)
-    features_data_array_resampled = interpolator(time_resampled)
-        
-    if plot:
-        plt.imshow(features_dict['feature'][1,:,:].T, aspect='auto', vmax=1e-3)
-        plt.imshow(features_data_array_resampled[10,:,:].T, aspect='auto', vmax=1e-4)
+    for key_to_resample in ['feature','artifact_mask']:
+        interpolator = CubicSpline(features_dict['time'],
+                                    features_dict[key_to_resample], 
+                                    axis=1)
+        data_array_resampled = interpolator(time_resampled)
+        if key_to_resample == 'artifact_mask':
+            data_array_resampled = data_array_resampled > 0.5
+            
+        features_dict.update({key_to_resample: data_array_resampled})
     
-    if inplace:
-        features_dict |= {'feature': features_data_array_resampled,
-                         'time': time_resampled}
-    
-    else:
-        features_dict | {'feature': features_data_array_resampled,
-                                 'time': time_resampled}
+    features_dict.update({'time': time_resampled})
     
     return features_dict
 

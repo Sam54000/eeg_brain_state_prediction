@@ -64,10 +64,6 @@ s = {
     'tasks': tasks
 }
 
-sub = '01' # 
-ses = '01' # 01 021
-task = 'checker_run-01' #'checker_run-01' 'rest_run-01' , 'tp_run-01', 'tp_run-02'
-
 data_fmri = {}
 data_eyetracking = {}
 data_respiration = {}
@@ -183,7 +179,6 @@ for sub in subjects:
                         sub_dir_eeg, 
                         f"sub-{sub}_ses-{ses}_task-{task}_desc-{key}_eeg.pkl")
                     
-                    print(key)
                     data = np.load(filename, allow_pickle=True)
                     eeg_features[key] = hf.resample_eeg_features(data, 
                                                                  resampled_time)
@@ -205,11 +200,18 @@ for sub in subjects:
                     ))
 
                 for data_name, data in multimodal_data_dict.items():
-                    for index, key_value in enumerate(["time", "feature"]):
+                    key_list = ["time", "feature"]
+                    for index, key_value in enumerate(key_list):
                         data_cropped = hf.crop_data(data[key_value],
                                             id_max = min_length,
                                             axis = index)
                         data.update({key_value:data_cropped})
+                    if data_name in eeg_features.keys():
+                        data_cropped = hf.crop_data(data["artifact_mask"],
+                                            id_max = min_length,
+                                            axis = 0)
+                        data.update({"artifact_mask":data_cropped})
+            
                         print(f"{data_name} {key_value} shape after cropping: {data_cropped.shape}")
                     
                     multimodal_data_dict.update({data_name:data})
