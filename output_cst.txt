@@ -136,11 +136,16 @@ Setting up band-pass filter from 30 - 40 Hz
 
 FIR filter parameters
 ---------------------
-Designing a one-pass,/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/joblib/externals/loky/backend/resource_tracker.py:314: UserWarning: resource_tracker: There appear to be 70 leaked semlock objects to clean up at shutdown
-  warnings.warn(
-/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/joblib/externals/loky/backend/resource_tracker.py:314: UserWarning: resource_tracker: There appear to be 2 leaked folder objects to clean up at shutdown
-  warnings.warn(
-s
+Designing a one-pass, zero-phase, non-causal bandpass filter:
+- Windowed time-domain design (firwin) method
+- Hamming window with 0.0194 passband ripple and 53 dB stopband attenuation
+- Lower passband edge: 30.00
+- Lower transition bandwidth: 7.50 Hz (-6 dB cutoff frequency: 26.25 Hz)
+- Upper passband edge: 40.00 Hz
+- Upper transition bandwidth: 10.00 Hz (-6 dB cutoff frequency: 45.00 Hz)
+- Filter length: 441 samples (0.441 s)
+
+[Parallel(n_jobs=1)]: Done  17 tasks      | elapsed:    0.1s
 saving into /data2/Projects/NKI_RS2/MoBI/Extract_Mobi_Data/eeg_preprocessing_cst/data/annotated_eeg_data/calibration_data/eeg_features_extraction/sub-M10971678/ses-MOBI1A/eeg/sub-M10971678_ses-MOBI1A_run-001_desc-EEGbandsEnvelopesBlinksRemoved_eeg.pkl
 	saving into /data2/Projects/NKI_RS2/MoBI/Extract_Mobi_Data/eeg_preprocessing_cst/data/annotated_eeg_data/calibration_data/eeg_features_extraction/sub-M10971678/ses-MOBI1A/eeg/sub-M10971678_ses-MOBI1A_run-001_desc-EEGbandsEnvelopesBlinksRemoved_eeg.pkl
 
