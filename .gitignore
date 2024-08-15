@@ -4,3 +4,4 @@ models
 *.txt
 *.png
 *.pdf
+*.pkl
