@@ -1,3 +1,5 @@
 .history
 .DS_Store
 models
+*.txt
+*.png
