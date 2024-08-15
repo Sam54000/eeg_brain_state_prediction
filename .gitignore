@@ -1,5 +1,7 @@
 .history
 .DS_Store
 models
-*.txt
 *.png
+*.pkl
+*.pdf
+*.txt
