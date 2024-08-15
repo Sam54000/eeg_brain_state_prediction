@@ -201,7 +201,6 @@ def resample_time(time: np.ndarray,
     else:
         raise ValueError("You must provide the TR value and the resampling factor")
 
-
 def save_resampled_data(data: pd.DataFrame | np.ndarray,
                         filename: str | os.PathLike) -> None:
     """Save the resampled data to a file whatever the instance is."
