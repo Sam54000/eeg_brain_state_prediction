@@ -229,6 +229,7 @@ class BlinkRemover:
         self.blink_removed_raw = self.raw.copy()
         self.blink_removed_raw.add_proj(self.eog_projs).apply_proj()
         return self
+    
 
 class EEGfeatures:
     def __init__(self, raw: mne.io.Raw):
@@ -407,7 +408,7 @@ def individual_process(filename: str,
                     remove_blinks = True,
                     blank_run = True):
     
-    derivatives_path = Path('/projects/EEG_FMRI/bids_eeg/BIDS/NEW/DERIVATIVES/eeg_features_extraction/third_run')
+    derivatives_path = Path('/projects/EEG_FMRI/bids_eeg/BIDS/NEW/DERIVATIVES/eeg_features_extraction/riemannian')
     print('=====================================================\n')
     print(f'reading {filename}')
 

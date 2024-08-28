@@ -83,6 +83,41 @@ def combine_data_from_filename(reading_dir: str | os.PathLike,
 big_d = combine_data_from_filename('/data2/Projects/eeg_fmri_natview/derivatives/multimodal_prediction_models/data_prep/prediction_model_data_eeg_features_v2/dictionary_group_data_Hz-3.8',
                                     task = 'checker',
                                     run = '01BlinksRemoved')
+def filter_data(data: np.ndarray, 
+                low_freq_cutoff: float | None = None,
+                high_freq_cutoff: float | None = None,
+                ):
+    """Filter the data using a bandpass filter.
+
+    Args:
+        data (np.ndarray): The data to filter
+        low_freq_cutoff (float | None): The lower bound to filter. 
+                                        Defaults to None.
+        high_freq_cutoff (float, optional): The higher bound to filter. 
+                                            Defaults to 0.1.
+
+    Returns:
+        data: _description_
+    """
+    if high_freq_cutoff and not low_freq_cutoff:
+        filter_type = 'low'
+        freq = high_freq_cutoff
+    elif low_freq_cutoff and not high_freq_cutoff:
+        filter_type = 'high'
+        freq = low_freq_cutoff
+    elif high_freq_cutoff and low_freq_cutoff:
+        filter_type = 'band'
+        freq = [low_freq_cutoff, high_freq_cutoff]
+    
+    filtered_data = scipy.signal.butter(
+        4, 
+        freq, 
+        btype=filter_type,
+        output='sos'
+        )
+    filtered_data = scipy.signal.sosfilt(filtered_data, data, axis=1)
+    return filtered_data
+
 
 def generate_key_list(subjects: list[str] | str,
                       sessions: list[str] | str,
@@ -106,7 +141,6 @@ def generate_key_list(subjects: list[str] | str,
     for subject in subjects:
         for session in sessions:
             for run in runs:
-                if big_
                 try:
                     big_data[f'sub-{subject}'][f'ses-{session}'][task][f'run-{run}']
                     key_list.append((
@@ -199,6 +233,8 @@ def create_big_feature_array(big_data: dict,
         
         if extracted_array.ndim < 2:
             extracted_array = np.reshape(extracted_array,(1,extracted_array.shape[0]))
+        
+        #extracted_array = filter_data(extracted_array,high_freq_cutoff=0.1)
         concatenation_list.append(extracted_array)
     
     return np.concatenate(concatenation_list,axis = axis_to_concatenate)
@@ -337,6 +373,7 @@ def create_X_and_Y(big_data: dict,
                    normalization: str = 'zscore',
                    reduction_method: str = 'flatten',
                    window_length: int = 45,
+                   integrate_pupil: bool = True,
                   ) -> tuple[Any,Any]:
     
     bands_list = ['delta','theta','alpha','beta','gamma']
@@ -346,6 +383,7 @@ def create_X_and_Y(big_data: dict,
 
     elif isinstance(bands_names, str):
         index_band = bands_list.index(bands_names)
+    
     
     big_X_array = create_big_feature_array(
         big_data            = big_data,
@@ -373,15 +411,49 @@ def create_X_and_Y(big_data: dict,
         axis=1
     )
     
-    new_shape = (windowed_X.shape[1], -1) + windowed_X.shape[3:]
+    if integrate_pupil:
+        pupil_array = create_big_feature_array(
+            big_data            = big_data,
+            modality            = 'pupil',
+            array_name          = 'feature',
+            index_to_get        = None,
+            axis_to_get         = 0,
+            keys_list           = keys_list
+            ) 
+
+        if normalization == 'zscore':
+            pupil_array = scipy.stats.zscore(pupil_array,axis=1)
+
+        windowed_pupil = np.lib.stride_tricks.sliding_window_view(
+            pupil_array[:,:-1], 
+            window_shape=window_length, 
+            axis=1
+        )
+        new_shape_pupil = (windowed_pupil.shape[1], -1)
+        windowed_pupil = windowed_pupil.transpose(1, 0, 2)
+        windowed_pupil = windowed_pupil.reshape(new_shape_pupil)
+        flattened_windowed_pupil = windowed_pupil.reshape(windowed_pupil.shape[0], -1)
+    
+    new_shape_X = (windowed_X.shape[1], -1) + windowed_X.shape[3:]
     windowed_X = windowed_X.transpose(1, 0, 2, *range(3, big_X_array.ndim + 1))
-    windowed_X = windowed_X.reshape(new_shape)
+    windowed_X = windowed_X.reshape(new_shape_X)
+    
+    
 
     if reduction_method == 'flatten':
         flattened_windowed_X = windowed_X.reshape(windowed_X.shape[0], -1)
     
     elif reduction_method == 'gfp':
         flattened_windowed_X = np.squeeze(np.var(windowed_X, axis=0))
+    
+    if integrate_pupil:
+        returning_X = np.concatenate(
+            (flattened_windowed_X, flattened_windowed_pupil),
+            axis=1
+            )
+    else:
+        returning_X = flattened_windowed_X
+    
     
     big_Y_array = create_big_feature_array(
         big_data            = big_data,
@@ -394,7 +466,7 @@ def create_X_and_Y(big_data: dict,
             
     windowed_Y = np.squeeze(big_Y_array[:,window_length:])
 
-    return flattened_windowed_X, windowed_Y
+    return returning_X, windowed_Y
 
 def create_train_test_data(big_data: dict,
                            train_sessions: list[str],
@@ -612,7 +684,7 @@ if __name__ == '__main__':
                 X_name        = 'EEGbandsEnvelopes',
                 band_name     = bands,
                 window_length = 45,
-                model_name    = 'elastic'
+                model_name    = 'ridge'
                 )
 
             models[subject][cap] = {
@@ -621,7 +693,7 @@ if __name__ == '__main__':
                 'Y_test': Y_test,
             }
 
-    with open('./models/ElasticNet_models_checker.pkl', 'wb') as file:
+    with open('./models/ridge_pupil.pkl', 'wb') as file:
         pickle.dump(models,file)
             
 #%% 

@@ -25,19 +25,20 @@ from numpy.lib.stride_tricks import sliding_window_view
 import combine_data
 import pandas as pd
 #%%
-with open('./models/ridge_model_rest.pkl', 'rb') as file:
+with open('./models/ridge_pupil.pkl', 'rb') as file:
     ridge_model = pickle.load(file)
 
 subject_list = list(ridge_model.keys())
 ts_CAPS_list = list(ridge_model[subject_list[0]].keys())
 sessions = ['01','02']
+task = 'rest'
 
 filename = '/data2/Projects/eeg_fmri_natview/derivatives/'\
            'multimodal_prediction_models/data_prep/'\
            'prediction_model_data_eeg_features_v2/dictionary_group_data_Hz-3.8'
            
 big_d = combine_data.combine_data_from_filename(filename,
-                                                task = 'rest',
+                                                task = task,
                                                 run = '01BlinksRemoved')
 #%%
 r_data_for_df = {'subject':[],
@@ -54,7 +55,7 @@ for subject in subject_list:
                     train_sessions=['01','02'],
                     test_subject = subject.split('-')[1],
                     test_session= session,
-                    task = 'rest',
+                    task = task,
                     runs = ['01BlinksRemoved'],
                     cap_name = ts_CAPS,
                     X_name = 'EEGbandsEnvelopes',
@@ -62,6 +63,7 @@ for subject in subject_list:
                     window_length = 45,
                     chan_select_args = None,
                     masking = True,
+                    
                     )
                 Y_hat = model.predict(X_test)
                 r = scipy.stats.pearsonr(Y_test,Y_hat)[0]

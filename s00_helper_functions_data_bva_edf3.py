@@ -25,7 +25,9 @@ def get_brainstate_data(sub: str,
                              the file exists, else return None.
     """
     #print("checking if files exist")
+
     brainstate_data_file = os.path.join(brainstate_dir, f"sub-{sub}_ses-{ses}_task-{task}.txt")
+    print(brainstate_data_file)
 
     if ( os.path.exists(brainstate_data_file) ):
         brainstate_data = pd.read_csv(brainstate_data_file, sep='\t') #, index_col=0
@@ -314,31 +316,66 @@ def resample_data(data: pd.DataFrame,
 
 # ==============================================================================================================================
 # ==============================================================================================================================
-def check_data_exists(sub, ses, task, fmri_data_dir, eeg_proc_data_dir, eyetrack_data_dir, respiration_data_dir):
-    #print("checking if files exist")
-    sub_dir = os.path.join(fmri_data_dir, f"sub-{sub}", f"ses-{ses}")
+def data_exists(sub: str,
+                ses: str,
+                task: str,
+                fmri_data_dir: str | os.PathLike | None = None,
+                eeg_proc_data_dir: str | os.PathLike | None = None,
+                eyetrack_data_dir: str | os.PathLike | None = None, 
+                respiration_data_dir: str | os.PathLike | None = None,
+                verbose = False) -> bool:
+    """Check if the data exists in the directories.
+    
+    Args:
+        sub (str): subject label
+        ses (str): session label
+        task (str): task label
+        fmri_data_dir (str | os.PathLike): directory where the fmri data is stored
+        eeg_proc_data_dir (str | os.PathLike): directory where the eeg data is stored
+        eyetrack_data_dir (str | os.PathLike): directory where the eyetrack data is stored
+        respiration_data_dir (str | os.PathLike): directory where the respiration data is stored
+        verbose (bool): Whether to print the existence of the data
+    
+    Returns:
+        bool: True if all the data exists, else False
+    """
 
+    existing_states = []
     if (task[:2]=='tp'):
         bstask = task
     else:
         bstask = task[:(len(task)-7)]
     
-    # sub-01_ses-01_task-checker_space-T1w_desc-preproc_bold.nii.gz
-    fmri_data = os.path.join(sub_dir, "func", f"sub-{sub}_ses-{ses}_task-{bstask}_space-T1w_desc-preproc_bold.nii.gz")
-    #eeg_data = os.path.join(eeg_data_dir, f"sub-{sub}_ses-{ses}_task-{task}_eeg-edf.edf")
-    #if (os.path.exists(eeg_data) == False):
-    #    eeg_data = os.path.join(eeg_data_dir, f"sub-{sub}_ses-{ses}_task-{task}_eeg-edf_2.edf")
-    eeg_data = os.path.join(eeg_proc_data_dir, f"sub-{sub}", f"ses-{ses}", "eeg", f"sub-{sub}_ses-{ses}_task-{task}_desc-EEGbandsEnvelopes_eeg.pkl")
-    eyetrack_data = os.path.join(eyetrack_data_dir, f"sub-{sub}_ses-{ses}_task-{task}_eyelink-pupil-eye-position.tsv")
-    respiration_data = os.path.join(respiration_data_dir, f"sub-{sub}_ses-{ses}_task-{bstask}_resp_stdevs.csv")
+    if fmri_data_dir:
+        sub_dir = os.path.join(fmri_data_dir, f"sub-{sub}", f"ses-{ses}")
+        fmri_data = os.path.join(sub_dir, "func", f"sub-{sub}_ses-{ses}_task-{bstask}_space-T1w_desc-preproc_bold.nii.gz")
+        existing_states.append(os.path.exists(fmri_data))
 
-    #print(eeg_data)
-    print(f"fmri data exists - {os.path.exists(fmri_data)}")
-    print(f"eeg data exists - {os.path.exists(eeg_data)}")
-    print(f"pd data exists - {os.path.exists(eyetrack_data)}")
-    print(f"resp data exists - {os.path.exists(respiration_data)}")
+        if verbose:
+            print(f"fmri data exists - {os.path.exists(fmri_data)}")
+    
+    if eeg_proc_data_dir:
+        #eeg_data = os.path.join(eeg_proc_data_dir, f"sub-{sub}", f"ses-{ses}", "eeg", f"sub-{sub}_ses-{ses}_task-{task}_desc-EEGbandsEnvelopes_eeg.pkl")
+        eeg_data = os.path.join(eeg_proc_data_dir, f"sub-{sub}_ses-{ses}_task-{task}_eeg.edf")
+        existing_states.append(os.path.exists(eeg_data))
 
-    #return ( os.path.exists(fmri_data) & os.path.exists(eeg_data) )
-    return os.path.exists(fmri_data), os.path.exists(eeg_data), os.path.exists(eyetrack_data), os.path.exists(respiration_data)
+        if verbose:
+            print(f"eeg data exists - {os.path.exists(eeg_data)}")
+    
+    if eyetrack_data_dir:
+        eyetrack_data = os.path.join(eyetrack_data_dir, f"sub-{sub}_ses-{ses}_task-{task}_eyelink-pupil-eye-position.tsv")
+        existing_states.append(os.path.exists(eyetrack_data))
+
+        if verbose:
+            print(f"pd data exists - {os.path.exists(eyetrack_data)}")
+    
+    if respiration_data_dir:
+        respiration_data = os.path.join(respiration_data_dir, f"sub-{sub}_ses-{ses}_task-{bstask}_resp_stdevs.csv")
+        existing_states.append(os.path.exists(respiration_data))
+
+        if verbose:
+            print(f"resp data exists - {os.path.exists(respiration_data)}")
+
+    return all(existing_states)
 
 # ==============================================================================================================================
