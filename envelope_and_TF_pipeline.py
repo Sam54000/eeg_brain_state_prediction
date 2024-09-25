@@ -221,7 +221,7 @@ class BlinkRemover:
         """
         self.eog_projs, _ = mne.preprocessing.compute_proj_eog(
             self.raw, 
-            n_eeg=1,
+            n_eeg=2,
             reject=None,
             no_proj=True,
             ch_name = self.channels
@@ -237,7 +237,7 @@ class EEGfeatures:
         self.channel_names = raw.info['ch_names']
         self.frequencies = list()
         self.croping_values = specific_crop(raw,
-                                            margin = 0,
+                                            margin = -1,
                                             return_time = True)
     
 
@@ -249,7 +249,7 @@ class EEGfeatures:
                 *self.croping_values
             )
             temp_envelopes_list.append(envelope.get_data())
-        self.times = envelope.times
+        self.time = envelope.times
         self.feature = np.stack(temp_envelopes_list, axis = -1)
         return self
 
@@ -274,7 +274,9 @@ class EEGfeatures:
                                 lowest_frequency: int = 1, 
                                 frequency_step: int = 1) -> 'EEGfeatures':
         self.frequencies = list()
-        for low_frequency in range(lowest_frequency, highest_frequency, frequency_step):
+        for low_frequency in range(lowest_frequency, 
+                                   highest_frequency, 
+                                   frequency_step):
             high_frequency = low_frequency + frequency_step
             self.frequencies.append((low_frequency - 1, high_frequency))
 
@@ -291,7 +293,6 @@ class EEGfeatures:
 
         self.frequencies = np.linspace(1,40,40)
         cycles = self.frequencies / 2
-        start, stop = self.croping_values
         time_frequency_representation = self.raw.copy().crop(
             *self.croping_values
             ).compute_tfr(
@@ -302,7 +303,7 @@ class EEGfeatures:
             reject_by_annotation=False
         )
     
-        self.times = time_frequency_representation.times - start
+        self.time = time_frequency_representation.times
         data_array = time_frequency_representation.get_data()
         self.feature = np.moveaxis(data_array, 2, 1)
         self.feature_info = """Morlet Time-Frequency Representation
@@ -323,7 +324,7 @@ class EEGfeatures:
     def save(self, filename):
         channel_info = extract_location(self.channel_names)
         param_to_save = {
-            'time': self.times,
+            'time': self.time,
             'labels':{'channels_info': channel_info,
                       'frequencies': self.frequencies,
             },
@@ -382,7 +383,8 @@ def specific_crop(raw: mne.io.Raw,
 def loop(overwrite = True, 
          task = ['rest', 'checker'],
          blank_run = True,
-         remove_blinks = False,):
+         remove_blinks = False,
+         derivatives_path = None):
     raw_path = Path('/projects/EEG_FMRI/bids_eeg/BIDS/NEW/PREP_BV_EDF')
 
     for filename in raw_path.iterdir():
@@ -395,7 +397,8 @@ def loop(overwrite = True,
             individual_process(filename, 
                             overwrite = overwrite,
                             remove_blinks = remove_blinks,
-                            blank_run=blank_run
+                            blank_run=blank_run,
+                            derivatives_path=derivatives_path
                             )
         #except Exception as e:
         #    print(f'___xxx___xxx___xxx___xxx___xxx___xxx___\n')
@@ -406,9 +409,9 @@ def loop(overwrite = True,
 def individual_process(filename: str, 
                     overwrite = True, 
                     remove_blinks = True,
-                    blank_run = True):
+                    blank_run = True,
+                    derivatives_path = None):
     
-    derivatives_path = Path('/projects/EEG_FMRI/bids_eeg/BIDS/NEW/DERIVATIVES/eeg_features_extraction/riemannian')
     print('=====================================================\n')
     print(f'reading {filename}')
 
@@ -470,8 +473,13 @@ def individual_process(filename: str,
 
 
 if __name__ == '__main__':
-    for blink_removal in [True, False]:
-        loop(overwrite = True, blank_run = False, remove_blinks = blink_removal)
+    blink_removal = True
+    saving_path = Path('/projects/EEG_FMRI/bids_eeg/BIDS/NEW/DERIVATIVES/'
+                       'eeg_features_extraction/third_run')
+    loop(overwrite = True, 
+         blank_run = False, 
+         remove_blinks = blink_removal,
+         derivatives_path = saving_path)
 
 # TODO The frequencies need a better handling because it changes datastructure
 #      from list of tuple to numpy array. It could be better to keep it as np.array

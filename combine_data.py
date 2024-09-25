@@ -80,9 +80,10 @@ def combine_data_from_filename(reading_dir: str | os.PathLike,
 
     return big_data
 
-big_d = combine_data_from_filename('/data2/Projects/eeg_fmri_natview/derivatives/multimodal_prediction_models/data_prep/prediction_model_data_eeg_features_v2/dictionary_group_data_Hz-3.8',
-                                    task = 'checker',
-                                    run = '01BlinksRemoved')
+#big_d = combine_data_from_filename('/data2/Projects/eeg_fmri_natview/derivatives/multimodal_prediction_models/data_prep/prediction_model_data_eeg_features_v2/group_data_Hz-3.8',
+#                                    task = 'checker',
+#                                    run = '01BlinksRemoved')
+#%%
 def filter_data(data: np.ndarray, 
                 low_freq_cutoff: float | None = None,
                 high_freq_cutoff: float | None = None,
@@ -117,7 +118,6 @@ def filter_data(data: np.ndarray,
         )
     filtered_data = scipy.signal.sosfilt(filtered_data, data, axis=1)
     return filtered_data
-
 
 def generate_key_list(subjects: list[str] | str,
                       sessions: list[str] | str,
@@ -220,7 +220,8 @@ def create_big_feature_array(big_data: dict,
                 ][session
                     ][task
                         ][run
-                            ][modality][array_name].take(
+                            ][modality
+                              ][array_name].take(
                                 index_to_get,
                                 axis = axis_to_get
                             )
@@ -314,9 +315,37 @@ def get_specific_location(big_data: Dict,
 
     return mask if mask.any() else None
 
+def combine_masks(big_data:dict,
+                  key_list: list,
+                  modalities: list = ['EEGbandsEnvelopes','brainstates']):
+    masks = []
+    for modality in modalities:
+        if 'brainstates' in modality:
+            array_name = 'feature'
+            index_to_get = -1
+            axis_to_get = 0
+        else:
+            array_name = 'artifact_mask'
+            index_to_get = None
+            axis_to_get = None
+        
+        temp_mask = create_big_feature_array(
+            big_data = big_data,
+            modality = modality,
+            array_name = array_name,
+            index_to_get = index_to_get,
+            axis_to_get=axis_to_get,
+            keys_list=key_list,
+            axis_to_concatenate=0
+        )
+        masks.append(temp_mask.flatten())
+    
+    return np.all(masks, axis = 0)
+        
 def build_windowed_mask(big_data: dict,
                         key_list:list,
                         window_length: int = 45,
+                        modalities = ['brainstates']
                         ) -> np.ndarray:
     """Build the mask based on the brainstate and EEG ones.
     
@@ -332,31 +361,9 @@ def build_windowed_mask(big_data: dict,
         np.ndarray: The windowed mask
     """
 
-    eeg_mask = create_big_feature_array(
-        big_data            =  big_data,
-        modality            = 'EEGbandsEnvelopes',
-        array_name          = 'artifact_mask',
-        index_to_get        = None,
-        axis_to_get         = None,
-        keys_list           = key_list,
-        axis_to_concatenate = 0
-        )
-
-    eeg_mask = eeg_mask.flatten()
-
-    fmri_mask = create_big_feature_array(
-        big_data            = big_data,
-        modality            = 'brainstates',
-        array_name          = 'feature',
-        index_to_get        = -1,
-        axis_to_get         = 0,
-        keys_list           = key_list,
-        axis_to_concatenate = 0,
-        )
-
-    fmri_mask = fmri_mask.flatten()
-    
-    joined_masks = np.logical_or(eeg_mask,fmri_mask)
+    joined_masks = combine_masks(big_data,
+                                 key_list,
+                                 modalities = modalities)
     
     windowed_mask = sliding_window_view(joined_masks[:-1], 
                                         window_shape=window_length,
@@ -367,8 +374,8 @@ def build_windowed_mask(big_data: dict,
 def create_X_and_Y(big_data: dict,
                    keys_list: list[tuple[str, ...]],
                    X_name: str,
-                   bands_names: str,
                    cap_name: str,
+                   bands_names: str | list | None =  None,
                    chan_select_args: Dict[str,str] | None = None,
                    normalization: str = 'zscore',
                    reduction_method: str = 'flatten',
@@ -383,17 +390,28 @@ def create_X_and_Y(big_data: dict,
 
     elif isinstance(bands_names, str):
         index_band = bands_list.index(bands_names)
+    else:
+        pass
     
+    if "pupil" in X_name:
+        index_to_get = 1 
+        axis_to_get = 0
+        integrate_pupil = False
     
+    elif "envelopes" in X_name.lower() or "tfr" in X_name.lower():
+        index_to_get = index_band
+        axis_to_get = 2
+
     big_X_array = create_big_feature_array(
         big_data            = big_data,
         modality            = X_name,
         array_name          = 'feature',
-        index_to_get        = index_band,
-        axis_to_get         = 2,
+        index_to_get        = index_to_get, #To modify for EEG band. It is now for pupil
+        axis_to_get         = axis_to_get,
         keys_list           = keys_list
         )
 
+    big_X_array
     if chan_select_args:
         channel_mask = get_specific_location(big_data, **chan_select_args)
         big_X_array = big_X_array[channel_mask,...]
@@ -416,7 +434,7 @@ def create_X_and_Y(big_data: dict,
             big_data            = big_data,
             modality            = 'pupil',
             array_name          = 'feature',
-            index_to_get        = None,
+            index_to_get        = 1,
             axis_to_get         = 0,
             keys_list           = keys_list
             ) 
@@ -438,8 +456,6 @@ def create_X_and_Y(big_data: dict,
     windowed_X = windowed_X.transpose(1, 0, 2, *range(3, big_X_array.ndim + 1))
     windowed_X = windowed_X.reshape(new_shape_X)
     
-    
-
     if reduction_method == 'flatten':
         flattened_windowed_X = windowed_X.reshape(windowed_X.shape[0], -1)
     
@@ -453,7 +469,6 @@ def create_X_and_Y(big_data: dict,
             )
     else:
         returning_X = flattened_windowed_X
-    
     
     big_Y_array = create_big_feature_array(
         big_data            = big_data,
@@ -531,15 +546,16 @@ def create_train_test_data(big_data: dict,
         window_length    = window_length,
         )
 
-    train_mask = build_windowed_mask(big_data,train_keys)
+    train_mask = build_windowed_mask(big_data,
+                                     key_list = train_keys,
+                                     modalities = ['brainstates']) # !!! TEMP FIX
+    
     print(f'X_train shape: {X_train.shape}')
     print(f'Y_train shape: {Y_train.shape}')
     print(f'Train mask shape: {train_mask.shape}')
 
     X_train = X_train[train_mask]
     Y_train = Y_train[train_mask]
-    
-    
     
     X_test, Y_test = create_X_and_Y(
         big_data         = big_data,
@@ -551,7 +567,10 @@ def create_train_test_data(big_data: dict,
         window_length    = window_length,
         )
 
-    test_mask = build_windowed_mask(big_data,test_keys)
+    test_mask = build_windowed_mask(big_data,
+                                    test_keys, 
+                                    modalities=['brainstates']) # !!! TEMP FIX
+    
     print(f'X_test shape: {X_test.shape}')
     print(f'Y_test shape: {Y_test.shape}')
     print(f'Test mask shape: {test_mask.shape}')
@@ -658,11 +677,12 @@ if __name__ == '__main__':
     bands = ['delta','theta','alpha','beta','gamma']
     runs = ['01BlinksRemoved']
     task = 'checker'
+    X_NAME = 'pupil'
     
     study_directory = (
         "/data2/Projects/eeg_fmri_natview/derivatives"
         "/multimodal_prediction_models/data_prep"
-        "/prediction_model_data_eeg_features_v2/dictionary_group_data_Hz-3.8"
+        "/prediction_model_data_eeg_features_v2/group_data_Hz-3.8"
         )
 
     big_d = combine_data_from_filename(
@@ -681,8 +701,8 @@ if __name__ == '__main__':
                 task          = task,
                 runs          = runs,
                 cap_name      = cap,
-                X_name        = 'EEGbandsEnvelopes',
-                band_name     = bands,
+                X_name        = X_NAME,
+                band_name     = None,
                 window_length = 45,
                 model_name    = 'ridge'
                 )

@@ -233,10 +233,6 @@ def resample_eeg_features(features_dict: dict[str, np.ndarray],
     """
     if verbose:
         features_dict.keys()
-        print(features_dict['feature'].shape)
-        print(features_dict['time'].shape)
-        print(features_dict['time'])
-    
     
     for key_to_resample in ['feature','artifact_mask']:
         interpolator = CubicSpline(features_dict['time'],
@@ -355,8 +351,8 @@ def data_exists(sub: str,
             print(f"fmri data exists - {os.path.exists(fmri_data)}")
     
     if eeg_proc_data_dir:
-        #eeg_data = os.path.join(eeg_proc_data_dir, f"sub-{sub}", f"ses-{ses}", "eeg", f"sub-{sub}_ses-{ses}_task-{task}_desc-EEGbandsEnvelopes_eeg.pkl")
-        eeg_data = os.path.join(eeg_proc_data_dir, f"sub-{sub}_ses-{ses}_task-{task}_eeg.edf")
+        eeg_data = os.path.join(eeg_proc_data_dir, f"sub-{sub}", f"ses-{ses}", "eeg", f"sub-{sub}_ses-{ses}_task-{task}_desc-EEGbandsEnvelopesBlinksRemoved_eeg.pkl")
+        #eeg_data = os.path.join(eeg_proc_data_dir, f"sub-{sub}_ses-{ses}_task-{task}_eeg.edf")
         existing_states.append(os.path.exists(eeg_data))
 
         if verbose:
@@ -367,14 +363,14 @@ def data_exists(sub: str,
         existing_states.append(os.path.exists(eyetrack_data))
 
         if verbose:
-            print(f"pd data exists - {os.path.exists(eyetrack_data)}")
+            print(f"pupil data exists - {os.path.exists(eyetrack_data)}")
     
     if respiration_data_dir:
         respiration_data = os.path.join(respiration_data_dir, f"sub-{sub}_ses-{ses}_task-{bstask}_resp_stdevs.csv")
         existing_states.append(os.path.exists(respiration_data))
 
         if verbose:
-            print(f"resp data exists - {os.path.exists(respiration_data)}")
+            print(f"respration data exists - {os.path.exists(respiration_data)}")
 
     return all(existing_states)
 

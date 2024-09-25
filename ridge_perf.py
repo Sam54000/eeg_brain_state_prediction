@@ -17,7 +17,6 @@ import numpy as np
 import sklearn.linear_model
 import sklearn.model_selection
 from typing import List, Dict, Union, Optional
-from typing import Any
 import pickle
 import seaborn as sns
 import scipy
@@ -31,11 +30,11 @@ with open('./models/ridge_pupil.pkl', 'rb') as file:
 subject_list = list(ridge_model.keys())
 ts_CAPS_list = list(ridge_model[subject_list[0]].keys())
 sessions = ['01','02']
-task = 'rest'
+task = 'checker'
 
 filename = '/data2/Projects/eeg_fmri_natview/derivatives/'\
            'multimodal_prediction_models/data_prep/'\
-           'prediction_model_data_eeg_features_v2/dictionary_group_data_Hz-3.8'
+           'prediction_model_data_eeg_features_v2/group_data_Hz-3.8'
            
 big_d = combine_data.combine_data_from_filename(filename,
                                                 task = task,
@@ -58,8 +57,8 @@ for subject in subject_list:
                     task = task,
                     runs = ['01BlinksRemoved'],
                     cap_name = ts_CAPS,
-                    X_name = 'EEGbandsEnvelopes',
-                    band_name = ['delta','theta','alpha','beta','gamma'],
+                    X_name = 'pupil',
+                    band_name = None,
                     window_length = 45,
                     chan_select_args = None,
                     masking = True,
