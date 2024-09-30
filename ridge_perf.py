@@ -24,7 +24,8 @@ from numpy.lib.stride_tricks import sliding_window_view
 import combine_data
 import pandas as pd
 #%%
-with open('./models/ridge_pupil.pkl', 'rb') as file:
+sampling_rate = 3.8
+with open(f'./models/ridge_pupil_{sampling_rate}.pkl', 'rb') as file:
     ridge_model = pickle.load(file)
 
 subject_list = list(ridge_model.keys())
@@ -34,7 +35,7 @@ task = 'checker'
 
 filename = '/data2/Projects/eeg_fmri_natview/derivatives/'\
            'multimodal_prediction_models/data_prep/'\
-           'prediction_model_data_eeg_features_v2/group_data_Hz-3.8'
+           f'prediction_model_data_eeg_features_v2/group_data_Hz-{sampling_rate}'
            
 big_d = combine_data.combine_data_from_filename(filename,
                                                 task = task,
@@ -45,28 +46,31 @@ r_data_for_df = {'subject':[],
                  'ts_CAPS':[],
                  'pearson_r':[]}
 for subject in subject_list:
-    for session in sessions:
+    for ts_CAPS in ts_CAPS_list:
         try:
-            for ts_CAPS in ts_CAPS_list:
-                model = ridge_model[subject][ts_CAPS]['model']
-                X_train, Y_train, X_test, Y_test = combine_data.create_train_test_data(
-                    big_data = big_d,
-                    train_sessions=['01','02'],
-                    test_subject = subject.split('-')[1],
-                    test_session= session,
-                    task = task,
-                    runs = ['01BlinksRemoved'],
-                    cap_name = ts_CAPS,
-                    X_name = 'pupil',
-                    band_name = None,
-                    window_length = 45,
-                    chan_select_args = None,
-                    masking = True,
-                    
-                    )
+            for session in sessions:
+                model = ridge_model[subject][ts_CAPS][f'ses-{session}']['model']
+                X_test = ridge_model[subject][ts_CAPS][f'ses-{session}']['X_test']
+                Y_test = ridge_model[subject][ts_CAPS][f'ses-{session}']['Y_test']
+                #X_train, Y_train, X_test, Y_test = combine_data.create_train_test_data(
+                #    big_data = big_d,
+                #    train_sessions=['01','02'],
+                #    test_subject = subject.split('-')[1],
+                #    test_session= [session],
+                #    task = task,
+                #    runs = ['01BlinksRemoved'],
+                #    cap_name = ts_CAPS,
+                #    X_name = 'pupil',
+                #    band_name = None,
+                #    window_length = 57,
+                #    chan_select_args = None,
+                #    masking = False,
+                #    
+                #    )
+                
                 Y_hat = model.predict(X_test)
+                print(Y_hat.shape)
                 r = scipy.stats.pearsonr(Y_test,Y_hat)[0]
-
 
                 for key, values in zip(
                     ['subject','session','ts_CAPS','pearson_r'],
@@ -75,7 +79,8 @@ for subject in subject_list:
 
         except Exception as e:
             print(e)
-            continue
+            raise e
+            #continue
 
 df_pearson_r = pd.DataFrame(r_data_for_df)
 #%%

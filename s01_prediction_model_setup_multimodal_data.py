@@ -38,10 +38,6 @@ out_dir = os.path.join(base_out_dir, f"group_data_Hz-{PREDHZ}")
 if not os.path.exists(out_dir):
    os.makedirs(out_dir)
 
-dict_out_dir = os.path.join(base_out_dir, f"dictionary_group_data_Hz-{PREDHZ}")
-if not os.path.exists(dict_out_dir):
-   os.makedirs(dict_out_dir)
-
 #image_dir = os.path.join(out_dir, f"figures")
 #if not os.path.exists(image_dir):
 #   os.makedirs(image_dir)

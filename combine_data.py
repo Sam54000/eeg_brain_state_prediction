@@ -12,8 +12,10 @@ import scipy.stats
 import sklearn
 from sklearn.ensemble import (HistGradientBoostingRegressor, 
                               RandomForestRegressor)
+from sklearn.impute import SimpleImputer
 import numpy as np
 import sklearn.linear_model
+from scipy.interpolate import CubicSpline
 import sklearn.model_selection
 from typing import List, Dict, Union, Optional
 from typing import Any
@@ -80,9 +82,9 @@ def combine_data_from_filename(reading_dir: str | os.PathLike,
 
     return big_data
 
-#big_d = combine_data_from_filename('/data2/Projects/eeg_fmri_natview/derivatives/multimodal_prediction_models/data_prep/prediction_model_data_eeg_features_v2/group_data_Hz-3.8',
-#                                    task = 'checker',
-#                                    run = '01BlinksRemoved')
+big_d = combine_data_from_filename('/data2/Projects/eeg_fmri_natview/derivatives/multimodal_prediction_models/data_prep/prediction_model_data_eeg_features_v2/group_data_Hz-3.8',
+                                    task = 'checker',
+                                    run = '01BlinksRemoved')
 #%%
 def filter_data(data: np.ndarray, 
                 low_freq_cutoff: float | None = None,
@@ -194,7 +196,9 @@ def create_big_feature_array(big_data: dict,
                              index_to_get: int | None,
                              axis_to_get: int | None,
                              keys_list: list[tuple[str, ...]],
-                             axis_to_concatenate: int = 1) -> np.ndarray:
+                             axis_to_concatenate: int = 1,
+                             subject_agnostic: bool = False
+                             ) -> np.ndarray:
     """This is to make a big numpy array across subject.
 
     It concatenates the features of interest along the time axis (2nd dim).
@@ -238,7 +242,10 @@ def create_big_feature_array(big_data: dict,
         #extracted_array = filter_data(extracted_array,high_freq_cutoff=0.1)
         concatenation_list.append(extracted_array)
     
-    return np.concatenate(concatenation_list,axis = axis_to_concatenate)
+    if subject_agnostic:
+        return np.concatenate(concatenation_list,axis = axis_to_concatenate)
+    else:
+        return np.array(concatenation_list)
 
 def _find_item(desired_key: str, obj: Dict[str, Any]) -> Any:
     """Find any item in an encapsulated dictionary."
@@ -317,17 +324,20 @@ def get_specific_location(big_data: Dict,
 
 def combine_masks(big_data:dict,
                   key_list: list,
-                  modalities: list = ['EEGbandsEnvelopes','brainstates']):
+                  modalities: list = ['EEGbandsEnvelopes','brainstates'],
+                  subject_agnostic: bool = False
+                  ) -> np.ndarray[bool]:
     masks = []
     for modality in modalities:
-        if 'brainstates' in modality:
-            array_name = 'feature'
-            index_to_get = -1
-            axis_to_get = 0
-        else:
+        if "envelopes" in modality.lower() or "tfr" in modality.lower():
             array_name = 'artifact_mask'
             index_to_get = None
             axis_to_get = None
+
+        else:
+            array_name = 'feature'
+            index_to_get = -1
+            axis_to_get = 0
         
         temp_mask = create_big_feature_array(
             big_data = big_data,
@@ -338,14 +348,22 @@ def combine_masks(big_data:dict,
             keys_list=key_list,
             axis_to_concatenate=0
         )
-        masks.append(temp_mask.flatten())
+        if subject_agnostic:
+            temp_mask = temp_mask.flatten()
+            
+        masks.append(temp_mask > 0.5)
     
+    masks = np.array(masks)
+    overall_mask = np.all(masks, axis = 0)
+    print('Overall mask shape:',overall_mask.shape)
     return np.all(masks, axis = 0)
         
 def build_windowed_mask(big_data: dict,
                         key_list:list,
                         window_length: int = 45,
-                        modalities = ['brainstates']
+                        modalities = ['brainstates'],
+                        subject_agnostic: bool = False,
+                        keepdims: bool = True
                         ) -> np.ndarray:
     """Build the mask based on the brainstate and EEG ones.
     
@@ -363,24 +381,48 @@ def build_windowed_mask(big_data: dict,
 
     joined_masks = combine_masks(big_data,
                                  key_list,
-                                 modalities = modalities)
+                                 modalities = modalities,
+                                 subject_agnostic = subject_agnostic)
     
-    windowed_mask = sliding_window_view(joined_masks[:-1], 
+    windowed_mask = sliding_window_view(joined_masks[:,:,:-1], 
                                         window_shape=window_length,
-                                        axis = 0) 
-    
-    return np.all(windowed_mask, axis = 1)
+                                        axis = 2)
+    print('Windowed mask shape:',windowed_mask.shape)
+    if subject_agnostic:
+        max_dim = 4
+        axis = 2
+    else:
+        max_dim = 3
+        axis = 1
+        
+    print(f'Winodwed mask shape: {windowed_mask.shape}')
+    print(f'After applying all: {np.all(windowed_mask, axis = axis, keepdims=keepdims).shape}')
+    if np.ndim(windowed_mask) < max_dim:
+        return windowed_mask
+    else:
+        # Take the case of EEG channels. If there is one channel not good, reject the entire window.
+        return np.all(windowed_mask, axis = axis, keepdims=keepdims)
 
+def build_windowed_data(array: np.ndarray,
+                        window_length: int = 45) -> np.ndarray:
+
+    windowed_data = np.lib.stride_tricks.sliding_window_view(
+        array[:,:,:-1,...], 
+        window_shape=window_length, 
+        axis=2
+    )
+            
+    return windowed_data
+    
 def create_X_and_Y(big_data: dict,
                    keys_list: list[tuple[str, ...]],
                    X_name: str,
                    cap_name: str,
                    bands_names: str | list | None =  None,
                    chan_select_args: Dict[str,str] | None = None,
-                   normalization: str = 'zscore',
-                   reduction_method: str = 'flatten',
+                   normalization: str | None = 'zscore',
                    window_length: int = 45,
-                   integrate_pupil: bool = True,
+                   integrate_pupil: bool = False,
                   ) -> tuple[Any,Any]:
     
     bands_list = ['delta','theta','alpha','beta','gamma']
@@ -390,7 +432,7 @@ def create_X_and_Y(big_data: dict,
 
     elif isinstance(bands_names, str):
         index_band = bands_list.index(bands_names)
-    else:
+    elif not bands_names:
         pass
     
     if "pupil" in X_name:
@@ -399,8 +441,8 @@ def create_X_and_Y(big_data: dict,
         integrate_pupil = False
     
     elif "envelopes" in X_name.lower() or "tfr" in X_name.lower():
-        index_to_get = index_band
-        axis_to_get = 2
+        index_to_get = -1
+        axis_to_get = index_band
 
     big_X_array = create_big_feature_array(
         big_data            = big_data,
@@ -411,7 +453,17 @@ def create_X_and_Y(big_data: dict,
         keys_list           = keys_list
         )
 
-    big_X_array
+    if "pupil" in X_name:
+        first_derivative = np.diff(big_X_array, axis = 2, append = 0)
+        second_derivative = np.diff(first_derivative, axis = 2, append = 0)
+        print('Pupil shape:',big_X_array.shape)
+        print('Pupil first derivative shape:',first_derivative.shape)
+        print('Pupil second derivative shape:',second_derivative.shape)
+        big_X_array = np.concatenate(
+            (big_X_array,first_derivative,second_derivative),
+            axis=1
+        )
+        
     if chan_select_args:
         channel_mask = get_specific_location(big_data, **chan_select_args)
         big_X_array = big_X_array[channel_mask,...]
@@ -421,14 +473,12 @@ def create_X_and_Y(big_data: dict,
     cap_index = [cap_names_list.index(cap) for cap in real_cap_name][0]
     
     if normalization == 'zscore':
-        big_X_array = scipy.stats.zscore(big_X_array,axis=1)
+        big_X_array = scipy.stats.zscore(big_X_array,axis=2)
     
-    windowed_X = np.lib.stride_tricks.sliding_window_view(
-        big_X_array[:,:-1,...], 
-        window_shape=window_length, 
-        axis=1
-    )
-    
+    windowed_X = build_windowed_data(big_X_array,
+                                     window_length)
+    print('Windowed X shape:',windowed_X.shape)
+
     if integrate_pupil:
         pupil_array = create_big_feature_array(
             big_data            = big_data,
@@ -441,34 +491,12 @@ def create_X_and_Y(big_data: dict,
 
         if normalization == 'zscore':
             pupil_array = scipy.stats.zscore(pupil_array,axis=1)
-
-        windowed_pupil = np.lib.stride_tricks.sliding_window_view(
-            pupil_array[:,:-1], 
-            window_shape=window_length, 
-            axis=1
-        )
-        new_shape_pupil = (windowed_pupil.shape[1], -1)
-        windowed_pupil = windowed_pupil.transpose(1, 0, 2)
-        windowed_pupil = windowed_pupil.reshape(new_shape_pupil)
-        flattened_windowed_pupil = windowed_pupil.reshape(windowed_pupil.shape[0], -1)
-    
-    new_shape_X = (windowed_X.shape[1], -1) + windowed_X.shape[3:]
-    windowed_X = windowed_X.transpose(1, 0, 2, *range(3, big_X_array.ndim + 1))
-    windowed_X = windowed_X.reshape(new_shape_X)
-    
-    if reduction_method == 'flatten':
-        flattened_windowed_X = windowed_X.reshape(windowed_X.shape[0], -1)
-    
-    elif reduction_method == 'gfp':
-        flattened_windowed_X = np.squeeze(np.var(windowed_X, axis=0))
-    
-    if integrate_pupil:
-        returning_X = np.concatenate(
-            (flattened_windowed_X, flattened_windowed_pupil),
+        
+        windowed_pupil = build_windowed_data(pupil_array)
+        windowed_X = np.concatenate(
+            (windowed_X, windowed_pupil),
             axis=1
             )
-    else:
-        returning_X = flattened_windowed_X
     
     big_Y_array = create_big_feature_array(
         big_data            = big_data,
@@ -478,15 +506,137 @@ def create_X_and_Y(big_data: dict,
         axis_to_get         = 0,
         keys_list           = keys_list
         )
+
+    if normalization == 'zscore':
+        big_Y_array = scipy.stats.zscore(big_Y_array,axis=2)
             
-    windowed_Y = np.squeeze(big_Y_array[:,window_length:])
+    windowed_Y = big_Y_array[:,:,window_length:,np.newaxis]
 
-    return returning_X, windowed_Y
+    return windowed_X, windowed_Y
 
+def thresholding_data_rejection(mask: np.ndarray,
+                                threshold: int = 20,
+                                ) -> np.ndarray[bool]:
+    """By studying the mask, reject the window that have too much False.
+    
+    Based on the windowed mask, it evaluate the amount of data rejected and then
+    generate a 1 dimensional boolean mask that will be applied to the
+    X and Y data correct the data.
+
+    Args:
+        mask (np.ndarray): 2D array of boolean values
+        threshold (int, optional): Percentage of data rejected to reject 
+        the entire window. Defaults to 20.
+
+    Returns:
+        np.ndarray[bool]: A 1 dimensional boolean mask to apply to the data.
+    """
+    
+    valid_data = np.sum(mask, axis = 3, keepdims=True)
+    percentage = valid_data * 100 / mask.shape[3]
+
+    return percentage > (100 - threshold)
+
+def interpolate_nan(arr, strategy='imputer'):
+    if strategy == 'imputer':
+        arr = SimpleImputer(missing_values=np.nan, 
+                            strategy='median', 
+                            copy=False).fit_transform(arr)
+    else:
+        for i in range(arr.shape[0]):  # Loop through rows
+            # Get indices of non-NaN values
+            valid_idx = np.nonzero(~np.isnan(arr[i]))[0]
+            invalid_idx = np.nonzero(np.isnan(arr[i]))[0]
+            
+            # If there are enough valid points for cubic spline interpolation
+            if len(valid_idx) > 1:
+                # Perform cubic spline interpolation
+                cs = CubicSpline(valid_idx, arr[i, valid_idx])
+                # Replace NaN values with interpolated values
+                arr[i, invalid_idx] = cs(invalid_idx)
+    
+    return arr
+
+def apply_mask(array: np.ndarray, 
+               mask: np.ndarray) -> np.ndarray:
+    """Apply a multidimensional mask to a multidimensional array.
+
+    In case of a mask that have several dimensions, it will broadcast the mask
+    to the array shape and then apply the mask to the array. The masked values
+    will be replaced by NaNs.
+
+    Args:
+        array (np.ndarray): The array to apply the mask to.
+        mask (np.ndarray): The mask to apply to the array.
+        method (str, optional): The method to apply the mask. 
+                                Defaults to 'bool'. Can be either 'bool' or
+                                'nan'.
+
+    Returns:
+        np.ndarray: The masked array.
+    """
+    print(mask.shape)
+    window_rejection_mask = thresholding_data_rejection(mask)
+    if array.ndim == window_rejection_mask.ndim:
+        window_rejection_mask = np.broadcast_to(window_rejection_mask,
+                                        array.shape)
+    else:
+        window_rejection_mask = window_rejection_mask.reshape(array.shape)
+
+    masked_array = np.full(array.shape, np.nan)  # Initialize with NaNs
+    masked_array[window_rejection_mask] = array[window_rejection_mask]
+    return masked_array
+
+#%%
+def reshape_array(array: np.ndarray) -> np.ndarray:
+    """ Reshape 4D array to 2D or 1D array.
+
+    Args:
+        array (np.ndarray): The array to reshape
+
+    Returns:
+        np.ndarray: The reshaped array
+    """
+    if array.ndim != 4:
+        raise ValueError('The array must be 4D.')
+
+    first_reshape = np.reshape(array, (array.shape[0],
+                                  array.shape[2],
+                                  array.shape[1]*array.shape[3]))
+    reshaped_array = np.reshape(first_reshape,(array.shape[0]*array.shape[2],
+                                     array.shape[1]*array.shape[3]))
+    
+    return reshaped_array
+
+def arrange_X_Y(X: np.ndarray, 
+                Y: np.ndarray, 
+                mask: np.ndarray) -> tuple:
+    """Arrange the X and Y data by reshaping them and applying the mask.
+
+    Args:
+        X (np.ndarray): The X data
+        Y (np.ndarray): The Y data
+        mask (np.ndarray): The mask to apply to the data
+
+    Returns:
+        tuple: The arranged X and Y data
+    """
+    window_rejection_mask = thresholding_data_rejection(mask)
+    reshaped_X = reshape_array(X)
+    print('X shape:',reshaped_X.shape)
+    reshaped_Y = reshape_array(Y)
+    print('Y shape:',reshaped_Y.shape)
+    reshaped_mask = np.squeeze(reshape_array(window_rejection_mask))
+    print('Mask shape:',reshaped_mask.shape)
+    
+    return reshaped_X[reshaped_mask,:], reshaped_Y[reshaped_mask,:]
+    
+    
+ #%%  
 def create_train_test_data(big_data: dict,
                            train_sessions: list[str],
                            test_subject: str,
-                           test_session: str,
+                           test_sessions: str | list[str],
                            task: str,
                            runs: list[str],
                            cap_name: str,
@@ -494,7 +644,7 @@ def create_train_test_data(big_data: dict,
                            band_name: str,
                            window_length: int = 45,
                            chan_select_args = None,
-                           masking = True,
+                           masking = False,
                            ) -> tuple[Any,Any,Any,Any]:
     """Create the train and test data using leave one out method.
 
@@ -512,7 +662,7 @@ def create_train_test_data(big_data: dict,
     print(f'Test subject: {test_subject}')
     
     print(f'Train sessions: {train_sessions}')
-    print(f'Test session: {test_session}')
+    print(f'Test session: {test_sessions}')
     
     train_keys = generate_key_list(
         big_data = big_data,
@@ -525,16 +675,13 @@ def create_train_test_data(big_data: dict,
     test_keys = generate_key_list(
         big_data = big_data,
         subjects = [test_subject],
-        sessions = [test_session],
+        sessions = test_sessions,
         task     = task,
         runs     = runs
         )
     
     if test_keys == []:
-        raise ValueError(f'No data for:sub-{test_subject}_ses-{test_session}')
-    
-    print(f'Train dataset: {train_keys}')
-    print(f'Test dataset: {test_keys}')
+        raise ValueError(f'No data for:sub-{test_subject}_ses-{test_sessions}')
     
     X_train, Y_train = create_X_and_Y(
         big_data         = big_data,
@@ -542,20 +689,15 @@ def create_train_test_data(big_data: dict,
         X_name           = X_name,
         bands_names      = band_name,
         cap_name         = cap_name,
+        normalization    = 'zscore',
         chan_select_args = chan_select_args,
         window_length    = window_length,
         )
 
-    train_mask = build_windowed_mask(big_data,
-                                     key_list = train_keys,
-                                     modalities = ['brainstates']) # !!! TEMP FIX
     
     print(f'X_train shape: {X_train.shape}')
     print(f'Y_train shape: {Y_train.shape}')
-    print(f'Train mask shape: {train_mask.shape}')
 
-    X_train = X_train[train_mask]
-    Y_train = Y_train[train_mask]
     
     X_test, Y_test = create_X_and_Y(
         big_data         = big_data,
@@ -563,28 +705,45 @@ def create_train_test_data(big_data: dict,
         X_name           = X_name,
         bands_names      = band_name,
         cap_name         = cap_name,
+        normalization    = 'zscore',
         chan_select_args = chan_select_args,
         window_length    = window_length,
         )
 
-    test_mask = build_windowed_mask(big_data,
-                                    test_keys, 
-                                    modalities=['brainstates']) # !!! TEMP FIX
     
     print(f'X_test shape: {X_test.shape}')
     print(f'Y_test shape: {Y_test.shape}')
-    print(f'Test mask shape: {test_mask.shape}')
     
-    X_test = X_test[test_mask]
-    Y_test = Y_test[test_mask]
+    if masking:
+        train_mask = build_windowed_mask(big_data,
+                                        key_list = train_keys,
+                                        window_length=window_length,
+                                        modalities = ['brainstates','pupil']) # !!! TEMP FIX
+        
+        test_mask = build_windowed_mask(big_data,
+                                        key_list=test_keys, 
+                                        window_length=window_length,
+                                        modalities=['brainstates','pupil']) # !!! TEMP FIX
+        
+
+        X_train, Y_train = arrange_X_Y(X_train, Y_train, train_mask)
+        print(f'X_train shape after masking: {X_train.shape}')
+        print(f'Y_train shape after masking: {Y_train.shape}')
+        
+        
+        X_test, Y_test = arrange_X_Y(X_test, Y_test, test_mask)
+        print(f'X_test shape after masking = {X_test.shape}')
+        print(f'Y_test shape after masking = {Y_test.shape}')
     
-    
-    return X_train, Y_train, X_test, Y_test
+    return (X_train, 
+            Y_train, 
+            X_test, 
+            Y_test)
 
 def train_model(big_data,
                 test_subject,
                 train_sessions,
-                test_session,
+                test_sessions,
                 task,
                 runs,
                 cap_name,
@@ -592,7 +751,7 @@ def train_model(big_data,
                 band_name,
                 window_length,
                 chan_select_args = None,
-                masking = True,
+                masking = False,
                 model_name = 'ridge',
                 viz_path = False):
     
@@ -601,7 +760,7 @@ def train_model(big_data,
         big_data         = big_data,
         train_sessions   = train_sessions,
         test_subject     = test_subject,
-        test_session     = test_session,
+        test_sessions    = test_sessions,
         task             = task,
         runs             = runs,
         cap_name         = cap_name,
@@ -612,7 +771,8 @@ def train_model(big_data,
         masking          = masking
             )
     except Exception as e:
-        print(e)
+        #print(e)
+        raise e
         return None, None, None, None, None
 
     if 'ridge' in model_name.lower():
@@ -645,6 +805,7 @@ def train_model(big_data,
         plot_path(X_train,Y_train)
 
     return model, X_train, Y_train, X_test, Y_test
+
 def plot_path(X_train, Y_train):
     alphas = np.linspace(1e-6,1e-3,1000)
     alphas_lasso, coef_lasso, _ = sklearn.linear_model.lasso_path(
@@ -678,11 +839,14 @@ if __name__ == '__main__':
     runs = ['01BlinksRemoved']
     task = 'checker'
     X_NAME = 'pupil'
+    SAMPLING_RATE_HZ = 3.8
+    WINDOW_LENGTH_SECONDS = 12
+    test_sessions = ['01','02']
     
     study_directory = (
         "/data2/Projects/eeg_fmri_natview/derivatives"
         "/multimodal_prediction_models/data_prep"
-        "/prediction_model_data_eeg_features_v2/group_data_Hz-3.8"
+        f"/prediction_model_data_eeg_features_v2/group_data_Hz-{SAMPLING_RATE_HZ}"
         )
 
     big_d = combine_data_from_filename(
@@ -692,155 +856,31 @@ if __name__ == '__main__':
    
     for subject in big_d.keys():
         models[subject] = {cap_name : {} for cap_name in caps}
-        for cap in caps:
-            model, X_train, Y_train, X_test, Y_test = train_model(
-                big_data      = big_d,
-                train_sessions = ['01','02'],
-                test_subject  = subject.split('-')[1],
-                test_session  = '01',
-                task          = task,
-                runs          = runs,
-                cap_name      = cap,
-                X_name        = X_NAME,
-                band_name     = None,
-                window_length = 45,
-                model_name    = 'ridge'
-                )
+        for test_session in test_sessions:
+            for cap in caps:
+                model, X_train, Y_train, X_test, Y_test = train_model(
+                    big_data      = big_d,
+                    train_sessions = ['01','02'],
+                    test_subject  = subject.split('-')[1],
+                    test_sessions  = [test_session],
+                    task          = task,
+                    runs          = runs,
+                    cap_name      = cap,
+                    X_name        = X_NAME,
+                    band_name     = None,
+                    window_length = int(WINDOW_LENGTH_SECONDS * SAMPLING_RATE_HZ)-1,
+                    model_name    = 'ridge',
+                    masking = True
+                    )
+                if model is None:
+                    continue
+                else:
+                    models[subject][cap][f'ses-{test_session}'] = {
+                        'model' : model,
+                        'X_test': X_test,
+                        'Y_test': Y_test,
 
-            models[subject][cap] = {
-                'model' : model,
-                'X_test': X_test,
-                'Y_test': Y_test,
-            }
+                    }
 
-    with open('./models/ridge_pupil.pkl', 'wb') as file:
+    with open(f'./models/ridge_pupil_{SAMPLING_RATE_HZ}.pkl', 'wb') as file:
         pickle.dump(models,file)
-            
-#%% 
-def evaluate_coefficients_channel_bands(model, title, big_data):
-    
-    coefficients = np.reshape(model.coef_,(61,-1,5))
-    #coefficients_normalized = coefficients / np.abs(coefficients).max(axis=0)
-    channel_names = big_data['sub-01']['ses-01']['checker']['run-01BlinksRemoved']['EEGbandsEnvelopes']['labels']['channels_info']['channel_name']
-    plt.figure(figsize=(12, 12))
-    sns.heatmap(coefficients_normalized[:,0,:], cmap='viridis', annot=False)
-    plt.title(title)
-    plt.xlabel('Frequency Band')
-    plt.yticks([chan_nb + 0.5 for chan_nb in range(len(channel_names))],
-               labels = channel_names)
-    plt.xticks([0.5,1.5,2.5,3.5,4.5],['delta','theta','alpha','beta','gamma'])
-    plt.ylabel('channels')
-    plt.show()
-
-# %%
-def evaluate_coefficients_channel_times(model, 
-                                        title, 
-                                        big_data,
-                                        averaging = True,
-                                        normalizing = True,
-                                        ):
-    
-    coefficients = np.reshape(model.coef_,(61,-1,5))
-    if averaging:
-        coefficients = np.squeeze(np.mean(coefficients, axis = 0))
-    if normalizing:
-        coefficients = coefficients / np.abs(coefficients).max(axis=0)
-    channel_names = big_data['sub-01']['ses-01']['checker']['run-01BlinksRemoved']['EEGbandsEnvelopes']['labels']['channels_info']['channel_name']
-    bands = ['delta','theta','alpha','beta','gamma']
-    plt.figure(figsize=(12, 6))
-    sns.heatmap(coefficients.T, cmap='viridis', annot=False)
-    plt.title(title)
-    plt.xlabel('time (s)')
-    ticks = [0.5,10.5,20.5,30.5,40.5]
-    plt.xticks(ticks, [str(np.round(tick/3.8,1)) for tick in ticks])
-    plt.yticks([0.5,1.5,2.5,3.5,4.5],bands)
-    plt.ylabel('Frequency Band')
-    plt.show()
-
-# %%
-def plot_predictionVSreal(big_data,model,title):
-    X_train, Y_train, X_test, Y_test = create_train_test_data(big_data,
-                                                            '01',
-                                                            '01',
-                                                            'checker',
-                                                            ['01BlinksRemoved'],
-                                                            'tsCAP1',
-                                                            'EEGbandsEnvelopes',
-                                                            ['theta','alpha'],
-                                                            chan_select_args={'anatomical_location':['occipital','parieto-occipital']},
-                                                            window_length=45,
-                                                            masking = True)
-    Y_pred = model.predict(X_test)
-    r_correlation = scipy.stats.pearsonr(Y_test,Y_pred)
-    r_2 = sklearn.metrics.r2_score(Y_test, Y_pred)
-    plt.figure(figsize=(12, 6))
-    plt.plot(Y_test, label='Real')
-    plt.plot(Y_pred, label='Predicted')
-    plt.title(title)
-    sample_values = np.arange(0,Y_test.shape[0],100)
-    plt.xticks(sample_values, sample_values/3.8)
-    plt.xlabel('Time (s)')
-    plt.text(0,-2,f'R: {r_correlation[0]:.2f}',fontsize=12)
-    plt.text(0,-3,f'R2: {r_2:.2f}',fontsize=12)
-    plt.legend()
-    plt.show()
-    
-# %%
-def plot_on_topomap(model, big_data, band):
-    bands  = ['delta','theta','alpha','beta','gamma']
-    band_id = bands.index(band)
-    coefficients = np.reshape(model.coef_,(61,-1,5))
-    coefficients = np.squeeze(np.mean(coefficients[:,40:41,:], axis = 1))
-    coefficients_normalized = coefficients / np.abs(coefficients).max(axis=0)
-    channel_names = big_data['sub-01']['ses-01']['checker']['run-01BlinksRemoved']['EEGbandsEnvelopes']['labels']['channels_info']['channel_name']
-    montage = mne.channels.make_standard_montage('easycap-M1')
-    mne_info = mne.create_info(channel_names, 3.8, ch_types='eeg')
-    data_array = np.expand_dims(coefficients_normalized[:,band_id],axis=1)
-    evoked = mne.EvokedArray(data_array, mne_info)
-    evoked.set_montage(montage)
-    fig = plt.figure(figsize=(5,5))
-    ax = fig.subplots(1,1)
-    im,_ = mne.viz.plot_topomap(coefficients_normalized[:,band_id],evoked.info, axes=ax,
-                                show = False)
-    ax.set_title(f'Coefficients for {band} band')
-    fig.colorbar(mappable=im,ax=ax)
-    plt.show()
-# %%
-
-def fine_tune_model(big_data):
-    param_grid = {
-        'n_estimators': np.arange(start = 100, stop = 10000, step = 10),
-        'criterion': ['squared_error', 
-                      'absolute_error', 
-                      'friedman_mse'],
-        'max_features': ['sqrt','log2',None],
-    }
-    
-    X_train, Y_train, X_test, Y_test = create_train_test_data(
-        big_data = big_data,
-        test_subject = '01',
-        test_session = '01',
-        task = 'checker',
-        runs = ['01BlinksRemoved'],
-        cap_name = 'tsCAP1',
-        X_name = 'EEGbandsEnvelopes',
-        band_name = 'alpha',
-        window_length = 45,
-        chan_select_args = {
-            'channel_names':['O1']
-            },
-        masking = True
-        )
-    grid_search = sklearn.model_selection.GridSearchCV(
-        RandomForestRegressor(), 
-        param_grid=param_grid,
-        ) 
-    grid_search.fit(X_train, Y_train)
-
-    return grid_search
-    # model = RandomForestRegressor(**grid_search.best_params_)
-    # model.fit(X_train, Y_train)
-    # Y_hat = model.predict(X_test)
-    # plt.plot(Y_test, label='Real')
-    # plt.plot(Y_hat, label='Predicted')
-    
