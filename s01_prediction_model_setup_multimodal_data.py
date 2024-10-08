@@ -48,23 +48,23 @@ subjects = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11',
             '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22']
 sessions = [ '01', '02' ]
 tasks = [
-    'tp_run-01',
-    'tp_run-02', 
-    'dme_run-01',
-    'dme_run-02',
-    'dmh_run-01',
-    'dmh_run-02',
-    'monkey1_run-01',
-    'monkey1_run-02',
-    'monkey2_run-01',
-    'monkey2_run-02', 
-    'monkey5_run-01', 
-    'monkey5_run-02',
+    #'tp_run-01',
+    #'tp_run-02', 
+    #'dme_run-01',
+    #'dme_run-02',
+    #'dmh_run-01',
+    #'dmh_run-02',
+    #'monkey1_run-01',
+    #'monkey1_run-02',
+    #'monkey2_run-01',
+    #'monkey2_run-02', 
+    #'monkey5_run-01', 
+    #'monkey5_run-02',
     'checker_run-01',
     'checker_run-02',
     'rest_run-01',
     'rest_run-02', 
-    'inscapes_run-01'
+    #'inscapes_run-01'
     ]
 bstate = 'cap_ts' # 'pca_cap_ts'
 
@@ -104,6 +104,7 @@ for sub in subjects:
                                             task, 
                                             fmri_data_dir= fmri_data_dir,
                                             eyetrack_data_dir=eyetrack_data_dir, 
+                                            eeg_proc_data_dir=eeg_proc_data_dir,
                                             verbose = True
                                             )
                 data_keys_dict = {
@@ -171,56 +172,56 @@ for sub in subjects:
                 
                 # ----------------------------------------------------------------------------
                 # RESPIRATION DATA
-                    #if (task[:2]=='tp'):
-                    #    bstask = task
-                    #else:
-                    #    bstask = task[:(len(task)-7)]
-                    #respiration_data_file = os.path.join(respiration_data_dir, f"sub-{sub}_ses-{ses}_task-{bstask}_resp_stdevs.csv")
-                    #respiration_data = pd.read_csv(respiration_data_file, sep=',', index_col=0)
-                    #resampled_time_resp = hf.resample_time(respiration_data['Time'].values,
-                    #                                    tr_value=TR_PERIOD,
-                    #                                    resampling_factor=TR_PERIOD_DIVIDING)
-                    #respiration_data_resampled = hf.resample_data(
-                    #    respiration_data, 
-                    #    time_resampled=resampled_time_resp)
-                    #multimodal_data_dict['respiration'] = hf.dataframe_to_dict(
-                    #    respiration_data_resampled,
-                    #    column_names=[col for col in respiration_data_resampled.columns
-                    #                if 'time' not in col.lower()],
-                    #    info = 'Respiration data'
-                    #)
+                    if (task[:2]=='tp'):
+                        bstask = task
+                    else:
+                        bstask = task[:(len(task)-7)]
+                    respiration_data_file = os.path.join(respiration_data_dir, f"sub-{sub}_ses-{ses}_task-{bstask}_resp_stdevs.csv")
+                    respiration_data = pd.read_csv(respiration_data_file, sep=',', index_col=0)
+                    resampled_time_resp = hf.resample_time(respiration_data['Time'].values,
+                                                        tr_value=TR_PERIOD,
+                                                        resampling_factor=TR_PERIOD_DIVIDING)
+                    respiration_data_resampled = hf.resample_data(
+                        respiration_data, 
+                        time_resampled=resampled_time_resp)
+                    multimodal_data_dict['respiration'] = hf.dataframe_to_dict(
+                        respiration_data_resampled,
+                        column_names=[col for col in respiration_data_resampled.columns
+                                    if 'time' not in col.lower()],
+                        info = 'Respiration data'
+                    )
                     # change the column name StdDev_6s to respiration
 
                 # ----------------------------------------------------------------------------
                 # EEG DATA
 
-                    #sub_dir_eeg = os.path.join(eeg_proc_data_dir, f"sub-{sub}", f"ses-{ses}", "eeg")
-                    #eeg_features = {
-                    #    'EEGbandsEnvelopes': None,
-                    #    'CustomEnvelopes': None,
-                    #    'MorletTFR': None
-                    #}
-                    #if (task[:2]=='tp'):
-                    #    bstask = task
-                    #else:
-                    #    bstask = task[:(len(task)-7)]
+                    sub_dir_eeg = os.path.join(eeg_proc_data_dir, f"sub-{sub}", f"ses-{ses}", "eeg")
+                    eeg_features = {
+                        'EEGbandsEnvelopes': None,
+                        'CustomEnvelopes': None,
+                        'MorletTFR': None
+                    }
+                    if (task[:2]=='tp'):
+                        bstask = task
+                    else:
+                        bstask = task[:(len(task)-7)]
                     
-                    #for key in eeg_features.keys():
-                    #    filename = os.path.join(
-                    #        sub_dir_eeg, 
-                    #        f"sub-{sub}_ses-{ses}_task-{task}_desc-{key}BlinksRemoved_eeg.pkl")
-                    #    
-                    #    data = np.load(filename, allow_pickle=True)
-                    #    resampled_eeg_time = hf.resample_time(
-                    #        data['time'],
-                    #        tr_value = TR_PERIOD,
-                    #        resampling_factor = TR_PERIOD_DIVIDING
-                    #        
-                    #    )
-                    #    eeg_features[key] = hf.resample_eeg_features(data, 
-                    #                                                resampled_eeg_time)
+                    for key in eeg_features.keys():
+                        filename = os.path.join(
+                            sub_dir_eeg, 
+                            f"sub-{sub}_ses-{ses}_task-{task}_desc-{key}BlinksRemoved_eeg.pkl")
+                        
+                        data = np.load(filename, allow_pickle=True)
+                        resampled_eeg_time = hf.resample_time(
+                            data['time'],
+                            tr_value = TR_PERIOD,
+                            resampling_factor = TR_PERIOD_DIVIDING
+                            
+                        )
+                        eeg_features[key] = hf.resample_eeg_features(data, 
+                                                                    resampled_eeg_time)
 
-                    #multimodal_data_dict|= eeg_features
+                    multimodal_data_dict|= eeg_features
                 #-----------------
 
                     end_times = []
@@ -252,10 +253,10 @@ for sub in subjects:
                             print(text1 + text)
                             print(f"    End time: {data['time'][-1]} seconds")
 
-                        #if data_name in eeg_features.keys():
-                        #    data_cropped = hf.crop_data(data["artifact_mask"],
-                        #                        id_max = min_length,
-                        #                        axis = 0)
+                        if data_name in eeg_features.keys():
+                            data_cropped = hf.crop_data(data["artifact_mask"],
+                                                id_max = min_length,
+                                                axis = 0)
                             data.update({"artifact_mask":data_cropped})
                         multimodal_data_dict.update({data_name:data})
 

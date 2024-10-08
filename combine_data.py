@@ -80,9 +80,9 @@ def combine_data_from_filename(reading_dir: str | os.PathLike,
 
     return big_data
 
-#big_d = combine_data_from_filename('/data2/Projects/eeg_fmri_natview/derivatives/multimodal_prediction_models/data_prep/prediction_model_data_eeg_features_v2/group_data_Hz-3.8',
-#                                    task = 'checker',
-#                                    run = '01BlinksRemoved')
+big_d = combine_data_from_filename('/data2/Projects/eeg_fmri_natview/derivatives/multimodal_prediction_models/data_prep/prediction_model_data_eeg_features_v2/group_data_Hz-3.8',
+                                    task = 'checker',
+                                    run = '01BlinksRemoved')
 #%%
 def filter_data(data: np.ndarray, 
                 low_freq_cutoff: float | None = None,
@@ -501,7 +501,12 @@ def build_windowed_data(array: np.ndarray,
     )
             
     return windowed_data
-  
+
+def create_X(big_data: dict,
+             keys_list: list[tuple[str,...]],
+             modalities: list,
+             
+
 def create_X_and_Y(big_data: dict,
                    keys_list: list[tuple[str, ...]],
                    X_name: str,
@@ -540,7 +545,7 @@ def create_X_and_Y(big_data: dict,
         integrate_pupil = False
         normalization_axis = 1
     
-    elif "envelopes" in X_name.lower() or "tfr" in X_name.lower():
+    elif "envelope" in X_name.lower() or "tfr" in X_name.lower():
         bands_list = ['delta','theta','alpha','beta','gamma']
 
         if isinstance(bands_names,list):
@@ -991,7 +996,7 @@ if __name__ == '__main__':
     bands = ['delta','theta','alpha','beta','gamma']
     runs = ['01']#, '02']
     task = 'checker'
-    MODALITY = 'pupil'
+    MODALITY = 'EEGbandEnvelopes'
     SAMPLING_RATE_HZ = 1.0
     WINDOW_LENGTH_SECONDS = 12
     train_sessions = ['01', '02']
@@ -1044,7 +1049,7 @@ if __name__ == '__main__':
                     i += 1
                     print(i)
                 except Exception as e:
-                    #raise e
+                    raise e
                     print(f'sub-{subject} {cap} {e}')
                     continue
     with open(f'./models/ridge_pupil_{SAMPLING_RATE_HZ}_{task}_run-{runs[0]}.pkl', 'wb') as file:
