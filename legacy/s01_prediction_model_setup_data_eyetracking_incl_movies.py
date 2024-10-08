@@ -25,7 +25,7 @@ respiration_data_dir = '/home/thoppe/physio-analysis/resp-analysis/resp_stdevs'
 
 #%% =======================================================================================
 
-predHz = 0.5 # 0.5
+predHz = 3.8 #0.5 # 0.5
 
 base_out_dir = os.path.join(base_dir,'data_prep', 'prediction_model_data_eyetracking_all_tasks_fixed')
 

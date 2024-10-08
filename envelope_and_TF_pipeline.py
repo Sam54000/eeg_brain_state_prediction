@@ -153,7 +153,10 @@ def parse_file_entities(filename: str | os.PathLike) -> dict:
     entities['extension'] = extension
     entities['suffix'] = basename.split('_')[-1]
     for entity in basename.split('_')[:-1]:
-        key, value = entity.split('-')
+        try:
+            key, value = entity.split('-')
+        except:
+            continue
 
         if key == 'sub':
             key = 'subject'
@@ -380,32 +383,6 @@ def specific_crop(raw: mne.io.Raw,
         cropped = raw.copy().crop(start, stop)
     return cropped
 
-def loop(overwrite = True, 
-         task = ['rest', 'checker'],
-         blank_run = True,
-         remove_blinks = False,
-         derivatives_path = None):
-    raw_path = Path('/projects/EEG_FMRI/bids_eeg/BIDS/NEW/PREP_BV_EDF')
-
-    for filename in raw_path.iterdir():
-        #try:
-        file_entities = parse_file_entities(filename)
-        conditions = (file_entities['task'] in task and
-                    file_entities['suffix'] == 'eeg' and
-                    not 'GradientStep1' in filename.name)
-        if conditions:
-            individual_process(filename, 
-                            overwrite = overwrite,
-                            remove_blinks = remove_blinks,
-                            blank_run=blank_run,
-                            derivatives_path=derivatives_path
-                            )
-        #except Exception as e:
-        #    print(f'___xxx___xxx___xxx___xxx___xxx___xxx___\n')
-        #    print(f'Error with {filename}\n')
-        #    print(e)
-        #    print(f'\n___xxx___xxx___xxx___xxx___xxx___xxx___\n')
-
 def individual_process(filename: str, 
                     overwrite = True, 
                     remove_blinks = True,
@@ -449,9 +426,9 @@ def individual_process(filename: str,
             
 
     process_file_desc_pairs = {
-        'run_wavelets': 'MorletTFR',
+        #'run_wavelets': 'MorletTFR',
         'extract_eeg_band_envelope': 'EEGbandsEnvelopes',
-        'extract_custom_band_envelope': 'CustomEnvelopes'
+        #'extract_custom_band_envelope': 'CustomEnvelopes'
     }
 
     for process, file_description in process_file_desc_pairs.items():
@@ -471,12 +448,39 @@ def individual_process(filename: str,
         else:
             continue
 
+def loop(overwrite = True, 
+         task = ['rest', 'checker'],
+         blank_run = True,
+         remove_blinks = False,
+         derivatives_path = None):
+    #raw_path = Path('/projects/EEG_FMRI/bids_eeg/BIDS/NEW/PREP_BV_EDF')
+    raw_path = Path('/projects/EEG_FMRI/bids_eeg/BIDS/NEW/PREP_BVA_GR_CB_BK_2024/')
+
+    for filename in raw_path.iterdir():
+        #try:
+        file_entities = parse_file_entities(filename)
+        conditions = (file_entities['task'] in task and
+                    file_entities['suffix'] == 'eeg' and
+                    not 'GradientStep1' in filename.name)
+        if conditions:
+            individual_process(filename, 
+                            overwrite = overwrite,
+                            remove_blinks = remove_blinks,
+                            blank_run=blank_run,
+                            derivatives_path=derivatives_path
+                            )
+        #except Exception as e:
+        #    print(f'___xxx___xxx___xxx___xxx___xxx___xxx___\n')
+        #    print(f'Error with {filename}\n')
+        #    print(e)
+        #    print(f'\n___xxx___xxx___xxx___xxx___xxx___xxx___\n')
+
 
 if __name__ == '__main__':
     blink_removal = True
-    saving_path = Path('/projects/EEG_FMRI/bids_eeg/BIDS/NEW/DERIVATIVES/'
-                       'eeg_features_extraction/third_run')
+    saving_path = Path('/projects/EEG_FMRI/bids_eeg/BIDS/NEW/DERIVATIVES/eeg_features_extraction/run_for_BVA_check')
     loop(overwrite = True, 
+         task = ['checker'],
          blank_run = False, 
          remove_blinks = blink_removal,
          derivatives_path = saving_path)

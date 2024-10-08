@@ -29,9 +29,9 @@ import importlib
 
 base_dir = '/data2/Projects/eeg_fmri_natview/derivatives/multimodal_prediction_models_with_legacy_code'
 
-predHz = 0.5# 3.8
+predHz = 3.8 #0.5# 3.8
 do_HRF = 0
-n_feat = 24 # 38
+n_feat = 38 #24 # 38
 print(f"-{n_feat/predHz}sec")
 
 base_data_dir = os.path.join(base_dir,'data_prep', 'prediction_model_data_eyetracking_all_tasks_fixed')
@@ -211,7 +211,9 @@ for test_bstate in brainstates:
             fmri_ts_mask = fmri_ts_mask[start_index:]
             eyetrack_mask = eyetrack_mask[start_index:]
 
+            print(f"Prediction features - {PREDICTION_FEATURES.shape}")
             PREDICTION_FEATURES = zscore(PREDICTION_FEATURES.T).T
+            print(f"Prediction features reshaped - {PREDICTION_FEATURES.shape}")
 
             #print(f"n_fmri : {FMRI_TARGET_DATA.shape}; n_eeg : {PREDICTION_FEATURES.shape}")
             npds, nn = PREDICTION_FEATURES.shape
