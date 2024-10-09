@@ -550,7 +550,7 @@ def create_X_and_Y(big_data: dict,
             index_band = bands_list.index(bands_names)
 
         index_to_get = index_band
-        normalization_axis = 1
+        normalization_axis = 2
         axis_to_get = -1
 
     big_X_array = create_big_feature_array(
