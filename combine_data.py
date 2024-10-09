@@ -213,11 +213,7 @@ def crop_data(array: np.ndarray,
 def create_big_feature_array(big_data: dict,
                              modality: str,
                              array_name: str,
-                             index_to_get: int | None,
-                             axis_to_get: int | None,
                              keys_list: list[tuple[str, ...]],
-                             subject_agnostic: bool = False,
-                             axis_to_concatenate: int = 1,
                              start_crop: int| None = None,
                              stop_crop: int| None = None
                              ) -> np.ndarray:
@@ -251,28 +247,18 @@ def create_big_feature_array(big_data: dict,
     for keys in keys_list:
         subject, session, task, run = keys
         
-        if isinstance(index_to_get, int) or isinstance(axis_to_get, int):
-            extracted_array = big_data[subject
-                ][session
-                    ][task
-                        ][run
-                            ][modality
-                              ][array_name].take(
-                                index_to_get,
-                                axis = axis_to_get
-                            )
-        else:
-            extracted_array = big_data[subject
-                ][session
-                    ][task
-                        ][run
-                            ][modality][array_name]
+        extracted_array = big_data[subject
+            ][session
+                ][task
+                    ][run
+                        ][modality][array_name]
         
-        if extracted_array.ndim < 2:
+        if extracted_array.ndim < 3:
             extracted_array = np.reshape(extracted_array,(1,extracted_array.shape[0]))
-        
+            extracted_array = extracted_array[:,:,np.newaxis]
+
         extracted_array = crop_data(extracted_array, 
-                                    axis = -1, 
+                                    axis = 1, 
                                     start = start_crop,
                                     stop = stop_crop)
         
@@ -282,10 +268,7 @@ def create_big_feature_array(big_data: dict,
     min_length = min(array_time_length)
     concatenation_list = [crop_data(array, axis = 1, stop = min_length)
                           for array in concatenation_list]
-    if subject_agnostic:
-        return np.concatenate(concatenation_list,axis = axis_to_concatenate)
-    else:
-        return np.array(concatenation_list)
+    return np.array(concatenation_list)
 
 def _find_item(desired_key: str, obj: Dict[str, Any]) -> Any:
     """Find any item in an encapsulated dictionary."
@@ -306,7 +289,7 @@ def _find_item(desired_key: str, obj: Dict[str, Any]) -> Any:
             if item:
                 return item
 
-def get_specific_location(big_data: Dict, 
+def get_specific_location(data_dict: Dict, 
                           channel_names: Optional[List[str]] = None, 
                           anatomical_location: Optional[List[str]] = None, 
                           laterality: Optional[List[str]] = None) -> Union[np.ndarray, None]:
@@ -322,7 +305,7 @@ def get_specific_location(big_data: Dict,
     Returns:
     - np.ndarray | None: A boolean array indicating the filtered channels or None if no channel info is found.
     """
-    channel_info = _find_item("channels_info", big_data)
+    channel_info = _find_item("channels_info", data_dict)
     if not channel_info:
         return None
 
@@ -504,7 +487,58 @@ def build_windowed_data(array: np.ndarray,
 
 def create_X(big_data: dict,
              keys_list: list[tuple[str,...]],
-             modalities: list,
+             features_args: dict,
+             normalization = 'zscore',
+             start_crop: int| None = None,
+             stop_crop: int| None = None
+             ) -> np.ndarray:
+
+    features = []
+    for modality in features_args.keys():
+        array = create_big_feature_array(
+            big_data = big_data,
+            keys_list=keys_list,
+            modality = modality,
+            array_name = "feature",
+            start_crop=start_crop,
+            stop_crop=stop_crop
+        )
+
+
+        if 'eeg' in modality:
+            bands_list = ['delta','theta','alpha','beta','gamma']
+            index_band = bands_list.index(
+                features_args[modality]['arguments']['band']
+                )
+            index_channel = get_specific_location(
+                data_dict=big_data,
+                channel_names=features_args[modality]['arguments']['channel']
+            )
+            selected_feature = array[:,index_channel,:,index_band]
+        
+        if 'pupil' in modality:
+            first_derivative = np.diff(
+                array, 
+                axis = 2, 
+                prepend = array[:,:,0,:]
+                )
+            
+            second_derivative = np.diff(
+                first_derivative, 
+                axis = 2, 
+                prepend = first_derivative[:,:,0,:]
+                )
+
+            selected_feature = np.concatenate(
+                (array,first_derivative,second_derivative),
+                axis=1
+            )
+        features.append(selected_feature)
+        features = np.concatenate(features, axis=1)
+            
+    
+    return features
+            
              
 
 def create_X_and_Y(big_data: dict,
