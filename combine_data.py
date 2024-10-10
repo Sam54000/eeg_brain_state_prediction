@@ -488,7 +488,27 @@ def normalize_data(array: np.ndarray) -> np.ndarray:
     """
     
     return scipy.stats.zscore(array, axis=2)
-        
+
+def fool_proof_key(key: str) -> str:
+    """Because I have a  very bad memory I need to normalize keys.
+    
+    This function is to transform key into normalized dict key. If I think that 
+    a key is 'Channels' and actually it's 'channel' this will transform it.
+    """    
+    normalized_key_list = [
+        'channels',
+        'bands',
+        'mask',
+        'feature'
+    ]
+    
+    for normalized_key in normalized_key_list:
+        if normalized_key in key.lower():
+            return normalized_key
+    
+    print('No key found check the spelling')
+    return None
+
 def create_X(big_data: dict,
              keys_list: list[tuple[str,...]],
              features_args: dict,
@@ -519,19 +539,14 @@ def create_X(big_data: dict,
 
         {
             'EEGbandsEnvelopes': {
-                    'band': 'delta',
-                    'channel': 'Fp1'
+                    'bands': ['theta','alpha','theta']
+                    'channels': ['Fp1', 'O2', 'Fp2']
                 },
 
             'pupil': {
                 'band': None,
                 'channel': None
                     },
-            
-            'EEGbandsEnvelopes': {
-                    'band': 'alpha',
-                    'channel': 'O2'
-                }
         }
     """
 
@@ -549,23 +564,32 @@ def create_X(big_data: dict,
 
         if 'EEG' in modality:
             bands_list = ['delta','theta','alpha','beta','gamma']
-            index_band = bands_list.index(
-                features_args[modality]['band']
+            selected_feature = list()
+
+            channels = features_args[modality]['channel']
+            bands = features_args[modality]['band']
+            for band, channel in zip(bands,channels):
+                copied_array = array.copy()
+                index_band = bands_list.index(band)
+                index_channel = get_specific_location(
+                    data_dict=big_data,
+                    channel_names=channel
                 )
-            index_channel = get_specific_location(
-                data_dict=big_data,
-                channel_names=features_args[modality]['channel']
-            )
-            selected_feature = array[:,index_channel,:,index_band] 
+                
+                selected_feature.append(
+                    copied_array[:,index_channel,:,index_band] 
+                )
+            selected_feature = np.concatenate(selected_feature,axis = 1)
+                
             selected_feature = np.reshape(
                 selected_feature,
-                (array.shape[0],
-                 1,
-                 array.shape[2],
-                 1
+                (copied_array.shape[0],
+                -1,
+                copied_array.shape[2],
+                1
                 )
             )
-        
+            
         if 'pupil' in modality:
             selected_feature = array[:,0,:,:]
             selected_feature = np.reshape(
@@ -695,7 +719,6 @@ def create_X_and_Y(big_data: dict,
         start_crop = start_crop,
         stop_crop = stop_crop
     )
-    Y_array = normalize_data(Y_array)
     windowed_Y = Y_array[:,:,window_length:]
     
     return windowed_X, windowed_Y
@@ -744,6 +767,7 @@ def reshape_array(array: np.ndarray) -> np.ndarray:
                                   swaped_array.shape[2]*swaped_array.shape[3]))
     reshaped_swaped_array = np.reshape(first_reshape,(swaped_array.shape[0]*swaped_array.shape[1],
                                      swaped_array.shape[2]*swaped_array.shape[3]))
+    print(f"reshaped array shape: {reshaped_swaped_array.shape}")
     
     return reshaped_swaped_array
 
@@ -788,11 +812,16 @@ def arange_X_Y(X: np.ndarray,
     window_rejection_mask = dimension_rejection_mask(mask, 
                                                      threshold=25, 
                                                      axis=3)
+    print(f"window rejection mask shape: {window_rejection_mask.shape}")
     #if group_rejection:
     #    window_rejection_mask, X, Y = reject_groups(X, Y, window_rejection_mask)
-    
+    print("Reshaping X...")
     reshaped_X = reshape_array(X)
+    
+    print("Reshaping Y...")
     reshaped_Y = np.reshape(Y, -1)
+    
+    print("Reshaping mask...")
     reshaped_mask = np.squeeze(reshape_array(window_rejection_mask))
     
     return reshaped_X[reshaped_mask,:], reshaped_Y[reshaped_mask]
@@ -838,10 +867,8 @@ def create_train_test_data(big_data: dict,
                            task: str,
                            runs: list[str],
                            cap_name: str,
-                           modality: str,
-                           band_name: str | None = None,
+                           features_args: dict,
                            window_length: int = 45,
-                           chan_select_args = None,
                            masking: bool = False,
                            start_crop: int| None = None,
                            stop_crop: int| None = None
@@ -876,8 +903,6 @@ def create_train_test_data(big_data: dict,
     Returns:
         tuple[np.ndarray]: the train and test data
     """
-    if train_subjects == 'all':
-        train_subjects = [sub.split('-')[1] for sub in big_data.keys()]
     
     train_subjects = sanatize_training_list(train_subjects, test_subject)
     
@@ -888,6 +913,9 @@ def create_train_test_data(big_data: dict,
         task     = task,
         runs     = runs
         )
+
+    print_keys(train_keys, title = "Train data")
+    print("")
     
     test_keys = generate_key_list(
         big_data = big_data,
@@ -896,6 +924,9 @@ def create_train_test_data(big_data: dict,
         task     = task,
         runs     = runs
         )
+
+    print_keys(test_keys, title = "Test data")
+    print("")
     
     if test_keys == []:
         raise ValueError(f'No data for:sub-{test_subject}_ses-{test_sessions}')
@@ -903,46 +934,67 @@ def create_train_test_data(big_data: dict,
     X_train, Y_train = create_X_and_Y(
         big_data         = big_data,
         keys_list        = train_keys,
-        X_args           = X_train_args,
+        X_args           = features_args,
         cap_name         = cap_name,
         window_length    = window_length,
         start_crop       = start_crop,
         stop_crop        = stop_crop
         )
+    
+    print(f"X train shape: {X_train.shape}")
+    print(f"Y train shape: {Y_train.shape}\n")
+    
+    
 
     X_test, Y_test = create_X_and_Y(
         big_data         = big_data,
         keys_list        = test_keys,
-        X_args           = X_test_args,
+        X_args           = features_args,
         cap_name         = cap_name,
         window_length    = window_length,
         start_crop       = start_crop,
         stop_crop        = stop_crop
         )
 
+    print(f"X test shape: {X_test.shape}")
+    print(f"Y test shape: {Y_test.shape}\n")
+
     if masking:
-        train_mask = build_windowed_mask(big_data,
-                                        key_list = train_keys,
-                                        window_length=window_length,
-                                        start_crop=start_crop,
-                                        stop_crop=stop_crop,
-                                        modalities =modality)
+        train_mask = build_windowed_mask(
+            big_data,
+            key_list = train_keys,
+            window_length=window_length,
+            start_crop=start_crop,
+            stop_crop=stop_crop,
+            modalities = list(features_args.keys()))
         
-        test_mask = build_windowed_mask(big_data,
-                                        key_list=test_keys, 
-                                        window_length=window_length,
-                                        start_crop=start_crop,
-                                        stop_crop=stop_crop,
-                                        modalities =modality)
+        test_mask = build_windowed_mask(
+            big_data,
+            key_list=test_keys, 
+            window_length=window_length,
+            start_crop=start_crop,
+            stop_crop=stop_crop,
+            modalities = list(features_args.keys()))
+    
+        print(f"train mask shape: {train_mask.shape}")
+        print(f"test mask shape: {test_mask.shape}\n")
         
 
+        print(f"Aranging training data:")
         X_train, Y_train = arange_X_Y(X = X_train, 
                                       Y = Y_train, 
                                       mask = train_mask)
-        
+        print(f"\nAranging test data")
         X_test, Y_test = arange_X_Y(X = X_test, 
                                     Y = Y_test, 
                                     mask = test_mask)
+                        
+
+    print(f"aranged X train shape: {X_train.shape}")
+    print(f"aranged Y train shape: {Y_train.shape}\n")
+
+    print(f"aranged X test shape: {X_test.shape}")
+    print(f"aranged Y test shape: {Y_test.shape}\n")
         
     if X_test is None or Y_test is None:
         raise ValueError(f'Test data excluded for sub-{test_subject} ses-{test_sessions}')
@@ -952,6 +1004,7 @@ def create_train_test_data(big_data: dict,
             X_test, 
             Y_test)
 
+#%%
 def Main(   data_directory: str | os.PathLike,
             train_subjects: str | list[str],
             train_sessions: list[str],
