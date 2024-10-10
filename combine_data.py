@@ -80,9 +80,9 @@ def combine_data_from_filename(reading_dir: str | os.PathLike,
 
     return big_data
 
-big_d = combine_data_from_filename('/data2/Projects/eeg_fmri_natview/derivatives/multimodal_prediction_models/data_prep/prediction_model_data_eeg_features_v2/group_data_Hz-3.8',
+big_d = combine_data_from_filename('/data2/Projects/eeg_fmri_natview/derivatives/multimodal_prediction_models/data_prep/prediction_model_data_eeg_features_v2/group_data_Hz-1.0',
                                     task = 'checker',
-                                    run = '01BlinksRemoved')
+                                    run = '01')
 #%%
 def filter_data(data: np.ndarray, 
                 low_freq_cutoff: float | None = None,
@@ -232,8 +232,6 @@ def create_big_feature_array(big_data: dict,
         axis_to_get (int): The axis to get the data from. If None, the entire
                                 array is considered.
         keys_list (list): The list of keys to access the data in the dictionary.
-        subject_agnostic (bool): If True, the data is concatenated along the
-                                 The subject axis defined by axis_to_concatenate.
         axis_to_concatenate (int): The axis to concatenate the data along.
         start_crop (int): The start index to crop the data.
         stop_crop (int): The stop index to crop the data.
@@ -253,8 +251,13 @@ def create_big_feature_array(big_data: dict,
                     ][run
                         ][modality][array_name]
         
+        if extracted_array.ndim < 2:
+            extracted_array = np.reshape(
+                extracted_array,
+                (1,extracted_array.shape[0],1)
+            )
+            
         if extracted_array.ndim < 3:
-            extracted_array = np.reshape(extracted_array,(1,extracted_array.shape[0]))
             extracted_array = extracted_array[:,:,np.newaxis]
 
         extracted_array = crop_data(extracted_array, 
@@ -268,6 +271,7 @@ def create_big_feature_array(big_data: dict,
     min_length = min(array_time_length)
     concatenation_list = [crop_data(array, axis = 1, stop = min_length)
                           for array in concatenation_list]
+    a = np.array(concatenation_list)
     return np.array(concatenation_list)
 
 def _find_item(desired_key: str, obj: Dict[str, Any]) -> Any:
@@ -348,7 +352,6 @@ def get_specific_location(data_dict: Dict,
 def combine_masks(big_data:dict,
                   key_list: list,
                   modalities: list | str = ['pupil'],
-                  subject_agnostic: bool = False,
                   start_crop: int| None = None,
                   stop_crop: int| None = None
                   ) -> np.ndarray[bool]:
@@ -359,8 +362,6 @@ def combine_masks(big_data:dict,
         key_list (list): The list of keys to access the data in the dictionary.
         modalities (list, optional): The modality to get the mask from. 
                                      Defaults to ['pupil','brainstates'].
-        subject_agnostic (bool, optional): Weither to compute mask subject-wise
-                                           or not. Defaults to False.
         start_crop (int | None, optional): The index to crop from the start. 
                                            Defaults to None.
         stop_crop (int | None, optional): The index to crop at the end. 
@@ -369,6 +370,10 @@ def combine_masks(big_data:dict,
     Returns:
         np.ndarray[bool]: The combined mask.
     """
+
+    if len(modalities) > 1:
+        modalities = list(np.unique(modalities))
+
     if isinstance(modalities, str):
         modalities = [modalities]
         
@@ -376,31 +381,17 @@ def combine_masks(big_data:dict,
     masks = []
     
     for modality in modalities:
-        if "envelopes" in modality.lower() or "tfr" in modality.lower():
-            array_name = 'artifact_mask'
-            index_to_get = None
-            axis_to_get = None
 
-        else:
-            array_name = 'feature'
-            index_to_get = -1
-            axis_to_get = 0
-        
         temp_mask = create_big_feature_array(
             big_data            = big_data,
             modality            = modality,
-            array_name          = array_name,
-            index_to_get        = index_to_get,
-            axis_to_get         = axis_to_get,
+            array_name          = 'mask',
             keys_list           = key_list,
-            axis_to_concatenate = 0,
             start_crop          = start_crop,
             stop_crop           = stop_crop
         )
         
-        if subject_agnostic:
-            temp_mask = temp_mask.flatten()
-            
+
         masks.append(temp_mask > 0.5)
     
     masks = np.array(masks)
@@ -410,7 +401,6 @@ def build_windowed_mask(big_data: dict,
                         key_list:list,
                         window_length: int = 45,
                         modalities = ['pupil','brainstates'],
-                        subject_agnostic: bool = False,
                         keepdims: bool = True,
                         start_crop: int| None = None,
                         stop_crop: int| None = None
@@ -424,7 +414,6 @@ def build_windowed_mask(big_data: dict,
                                        samples. Defaults to 45.
         modalities (list, optional): The modalities to consider. Defaults to
                                      ['pupil','brainstates'].
-        subject_agnostic (bool, optional): If True, the mask is subject agnostic.
                                            meaning the mask is concatenated along
                                            the time axis. Defaults to False.
         keepdims (bool, optional): If True, the mask is kept with the same
@@ -443,7 +432,6 @@ def build_windowed_mask(big_data: dict,
     joined_masks = combine_masks(big_data,
                                  key_list,
                                  modalities = modalities,
-                                 subject_agnostic = subject_agnostic,
                                  start_crop = start_crop,
                                  stop_crop = stop_crop
                                  )
@@ -451,18 +439,18 @@ def build_windowed_mask(big_data: dict,
     windowed_mask = sliding_window_view(joined_masks[:,:,:-1], 
                                         window_shape=window_length,
                                         axis = 2)
-    if subject_agnostic:
-        max_dim = 4
-        axis = 2
-    else:
-        max_dim = 3
-        axis = 1
-        
-    if np.ndim(windowed_mask) < max_dim:
-        return windowed_mask
-    else:
-        # Take the case of EEG channels. If there is one channel not good, reject the entire window.
-        return np.all(windowed_mask, axis = axis, keepdims=keepdims)
+    combined_windowed_mask = np.all(
+        windowed_mask,
+        axis = 1,
+        keepdims=keepdims)
+    
+    windowed_mask = np.reshape(combined_windowed_mask,
+                               (combined_windowed_mask.shape[0],
+                                1,
+                                combined_windowed_mask.shape[2],
+                                combined_windowed_mask.shape[4])
+    )
+    return windowed_mask
 
 def build_windowed_data(array: np.ndarray,
                         window_length: int = 45) -> np.ndarray:
@@ -485,15 +473,69 @@ def build_windowed_data(array: np.ndarray,
             
     return windowed_data
 
+def normalize_data(array: np.ndarray) -> np.ndarray:
+    """Normalize the data using a normalizer.
+    
+    This is also a place holder for other normalizers.
+    
+    Args:
+        array (np.ndarray): The array to normalize
+        normalizer (scipy.stats.zscore | sklearn.preprocessing.StandardScaler): 
+            The normalizer object
+    
+    Returns:
+        np.ndarray: The normalized data
+    """
+    
+    return scipy.stats.zscore(array, axis=2)
+        
 def create_X(big_data: dict,
              keys_list: list[tuple[str,...]],
              features_args: dict,
-             normalization = 'zscore',
              start_crop: int| None = None,
              stop_crop: int| None = None
              ) -> np.ndarray:
+    """Generate the X array for ML training.
 
-    features = []
+    Args:
+        big_data (dict): The encapsulated dictionary
+        keys_list (list[tuple[str,...]]): The list of selected keys to select
+        features_args (dict): The arguments to select the features
+        start_crop (int | None, optional): Index from when to start. 
+                                           Defaults to None.
+        stop_crop (int | None, optional): Index from whe to stop. 
+                                          Defaults to None.
+
+    Returns:
+        np.ndarray: The X array
+
+    Note:
+        X_args are the argument for building the X array. It is a dictionary 
+        that should have specific keys. 
+        For example let's say we have 3 features selected.
+        Feature 1 is EEGbandsEnvelopes (specifically for Fp1 along the delta band)
+        Feature 2 is the pupil data
+        Feature 3 is the EEGbandsEnvelopes (specifically for O2 along the alpha band)
+
+        {
+            'EEGbandsEnvelopes': {
+                    'band': 'delta',
+                    'channel': 'Fp1'
+                },
+
+            'pupil': {
+                'band': None,
+                'channel': None
+                    },
+            
+            'EEGbandsEnvelopes': {
+                    'band': 'alpha',
+                    'channel': 'O2'
+                }
+        }
+    """
+
+    features = list()
     for modality in features_args.keys():
         array = create_big_feature_array(
             big_data = big_data,
@@ -505,51 +547,91 @@ def create_X(big_data: dict,
         )
 
 
-        if 'eeg' in modality:
+        if 'EEG' in modality:
             bands_list = ['delta','theta','alpha','beta','gamma']
             index_band = bands_list.index(
-                features_args[modality]['arguments']['band']
+                features_args[modality]['band']
                 )
             index_channel = get_specific_location(
                 data_dict=big_data,
-                channel_names=features_args[modality]['arguments']['channel']
+                channel_names=features_args[modality]['channel']
             )
-            selected_feature = array[:,index_channel,:,index_band]
+            selected_feature = array[:,index_channel,:,index_band] 
+            selected_feature = np.reshape(
+                selected_feature,
+                (array.shape[0],
+                 1,
+                 array.shape[2],
+                 1
+                )
+            )
         
         if 'pupil' in modality:
-            first_derivative = np.diff(
-                array, 
-                axis = 2, 
-                prepend = array[:,:,0,:]
+            selected_feature = array[:,0,:,:]
+            selected_feature = np.reshape(
+                selected_feature,
+                (array.shape[0],
+                 1,
+                 array.shape[2],
+                 array.shape[3]
                 )
+            )
+
+            first_derivative = np.diff(
+                selected_feature, 
+                axis = 2, 
+                prepend = np.expand_dims(selected_feature[:,:,0,:], axis = 2)
+                )
+            
             
             second_derivative = np.diff(
                 first_derivative, 
                 axis = 2, 
-                prepend = first_derivative[:,:,0,:]
+                prepend = np.expand_dims(selected_feature[:,:,0,:], axis = 2)
                 )
+            
 
             selected_feature = np.concatenate(
-                (array,first_derivative,second_derivative),
+                (selected_feature,first_derivative,second_derivative),
                 axis=1
             )
+            
         features.append(selected_feature)
-        features = np.concatenate(features, axis=1)
-            
+    features = np.concatenate(features, axis=1)
     
-    return features
+    return np.reshape(features, features.shape[:-1])
             
-             
+def create_Y(big_data: dict,
+             keys_list: list[tuple[str,...]],
+             cap_name: str,
+             start_crop: int| None = None,
+             stop_crop: int| None = None
+             ) -> np.ndarray:
+    cap_names_list = extract_cap_name_list(big_data,keys_list)
+    real_cap_name = get_real_cap_name(cap_name,cap_names_list)
+    cap_index = [cap_names_list.index(cap) for cap in real_cap_name][0]
+    
+    array = create_big_feature_array(
+        big_data            = big_data,
+        modality            = 'brainstates', 
+        array_name          = 'feature',
+        keys_list           = keys_list,
+        start_crop          = start_crop,
+        stop_crop           = stop_crop
+        )
+    selection = array[:,cap_index,:,:]
+    selection = np.reshape(selection,(array.shape[0],
+                                      1,
+                                      array.shape[2])
+    )
+    
+    return selection
 
 def create_X_and_Y(big_data: dict,
                    keys_list: list[tuple[str, ...]],
-                   X_name: str,
-                   Y_name: str,
-                   bands_names: str | list | None =  None,
-                   chan_select_args: Dict[str,str] | None = None,
-                   normalization: str | None = 'zscore',
+                   X_args: dict,
+                   cap_name: str,
                    window_length: int = 45,
-                   integrate_pupil: bool = False,
                    start_crop: int| None = None,
                    stop_crop: int| None = None
                   ) -> tuple[Any,Any]:
@@ -559,121 +641,66 @@ def create_X_and_Y(big_data: dict,
         big_data (dict): The encapsulated dictionary
         keys_list (list[tuple[str, ...]]): The list of selected keys to select
                                            data in the dictionary
-        X_name (str): The name of the modality to get
-        cap_name (str): The name of the 
-        bands_names (str | list | None, optional): _description_. Defaults to None.
-        chan_select_args (Dict[str,str] | None, optional): _description_. Defaults to None.
-        normalization (str | None, optional): _description_. Defaults to 'zscore'.
+        X_args (dict): The arguments to select the X data.
+        Y_args (dict): The arguments to select the Y data
         window_length (int, optional): _description_. Defaults to 45.
-        integrate_pupil (bool, optional): _description_. Defaults to False.
         start_crop (int | None, optional): _description_. Defaults to None.
         stop_crop (int | None, optional): _description_. Defaults to None.
 
     Returns:
-        tuple[Any,Any]: _description_
+        tuple[Any,Any]: The X and Y arrays.
+    
+    Note:
+        X_args are the argument for building the X array. It is a dictionary 
+        that should have specific keys. 
+        For example let's say we have 3 features selected.
+        Feature 1 is EEGbandsEnvelopes (specifically for Fp1 along the delta band)
+        Feature 2 is the pupil data
+        Feature 3 is the EEGbandsEnvelopes (specifically for O2 along the alpha band)
+
+        {
+            'EEGbandsEnvelopes': {
+                    'band': 'delta',
+                    'channel': 'Fp1'
+                },
+
+            'pupil': {
+                'band': None,
+                'channel': None
+                    },
+            
+            'EEGbandsEnvelopes': {
+                    'band': 'alpha',
+                    'channel': 'O2'
+                }
+        }
     """
     
-    if "pupil" in X_name:
-        index_to_get = 0 
-        axis_to_get = 0
-        integrate_pupil = False
-        normalization_axis = 1
-    
-    elif "envelope" in X_name.lower() or "tfr" in X_name.lower():
-        bands_list = ['delta','theta','alpha','beta','gamma']
-
-        if isinstance(bands_names,list):
-            index_band = [bands_list.index(band) for band in bands_names]
-
-        elif isinstance(bands_names, str):
-            index_band = bands_list.index(bands_names)
-
-        index_to_get = index_band
-        normalization_axis = 1
-        axis_to_get = -1
-
-    big_X_array = create_big_feature_array(
-        big_data     = big_data,
-        modality     = X_name,
-        array_name   = 'feature',
-        index_to_get = index_to_get,
-        axis_to_get  = axis_to_get,
-        keys_list    = keys_list,
-        start_crop   = start_crop,
-        stop_crop    = stop_crop
-        )
-
-    if "pupil" in X_name:
-        first_derivative = np.diff(
-            big_X_array, 
-            axis = 2, 
-            prepend = big_X_array[:,:,0][:,:,np.newaxis]
-            )
-        
-        second_derivative = np.diff(
-            first_derivative, 
-            axis = 2, 
-            prepend = first_derivative[:,:,0][:,:,np.newaxis]
-            )
-
-        big_X_array = np.concatenate(
-            (big_X_array,first_derivative,second_derivative),
-            axis=1
-        )
-    
-    if normalization == 'zscore':
-        big_X_array = scipy.stats.zscore(big_X_array,axis=normalization_axis)
-    
-    windowed_X = build_windowed_data(big_X_array,
+    X_array = create_X(
+        big_data = big_data,
+        keys_list = keys_list,
+        features_args = X_args,
+        start_crop = start_crop,
+        stop_crop = stop_crop,
+    )
+    X_array = normalize_data(X_array)
+    windowed_X = build_windowed_data(X_array,
                                      window_length)
-
-    if integrate_pupil:
-        pupil_array = create_big_feature_array(
-            big_data            = big_data,
-            modality            = 'pupil',
-            array_name          = 'feature',
-            index_to_get        = 1,
-            axis_to_get         = 0,
-            keys_list           = keys_list,
-            start_crop          = start_crop,
-            stop_crop           = stop_crop
-            ) 
-
-        if normalization == 'zscore':
-            pupil_array = scipy.stats.zscore(pupil_array,axis=1)
-        
-        windowed_pupil = build_windowed_data(pupil_array)
-        windowed_X = np.concatenate(
-            (windowed_X, windowed_pupil),
-            axis=1
-            )
     
-    if chan_select_args:
-        channel_mask = get_specific_location(big_data, **chan_select_args)
-        big_X_array = big_X_array[:,channel_mask,...]
-    
-    cap_names_list = extract_cap_name_list(big_data,keys_list)
-    real_cap_name = get_real_cap_name(Y_name,cap_names_list)
-    cap_index = [cap_names_list.index(cap) for cap in real_cap_name][0]
-    
-    big_Y_array = create_big_feature_array(
-        big_data            = big_data,
-        modality            = 'brainstates', 
-        array_name          = 'feature',
-        index_to_get        = cap_index,
-        axis_to_get         = 0,
-        keys_list           = keys_list,
-        start_crop          = start_crop,
-        stop_crop           = stop_crop
-        )
 
-    #if normalization == 'zscore':
-    #    big_Y_array = scipy.stats.zscore(big_Y_array,axis=2)
-            
-    windowed_Y = big_Y_array[:,:,window_length:]
-
+    Y_array = create_Y(
+        big_data = big_data,
+        keys_list = keys_list,
+        cap_name = cap_name,
+        start_crop = start_crop,
+        stop_crop = stop_crop
+    )
+    Y_array = normalize_data(Y_array)
+    windowed_Y = Y_array[:,:,window_length:]
+    
     return windowed_X, windowed_Y
 
+#%%
 def dimension_rejection_mask(mask: np.ndarray,
                                threshold: int = 25,
                                axis: int = 3
@@ -862,8 +889,6 @@ def create_train_test_data(big_data: dict,
         runs     = runs
         )
     
-    #print_keys(train_keys, 'Train keys')
-    
     test_keys = generate_key_list(
         big_data = big_data,
         subjects = [test_subject],
@@ -872,19 +897,14 @@ def create_train_test_data(big_data: dict,
         runs     = runs
         )
     
-    #print_keys(test_keys, 'Test keys')
-    
     if test_keys == []:
         raise ValueError(f'No data for:sub-{test_subject}_ses-{test_sessions}')
     
     X_train, Y_train = create_X_and_Y(
         big_data         = big_data,
         keys_list        = train_keys,
-        X_name           = modality,
-        bands_names      = band_name,
-        Y_name           = cap_name,
-        normalization    = 'zscore',
-        chan_select_args = chan_select_args,
+        X_args           = X_train_args,
+        cap_name         = cap_name,
         window_length    = window_length,
         start_crop       = start_crop,
         stop_crop        = stop_crop
@@ -893,11 +913,8 @@ def create_train_test_data(big_data: dict,
     X_test, Y_test = create_X_and_Y(
         big_data         = big_data,
         keys_list        = test_keys,
-        X_name           = modality,
-        bands_names      = band_name,
-        Y_name           = cap_name,
-        normalization    = 'zscore',
-        chan_select_args = chan_select_args,
+        X_args           = X_test_args,
+        cap_name         = cap_name,
         window_length    = window_length,
         start_crop       = start_crop,
         stop_crop        = stop_crop
@@ -1083,7 +1100,7 @@ if __name__ == '__main__':
                     i += 1
                     print(i)
                 except Exception as e:
-                    raise e
+                    #raise e
                     print(f'sub-{subject} {cap} {e}')
                     continue
     with open(f'./models/ridge_pupil_{SAMPLING_RATE_HZ}_{task}_run-{runs[0]}.pkl', 'wb') as file:

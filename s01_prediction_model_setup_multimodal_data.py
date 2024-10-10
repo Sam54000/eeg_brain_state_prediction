@@ -143,15 +143,16 @@ for sub in subjects:
                         fill_nan = True
                         )
                     
-                    multimodal_data_dict = {'brainstates': hf.dataframe_to_dict(
+                    bs_dict = hf.dataframe_to_dict(
                         brainstate_data_resampled,
                         column_names = [col 
                                         for col in brainstate_data_resampled.columns
                                         if hf.get_real_column_name(brainstate_data_resampled, 'time')
-                                        not in col],
+                                        not in col and 'tsMask' not in col],
                         info = 'brain states'
                     )
-                    }
+                    bs_dict.update({"mask":brainstate_data_resampled['tsMask'].values})
+                    multimodal_data_dict = {'brainstates': bs_dict}
 
                     
                 # ----------------------------------------------------------------------------
@@ -163,12 +164,15 @@ for sub in subjects:
                                                         resampling_factor=TR_PERIOD_DIVIDING)
                     pupil_data_resampled = hf.resample_data(pupil_data, 
                                                             time_resampled=resampled_time_et)
-                    multimodal_data_dict['pupil'] = hf.dataframe_to_dict(
+                    eyetrack_dict =  hf.dataframe_to_dict(
                         pupil_data_resampled,
                         column_names=[col for col in pupil_data_resampled.columns 
-                                    if 'time' not in col.lower()],
+                                    if 'time' not in col.lower()
+                                    and 'tmask' not in col.lower()],
                         info = 'Pupil data'
                     )
+                    eyetrack_dict.update({'mask': pupil_data_resampled['tmask'].values})
+                    multimodal_data_dict['pupil'] = eyetrack_dict
                 
                 # ----------------------------------------------------------------------------
                 # RESPIRATION DATA
@@ -184,12 +188,18 @@ for sub in subjects:
                     respiration_data_resampled = hf.resample_data(
                         respiration_data, 
                         time_resampled=resampled_time_resp)
-                    multimodal_data_dict['respiration'] = hf.dataframe_to_dict(
+                    respiration_data_dict =  hf.dataframe_to_dict(
                         respiration_data_resampled,
                         column_names=[col for col in respiration_data_resampled.columns
                                     if 'time' not in col.lower()],
                         info = 'Respiration data'
                     )
+                    respiration_data_dict.update({
+                        'mask': np.full_like(respiration_data_resampled['time'].values,
+                                        True,
+                                        dtype = bool)
+                    })
+                    multimodal_data_dict['respiration'] = respiration_data_dict
                     # change the column name StdDev_6s to respiration
 
                 # ----------------------------------------------------------------------------
@@ -219,7 +229,8 @@ for sub in subjects:
                             
                         )
                         eeg_features[key] = hf.resample_eeg_features(data, 
-                                                                    resampled_eeg_time)
+                                                                    resampled_eeg_time,
+                                                                    verbose = True)
 
                     multimodal_data_dict|= eeg_features
                 #-----------------
@@ -242,8 +253,9 @@ for sub in subjects:
                     print(f"Index to crop: {min_length}\n")
 
                     for data_name, data in multimodal_data_dict.items():
-                        key_list = ["time", "feature"]
-                        for index, key_value in enumerate(key_list):
+                        key_list = ["time", "feature", "mask"]
+                        print(data.keys())
+                        for index, key_value in zip([0,1,0],key_list):
                             data_cropped = hf.crop_data(data[key_value],
                                                 id_max = min_length,
                                                 axis = index)
@@ -253,11 +265,6 @@ for sub in subjects:
                             print(text1 + text)
                             print(f"    End time: {data['time'][-1]} seconds")
 
-                        if data_name in eeg_features.keys():
-                            data_cropped = hf.crop_data(data["artifact_mask"],
-                                                id_max = min_length,
-                                                axis = 0)
-                            data.update({"artifact_mask":data_cropped})
                         multimodal_data_dict.update({data_name:data})
 
                     key_name = f"sub-{sub}_ses-{ses}_task-{task}"
@@ -270,7 +277,8 @@ for sub in subjects:
                     print('data not found')
             
             except Exception as e:
-                print(f"Error sub-{sub}_ses-{ses}_task{task}: {e}")
+                #raise e
+                print(f"Error sub-{sub}_ses-{ses}_task-{task}: {e}")
 
 #%%
 data_checker.to_csv("data_checker.csv", index=False)

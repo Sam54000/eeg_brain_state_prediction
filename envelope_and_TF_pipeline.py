@@ -333,7 +333,7 @@ class EEGfeatures:
             },
             'feature': self.feature,
             'feature_info': self.feature_info,
-            'artifact_mask': self.mask
+            'mask': self.mask
         }
         print(f'saving into {filename}')
         with open(filename, 'wb') as file:
@@ -426,9 +426,9 @@ def individual_process(filename: str,
             
 
     process_file_desc_pairs = {
-        #'run_wavelets': 'MorletTFR',
+        'run_wavelets': 'MorletTFR',
         'extract_eeg_band_envelope': 'EEGbandsEnvelopes',
-        #'extract_custom_band_envelope': 'CustomEnvelopes'
+        'extract_custom_band_envelope': 'CustomEnvelopes'
     }
 
     for process, file_description in process_file_desc_pairs.items():
@@ -453,8 +453,7 @@ def loop(overwrite = True,
          blank_run = True,
          remove_blinks = False,
          derivatives_path = None):
-    #raw_path = Path('/projects/EEG_FMRI/bids_eeg/BIDS/NEW/PREP_BV_EDF')
-    raw_path = Path('/projects/EEG_FMRI/bids_eeg/BIDS/NEW/PREP_BVA_GR_CB_BK_2024/')
+    raw_path = Path('/projects/EEG_FMRI/bids_eeg/BIDS/NEW/PREP_BV_EDF')
 
     for filename in raw_path.iterdir():
         #try:
@@ -478,9 +477,9 @@ def loop(overwrite = True,
 
 if __name__ == '__main__':
     blink_removal = True
-    saving_path = Path('/projects/EEG_FMRI/bids_eeg/BIDS/NEW/DERIVATIVES/eeg_features_extraction/run_for_BVA_check')
+    saving_path = Path('/projects/EEG_FMRI/bids_eeg/BIDS/NEW/DERIVATIVES/eeg_features_extraction/third_run')
     loop(overwrite = True, 
-         task = ['checker'],
+         task = ['rest','checker'],
          blank_run = False, 
          remove_blinks = blink_removal,
          derivatives_path = saving_path)
