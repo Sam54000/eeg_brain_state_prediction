@@ -187,8 +187,6 @@ def get_real_cap_name(cap_names: str | list[str],
     
     return real_cap_names
 
-import numpy as np
-
 def crop_data(array: np.ndarray, 
               axis: int = -1, 
               start: int | None = None, 
@@ -427,7 +425,6 @@ def combine_masks(big_data:dict,
     masks = np.array(masks)
 
     return np.all(masks, axis = 0)
-        
     
 def build_windowed_mask(big_data: dict,
                         key_list:list,
