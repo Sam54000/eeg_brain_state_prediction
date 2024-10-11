@@ -187,35 +187,66 @@ def get_real_cap_name(cap_names: str | list[str],
     
     return real_cap_names
 
+import numpy as np
+
 def crop_data(array: np.ndarray, 
               axis: int = -1, 
               start: int | None = None, 
               stop: int | None = None, 
-              step: int = 1):
+              step: int = 1, 
+              from_end: bool = False):
     """
-    Select a slice along a specific axis in a NumPy array.
+    Select a slice along a specific axis in a NumPy array, with the option to 
+    choose whether the slicing indices are from the beginning or from the end 
+    of the axis.
 
     Args:
-        array (np.ndarray): The array to slice
-        axis (int): The axis to slice along
-        start (int): The start index
-        stop (int): The stop index
-        step (int): The step size in number of samples
-    
+        array (np.ndarray): The array to slice.
+        axis (int): The axis to slice along.
+        start (int | None): The start index.
+        stop (int | None): The stop index.
+        step (int): The step size in number of samples.
+        from_end (bool): Whether to slice starting from the end of the axis.
+
     Returns:
-        np.ndarray: The sliced array
+        np.ndarray: The sliced array.
     """
     slicing = [slice(None)] * array.ndim
+    
+    axis_size = array.shape[axis]
+    if from_end:
+        start = axis_size + start if start is not None else None
+        stop = axis_size + stop if stop is not None else None
+    
     slicing[axis] = slice(start, stop, step)
 
     return array[tuple(slicing)]
+
+def trim_array(array: np.ndarray,
+               trim: tuple) -> np.ndarray:
+    
+    if trim[0]:
+        from_end = True if trim[0] < 0 else False
+        array = crop_data(array ,
+                          axis = 2,
+                          start = trim[0],
+                          stop = None,
+                          from_end=from_end)
+    if trim[1]:
+        from_end = True if trim[1] < 0 else False
+        array = crop_data(array ,
+                          axis = 2,
+                          start = None,
+                          stop = trim[1],
+                          from_end=from_end)
+    
+    return array
 
 def create_big_feature_array(big_data: dict,
                              modality: str,
                              array_name: str,
                              keys_list: list[tuple[str, ...]],
-                             start_crop: int| None = None,
-                             stop_crop: int| None = None
+                             trim_args: tuple = (None,None)
                              ) -> np.ndarray:
     """Gather one type of data across subject and arange it in an array.
 
@@ -260,19 +291,20 @@ def create_big_feature_array(big_data: dict,
         if extracted_array.ndim < 3:
             extracted_array = extracted_array[:,:,np.newaxis]
 
-        extracted_array = crop_data(extracted_array, 
-                                    axis = 1, 
-                                    start = start_crop,
-                                    stop = stop_crop)
-        
         concatenation_list.append(extracted_array)
     
     array_time_length = [array.shape[1] for array in concatenation_list]
     min_length = min(array_time_length)
     concatenation_list = [crop_data(array, axis = 1, stop = min_length)
                           for array in concatenation_list]
-    a = np.array(concatenation_list)
-    return np.array(concatenation_list)
+    array = np.array(concatenation_list)
+    
+    print(f"array before trimming: {array.shape}")
+    array = trim_array(array = array,
+                       trim = trim_args)
+    print(f"array after trimming: {array.shape}")
+    
+    return array
 
 def _find_item(desired_key: str, obj: Dict[str, Any]) -> Any:
     """Find any item in an encapsulated dictionary."
@@ -352,8 +384,7 @@ def get_specific_location(data_dict: Dict,
 def combine_masks(big_data:dict,
                   key_list: list,
                   modalities: list | str = ['pupil'],
-                  start_crop: int| None = None,
-                  stop_crop: int| None = None
+                  trim_args : tuple = (None, None),
                   ) -> np.ndarray[bool]:
     """Combine the masks from different modalities.
 
@@ -387,23 +418,23 @@ def combine_masks(big_data:dict,
             modality            = modality,
             array_name          = 'mask',
             keys_list           = key_list,
-            start_crop          = start_crop,
-            stop_crop           = stop_crop
+            trim_args           = trim_args
         )
         
 
         masks.append(temp_mask > 0.5)
     
     masks = np.array(masks)
+
     return np.all(masks, axis = 0)
         
+    
 def build_windowed_mask(big_data: dict,
                         key_list:list,
                         window_length: int = 45,
                         modalities = ['pupil','brainstates'],
                         keepdims: bool = True,
-                        start_crop: int| None = None,
-                        stop_crop: int| None = None
+                        trim_args: tuple = (None, None)
                         ) -> np.ndarray:
     """Builod a windowed mask from the data to fit later with the windowed data.
     
@@ -432,8 +463,7 @@ def build_windowed_mask(big_data: dict,
     joined_masks = combine_masks(big_data,
                                  key_list,
                                  modalities = modalities,
-                                 start_crop = start_crop,
-                                 stop_crop = stop_crop
+                                 trim_args=trim_args
                                  )
     
     windowed_mask = sliding_window_view(joined_masks[:,:,:-1], 
@@ -512,8 +542,7 @@ def fool_proof_key(key: str) -> str:
 def create_X(big_data: dict,
              keys_list: list[tuple[str,...]],
              features_args: dict,
-             start_crop: int| None = None,
-             stop_crop: int| None = None
+             trim_args: tuple = (None, None)
              ) -> np.ndarray:
     """Generate the X array for ML training.
 
@@ -543,10 +572,7 @@ def create_X(big_data: dict,
                     'channels': ['Fp1', 'O2', 'Fp2']
                 },
 
-            'pupil': {
-                'band': None,
-                'channel': None
-                    },
+            'pupil': list(),
         }
     """
 
@@ -557,8 +583,7 @@ def create_X(big_data: dict,
             keys_list=keys_list,
             modality = modality,
             array_name = "feature",
-            start_crop=start_crop,
-            stop_crop=stop_crop
+            trim_args=trim_args
         )
 
 
@@ -579,6 +604,7 @@ def create_X(big_data: dict,
                 selected_feature.append(
                     copied_array[:,index_channel,:,index_band] 
                 )
+              
             selected_feature = np.concatenate(selected_feature,axis = 1)
                 
             selected_feature = np.reshape(
@@ -591,13 +617,93 @@ def create_X(big_data: dict,
             )
             
         if 'pupil' in modality:
-            selected_feature = array[:,0,:,:]
-            selected_feature = np.reshape(
-                selected_feature,
+            copied_array = array[:,0,:,:].copy()
+            pupil_dilation = np.reshape(
+                copied_array,
                 (array.shape[0],
                  1,
                  array.shape[2],
                  array.shape[3]
+                )
+            )
+
+            first_derivative = np.diff(
+                pupil_dilation, 
+                axis = 2, 
+                prepend = np.expand_dims(pupil_dilation[:,:,0,:], axis = 2)
+                )
+            
+            
+            second_derivative = np.diff(
+                first_derivative, 
+                axis = 2, 
+                prepend = np.expand_dims(pupil_dilation[:,:,0,:], axis = 2)
+                )
+            selected_feature = list()
+            for value in features_args[modality]:
+                
+                selected_feature.append(locals()[value])
+            
+            selected_feature = np.concatenate(selected_feature,axis=1)
+            
+        features.append(selected_feature)
+        
+    features = np.concatenate(features, axis=1)
+    
+    return np.reshape(features, features.shape[:-1])
+            
+def create_Y(big_data: dict,
+             keys_list: list[tuple[str,...]],
+             cap_name: str,
+             trim_args: tuple = (None, None)
+             ) -> np.ndarray:
+    cap_names_list = extract_cap_name_list(big_data,keys_list)
+    real_cap_name = get_real_cap_name(cap_name,cap_names_list)
+    cap_index = [cap_names_list.index(cap) for cap in real_cap_name][0]
+    
+    array = create_big_feature_array(
+        big_data            = big_data,
+        modality            = 'brainstates', 
+        array_name          = 'feature',
+        keys_list           = keys_list,
+        trim_args           = trim_args
+        )
+    selection = array[:,cap_index,:,:]
+    selection = np.reshape(selection,(array.shape[0],
+                                      1,
+                                      array.shape[2])
+    )
+    
+    return selection
+
+''' WORK IN PROGRESS
+def cross_correlation(
+    big_data: dict,
+    keys_list: list,
+    cap_name: str,
+    features_names: list = ["pupil", "EEGbandsEnvelopes"],
+    trim_args: tuple = (None, None)
+) -> np.ndarray:
+    
+    concatenated_features = list()
+
+    for feature_name in features_names:
+        features_array = create_big_feature_array(
+            big_data = big_data,
+            keys_list=keys_list,
+            modality = feature_name,
+            array_name="feature",
+            trim_args=trim_args
+        )
+
+        if 'pupil' in feature_name:
+            selected_feature = features_array[:,0,:,:]
+            selected_feature = np.reshape(
+                selected_feature,
+                (features_array.shape[0],
+                 1,
+                 features_array.shape[2],
+                 features_array.shape[3]
                 )
             )
 
@@ -613,51 +719,39 @@ def create_X(big_data: dict,
                 axis = 2, 
                 prepend = np.expand_dims(selected_feature[:,:,0,:], axis = 2)
                 )
-            
 
             selected_feature = np.concatenate(
                 (selected_feature,first_derivative,second_derivative),
                 axis=1
             )
             
-        features.append(selected_feature)
-    features = np.concatenate(features, axis=1)
+        concatenated_features.append(features_array)
     
-    return np.reshape(features, features.shape[:-1])
-            
-def create_Y(big_data: dict,
-             keys_list: list[tuple[str,...]],
-             cap_name: str,
-             start_crop: int| None = None,
-             stop_crop: int| None = None
-             ) -> np.ndarray:
-    cap_names_list = extract_cap_name_list(big_data,keys_list)
-    real_cap_name = get_real_cap_name(cap_name,cap_names_list)
-    cap_index = [cap_names_list.index(cap) for cap in real_cap_name][0]
-    
-    array = create_big_feature_array(
-        big_data            = big_data,
-        modality            = 'brainstates', 
-        array_name          = 'feature',
-        keys_list           = keys_list,
-        start_crop          = start_crop,
-        stop_crop           = stop_crop
-        )
-    selection = array[:,cap_index,:,:]
-    selection = np.reshape(selection,(array.shape[0],
-                                      1,
-                                      array.shape[2])
+    concatenated_features = np.concatenate(concatenated_features,
+                                           axis = 1)
+    masks_array = combine_masks(
+        big_data=big_data,
+        key_list=keys_list,
+        modalities=features_names,
+        trim_args=trim_args
     )
-    
-    return selection
 
+    brainstates_array = create_Y(
+        big_data=big_data,
+        keys_list = keys_list,
+        cap_name=cap_name,
+        trim_args=trim_args
+    )
+        
+    brainstates_array = brainstates_array[:,:,:,np.newaxis]
+'''    
+            
 def create_X_and_Y(big_data: dict,
                    keys_list: list[tuple[str, ...]],
                    X_args: dict,
                    cap_name: str,
                    window_length: int = 45,
-                   start_crop: int| None = None,
-                   stop_crop: int| None = None
+                   trim_args: tuple = (None, None)
                   ) -> tuple[Any,Any]:
     """Generate X and Y array for ML training and/or testing.
 
@@ -704,8 +798,7 @@ def create_X_and_Y(big_data: dict,
         big_data = big_data,
         keys_list = keys_list,
         features_args = X_args,
-        start_crop = start_crop,
-        stop_crop = stop_crop,
+        trim_args = trim_args
     )
     X_array = normalize_data(X_array)
     windowed_X = build_windowed_data(X_array,
@@ -716,8 +809,7 @@ def create_X_and_Y(big_data: dict,
         big_data = big_data,
         keys_list = keys_list,
         cap_name = cap_name,
-        start_crop = start_crop,
-        stop_crop = stop_crop
+        trim_args = trim_args
     )
     windowed_Y = Y_array[:,:,window_length:]
     
@@ -870,8 +962,7 @@ def create_train_test_data(big_data: dict,
                            features_args: dict,
                            window_length: int = 45,
                            masking: bool = False,
-                           start_crop: int| None = None,
-                           stop_crop: int| None = None
+                           trim_args: tuple = (None, None)
                            ) -> tuple[Any,Any,Any,Any]:
     """Create the train and test data using leave one out method.
 
@@ -937,8 +1028,7 @@ def create_train_test_data(big_data: dict,
         X_args           = features_args,
         cap_name         = cap_name,
         window_length    = window_length,
-        start_crop       = start_crop,
-        stop_crop        = stop_crop
+        trim_args        = trim_args
         )
     
     print(f"X train shape: {X_train.shape}")
@@ -952,8 +1042,7 @@ def create_train_test_data(big_data: dict,
         X_args           = features_args,
         cap_name         = cap_name,
         window_length    = window_length,
-        start_crop       = start_crop,
-        stop_crop        = stop_crop
+        trim_args        = trim_args
         )
 
     print(f"X test shape: {X_test.shape}")
@@ -964,16 +1053,14 @@ def create_train_test_data(big_data: dict,
             big_data,
             key_list = train_keys,
             window_length=window_length,
-            start_crop=start_crop,
-            stop_crop=stop_crop,
+            trim_args = trim_args,
             modalities = list(features_args.keys()))
         
         test_mask = build_windowed_mask(
             big_data,
             key_list=test_keys, 
             window_length=window_length,
-            start_crop=start_crop,
-            stop_crop=stop_crop,
+            trim_args = trim_args,
             modalities = list(features_args.keys()))
     
         print(f"train mask shape: {train_mask.shape}")
@@ -1018,8 +1105,7 @@ def Main(   data_directory: str | os.PathLike,
             window_length_seconds: int | float = 12,
             chan_select_args = None,
             masking: bool = False,
-            start_crop: int| None = None,
-            stop_crop: int| None = None,
+            trim_args: tuple = (None, None)
             sampling_rate: int | float = 1,
             estimator: BaseEstimator = linear_model.RidgeCV(cv = 5),
             on_errors: str = 'raise', 
