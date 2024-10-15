@@ -1,4 +1,3 @@
-# %%
 import os
 
 nthreads = "32" # 64 on synapse
@@ -13,16 +12,337 @@ import sklearn
 from sklearn.base import BaseEstimator
 import numpy as np
 import sklearn.linear_model as linear_model
-from scipy.interpolate import CubicSpline
 import sklearn.model_selection
 from typing import List, Dict, Union, Optional
 from typing import Any
-import pickle
-import seaborn as sns
-import pandas as pd
-import scipy
 from numpy.lib.stride_tricks import sliding_window_view
+import pickle
+import pandas as pd
+from glob import glob
 
+#%%
+def xcorr_with_ttest(subject_list: list, 
+                     ts_files_path: str | os.PathLike,
+                     sessions: list,
+                     task: str,
+                     run: str,
+                     cap_name: str,
+                     feature_name: str,
+                     sampling_rate: float = 1.0,
+                     ):
+    """ Returns dictionary of t-tested cross correlations. 
+    Returns dictionary of t-tested cross correlations for a given list of 
+    participants' fMRI, EEG, and pupillometry data from a given task.  
+    Each element in the dictionary is a series of t-stats for a certain CAP x 
+    channel-band or CAP x pupillometry analysis cross correlation 
+    (and is labeled as such, eg "tsCAP1_Oz-alpha", "tsCAP5_PD-firstder")
+    
+    Args:
+        subject_list (list): The list of subject to run the function on.
+        sessions (list): The list of sessions per subject to run the function on.
+        task (str): The 
+        run (str): _description_
+
+    Returns:
+        _type_: _description_
+    """
+
+    
+    channel_list = ['Fp1','Fpz','Fp2','AF7','AF3','AF4','AF8','F7','F5','F3','F1','Fz',
+                    'F2','F4','F6','F8','FT7','FT8','FC5','FC3','FC1','FC2','FC4','FC6',
+                    'T7','T8','C5','C3','C1','Cz','C2','C4','C6','TP9','TP7','TP8','TP10',
+                    'CP5','CP3','CP1','CPz','CP2','CP4','CP6','P7','P5','P3','P1','Pz',
+                    'P2','P4','P6','P8','PO7','PO3','POz','PO4','PO8','O1','O2','Oz']
+    band_list = ["delta","theta","alpha","beta","gamma"]
+    #initialize dictionary to hold t-tested xcorrs
+    dict_xcorr_t = dict()
+
+    #iterate over CAPs
+
+    #iterate over channel-band combos
+    for channel in channel_list:
+        for band in band_list:
+            #create label to be used for dict_xcorr_t keys
+            channel_band = f"{channel}-{band}"
+
+            #create dictionary to hold each subject's CAPxchannel-band xcorr data
+            channel_band_xcorr_dict = dict()
+
+            #iterate over subjects
+            for subject in subject_list:
+                for session in sessions:
+                #open subject's data
+                    ts_path = os.path.join(
+                        ts_files_path, 
+                        f"sub-{subject}_ses-{session}_task-{task}_run-{run}_multimodal_data.pkl"
+                        )
+                    try:
+                        with open(ts_path, 'rb') as file:
+                            data_dict = pickle.load(file)
+                    except Exception as e:
+                        #raise e
+                        continue
+
+                    # get data for CAP
+                    cap_index = data_dict['brainstates']['labels'].index(cap_name)
+                    cap_data = data_dict['brainstates']['feature'][cap_index]
+
+                    #get mask for CAP
+                    cap_mask_float = data_dict['brainstates']['mask']
+                    cap_mask = cap_mask_float > 0.5                    
+
+                    #get data for channel-band
+                    ch_idx = data_dict[feature_name]['labels']["channels_info"]["channel_name"].index(channel)
+                    band_idx = band_list.index(band)
+
+                    eeg_ch_band_data = np.zeros(data_dict[feature_name]['feature'].shape[1])
+                    for tp in np.arange(eeg_ch_band_data.shape[0]):
+                        eeg_ch_band_data[tp] = data_dict[feature_name]['feature'][ch_idx][tp][band_idx]
+                    
+                    #get mask for channel-band
+                    eeg_ch_band_mask = data_dict[feature_name]["mask"]
+                
+                    #while BVA mystery artifact exists!
+                    sample_to_crop = int(20*sampling_rate)
+                    if task == "checker": 
+                        cap_data = cap_data[:-sample_to_crop]
+                        cap_mask = cap_mask[:-sample_to_crop]
+                        eeg_ch_band_data = eeg_ch_band_data[:-sample_to_crop]
+                        eeg_ch_band_mask = eeg_ch_band_mask[:-sample_to_crop]
+                    if task == "rest":
+                        cap_data = cap_data[:-sample_to_crop]
+                        cap_mask = cap_mask[:-sample_to_crop]
+                        eeg_ch_band_data = eeg_ch_band_data[:-sample_to_crop]
+                        eeg_ch_band_mask = eeg_ch_band_mask[:-sample_to_crop]
+                    
+                    #calculate FMRI-EEG xcorr using CAP data, CAP mask, channel-band data, channel-band mask 
+                    window = int(30*sampling_rate)
+                    xcorr = np.zeros(window+1)
+                    for lag_idx, lag in enumerate(np.arange(int(window/2 * -1), int(window/2+1))):
+                        cap_lag = np.zeros(cap_data.shape[0]-abs(lag))
+                        cap_mask_lag = np.zeros(cap_mask.shape[0]-abs(lag))
+                        if lag <= 0:
+                            for idx in np.arange(cap_data.shape[0]-abs(lag)):
+                                cap_lag[idx] = cap_data[idx-lag]
+                                cap_mask_lag[idx] = cap_mask[idx-lag]
+                            eeg_lag = eeg_ch_band_data[:cap_data.shape[0]+lag]   
+                            eeg_mask_lag = eeg_ch_band_mask[:cap_data.shape[0]+lag]
+                        if lag > 0:
+                            for idx in np.arange(eeg_ch_band_data.shape[0]-abs(lag)):
+                                cap_lag[idx] = cap_data[idx]
+                                cap_mask_lag[idx] = cap_mask[idx]
+                            eeg_lag = eeg_ch_band_data[lag:]
+                            eeg_mask_lag = eeg_ch_band_mask[lag:]
+
+                        joint_mask = cap_mask_lag==eeg_mask_lag
+                        xcorr[lag_idx] = np.corrcoef(cap_lag[joint_mask], eeg_lag[joint_mask])[0,1]
+                    
+                    channel_band_xcorr_dict[f"sub-{subject}_ses-{session}"] = xcorr
+            
+            #convert to dataframe for t-testing
+            df_channel_band_xcorr = pd.DataFrame(channel_band_xcorr_dict)
+
+            #t-test dataframe
+            t_series = np.zeros(df_channel_band_xcorr.shape[0])
+            for index, row in df_channel_band_xcorr.iterrows():
+                t_stat, p_val = scipy.stats.ttest_1samp(row, popmean=0)
+                t_series[index] = t_stat
+
+            #add to master t-stat dictionary
+            dict_xcorr_t[channel_band] = t_series
+
+
+    #now CAPxPD!
+    pd_analysis_list = ["pupil_dilation","first_derivative","second_derivative"]
+
+    for pd_analysis in pd_analysis_list: 
+        #create label to be used for dict_xcorr_t keys
+        pd_analysis = f"{pd_analysis}"
+
+        pd_xcorr_dict = dict()
+
+        for subject in subject_list:
+            for session in sessions:
+                ts_path = os.path.join(
+                    ts_files_path, 
+                    f"sub-{subject}_ses-{sessions}_task-{task}_run-{run}_multimodal_data.pkl"
+                    )
+                try:
+                    with open(ts_path, 'rb') as file:
+                        data_dict = pickle.load(file)
+                except Exception as e:
+                    continue
+
+                # get data for CAP
+                cap_index = data_dict['brainstates']['labels'].index(cap_name)
+                cap_data = data_dict['brainstates']['feature'][cap_index]
+
+                #get mask for CAP
+                cap_mask_float = data_dict['brainstates']['mask']
+                cap_mask = cap_mask_float > 0.5
+
+                #get PD data and calculate first, second deriv if necessary
+                ftr_index = data_dict['pupil']['labels'].index("pupil_size")
+                pd_data = data_dict['pupil']['feature'][ftr_index,:]
+                if pd_analysis == "PD-firstder":
+                    pd_firstder_arr = np.zeros(pd_data.shape[0])
+                    pd_firstder_arr[:-1] = np.diff(pd_data)
+                    pd_data = pd_firstder_arr
+                elif pd_analysis == "PD-secondder":
+                    pd_firstder_arr = np.zeros(pd_data.shape[0])
+                    pd_firstder_arr[:-1] = np.diff(pd_data)
+                    pd_secondder_arr = np.zeros(pd_data.shape[0])
+                    pd_secondder_arr[:-1] = np.diff(pd_firstder_arr)
+                    pd_data = pd_secondder_arr
+
+                #get mask for PD
+                pd_mask_float = data_dict['pupil']['mask']
+                pd_mask = pd_mask_float > 0.5
+
+                window = 120
+                xcorr = np.zeros(window+1)
+                for lag_idx, lag in enumerate(np.arange(int(window/2 * -1), int(window/2+1))):
+                    cap_lag = np.zeros(cap_data.shape[0]-abs(lag))
+                    cap_mask_lag = np.zeros(cap_mask.shape[0]-abs(lag))##
+                    if lag <= 0:
+                        for idx in np.arange(cap_data.shape[0]-abs(lag)):
+                            cap_lag[idx] = cap_data[idx-lag]
+                            cap_mask_lag[idx] = cap_mask[idx-lag]##
+                        pd_lag = pd_data[:cap_data.shape[0]+lag]#     
+                        pd_mask_lag = pd_mask[:cap_data.shape[0]+lag]##
+                    if lag > 0:
+                        for idx in np.arange(pd_data.shape[0]-abs(lag)):
+                            cap_lag[idx] = cap_data[idx]
+                            cap_mask_lag[idx] = cap_mask[idx]##
+                        pd_lag = pd_data[lag:]#
+                        pd_mask_lag = pd_mask[lag:]##
+
+                    joint_mask = cap_mask_lag==pd_mask_lag
+                    xcorr[lag_idx] = np.corrcoef(cap_lag[joint_mask], pd_lag[joint_mask])[0,1]#
+                    
+                    pd_xcorr_dict[f"sub-{subject}_ses-{sessions}"] = xcorr
+                
+                    #convert to dataframe for t-testing
+                    df_pd_xcorr = pd.DataFrame(pd_xcorr_dict)
+
+                    #t-test dataframe
+                    t_series = np.zeros(df_pd_xcorr.shape[0])
+                    for index, row in df_pd_xcorr.iterrows():
+                        t_stat, p_val = scipy.stats.ttest_1samp(row, popmean=0)
+                        t_series[index] = t_stat
+
+                    #add to master t-stat dictionary
+                    dict_xcorr_t[pd_analysis] = t_series
+    
+    return dict_xcorr_t
+
+def select_feature(dict_xcorr_t: dict,
+                   nb_features: int = 5) -> dict:
+    abs_max_t = dict()
+    for key, values in dict_xcorr_t.items():
+        abs_max_t[key] = np.max(np.abs(values))
+    
+    sorted_dict = dict(sorted(abs_max_t.items(), 
+                              key=lambda item: item[1], 
+                              reverse=True)
+    )
+    
+    return list(sorted_dict.keys())[:nb_features]
+
+def format_features_info(features_info: list):
+    output_info = {"EEGbandsEnvelopes":{
+        "channel":list(),
+        "band":list()
+    },
+                   "pupil":list()
+    }
+    
+    for feature_info in features_info:
+        if "pupil" in feature_info or "derivative" in feature_info:
+           output_info["pupil"].append(feature_info)
+           
+        else:
+            channel, band = feature_info.split('-')
+            output_info["EEGbandsEnvelopes"]["channel"].append(channel)
+            output_info["EEGbandsEnvelopes"]["band"].append(band)
+    
+    
+    
+    return {key: value for key, value in output_info.items() if value}
+
+def main_xcorr(subject_list:list,
+                ts_files_path: str | os.PathLike,
+                sessions: list,
+                task: str,
+                run: str,
+                cap_name: str,
+                feature_name: str,
+                sampling_rate: float = 1.0,
+                nb_features: int = 5) -> dict:
+    
+    dict_xcorr_t = xcorr_with_ttest(
+        subject_list=subject_list,
+        ts_files_path=ts_files_path,
+        sessions = sessions,
+        task = task,
+        run = run,
+        cap_name = cap_name,
+        feature_name=feature_name,
+        sampling_rate=sampling_rate)
+    
+    selected_features = select_feature(dict_xcorr_t=dict_xcorr_t,
+                                       nb_features=nb_features)
+    formated_features_info = format_features_info(selected_features)
+    
+    return formated_features_info  
+    
+def splitter(lst: list[str], 
+                        test: str,
+                        num_combinations: int, 
+                        max_failures = 40):
+    copied_lst = lst.copy()
+    copied_lst.pop(copied_lst.index(test))
+    n = len(copied_lst)
+    generated_combinations = set()
+    random_gen = np.random.default_rng()
+    if len(copied_lst) % 2 == 0:
+        training_window = int(n / 2) 
+        feat_selection_window = training_window - 1
+    else:
+        training_window = int(((n+1)/2) -1)
+        feat_selection_window = training_window
+    
+    iterations = 0
+    fail = 0
+    training_subjects = list()
+    feature_subjects = list()
+    
+    while len(generated_combinations) < num_combinations:
+            a_comb = frozenset(random_gen.choice(copied_lst, 
+                                             size = training_window,
+                                             replace = False))
+            
+            remaining = [x for x in copied_lst if x not in a_comb]
+            
+            b_comb = frozenset(random_gen.choice(remaining,
+                                             size = feat_selection_window,
+                                             replace = False))
+            
+            combination = (a_comb, b_comb)
+            iterations += 1
+            if combination not in generated_combinations:
+                generated_combinations.add(combination)
+                training_subjects.append(list(a_comb))
+                feature_subjects.append(list(b_comb))
+            else:
+                fail += 1 
+                if fail > max_failures:
+                    print('Number of maximum falures reached:'
+                          f' {len(generated_combinations)} total combinations generated'
+                          f' after {iterations} iterations')
+                    break
+    
+    return training_subjects, feature_subjects
 
 #%%
 def parse_filename(filename: str | os.PathLike) -> dict[str,str]:
@@ -78,9 +398,10 @@ def combine_data_from_filename(reading_dir: str | os.PathLike,
             else:
                 big_data[f'sub-{subject}'] = wrapped_data
 
+
     return big_data
 
-big_data = combine_data_from_filename('/data2/Projects/eeg_fmri_natview/derivatives/multimodal_prediction_models/data_prep/prediction_model_data_eeg_features_v2/group_data_Hz-3.8',
+big_d = combine_data_from_filename('/data2/Projects/eeg_fmri_natview/derivatives/multimodal_prediction_models/data_prep/prediction_model_data_eeg_features_v2/group_data_Hz-1.0',
                                     task = 'checker',
                                     run = '01')
 #%%
@@ -138,6 +459,10 @@ def generate_key_list(subjects: list[str] | str,
         list[tuple[str]]: The list of keys to access the data
     """
     key_list = list()
+    for argument in [subjects, sessions, runs]:
+        if isinstance(argument,str):
+            argument = [argument]
+    
     for subject in subjects:
         for session in sessions:
             for run in runs:
@@ -271,7 +596,6 @@ def create_big_feature_array(big_data: dict,
     """
     
     concatenation_list = list()
-    print(f'     Gathering {array_name} from {modality}:')
     for keys in keys_list:
         subject, session, task, run = keys
         
@@ -280,8 +604,6 @@ def create_big_feature_array(big_data: dict,
                 ][task
                     ][run
                         ][modality][array_name]
-        print(f'            sub-{subject} ses-{session}'\
-f' array of shape {extracted_array.shape}')
         
         if extracted_array.ndim < 2:
             extracted_array = np.reshape(
@@ -293,17 +615,17 @@ f' array of shape {extracted_array.shape}')
             extracted_array = extracted_array[:,:,np.newaxis]
 
         concatenation_list.append(extracted_array)
-    print('     stacking arrays and trimming...')
+    
     array_time_length = [array.shape[1] for array in concatenation_list]
     min_length = min(array_time_length)
     concatenation_list = [crop_data(array, axis = 1, stop = min_length)
                           for array in concatenation_list]
     array = np.array(concatenation_list)
     
-    print(f"        array before trimming: {array.shape}")
+    print(f"array before trimming: {array.shape}")
     array = trim_array(array = array,
                        trim = trim_args)
-    print(f"        array after trimming: {array.shape}")
+    print(f"array after trimming: {array.shape}")
     
     return array
 
@@ -496,15 +818,14 @@ def build_windowed_data(array: np.ndarray,
     """
 
     windowed_data = np.lib.stride_tricks.sliding_window_view(
-        array[:,:,:-1], 
+        array[:,:,:-1,...], 
         window_shape=window_length, 
         axis=2
     )
             
     return windowed_data
 
-def normalize_data(array: np.ndarray,
-                   axis = 2) -> np.ndarray:
+def normalize_data(array: np.ndarray) -> np.ndarray:
     """Normalize the data using a normalizer.
     
     This is also a place holder for other normalizers.
@@ -518,7 +839,7 @@ def normalize_data(array: np.ndarray,
         np.ndarray: The normalized data
     """
     
-    return scipy.stats.zscore(array, axis=-1)
+    return scipy.stats.zscore(array, axis=2)
 
 def fool_proof_key(key: str) -> str:
     """Because I have a  very bad memory I need to normalize keys.
@@ -578,7 +899,6 @@ def create_X(big_data: dict,
     """
 
     features = list()
-    print(' CREATING X:')
     for modality in features_args.keys():
         array = create_big_feature_array(
             big_data = big_data,
@@ -586,6 +906,8 @@ def create_X(big_data: dict,
             modality = modality,
             array_name = "feature",
             trim_args=trim_args
+        )
+
 
         if 'EEG' in modality:
             bands_list = ['delta','theta','alpha','beta','gamma']
@@ -623,7 +945,7 @@ def create_X(big_data: dict,
                 (array.shape[0],
                  1,
                  array.shape[2],
-                 1
+                 array.shape[3]
                 )
             )
 
@@ -635,12 +957,10 @@ def create_X(big_data: dict,
             
             
             second_derivative = np.diff(
-                pupil_dilation, 
-                n = 2,
+                first_derivative, 
                 axis = 2, 
-                prepend = first_derivative[:,:,:2,:]
+                prepend = np.expand_dims(pupil_dilation[:,:,0,:], axis = 2)
                 )
-            
             selected_feature = list()
             for value in features_args[modality]:
                 
@@ -651,14 +971,8 @@ def create_X(big_data: dict,
         features.append(selected_feature)
         
     features = np.concatenate(features, axis=1)
-    features = np.reshape(features,(
-        features.shape[0],
-        features.shape[1],
-        features.shape[2]
-        )
-    )
     
-    return features
+    return np.reshape(features, features.shape[:-1])
             
 def create_Y(big_data: dict,
              keys_list: list[tuple[str,...]],
@@ -684,6 +998,7 @@ def create_Y(big_data: dict,
     
     return selection
 
+            
 def create_X_and_Y(big_data: dict,
                    keys_list: list[tuple[str, ...]],
                    X_args: dict,
@@ -738,7 +1053,6 @@ def create_X_and_Y(big_data: dict,
         features_args = X_args,
         trim_args = trim_args
     )
-    
     X_array = normalize_data(X_array)
     windowed_X = build_windowed_data(X_array,
                                      window_length)
@@ -754,9 +1068,8 @@ def create_X_and_Y(big_data: dict,
     
     return windowed_X, windowed_Y
 
-#%%
 def dimension_rejection_mask(mask: np.ndarray,
-                               threshold: float= 0.75,
+                               threshold: int = 25,
                                axis: int = 3
                                 ) -> np.ndarray[bool]:
     """Reject time windows based on the percentage of data rejected.
@@ -776,7 +1089,9 @@ def dimension_rejection_mask(mask: np.ndarray,
     """
     
     valid_data = np.sum(mask, axis = axis, keepdims=True)
-    return valid_data > threshold* mask.shape[axis]
+    percentage = valid_data * 100 / mask.shape[axis]
+
+    return percentage > (100 - threshold)
 
 def reshape_array(array: np.ndarray) -> np.ndarray:
     """ Reshape 4D array to 2D or 1D array.
@@ -794,10 +1109,8 @@ def reshape_array(array: np.ndarray) -> np.ndarray:
     first_reshape = np.reshape(swaped_array, (swaped_array.shape[0],
                                   swaped_array.shape[1],
                                   swaped_array.shape[2]*swaped_array.shape[3]))
-    reshaped_swaped_array = np.reshape(first_reshape,(
-        swaped_array.shape[0]*swaped_array.shape[1],
-        -1)
-                                       )
+    reshaped_swaped_array = np.reshape(first_reshape,(swaped_array.shape[0]*swaped_array.shape[1],
+                                     swaped_array.shape[2]*swaped_array.shape[3]))
     print(f"reshaped array shape: {reshaped_swaped_array.shape}")
     
     return reshaped_swaped_array
@@ -841,7 +1154,7 @@ def arange_X_Y(X: np.ndarray,
     """
 
     window_rejection_mask = dimension_rejection_mask(mask, 
-                                                     threshold=0.75, 
+                                                     threshold=25, 
                                                      axis=3)
     print(f"window rejection mask shape: {window_rejection_mask.shape}")
     #if group_rejection:
@@ -933,9 +1246,6 @@ def create_train_test_data(big_data: dict,
     Returns:
         tuple[np.ndarray]: the train and test data
     """
-    
-    if train_subjects == 'all':
-        train_subjects = [sub.split('-')[1] for sub in big_data.keys()]
     
     train_subjects = sanatize_training_list(train_subjects, test_subject)
     
@@ -1033,122 +1343,89 @@ def create_train_test_data(big_data: dict,
             X_test, 
             Y_test)
 
-#%%
+def Main():
+
+    SAMPLING_RATE = 1.0
+    data_directory = "/data2/Projects/eeg_fmri_natview/derivatives"\
+        "/multimodal_prediction_models/data_prep"\
+        f"/prediction_model_data_eeg_features_v2/group_data_Hz-{SAMPLING_RATE}"
     
-study_directory = (
-    "/data2/Projects/eeg_fmri_natview/derivatives"
-    "/multimodal_prediction_models/data_prep"
-    f"/prediction_model_data_eeg_features_v2/group_data_Hz-3.8"
-    )
+    EEG_FEATURE = "EEGbandsEnvelopes"
+    TASK = "checker"
+    RUN = "01"
+    NB_FEATURES = 5
+    WINDOW_LENGTH_SECONDS = 12
+    big_d = combine_data_from_filename(
+        reading_dir = data_directory,
+        task        = TASK,
+        run         = RUN)
+    subject_list = [subject[4:] for subject in big_d.keys()]
+    rand_generator = np.random.default_rng()
+    sessions = ["01","02"]
+    caps = ['tsCAP1',
+            'tsCAP2',
+            'tsCAP3',
+            'tsCAP4',
+            'tsCAP5',
+            'tsCAP6',
+            'tsCAP7',
+            'tsCAP8']
+    performances = {cap_name: list() for cap_name in caps}
+    
+    for test_subject in subject_list:
+        for cap_name in caps:
+            training_comb, feature_comb = splitter(subject_list,
+                                    test = test_subject,
+                                    num_combinations= 2,
+                                    max_failures=60)
+            
+            for train_subjects, feature_subjects in zip(
+                    training_comb, feature_comb):
 
-rand_generator = np.random.default_rng()
-caps = np.array(['tsCAP1',
-        'tsCAP2',
-        'tsCAP3',
-        'tsCAP4',
-        'tsCAP5',
-        'tsCAP6',
-        'tsCAP7',
-        'tsCAP8'])
-
-bands = ['delta','theta','alpha','beta','gamma']
-runs = ['01']#, '02']
-TASK = 'checker'
-SAMPLING_RATE_HZ = 3.8
-WINDOW_LENGTH_SECONDS = 10
-train_sessions = ['01', '02']
-test_sessions = ['01','02']
-
-big_d = combine_data_from_filename(
-    reading_dir = study_directory,
-    task        = TASK,
-    run         = runs[0])
-
-models = {sub : {cap: {} for cap in caps} for sub in big_d.keys()}
-subjects = np.array(list(models.keys()))
-feat_args = {"pupil":["pupil_dilation","first_derivative","second_derivative"],
-             "EEGbandsEnvelopes":{
-                 "channel": ["Fp1", "O2"],
-                 "band": ["delta","alpha"]
-             }
-}
-rand_generator.shuffle(subjects)
-r_data_for_df = {'subject':[],
-                 'session':[],
-                 'ts_CAPS':[],
-                 'pearson_r':[]}
-
-for subject in subjects:
-    rand_generator.shuffle(caps)
-    for cap in caps:
-        for test_session in test_sessions:
-            print(f"===== {cap} =====")
-            try:
-
-                X_train, Y_train, X_test, Y_test = create_train_test_data(
-                    big_data=big_d,
-                    train_subjects='all',
-                    train_sessions=train_sessions,
-                    test_subject=subject.split('-')[1],
-                    test_sessions=test_session,
-                    task = TASK,
-                    runs = runs,
-                    cap_name = cap,
-                    features_args=feat_args,
-                    window_length=int(SAMPLING_RATE_HZ*WINDOW_LENGTH_SECONDS),
-                    masking = True,
-                    trim_args = (5,None)
-                )
+                for test_session in sessions:
                     
-                estimator = sklearn.linear_model.RidgeCV(cv=5)
-                model = estimator.fit(X_train,Y_train)
-                Y_hat = estimator.predict(X_test)
-                r = np.corrcoef(Y_test.T,Y_hat.T)[0,1]
-                for key, values in zip(
-                    ['subject','session','ts_CAPS','pearson_r'],
-                    [subject,test_session,cap,r]):
-                    r_data_for_df[key].append(values)
-                
-            except Exception as e:
-                raise e
-                #print(f'{subject} {cap} {e}')
-                #continue
-#%% 
-df_pearson_r = pd.DataFrame(r_data_for_df)
-df_pearson_r = df_pearson_r.sort_values(by = ['subject', 'ts_CAPS']).reset_index()        
-fig, ax = plt.subplots(figsize=(6,3))
-sns.stripplot(data = df_pearson_r,
-            x = 'ts_CAPS',
-            y = 'pearson_r',
-            ax = ax,
-            palette = 'Paired',
-            alpha=0.5, 
-            size=5, 
-            zorder=0
-            )
+                    #features_selected = main_xcorr(
+                    #    subject_list=feature_subjects,
+                    #    ts_files_path=data_directory,
+                    #    sessions = sessions,
+                    #    task = TASK,
+                    #    run = RUN,
+                    #    cap_name=cap_name,
+                    #    feature_name=EEG_FEATURE,
+                    #    sampling_rate=SAMPLING_RATE,
+                    #    nb_features=NB_FEATURES)
+                    
+                    features_selected = {
+                        "EEGbandsEnvelopes":{
+                            "channel":['CPz', 'FT8', 'F3', 'F1', 'AF7'],
+                            "band": ['delta', 'beta', 'theta', 'theta', 'delta']
+                        }
+                    }
+                    try:
+                        X_train, Y_train, X_test, Y_test = create_train_test_data(
+                            big_data=big_d,
+                            train_subjects=train_subjects,
+                            train_sessions=sessions,
+                            test_subject=test_subject,
+                            test_sessions=test_session,
+                            task=TASK,
+                            runs=["01"],
+                            cap_name=cap_name,
+                            features_args=features_selected,
+                            window_length=int(WINDOW_LENGTH_SECONDS*SAMPLING_RATE),
+                            masking=True,
+                            trim_args=(None,-20)
+                        )
+                    except Exception as e:
+                        continue
+                    
+                    model = linear_model.RidgeCV()
+                    model.fit(X_train, Y_train)
+                    Y_hat = model.predict(X_test)
+                    performances[cap_name].append(np.corrcoef(Y_test.T,Y_hat.T)[0,1])
+    
+    with open('selected_feaures_performance.pkl','wb') as file:
+        pickle.dump(performances, file)
 
-sns.barplot(data = df_pearson_r, 
-            x = 'ts_CAPS', 
-            y = 'pearson_r', 
-            errorbar = ('ci',68),
-            ax = ax, 
-            palette = 'Paired',
-            alpha=0.6, 
-            width=0.8, 
-            zorder=1
-            )
-
-caps_names = ['CAP1','CAP2','CAP3','CAP4','CAP5','CAP6','CAP7','CAP8']
-plt.ylim(-0.4,1)
-plt.xlabel('')
-plt.ylabel('Correlation(yhat,ytest)')#, size = 12)
-plt.xticks(ticks = np.arange(8), labels = caps_names)#, size = 12)
-plt.axhline(0, 
-            linewidth = 1.5,
-            color = 'black')
-#plt.axhline(0.5, 
-            #linestyle = '--',
-            #linewidth = 1,
-            #color = "black",
-            #alpha = 0.5)
-# %%
+if __name__ == "__main__":
+    Main()

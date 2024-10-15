@@ -1,3 +1,4 @@
+#%%
 import pickle as pkl
 import pandas as pd
 import scipy.stats as sps
@@ -12,16 +13,17 @@ subject_list = [
     "sub-02_ses-01"
     ]
 
-ts_files_path = "/data2/Projects/eeg_fmri_natview/derivatives/multimodal_prediction_models/data_prep/prediction_model_data_eeg_features_v2/dictionary_group_data_Hz-3.8"
+ts_files_path = "/data2/Projects/eeg_fmri_natview/derivatives/multimodal_prediction_models/data_prep/prediction_model_data_eeg_features_v2/group_data_Hz-1.0"
 
 ###############################################################################################
-
-
 
 def xcorr_with_ttest(subject_list: list, 
                      sessions: list,
                      task: str,
-                     run: str):
+                     run: str,
+                     cap_name: str,
+                     feature_name: str,
+                     sampling_rate: float = 1.0):
     """ Returns dictionary of t-tested cross correlations. 
     Returns dictionary of t-tested cross correlations for a given list of 
     participants' fMRI, EEG, and pupillometry data from a given task.  
@@ -48,185 +50,222 @@ def xcorr_with_ttest(subject_list: list,
                     'CP5','CP3','CP1','CPz','CP2','CP4','CP6','P7','P5','P3','P1','Pz',
                     'P2','P4','P6','P8','PO7','PO3','POz','PO4','PO8','O1','O2','Oz']
     band_list = ["delta","theta","alpha","beta","gamma"]
-
+    print(sessions)
     #initialize dictionary to hold t-tested xcorrs
     dict_xcorr_t = dict()
 
     #iterate over CAPs
-    for cap in cap_list:
 
-        #iterate over channel-band combos
-        for channel in channel_list:
-            for band in band_list:
-                #create label to be used for dict_xcorr_t keys
-                cap_channel_band = f"{cap}_{channel}-{band}"
-
-                #create dictionary to hold each subject's CAPxchannel-band xcorr data
-                cap_channel_band_xcorr_dict = dict()
-
-                #iterate over subjects
-                for subject in subject_list:
-                    #open subject's data
-                    ts_path = os.path.join(
-                        ts_files_path, 
-                        f"{subject}_task-{task}_{run}_multimodal_data.pkl"
-                        )
-                    with open(ts_path, 'rb') as file:
-                        data_dict = pkl.load(file)
-
-                    # get data for CAP
-                    cap_index = data_dict['brainstates']['labels'].index(cap)
-                    cap_data = data_dict['brainstates']['feature'][cap_index]
-
-                    #get mask for CAP
-                    cap_index = data_dict['brainstates']['labels'].index('tsMask')
-                    cap_mask_float = data_dict['brainstates']['feature'][cap_index]
-                    cap_mask = cap_mask_float > 0.5                    
-
-                    #get data for channel-band
-                    ch_idx = data_dict['EEGbandsEnvelopes']['labels']["channels_info"]["channel_name"].index(channel)
-                    band_idx = band_list.index(band)
-
-                    eeg_ch_band_data = np.zeros(data_dict['EEGbandsEnvelopes']['feature'].shape[1])
-                    for tp in np.arange(eeg_ch_band_data.shape[0]):
-                        eeg_ch_band_data[tp] = data_dict['EEGbandsEnvelopes']['feature'][ch_idx][tp][band_idx]
-                    
-                    #get mask for channel-band
-                    eeg_ch_band_mask = data_dict["EEGbandsEnvelopes"]["artifact_mask"]
-                
-                    #while BVA mystery artifact exists!
-                    if task == "checker": 
-                        cap_data = cap_data[:682]
-                        cap_mask = cap_mask[:682]
-                        eeg_ch_band_data = eeg_ch_band_data[:682]
-                        eeg_ch_band_mask = eeg_ch_band_mask[:682]
-                    if task == "rest":
-                        cap_data = cap_data[:2204]
-                        cap_mask = cap_mask[:2204]
-                        eeg_ch_band_data = eeg_ch_band_data[:2204]
-                        eeg_ch_band_mask = eeg_ch_band_mask[:2204]
-                    
-                    #calculate FMRI-EEG xcorr using CAP data, CAP mask, channel-band data, channel-band mask 
-                    window = 120
-                    xcorr = np.zeros(window+1)
-                    for lag_idx, lag in enumerate(np.arange(int(window/2 * -1), int(window/2+1))):
-                        cap_lag = np.zeros(cap_data.shape[0]-abs(lag))
-                        cap_mask_lag = np.zeros(cap_mask.shape[0]-abs(lag))
-                        if lag <= 0:
-                            for idx in np.arange(cap_data.shape[0]-abs(lag)):
-                                cap_lag[idx] = cap_data[idx-lag]
-                                cap_mask_lag[idx] = cap_mask[idx-lag]
-                            eeg_lag = eeg_ch_band_data[:cap_data.shape[0]+lag]   
-                            eeg_mask_lag = eeg_ch_band_mask[:cap_data.shape[0]+lag]
-                        if lag > 0:
-                            for idx in np.arange(eeg_ch_band_data.shape[0]-abs(lag)):
-                                cap_lag[idx] = cap_data[idx]
-                                cap_mask_lag[idx] = cap_mask[idx]
-                            eeg_lag = eeg_ch_band_data[lag:]
-                            eeg_mask_lag = eeg_ch_band_mask[lag:]
-
-                        joint_mask = cap_mask_lag==eeg_mask_lag
-                        xcorr[lag_idx] = np.corrcoef(cap_lag[joint_mask], eeg_lag[joint_mask])[0,1]
-                    
-                    cap_channel_band_xcorr_dict[subject] = xcorr
-                
-                #convert to dataframe for t-testing
-                df_cap_channel_band_xcorr = pd.DataFrame(cap_channel_band_xcorr_dict)
-
-                #t-test dataframe
-                t_series = np.zeros(df_cap_channel_band_xcorr.shape[0])
-                for index, row in df_cap_channel_band_xcorr.iterrows():
-                    t_stat, p_val = sps.ttest_1samp(row, popmean=0)
-                    t_series[index] = t_stat
-
-                #add to master t-stat dictionary
-                dict_xcorr_t[cap_channel_band] = t_series
-
-
-        #now CAPxPD!
-        pd_analysis_list = ["PD","PD-firstder","PD-secondder"]
-
-        for pd_analysis in pd_analysis_list: 
+    #iterate over channel-band combos
+    for channel in channel_list:
+        for band in band_list:
             #create label to be used for dict_xcorr_t keys
-            cap_pd_analysis = f"{cap}_{pd_analysis}"
+            channel_band = f"{channel}-{band}"
 
-            #create dictionary to hold each subject's CAPxPD-analysis xcorr data
-            cap_pd_xcorr_dict = dict()
+            #create dictionary to hold each subject's CAPxchannel-band xcorr data
+            channel_band_xcorr_dict = dict()
 
+            #iterate over subjects
             for subject in subject_list:
+                #open subject's data
                 ts_path = os.path.join(
                     ts_files_path, 
-                    f"{subject}_task-{task}_{run}_multimodal_data.pkl"
+                    f"{subject}_task-{task}_run-{run}_multimodal_data.pkl"
                     )
                 with open(ts_path, 'rb') as file:
                     data_dict = pkl.load(file)
 
                 # get data for CAP
-                cap_index = data_dict['brainstates']['labels'].index(cap)
+                cap_index = data_dict['brainstates']['labels'].index(cap_name)
                 cap_data = data_dict['brainstates']['feature'][cap_index]
 
                 #get mask for CAP
-                cap_index = data_dict['brainstates']['labels'].index('tsMask')
-                cap_mask_float = data_dict['brainstates']['feature'][cap_index]
-                cap_mask = cap_mask_float > 0.5
+                cap_mask_float = data_dict['brainstates']['mask']
+                cap_mask = cap_mask_float > 0.5                    
 
-                #get PD data and calculate first, second deriv if necessary
-                ftr_index = data_dict['pupil']['labels'].index("pupil_size")
-                pd_data = data_dict['pupil']['feature'][ftr_index,:]
-                if pd_analysis == "PD-firstder":
-                    pd_firstder_arr = np.zeros(pd_data.shape[0])
-                    pd_firstder_arr[:-1] = np.diff(pd_data)
-                    pd_data = pd_firstder_arr
-                elif pd_analysis == "PD-secondder":
-                    pd_firstder_arr = np.zeros(pd_data.shape[0])
-                    pd_firstder_arr[:-1] = np.diff(pd_data)
-                    pd_secondder_arr = np.zeros(pd_data.shape[0])
-                    pd_secondder_arr[:-1] = np.diff(pd_firstder_arr)
-                    pd_data = pd_secondder_arr
+                #get data for channel-band
+                ch_idx = data_dict[feature_name]['labels']["channels_info"]["channel_name"].index(channel)
+                band_idx = band_list.index(band)
 
-                #get mask for PD
-                ftr_index = data_dict['pupil']['labels'].index('tmask')
-                pd_mask_float = data_dict['pupil']['feature'][ftr_index,:]
-                pd_mask = pd_mask_float > 0.5
-
-                window = 120
+                eeg_ch_band_data = np.zeros(data_dict[feature_name]['feature'].shape[1])
+                for tp in np.arange(eeg_ch_band_data.shape[0]):
+                    eeg_ch_band_data[tp] = data_dict[feature_name]['feature'][ch_idx][tp][band_idx]
+                
+                #get mask for channel-band
+                eeg_ch_band_mask = data_dict[feature_name]["mask"]
+            
+                #while BVA mystery artifact exists!
+                if task == "checker": 
+                    cap_data = cap_data[:682]
+                    cap_mask = cap_mask[:682]
+                    eeg_ch_band_data = eeg_ch_band_data[:682]
+                    eeg_ch_band_mask = eeg_ch_band_mask[:682]
+                if task == "rest":
+                    cap_data = cap_data[:2204]
+                    cap_mask = cap_mask[:2204]
+                    eeg_ch_band_data = eeg_ch_band_data[:2204]
+                    eeg_ch_band_mask = eeg_ch_band_mask[:2204]
+                
+                #calculate FMRI-EEG xcorr using CAP data, CAP mask, channel-band data, channel-band mask 
+                window = int(30*sampling_rate)
                 xcorr = np.zeros(window+1)
                 for lag_idx, lag in enumerate(np.arange(int(window/2 * -1), int(window/2+1))):
                     cap_lag = np.zeros(cap_data.shape[0]-abs(lag))
-                    cap_mask_lag = np.zeros(cap_mask.shape[0]-abs(lag))##
+                    cap_mask_lag = np.zeros(cap_mask.shape[0]-abs(lag))
                     if lag <= 0:
                         for idx in np.arange(cap_data.shape[0]-abs(lag)):
                             cap_lag[idx] = cap_data[idx-lag]
-                            cap_mask_lag[idx] = cap_mask[idx-lag]##
-                        pd_lag = pd_data[:cap_data.shape[0]+lag]#     
-                        pd_mask_lag = pd_mask[:cap_data.shape[0]+lag]##
+                            cap_mask_lag[idx] = cap_mask[idx-lag]
+                        eeg_lag = eeg_ch_band_data[:cap_data.shape[0]+lag]   
+                        eeg_mask_lag = eeg_ch_band_mask[:cap_data.shape[0]+lag]
                     if lag > 0:
-                        for idx in np.arange(pd_data.shape[0]-abs(lag)):
+                        for idx in np.arange(eeg_ch_band_data.shape[0]-abs(lag)):
                             cap_lag[idx] = cap_data[idx]
-                            cap_mask_lag[idx] = cap_mask[idx]##
-                        pd_lag = pd_data[lag:]#
-                        pd_mask_lag = pd_mask[lag:]##
+                            cap_mask_lag[idx] = cap_mask[idx]
+                        eeg_lag = eeg_ch_band_data[lag:]
+                        eeg_mask_lag = eeg_ch_band_mask[lag:]
 
-                    joint_mask = cap_mask_lag==pd_mask_lag
-                    xcorr[lag_idx] = np.corrcoef(cap_lag[joint_mask], pd_lag[joint_mask])[0,1]#
-                    
-                cap_pd_xcorr_dict[subject] = xcorr
+                    joint_mask = cap_mask_lag==eeg_mask_lag
+                    xcorr[lag_idx] = np.corrcoef(cap_lag[joint_mask], eeg_lag[joint_mask])[0,1]
                 
-                #convert to dataframe for t-testing
-                df_cap_pd_xcorr = pd.DataFrame(cap_pd_xcorr_dict)
+                channel_band_xcorr_dict[subject] = xcorr
+            
+            #convert to dataframe for t-testing
+            df_channel_band_xcorr = pd.DataFrame(channel_band_xcorr_dict)
 
-                #t-test dataframe
-                t_series = np.zeros(df_cap_pd_xcorr.shape[0])
-                for index, row in df_cap_pd_xcorr.iterrows():
-                    t_stat, p_val = sps.ttest_1samp(row, popmean=0)
-                    t_series[index] = t_stat
+            #t-test dataframe
+            t_series = np.zeros(df_channel_band_xcorr.shape[0])
+            for index, row in df_channel_band_xcorr.iterrows():
+                t_stat, p_val = sps.ttest_1samp(row, popmean=0)
+                t_series[index] = t_stat
 
-                #add to master t-stat dictionary
-                dict_xcorr_t[cap_pd_analysis] = t_series
+            #add to master t-stat dictionary
+            dict_xcorr_t[channel_band] = t_series
+
+
+    #now CAPxPD!
+    pd_analysis_list = ["pupil_dilation","first_derivative","second_derivative"]
+
+    for pd_analysis in pd_analysis_list: 
+        #create label to be used for dict_xcorr_t keys
+        pd_analysis = f"{pd_analysis}"
+
+        #create dictionary to hold each subject's CAPxPD-analysis xcorr data
+        pd_xcorr_dict = dict()
+
+        for subject in subject_list:
+            ts_path = os.path.join(
+                ts_files_path, 
+                f"{subject}_task-{task}_run-{run}_multimodal_data.pkl"
+                )
+            with open(ts_path, 'rb') as file:
+                data_dict = pkl.load(file)
+
+            # get data for CAP
+            cap_index = data_dict['brainstates']['labels'].index(cap_name)
+            cap_data = data_dict['brainstates']['feature'][cap_index]
+
+            #get mask for CAP
+            cap_mask_float = data_dict['brainstates']['mask']
+            cap_mask = cap_mask_float > 0.5
+
+            #get PD data and calculate first, second deriv if necessary
+            ftr_index = data_dict['pupil']['labels'].index("pupil_size")
+            pd_data = data_dict['pupil']['feature'][ftr_index,:]
+            if pd_analysis == "PD-firstder":
+                pd_firstder_arr = np.zeros(pd_data.shape[0])
+                pd_firstder_arr[:-1] = np.diff(pd_data)
+                pd_data = pd_firstder_arr
+            elif pd_analysis == "PD-secondder":
+                pd_firstder_arr = np.zeros(pd_data.shape[0])
+                pd_firstder_arr[:-1] = np.diff(pd_data)
+                pd_secondder_arr = np.zeros(pd_data.shape[0])
+                pd_secondder_arr[:-1] = np.diff(pd_firstder_arr)
+                pd_data = pd_secondder_arr
+
+            #get mask for PD
+            pd_mask_float = data_dict['pupil']['mask']
+            pd_mask = pd_mask_float > 0.5
+
+            window = 120
+            xcorr = np.zeros(window+1)
+            for lag_idx, lag in enumerate(np.arange(int(window/2 * -1), int(window/2+1))):
+                cap_lag = np.zeros(cap_data.shape[0]-abs(lag))
+                cap_mask_lag = np.zeros(cap_mask.shape[0]-abs(lag))##
+                if lag <= 0:
+                    for idx in np.arange(cap_data.shape[0]-abs(lag)):
+                        cap_lag[idx] = cap_data[idx-lag]
+                        cap_mask_lag[idx] = cap_mask[idx-lag]##
+                    pd_lag = pd_data[:cap_data.shape[0]+lag]#     
+                    pd_mask_lag = pd_mask[:cap_data.shape[0]+lag]##
+                if lag > 0:
+                    for idx in np.arange(pd_data.shape[0]-abs(lag)):
+                        cap_lag[idx] = cap_data[idx]
+                        cap_mask_lag[idx] = cap_mask[idx]##
+                    pd_lag = pd_data[lag:]#
+                    pd_mask_lag = pd_mask[lag:]##
+
+                joint_mask = cap_mask_lag==pd_mask_lag
+                xcorr[lag_idx] = np.corrcoef(cap_lag[joint_mask], pd_lag[joint_mask])[0,1]#
+                
+            pd_xcorr_dict[subject] = xcorr
+            
+            #convert to dataframe for t-testing
+            df_pd_xcorr = pd.DataFrame(pd_xcorr_dict)
+
+            #t-test dataframe
+            t_series = np.zeros(df_pd_xcorr.shape[0])
+            for index, row in df_pd_xcorr.iterrows():
+                t_stat, p_val = sps.ttest_1samp(row, popmean=0)
+                t_series[index] = t_stat
+
+            #add to master t-stat dictionary
+            dict_xcorr_t[pd_analysis] = t_series
+    
     return dict_xcorr_t
 
+def select_feature(dict_xcorr_t: dict,
+                   nb_features: int = 5) -> dict:
+    abs_max_t = dict()
+    for key, values in dict_xcorr_t.items():
+        abs_max_t[key] = np.max(np.abs(values))
+    
+    sorted_dict = dict(sorted(abs_max_t.items(), 
+                              key=lambda item: item[1], 
+                              reverse=True)
+    )
+    
+    return list(sorted_dict.keys())[:nb_features]
 
+def format_features_info(features_info: list):
+    output_info = {"EEGbandsEnvelopes":{
+        "channel":list(),
+        "band":list()
+    },
+                   "pupil":list()
+    }
+    
+    for feature_info in features_info:
+        if "pupil" in feature_info or "derivative" in feature_info:
+           output_info["pupil"].append(feature_info)
+           
+        else:
+            channel, band = feature_info.split('-')
+            output_info["EEGbandsEnvelopes"]["channel"].append(channel)
+            output_info["EEGbandsEnvelopes"]["band"].append(band)
+    
+    
+    
+    return {key: value for key, value in output_info.items() if value}
+                       
+                       
 ###############################################################################################
 
-
-dict_xcorr_t = xcorr_with_ttest(subject_list, task)
+#%%
+dict_xcorr_t = xcorr_with_ttest(subject_list, 
+                                task = "checker",
+                                sessions = None,
+                                cap_name = "tsCAP1",
+                                sampling_rate=1.0,
+                                feature_name = "EEGbandsEnvelopes",
+                                run = "01")

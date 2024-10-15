@@ -234,14 +234,14 @@ def resample_eeg_features(features_dict: dict[str, np.ndarray],
         dict[str, np.ndarray]: The resampled EEG features
     """
     if verbose:
-        features_dict.keys()
+        print(features_dict.keys())
     
-    for key_to_resample in ['feature','artifact_mask']:
+    for axis, key_to_resample in enumerate(['feature','mask']):
         interpolator = CubicSpline(features_dict['time'],
                                     features_dict[key_to_resample], 
                                     axis=1)
         data_array_resampled = interpolator(time_resampled)
-        if key_to_resample == 'artifact_mask':
+        if key_to_resample == 'mask':
             data_array_resampled = data_array_resampled > 0.5
             
         features_dict.update({key_to_resample: data_array_resampled})
