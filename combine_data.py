@@ -19,6 +19,7 @@ from typing import List, Dict, Union, Optional
 from typing import Any
 import pickle
 import seaborn as sns
+import pandas as pd
 import scipy
 from numpy.lib.stride_tricks import sliding_window_view
 
@@ -77,10 +78,9 @@ def combine_data_from_filename(reading_dir: str | os.PathLike,
             else:
                 big_data[f'sub-{subject}'] = wrapped_data
 
-
     return big_data
 
-big_d = combine_data_from_filename('/data2/Projects/eeg_fmri_natview/derivatives/multimodal_prediction_models/data_prep/prediction_model_data_eeg_features_v2/group_data_Hz-1.0',
+big_data = combine_data_from_filename('/data2/Projects/eeg_fmri_natview/derivatives/multimodal_prediction_models/data_prep/prediction_model_data_eeg_features_v2/group_data_Hz-3.8',
                                     task = 'checker',
                                     run = '01')
 #%%
@@ -271,6 +271,7 @@ def create_big_feature_array(big_data: dict,
     """
     
     concatenation_list = list()
+    print(f'     Gathering {array_name} from {modality}:')
     for keys in keys_list:
         subject, session, task, run = keys
         
@@ -279,6 +280,8 @@ def create_big_feature_array(big_data: dict,
                 ][task
                     ][run
                         ][modality][array_name]
+        print(f'            sub-{subject} ses-{session}'\
+f'               array of shape {extracted_array.shape}')
         
         if extracted_array.ndim < 2:
             extracted_array = np.reshape(
@@ -290,17 +293,17 @@ def create_big_feature_array(big_data: dict,
             extracted_array = extracted_array[:,:,np.newaxis]
 
         concatenation_list.append(extracted_array)
-    
+    print('     stacking arrays and trimming...')
     array_time_length = [array.shape[1] for array in concatenation_list]
     min_length = min(array_time_length)
     concatenation_list = [crop_data(array, axis = 1, stop = min_length)
                           for array in concatenation_list]
     array = np.array(concatenation_list)
     
-    print(f"array before trimming: {array.shape}")
+    print(f"        array before trimming: {array.shape}")
     array = trim_array(array = array,
                        trim = trim_args)
-    print(f"array after trimming: {array.shape}")
+    print(f"        array after trimming: {array.shape}")
     
     return array
 
@@ -493,14 +496,15 @@ def build_windowed_data(array: np.ndarray,
     """
 
     windowed_data = np.lib.stride_tricks.sliding_window_view(
-        array[:,:,:-1,...], 
+        array[:,:,:-1], 
         window_shape=window_length, 
         axis=2
     )
             
     return windowed_data
 
-def normalize_data(array: np.ndarray) -> np.ndarray:
+def normalize_data(array: np.ndarray,
+                   axis = 2) -> np.ndarray:
     """Normalize the data using a normalizer.
     
     This is also a place holder for other normalizers.
@@ -514,7 +518,7 @@ def normalize_data(array: np.ndarray) -> np.ndarray:
         np.ndarray: The normalized data
     """
     
-    return scipy.stats.zscore(array, axis=2)
+    return scipy.stats.zscore(array, axis=-1)
 
 def fool_proof_key(key: str) -> str:
     """Because I have a  very bad memory I need to normalize keys.
@@ -574,6 +578,7 @@ def create_X(big_data: dict,
     """
 
     features = list()
+    print(' CREATING X:')
     for modality in features_args.keys():
         array = create_big_feature_array(
             big_data = big_data,
@@ -620,7 +625,7 @@ def create_X(big_data: dict,
                 (array.shape[0],
                  1,
                  array.shape[2],
-                 array.shape[3]
+                 1
                 )
             )
 
@@ -632,10 +637,12 @@ def create_X(big_data: dict,
             
             
             second_derivative = np.diff(
-                first_derivative, 
+                pupil_dilation, 
+                n = 2,
                 axis = 2, 
-                prepend = np.expand_dims(pupil_dilation[:,:,0,:], axis = 2)
+                prepend = first_derivative[:,:,:2,:]
                 )
+            
             selected_feature = list()
             for value in features_args[modality]:
                 
@@ -646,8 +653,14 @@ def create_X(big_data: dict,
         features.append(selected_feature)
         
     features = np.concatenate(features, axis=1)
+    features = np.reshape(features,(
+        features.shape[0],
+        features.shape[1],
+        features.shape[2]
+        )
+    )
     
-    return np.reshape(features, features.shape[:-1])
+    return features
             
 def create_Y(big_data: dict,
              keys_list: list[tuple[str,...]],
@@ -673,76 +686,6 @@ def create_Y(big_data: dict,
     
     return selection
 
-''' WORK IN PROGRESS
-def cross_correlation(
-    big_data: dict,
-    keys_list: list,
-    cap_name: str,
-    features_names: list = ["pupil", "EEGbandsEnvelopes"],
-    trim_args: tuple = (None, None)
-) -> np.ndarray:
-    
-    concatenated_features = list()
-
-    for feature_name in features_names:
-        features_array = create_big_feature_array(
-            big_data = big_data,
-            keys_list=keys_list,
-            modality = feature_name,
-            array_name="feature",
-            trim_args=trim_args
-        )
-
-        if 'pupil' in feature_name:
-            selected_feature = features_array[:,0,:,:]
-            selected_feature = np.reshape(
-                selected_feature,
-                (features_array.shape[0],
-                 1,
-                 features_array.shape[2],
-                 features_array.shape[3]
-                )
-            )
-
-            first_derivative = np.diff(
-                selected_feature, 
-                axis = 2, 
-                prepend = np.expand_dims(selected_feature[:,:,0,:], axis = 2)
-                )
-            
-            
-            second_derivative = np.diff(
-                first_derivative, 
-                axis = 2, 
-                prepend = np.expand_dims(selected_feature[:,:,0,:], axis = 2)
-                )
-
-            selected_feature = np.concatenate(
-                (selected_feature,first_derivative,second_derivative),
-                axis=1
-            )
-            
-        concatenated_features.append(features_array)
-    
-    concatenated_features = np.concatenate(concatenated_features,
-                                           axis = 1)
-    masks_array = combine_masks(
-        big_data=big_data,
-        key_list=keys_list,
-        modalities=features_names,
-        trim_args=trim_args
-    )
-
-    brainstates_array = create_Y(
-        big_data=big_data,
-        keys_list = keys_list,
-        cap_name=cap_name,
-        trim_args=trim_args
-    )
-        
-    brainstates_array = brainstates_array[:,:,:,np.newaxis]
-'''    
-            
 def create_X_and_Y(big_data: dict,
                    keys_list: list[tuple[str, ...]],
                    X_args: dict,
@@ -797,6 +740,7 @@ def create_X_and_Y(big_data: dict,
         features_args = X_args,
         trim_args = trim_args
     )
+    
     X_array = normalize_data(X_array)
     windowed_X = build_windowed_data(X_array,
                                      window_length)
@@ -814,7 +758,7 @@ def create_X_and_Y(big_data: dict,
 
 #%%
 def dimension_rejection_mask(mask: np.ndarray,
-                               threshold: int = 25,
+                               threshold: float= 0.75,
                                axis: int = 3
                                 ) -> np.ndarray[bool]:
     """Reject time windows based on the percentage of data rejected.
@@ -834,9 +778,7 @@ def dimension_rejection_mask(mask: np.ndarray,
     """
     
     valid_data = np.sum(mask, axis = axis, keepdims=True)
-    percentage = valid_data * 100 / mask.shape[axis]
-
-    return percentage > (100 - threshold)
+    return valid_data > threshold* mask.shape[axis]
 
 def reshape_array(array: np.ndarray) -> np.ndarray:
     """ Reshape 4D array to 2D or 1D array.
@@ -854,8 +796,10 @@ def reshape_array(array: np.ndarray) -> np.ndarray:
     first_reshape = np.reshape(swaped_array, (swaped_array.shape[0],
                                   swaped_array.shape[1],
                                   swaped_array.shape[2]*swaped_array.shape[3]))
-    reshaped_swaped_array = np.reshape(first_reshape,(swaped_array.shape[0]*swaped_array.shape[1],
-                                     swaped_array.shape[2]*swaped_array.shape[3]))
+    reshaped_swaped_array = np.reshape(first_reshape,(
+        swaped_array.shape[0]*swaped_array.shape[1],
+        -1)
+                                       )
     print(f"reshaped array shape: {reshaped_swaped_array.shape}")
     
     return reshaped_swaped_array
@@ -899,7 +843,7 @@ def arange_X_Y(X: np.ndarray,
     """
 
     window_rejection_mask = dimension_rejection_mask(mask, 
-                                                     threshold=25, 
+                                                     threshold=0.75, 
                                                      axis=3)
     print(f"window rejection mask shape: {window_rejection_mask.shape}")
     #if group_rejection:
@@ -992,6 +936,9 @@ def create_train_test_data(big_data: dict,
         tuple[np.ndarray]: the train and test data
     """
     
+    if train_subjects == 'all':
+        train_subjects = [sub.split('-')[1] for sub in big_data.keys()]
+    
     train_subjects = sanatize_training_list(train_subjects, test_subject)
     
     train_keys = generate_key_list(
@@ -1008,7 +955,7 @@ def create_train_test_data(big_data: dict,
     test_keys = generate_key_list(
         big_data = big_data,
         subjects = [test_subject],
-        sessions = test_sessions,
+        sessions = [test_sessions],
         task     = task,
         runs     = runs
         )
@@ -1089,155 +1036,118 @@ def create_train_test_data(big_data: dict,
             Y_test)
 
 #%%
-def Main(   data_directory: str | os.PathLike,
-            train_subjects: str | list[str],
-            train_sessions: list[str],
-            test_subject: str,
-            test_sessions: str | list[str],
-            task: str,
-            runs: list[str],
-            cap_names: str,
-            modality: str,
-            band_name: str | None = None,
-            window_length_seconds: int | float = 12,
-            chan_select_args = None,
-            masking: bool = False,
-            trim_args: tuple = (None, None)
-            sampling_rate: int | float = 1,
-            estimator: BaseEstimator = linear_model.RidgeCV(cv = 5),
-            on_errors: str = 'raise', 
-            save: bool = True
-
-    ):
-
-    big_d = combine_data_from_filename(
-        reading_dir = data_directory,
-        task        = task,
-        run         = runs[0])
     
-    rand_generator.shuffle(cap_names)
-    
-    for cap in cap_names:
-        rand_generator.shuffle(test_sessions)
-        
+study_directory = (
+    "/data2/Projects/eeg_fmri_natview/derivatives"
+    "/multimodal_prediction_models/data_prep"
+    f"/prediction_model_data_eeg_features_v2/group_data_Hz-3.8"
+    )
+
+rand_generator = np.random.default_rng()
+caps = np.array(['tsCAP1',
+        'tsCAP2',
+        'tsCAP3',
+        'tsCAP4',
+        'tsCAP5',
+        'tsCAP6',
+        'tsCAP7',
+        'tsCAP8'])
+
+bands = ['delta','theta','alpha','beta','gamma']
+runs = ['01']#, '02']
+TASK = 'checker'
+MODALITY = 'EEGbandEnvelopes'
+SAMPLING_RATE_HZ = 3.8
+WINDOW_LENGTH_SECONDS = 10
+train_sessions = ['01', '02']
+test_sessions = ['01','02']
+
+big_d = combine_data_from_filename(
+    reading_dir = study_directory,
+    task        = TASK,
+    run         = runs[0])
+
+models = {sub : {cap: {} for cap in caps} for sub in big_d.keys()}
+subjects = np.array(list(models.keys()))
+feat_args = {"pupil":["pupil_dilation","first_derivative","second_derivative"]}
+rand_generator.shuffle(subjects)
+r_data_for_df = {'subject':[],
+                 'session':[],
+                 'ts_CAPS':[],
+                 'pearson_r':[]}
+
+for subject in subjects:
+    rand_generator.shuffle(caps)
+    for cap in caps:
         for test_session in test_sessions:
+            print(f"===== {cap} =====")
             try:
+
                 X_train, Y_train, X_test, Y_test = create_train_test_data(
-                big_data         = big_d,
-                train_subjects   = train_subjects,
-                train_sessions   = train_sessions,
-                test_subject     = test_subject,
-                test_sessions    = [test_session],
-                task             = task,
-                runs             = runs,
-                cap_name         = cap,
-                modality         = modality,
-                window_length    = int(window_length_seconds * sampling_rate)-1,
-                chan_select_args = chan_select_args,
-                masking          = masking,
-                band_name        = band_name,
-                start_crop       = start_crop,
-                stop_crop        = stop_crop
+                    big_data=big_d,
+                    train_subjects='all',
+                    train_sessions=train_sessions,
+                    test_subject=subject.split('-')[1],
+                    test_sessions=test_session,
+                    task = TASK,
+                    runs = runs,
+                    cap_name = cap,
+                    features_args=feat_args,
+                    window_length=int(SAMPLING_RATE_HZ*WINDOW_LENGTH_SECONDS),
+                    masking = True,
+                    trim_args = (5,None)
                 )
-
+                    
+                estimator = sklearn.linear_model.RidgeCV(cv=5)
                 model = estimator.fit(X_train,Y_train)
-                models[test_subject][cap].update({f'ses-{test_session}':{
-                    'model' : model,
-                    'X_test': X_test,
-                    'Y_test': Y_test,
-                }
-                }
-                )
+                Y_hat = estimator.predict(X_test)
+                r = np.corrcoef(Y_test.T,Y_hat.T)[0,1]
+                for key, values in zip(
+                    ['subject','session','ts_CAPS','pearson_r'],
+                    [subject,test_session,cap,r]):
+                    r_data_for_df[key].append(values)
+                
+                i += 1
             except Exception as e:
-                if on_errors == 'raise':
-                    raise e
-                elif on_errors == 'warn':
-                    print(f'sub-{subject} {cap} {e}')
-                    continue
-                elif on_errors == 'ignore':
-                    continue
-    if save:
-        with open(f'./models/ridge_pupil_{SAMPLING_RATE_HZ}_{task}_run-{runs[0]}.pkl', 'wb') as file:
-            pickle.dump(models,file)
-    
-#%%
-if __name__ == '__main__':
-    
-    
-    study_directory = (
-        "/data2/Projects/eeg_fmri_natview/derivatives"
-        "/multimodal_prediction_models/data_prep"
-        f"/prediction_model_data_eeg_features_v2/group_data_Hz-1.0"
-        )
-    
-    rand_generator = np.random.default_rng()
-    caps = ['tsCAP1',
-            'tsCAP2',
-            'tsCAP3',
-            'tsCAP4',
-            'tsCAP5',
-            'tsCAP6',
-            'tsCAP7',
-            'tsCAP8']
-    
-    bands = ['delta','theta','alpha','beta','gamma']
-    runs = ['01']#, '02']
-    task = 'checker'
-    MODALITY = 'EEGbandEnvelopes'
-    SAMPLING_RATE_HZ = 1.0
-    WINDOW_LENGTH_SECONDS = 12
-    train_sessions = ['01', '02']
-    test_sessions = ['01','02']
-    
-    big_d = combine_data_from_filename(
-        reading_dir = study_directory,
-        task        = task,
-        run         = runs[0])
-    
-    models = {sub : {cap: {} for cap in caps} for sub in big_d.keys()}
-    subjects = list(models.keys())
-    rand_generator.shuffle(subjects)
+                #raise e
+                #print(f'{subject} {cap} {e}')
+                continue
+#%% 
+df_pearson_r = pd.DataFrame(r_data_for_df)
+df_pearson_r = df_pearson_r.sort_values(by = ['subject', 'ts_CAPS']).reset_index()        
+fig, ax = plt.subplots(figsize=(6,3))
+sns.stripplot(data = df_pearson_r,
+            x = 'ts_CAPS',
+            y = 'pearson_r',
+            ax = ax,
+            palette = 'Paired',
+            alpha=0.5, 
+            size=5, 
+            zorder=0
+            )
 
-    i = 0
-    for subject in subjects:
-        rand_generator.shuffle(caps)
-        for cap in caps:
-            for test_session in test_sessions:
-                print(f"===== {cap} =====")
-                try:
-                    X_train, Y_train, X_test, Y_test = create_train_test_data(
-                    big_data         = big_d,
-                    train_subjects   = 'all',
-                    train_sessions   = train_sessions,
-                    test_subject     = subject.split('-')[1],
-                    test_sessions    = [test_session],
-                    task             = task,
-                    runs             = runs,
-                    cap_name         = cap,
-                    modality          = MODALITY,
-                    window_length    = int(WINDOW_LENGTH_SECONDS * SAMPLING_RATE_HZ)-1,
-                    chan_select_args = None,
-                    masking          = True,
-                    band_name        = 'alpha',
-                    start_crop       = int(5*SAMPLING_RATE_HZ),
-                    stop_crop        = None
-                    )
+sns.barplot(data = df_pearson_r, 
+            x = 'ts_CAPS', 
+            y = 'pearson_r', 
+            errorbar = ('ci',68),
+            ax = ax, 
+            palette = 'Paired',
+            alpha=0.6, 
+            width=0.8, 
+            zorder=1
+            )
 
-                    estimator = sklearn.linear_model.RidgeCV(cv=5)
-                    model = estimator.fit(X_train,Y_train)
-                    models[subject][cap].update({f'ses-{test_session}':{
-                        'model' : model,
-                        'X_test': X_test,
-                        'Y_test': Y_test,
-
-                    }
-                    }
-                    )
-                    i += 1
-                    print(i)
-                except Exception as e:
-                    #raise e
-                    print(f'sub-{subject} {cap} {e}')
-                    continue
-    with open(f'./models/ridge_pupil_{SAMPLING_RATE_HZ}_{task}_run-{runs[0]}.pkl', 'wb') as file:
-        pickle.dump(models,file)
+caps_names = ['CAP1','CAP2','CAP3','CAP4','CAP5','CAP6','CAP7','CAP8']
+plt.ylim(-0.4,1)
+plt.xlabel('')
+plt.ylabel('Correlation(yhat,ytest)')#, size = 12)
+plt.xticks(ticks = np.arange(8), labels = caps_names)#, size = 12)
+plt.axhline(0, 
+            linewidth = 1.5,
+            color = 'black')
+#plt.axhline(0.5, 
+            #linestyle = '--',
+            #linewidth = 1,
+            #color = "black",
+            #alpha = 0.5)
+# %%

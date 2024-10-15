@@ -26,7 +26,7 @@ respiration_data_dir = '/home/thoppe/physio-analysis/resp-analysis/resp_stdevs'
 
 #%% =======================================================================================
 
-TR_PERIOD_DIVIDING = 2.1
+TR_PERIOD_DIVIDING = 8
 TR_PERIOD = 2.1
 PREDHZ = np.round(TR_PERIOD_DIVIDING/TR_PERIOD, 1)
 
@@ -104,7 +104,7 @@ for sub in subjects:
                                             task, 
                                             fmri_data_dir= fmri_data_dir,
                                             eyetrack_data_dir=eyetrack_data_dir, 
-                                            eeg_proc_data_dir=eeg_proc_data_dir,
+                                            #eeg_proc_data_dir=eeg_proc_data_dir,
                                             verbose = True
                                             )
                 data_keys_dict = {
@@ -204,36 +204,34 @@ for sub in subjects:
 
                 # ----------------------------------------------------------------------------
                 # EEG DATA
-
-                    sub_dir_eeg = os.path.join(eeg_proc_data_dir, f"sub-{sub}", f"ses-{ses}", "eeg")
-                    eeg_features = {
-                        'EEGbandsEnvelopes': None,
-                        'CustomEnvelopes': None,
-                        'MorletTFR': None
-                    }
-                    if (task[:2]=='tp'):
-                        bstask = task
-                    else:
-                        bstask = task[:(len(task)-7)]
-                    
-                    for key in eeg_features.keys():
-                        filename = os.path.join(
-                            sub_dir_eeg, 
-                            f"sub-{sub}_ses-{ses}_task-{task}_desc-{key}BlinksRemoved_eeg.pkl")
-                        
-                        data = np.load(filename, allow_pickle=True)
-                        resampled_eeg_time = hf.resample_time(
-                            data['time'],
-                            tr_value = TR_PERIOD,
-                            resampling_factor = TR_PERIOD_DIVIDING
-                            
-                        )
-                        eeg_features[key] = hf.resample_eeg_features(data, 
-                                                                    resampled_eeg_time,
-                                                                    verbose = True)
-
-                    multimodal_data_dict|= eeg_features
-                #-----------------
+#                    sub_dir_eeg = os.path.join(eeg_proc_data_dir, f"sub-{sub}", f"ses-{ses}", "eeg")
+#                    eeg_features = {
+#                        'EEGbandsEnvelopes': None,
+#                        'CustomEnvelopes': None,
+#                        'MorletTFR': None
+#                    }
+#                    if (task[:2]=='tp'):
+#                        bstask = task
+#                    else:
+#                        bstask = task[:(len(task)-7)]
+#                    
+#                    for key in eeg_features.keys():
+#                        filename = os.path.join(
+#                            sub_dir_eeg, 
+#                            f"sub-{sub}_ses-{ses}_task-{task}_desc-{key}BlinksRemoved_eeg.pkl")
+#                        
+#                        data = np.load(filename, allow_pickle=True)
+#                        resampled_eeg_time = hf.resample_time(
+#                            data['time'],
+#                            tr_value = TR_PERIOD,
+#                            resampling_factor = TR_PERIOD_DIVIDING
+#                            
+#                        )
+#                        eeg_features[key] = hf.resample_eeg_features(data, 
+#                                                                    resampled_eeg_time,
+#                                                                    verbose = True)
+#
+#                    multimodal_data_dict|= eeg_features
 
                     end_times = []
                     print("\n")
