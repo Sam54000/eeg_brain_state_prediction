@@ -281,7 +281,7 @@ def create_big_feature_array(big_data: dict,
                     ][run
                         ][modality][array_name]
         print(f'            sub-{subject} ses-{session}'\
-f'               array of shape {extracted_array.shape}')
+f' array of shape {extracted_array.shape}')
         
         if extracted_array.ndim < 2:
             extracted_array = np.reshape(
@@ -1056,7 +1056,6 @@ caps = np.array(['tsCAP1',
 bands = ['delta','theta','alpha','beta','gamma']
 runs = ['01']#, '02']
 TASK = 'checker'
-MODALITY = 'EEGbandEnvelopes'
 SAMPLING_RATE_HZ = 3.8
 WINDOW_LENGTH_SECONDS = 10
 train_sessions = ['01', '02']
@@ -1069,7 +1068,12 @@ big_d = combine_data_from_filename(
 
 models = {sub : {cap: {} for cap in caps} for sub in big_d.keys()}
 subjects = np.array(list(models.keys()))
-feat_args = {"pupil":["pupil_dilation","first_derivative","second_derivative"]}
+feat_args = {"pupil":["pupil_dilation","first_derivative","second_derivative"],
+             "EEGbandsEnvelopes":{
+                 "channel": ["Fp1", "O2"],
+                 "band": ["delta","alpha"]
+             }
+}
 rand_generator.shuffle(subjects)
 r_data_for_df = {'subject':[],
                  'session':[],
@@ -1107,11 +1111,10 @@ for subject in subjects:
                     [subject,test_session,cap,r]):
                     r_data_for_df[key].append(values)
                 
-                i += 1
             except Exception as e:
-                #raise e
+                raise e
                 #print(f'{subject} {cap} {e}')
-                continue
+                #continue
 #%% 
 df_pearson_r = pd.DataFrame(r_data_for_df)
 df_pearson_r = df_pearson_r.sort_values(by = ['subject', 'ts_CAPS']).reset_index()        
