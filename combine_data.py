@@ -68,7 +68,7 @@ def combine_data_from_filename(reading_dir: str | os.PathLike,
         if task in filename_parts['task'] and filename_parts['run'] == run:
             wrapped_data = {
                 f'ses-{filename_parts["ses"]}':{
-                    filename_parts["task"]:{
+                    f'task-{filename_parts["task"]}':{
                         f'run-{filename_parts["run"]}': data
                     }
                 }
@@ -121,7 +121,7 @@ def filter_data(data: np.ndarray,
 
 def generate_key_list(subjects: list[str] | str,
                       sessions: list[str] | str,
-                      task: str,
+                      tasks: list[str] | str,
                       runs: list[str] | str,
                       big_data: dict | None,
                       ) -> list[tuple[str, str, str, str]]:
@@ -138,22 +138,99 @@ def generate_key_list(subjects: list[str] | str,
         list[tuple[str]]: The list of keys to access the data
     """
     key_list = list()
-    for subject in subjects:
-        for session in sessions:
-            for run in runs:
-                try:
-                    big_data[f'sub-{subject}'][f'ses-{session}'][task][f'run-{run}']
-                    key_list.append((
-                        f'sub-{subject}',
-                        f'ses-{session}',
-                        task,
-                        f'run-{run}'
-                        ))
-                except:
+    arg_dict = {
+        'subjects': [],
+        'sessions': [],
+        'tasks': [],
+        'runs': []
+    }
+    for arg, prefix in zip(['subjects', 'sessions', 'tasks', 'runs'],
+                           ['sub-','ses-','task-','run-']):
+        if isinstance(locals()[arg],list):
+            arg_dict[arg] = [prefix + arg_nb if prefix not in arg_nb 
+                             else arg_nb for arg_nb in locals()[arg]]
+        elif isinstance(locals()[arg], str):
+            arg_dict[arg] = [prefix + locals()[arg]] \
+            if prefix not in locals()[arg] else [locals()[arg]]
+            
+    for subject in arg_dict['subjects']:
+        if subject not in list(big_data.keys()):
+            continue
+        for session in arg_dict['sessions']:
+            if session not in big_data[subject].keys():
+                continue
+            for task in arg_dict['tasks']:
+                if task not in big_data[subject][session].keys():
                     continue
+                for run in arg_dict['runs']:
+                    if run not in big_data[subject][session][task].keys():
+                        continue
+                    big_data[subject][session][task][run]
+                key_list.append((subject, session, task, run))
+    
+    key_list = np.array(key_list)
+    if key_list.ndim == 1:
+        key_list = np.reshape(key_list,(1,-1))
                     
     return key_list
 
+def format_keys(key_values_pair: dict):
+    """Format the input. 
+    
+    For example the user wants subjects from 1 to 10 and give as input:
+    {subjects: ["01",..."10"]}, this function will reformat by adding the
+    prefix in front of the values.
+
+    Args:
+        key_values_pair (dict): _description_
+    """
+    for key, values in key_values_pair.items():
+        if "subject" in key:
+            prefix = 'sub-'
+        elif "session" in key:
+            prefix = 'ses-'
+        elif "task" in key:
+            prefix = 'task-'
+        elif "run" in key:
+            prefix = 'run-'
+        elif "description" in key:
+            prefix = 'desc-'
+        else:
+            raise ValueError('please check for typo')
+        
+        if isinstance(values,str):
+            values = [values]
+        
+        formated_values = [prefix + val 
+                            if prefix not in val else val 
+                            for val in values ]
+        
+        formated_values = np.array(formated_values)
+        if formated_values.ndim == 1:
+            formated_values = np.reshape(formated_values,(1,-1))
+
+        key_values_pair[key] = np.array(formated_values)
+    
+    return key_values_pair
+    
+def generate_train_test_keys(train_subjects: np.ndarray,
+                             test_subjects: np.ndarray,
+                             key_list: np.ndarray) -> np.ndarray:
+
+    formated_inputs = format_keys({key: locals()[key] 
+                                   for key in ['train_subjects',
+                                               'test_subjects']})
+    formated_inputs['train_subjects'] = sanatize_training_list(*formated_inputs.values())
+    
+    train_keys = key_list[
+        np.isin(key_list,formated_inputs['train_subjects'])[:,0],
+                          :]
+    test_keys = key_list[
+        np.isin(key_list,formated_inputs['test_subjects'])[:,0],
+        :]
+    
+    return train_keys, test_keys
+    
 def extract_cap_name_list(big_data: dict,
                           keys_list: list[tuple[str, ...]]) -> list[str]:
     """Extract the list of CAP names from the encapuslated dictionary.
@@ -165,7 +242,7 @@ def extract_cap_name_list(big_data: dict,
     Returns:
         list: The list of CAP names
     """
-    subject, session, task, run = keys_list[0]
+    subject, session, task, run = keys_list[0,:]
     return big_data[subject][session][task][run]['brainstates']['labels']
 
 def get_real_cap_name(cap_names: str | list[str],
@@ -243,7 +320,7 @@ def trim_array(array: np.ndarray,
 def create_big_feature_array(big_data: dict,
                              modality: str,
                              array_name: str,
-                             keys_list: list[tuple[str, ...]],
+                             keys_list: np.ndarray,
                              trim_args: tuple = (None,None)
                              ) -> np.ndarray:
     """Gather one type of data across subject and arange it in an array.
@@ -541,7 +618,7 @@ def fool_proof_key(key: str) -> str:
     return None
 
 def create_X(big_data: dict,
-             keys_list: list[tuple[str,...]],
+             keys_list: np.ndarray,
              features_args: dict,
              trim_args: tuple = (None, None)
              ) -> np.ndarray:
@@ -687,7 +764,7 @@ def create_Y(big_data: dict,
     return selection
 
 def create_X_and_Y(big_data: dict,
-                   keys_list: list[tuple[str, ...]],
+                   keys_list: np.ndarray,
                    X_args: dict,
                    cap_name: str,
                    window_length: int = 45,
@@ -859,7 +936,7 @@ def arange_X_Y(X: np.ndarray,
     
     return reshaped_X[reshaped_mask,:], reshaped_Y[reshaped_mask]
 
-def print_keys(keys_list: list[tuple[str, ...]], title = None):
+def print_keys(keys_list: np.ndarray, title = None):
     """Format the keys list to print them in a nice way.
 
     Args:
@@ -877,8 +954,8 @@ def print_keys(keys_list: list[tuple[str, ...]], title = None):
         print(f"            Session: {session}")
         hold_subject = subject
 
-def sanatize_training_list(training_list: list[str],
-                           test_str: str) -> list[str]:
+def sanatize_training_list(training_list: np.ndarray,
+                           test_str: np.ndarray) -> np.ndarray:
     """Sanatize the training list by removing the test label. 
     
     This sanatation prevent from leakage.
@@ -890,15 +967,13 @@ def sanatize_training_list(training_list: list[str],
     Returns:
         list[str]: The sanatized training list
     """
-    return [label for label in training_list if label != test_str]
+
+    t = training_list[np.where(training_list != test_str)]
+    return t
 
 def create_train_test_data(big_data: dict,
-                           train_subjects: list[str] | str,
-                           train_sessions: list[str],
-                           test_subject: str,
-                           test_sessions: str | list[str],
-                           task: str,
-                           runs: list[str],
+                           train_keys: np.ndarray,
+                           test_keys: np.ndarray,
                            cap_name: str,
                            features_args: dict,
                            window_length: int = 45,
@@ -936,35 +1011,11 @@ def create_train_test_data(big_data: dict,
         tuple[np.ndarray]: the train and test data
     """
     
-    if train_subjects == 'all':
-        train_subjects = [sub.split('-')[1] for sub in big_data.keys()]
-    
-    train_subjects = sanatize_training_list(train_subjects, test_subject)
-    
-    train_keys = generate_key_list(
-        big_data = big_data,
-        subjects = train_subjects,
-        sessions = train_sessions,
-        task     = task,
-        runs     = runs
-        )
-
     print_keys(train_keys, title = "Train data")
     print("")
     
-    test_keys = generate_key_list(
-        big_data = big_data,
-        subjects = [test_subject],
-        sessions = [test_sessions],
-        task     = task,
-        runs     = runs
-        )
-
     print_keys(test_keys, title = "Test data")
     print("")
-    
-    if test_keys == []:
-        raise ValueError(f'No data for:sub-{test_subject}_ses-{test_sessions}')
     
     X_train, Y_train = create_X_and_Y(
         big_data         = big_data,
@@ -1028,7 +1079,7 @@ def create_train_test_data(big_data: dict,
     print(f"aranged Y test shape: {Y_test.shape}\n")
         
     if X_test is None or Y_test is None:
-        raise ValueError(f'Test data excluded for sub-{test_subject} ses-{test_sessions}')
+        raise ValueError()
     
     return (X_train, 
             Y_train, 
@@ -1058,8 +1109,7 @@ runs = ['01']#, '02']
 TASK = 'checker'
 SAMPLING_RATE_HZ = 3.8
 WINDOW_LENGTH_SECONDS = 10
-train_sessions = ['01', '02']
-test_sessions = ['01','02']
+sessions = ["01","02"]
 
 big_d = combine_data_from_filename(
     reading_dir = study_directory,
@@ -1069,32 +1119,42 @@ big_d = combine_data_from_filename(
 models = {sub : {cap: {} for cap in caps} for sub in big_d.keys()}
 subjects = np.array(list(models.keys()))
 feat_args = {"pupil":["pupil_dilation","first_derivative","second_derivative"],
-             "EEGbandsEnvelopes":{
-                 "channel": ["Fp1", "O2"],
-                 "band": ["delta","alpha"]
+             #"EEGbandsEnvelopes":{
+             #    "channel": ["Fp1", "O2"],
+             #    "band": ["delta","alpha"]
              }
-}
+#}
 rand_generator.shuffle(subjects)
 r_data_for_df = {'subject':[],
                  'session':[],
                  'ts_CAPS':[],
                  'pearson_r':[]}
 
+all_possible_keys = generate_key_list(
+    subjects=list(subjects),
+    sessions = sessions,
+    tasks = TASK,
+    runs = runs,
+    big_data = big_d
+)
+
 for subject in subjects:
     rand_generator.shuffle(caps)
     for cap in caps:
-        for test_session in test_sessions:
+        
+        train_keys, test_keys = generate_train_test_keys(
+            train_subjects=subjects,
+            test_subjects=subject,
+            key_list=all_possible_keys
+        )
+        for test_key in test_keys:
             print(f"===== {cap} =====")
+            _, test_session, _, _ = test_key
             try:
-
                 X_train, Y_train, X_test, Y_test = create_train_test_data(
                     big_data=big_d,
-                    train_subjects='all',
-                    train_sessions=train_sessions,
-                    test_subject=subject.split('-')[1],
-                    test_sessions=test_session,
-                    task = TASK,
-                    runs = runs,
+                    train_keys=train_keys,
+                    test_keys=test_key[np.newaxis,:],
                     cap_name = cap,
                     features_args=feat_args,
                     window_length=int(SAMPLING_RATE_HZ*WINDOW_LENGTH_SECONDS),
@@ -1113,8 +1173,6 @@ for subject in subjects:
                 
             except Exception as e:
                 raise e
-                #print(f'{subject} {cap} {e}')
-                #continue
 #%% 
 df_pearson_r = pd.DataFrame(r_data_for_df)
 df_pearson_r = df_pearson_r.sort_values(by = ['subject', 'ts_CAPS']).reset_index()        

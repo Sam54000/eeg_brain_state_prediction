@@ -104,7 +104,7 @@ for sub in subjects:
                                             task, 
                                             fmri_data_dir= fmri_data_dir,
                                             eyetrack_data_dir=eyetrack_data_dir, 
-                                            #eeg_proc_data_dir=eeg_proc_data_dir,
+                                            eeg_proc_data_dir=eeg_proc_data_dir,
                                             verbose = True
                                             )
                 data_keys_dict = {
