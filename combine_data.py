@@ -663,8 +663,6 @@ def create_X(big_data: dict,
             modality = modality,
             array_name = "feature",
             trim_args=trim_args
-        )
-
 
         if 'EEG' in modality:
             bands_list = ['delta','theta','alpha','beta','gamma']
