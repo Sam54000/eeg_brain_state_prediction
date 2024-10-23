@@ -39,6 +39,7 @@ import bids
 import mne_bids
 from mne_bids import BIDSPath
 from pathlib import Path
+import matplotlib
 import matplotlib.pyplot as plt
 import eeg_research.preprocessing.tools.utils as utils
 import numpy as np
@@ -145,6 +146,14 @@ def extract_location(channels: list[str]) -> dict[str, list[str | int]]:
     return location
 
 def parse_file_entities(filename: str | os.PathLike) -> dict:
+    """Parse all BIDS key-value pairs a file name in BIDS format.
+
+    Args:
+        filename (str | os.PathLike): The filename to parse.
+
+    Returns:
+        dict: The key-value pairs generated from the filename.
+    """
     file_only = Path(filename).name
     basename, extension = os.path.splitext(file_only)
     entities = dict()
@@ -186,37 +195,77 @@ def extract_eeg_only(raw: mne.io.Raw) -> mne.io.Raw:
 
 def specific_crop(raw: mne.io.Raw, 
                   start_annotation: str,
-                  stop_annotation) -> mne.io.Raw:
+                  stop_annotation: str) -> mne.io.Raw:
+    """Crop the data following specific annotations.
+
+    Args:
+        raw (mne.io.Raw): The mne.Raw object
+        start_annotation (str): The annotation from which the EEG data should
+                                start.
+        stop_annotation (str): The annotation where the EEG data should end.
+
+    Returns:
+        mne.io.Raw: The croped EEG data.
+    """
     start_onset = raw.annotations.onset[raw.annotations.description == start_annotation][0]
     stop_onset = raw.annotations.onset[raw.annotations.description == stop_annotation][0]
     raw.crop(start_onset, stop_onset)
     return raw
 
 class BlinkRemover:
-    def __init__(self, raw: mne.io.Raw, channels = ['Fp1', 'Fp2']):
+    """This class is a helper to remove blinks from EEG using SSP projectors.
+
+    You should initiate the object by giving as inputs the raw data (mne.Raw
+    object) and the channel names on which the blinks are the most present
+    (By default Fp1 and Fp2)
+    """
+    def __init__(self, 
+                 raw: mne.io.Raw, 
+                 channels: list[str] = ['Fp1', 'Fp2']):
         self.raw = raw
         self.channels = channels
     
-    def _find_blinks(self):
+    def _find_blinks(self: 'BlinkRemover') -> 'BlinkRemover':
         self.eog_evoked = mne.preprocessing.create_eog_epochs(self.raw, ch_name = self.channels).average()
         self.eog_evoked.apply_baseline((None, None))
         return self
     
-    def plot_removal_results(self, saving_filename = None):
+    def plot_removal_results(self: 'BlinkRemover', 
+                             saving_filename: str | os.PathLike | None = None
+                             ) -> matplotlib.figure:
+        """Plot how well the blinks were removed.
+        
+        In a REPL when testing the BlinkRemover object it's always good to have
+        a good view on how well the blinks were removed.
+
+        Args:
+            saving_filename (, optional): _description_. Defaults to None.
+        """
         figure = mne.viz.plot_projs_joint(self.eog_projs, self.eog_evoked)
         figure.suptitle("EOG projectors")
         if saving_filename:
             figure.savefig(saving_filename)
-        plt.close()
+        
+        return figure
     
-    def plot_blinks_found(self, saving_filename = None):
+    def plot_blinks_found(self: 'BlinkRemover', 
+                          saving_filename: str | os.PathLike | None = None
+                          ) -> matplotlib.figure:
+        """Plot the result of the automated blink detection.
+
+        Args:
+            saving_filename (str | os.PathLike | None, optional): _description_. Defaults to None.
+
+        Returns:
+            matplotlib.figure: The figure generated.
+        """
         self._find_blinks()
         figure = self.eog_evoked.plot_joint(times = 0)
         if saving_filename:
             figure.savefig(saving_filename)
-        plt.close()
+        return figure
     
-    def remove_blinks(self) -> mne.io.Raw:
+    def remove_blinks(self: 'BlinkRemove') -> mne.io.Raw:
         """Remove the EOG artifacts from the raw data.
 
         Args:
@@ -237,13 +286,26 @@ class BlinkRemover:
         return self
 
 class EEGfeatures:
+    """A Object containing EEG features extracted.
+    """
     def __init__(self, raw: mne.io.Raw):
         self.raw = raw
         self.channel_names = raw.info['ch_names']
         self.frequencies = list()
     
+    def _extract_envelope(self, frequencies: list[tuple[float,float]]
+                          )-> 'EEGfeatures':
+        """Extract the dynamic of frequency bands.
 
-    def _extract_envelope(self, frequencies: list[tuple[float,float]])-> np.ndarray:
+        Args:
+            frequencies (list[tuple[float,float]]): A list of frequency pairs
+                                                    being the lower and
+                                                    upper frequencies of 
+                                                    each desired band.
+
+        Returns:
+            EEGfeatures object
+        """
         temp_envelopes_list = list()
         for band in frequencies:
             filtered = self.raw.copy().filter(*band)
@@ -254,6 +316,8 @@ class EEGfeatures:
         return self
 
     def extract_eeg_band_envelope(self: 'EEGfeatures') -> 'EEGfeatures':
+        """Automatically extract envelope from all EEG bands.
+        """
 
         self.frequencies = np.array([ 
                     (0.5, 4),
@@ -270,11 +334,39 @@ class EEGfeatures:
         return self
 
     def extract_custom_band_envelope(self: 'EEGfeatures',
-                                highest_frequency: int = 40,
-                                lowest_frequency: int = 1, 
+                                highest_frequency: float = 40,
+                                lowest_frequency: float = 1, 
                                 frequency_step: int = 1) -> 'EEGfeatures':
+        """Extract a custom serie of envelopes of narrow band filtered signal.
+        
+        It will generate n envelopes defined by frequency_step from lowest to 
+        highest frequency.
+        Args:
+            highest_frequency (float): The highest frequency from the desired
+                                       band.
+            lowest_frequency (float): The lowest frequency from the desired 
+                                      band.
+        
+        Returns:
+            EEGfeatures object
+        
+        Example:
+            We want to extract 5 envelopes of the narrow-band filtered signal
+            from 0Hz to 10Hz, from 10Hz to 20Hz, from 20Hz to 30Hz, from 30Hz to
+            40Hz and from 40Hz to 50Hz the function all will be
+            ```
+            envelopes = extract_custom_band_envelope(
+                            highest_frequency = 50,
+                            lowest_frequency = 0,
+                            frequency_step = 10
+                            )
+            ```
+        """
+            
         self.frequencies = list()
-        for low_frequency in range(lowest_frequency, highest_frequency, frequency_step):
+        for low_frequency in range(lowest_frequency, 
+                                   highest_frequency, 
+                                   frequency_step):
             high_frequency = low_frequency + frequency_step
             self.frequencies.append((low_frequency, high_frequency))
 
