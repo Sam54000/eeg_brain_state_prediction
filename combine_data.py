@@ -6,6 +6,7 @@ os.environ["OMP_NUM_THREADS"] = nthreads
 os.environ["OPENBLAS_NUM_THREADS"] = nthreads
 os.environ["MKL_NUM_THREADS"] = nthreads
 os.environ["VECLIB_MAXIMUM_THREADS"] = nthreads
+os.environ["BLIS_NUM_THREADS"] = nthreads
 os.environ["NUMEXPR_NUM_THREADS"] = nthreads
 import matplotlib.pyplot as plt
 import scipy.stats
@@ -43,10 +44,44 @@ def parse_filename(filename: str | os.PathLike) -> dict[str,str]:
             filename_parts[label] = value
         
     return filename_parts
+    
+def populate_encapsulated_dict(existing_dict: dict,
+                               subject: str,
+                               session: str,
+                               task: str,
+                               run: str,
+                               data: dict):
+    """Making encapsulated dict is the root of all evil. TO CHANGE
 
+    Args:
+        existing_dict (dict): _description_
+        subject (str): _description_
+        session (str): _description_
+        task (str): _description_
+        run (str): _description_
+        data (dict): _description_
+
+    Returns:
+        _type_: _description_
+    """
+    if existing_dict:
+        if existing_dict.get(subject):
+            if existing_dict[subject].get(session):
+                if existing_dict[subject][session].get(task):
+                    return existing_dict[subject][session][task].update({run: data})
+                else:
+                    return existing_dict[subject][session].update({task: {run: data}})
+            else:
+                return existing_dict[subject].update({session: {task: {run: data}}})
+        else:
+            return existing_dict.update({subject: {session: {task: {run: data}}}})
+    else:
+        return {subject: {session: {task: {run: data}}}}
+    
 def combine_data_from_filename(reading_dir: str | os.PathLike,
-                               task:str = "checker",
-                               run: str = "01"):
+                               sessions: list[str],
+                               tasks: list[str] = ["checker"],
+                               runs: list[str] = ["01"]):
     """Combine the data from the files in the reading directory.
 
     Args:
@@ -60,29 +95,32 @@ def combine_data_from_filename(reading_dir: str | os.PathLike,
     """
     big_data = dict()
     filename_list = os.listdir(reading_dir)
-    for filename in filename_list:
+    for file_idx, filename in enumerate(filename_list):
         filename_parts = parse_filename(filename)
-        subject = filename_parts["sub"]
-        with open(os.path.join(reading_dir,filename), 'rb') as file: 
-            data = pickle.load(file)
-        if task in filename_parts['task'] and filename_parts['run'] == run:
-            wrapped_data = {
-                f'ses-{filename_parts["ses"]}':{
-                    filename_parts["task"]:{
-                        f'run-{filename_parts["run"]}': data
-                    }
-                }
-            }
-            if big_data.get(f'sub-{subject}'):
-                big_data[f'sub-{subject}'].update(wrapped_data)
-            else:
-                big_data[f'sub-{subject}'] = wrapped_data
-
+        subject = filename_parts['sub']
+        filename_match = (filename_parts['ses'] in sessions,
+                          filename_parts['task'] in tasks,
+                          filename_parts['run'] in runs)
+        if filename_match:
+            with open(os.path.join(reading_dir,filename), 'rb') as file: 
+                data = pickle.load(file)
+                if file_idx == 0:
+                    big_data = {f'sub-{subject}':{}}
+                
+                populate_encapsulated_dict(
+                    existing_dict = big_data,
+                    subject = f'sub-{subject}',
+                    session = f'ses-{filename_parts["ses"]}',
+                    task = f'task-{filename_parts["task"]}',
+                    run = f'run-{filename_parts["run"]}',
+                    data = data
+                )
+                    
     return big_data
 
-big_data = combine_data_from_filename('/data2/Projects/eeg_fmri_natview/derivatives/multimodal_prediction_models/data_prep/prediction_model_data_eeg_features_v2/group_data_Hz-3.8',
-                                    task = 'checker',
-                                    run = '01')
+#big_data = combine_data_from_filename('/data2/Projects/eeg_fmri_natview/derivatives/multimodal_prediction_models/data_prep/prediction_model_data_eeg_features_v2/group_data_Hz-3.8',
+                                   # task = 'checker',
+                                   # run = '01')
 #%%
 def filter_data(data: np.ndarray, 
                 low_freq_cutoff: float | None = None,
@@ -121,10 +159,10 @@ def filter_data(data: np.ndarray,
 
 def generate_key_list(subjects: list[str] | str,
                       sessions: list[str] | str,
-                      task: str,
+                      tasks: list[str] | str,
                       runs: list[str] | str,
                       big_data: dict | None,
-                      ) -> list[tuple[str, str, str, str]]:
+                      ) -> np.ndarray:
     """Generate a list of keys to access the data an encapsulated dictionary.
     
     Args:
@@ -138,24 +176,94 @@ def generate_key_list(subjects: list[str] | str,
         list[tuple[str]]: The list of keys to access the data
     """
     key_list = list()
-    for subject in subjects:
-        for session in sessions:
-            for run in runs:
-                try:
-                    big_data[f'sub-{subject}'][f'ses-{session}'][task][f'run-{run}']
-                    key_list.append((
-                        f'sub-{subject}',
-                        f'ses-{session}',
-                        task,
-                        f'run-{run}'
-                        ))
-                except:
+    arg_keys = ['subjects','sessions','tasks','runs']
+    arg_dict = {key: locals()[key] for key in arg_keys}
+    formated_arg_dict = format_keys(arg_dict)
+            
+    for subject in formated_arg_dict['subjects']:
+        if subject not in list(big_data.keys()):
+            continue
+        for session in formated_arg_dict['sessions']:
+            if session not in big_data[subject].keys():
+                continue
+            for task in formated_arg_dict['tasks']:
+                if task not in big_data[subject][session].keys():
                     continue
+                for run in formated_arg_dict['runs']:
+                    if run not in big_data[subject][session][task].keys():
+                        continue
+                    key_list.append((subject, session, task, run))
+    
+    key_list_array = np.array(key_list)
+    if key_list_array.ndim == 1:
+        key_list_array = np.reshape(key_list_array,(1,-1))
                     
-    return key_list
+    return key_list_array
 
+def format_keys(key_values_pair: dict):
+    """Format the input. 
+    
+    For example the user wants subjects from 1 to 10 and give as input:
+    {subjects: ["01",..."10"]}, this function will reformat by adding the
+    prefix in front of the values.
+
+    Args:
+        key_values_pair (dict): _description_
+    """
+    for key, values in key_values_pair.items():
+        if "subject" in key:
+            prefix = 'sub-'
+        elif "session" in key:
+            prefix = 'ses-'
+        elif "task" in key:
+            prefix = 'task-'
+        elif "run" in key:
+            prefix = 'run-'
+        elif "description" in key:
+            prefix = 'desc-'
+        else:
+            raise ValueError('please check for typo')
+        
+        if isinstance(values,str):
+            values = [values]
+        
+        formated_values = [prefix + val 
+                            if prefix not in val else val 
+                            for val in values ]
+        
+        formated_values_array = np.array(formated_values)
+        if formated_values_array.ndim == 1:
+            formated_values = np.reshape(formated_values_array,(1,-1))
+
+        key_values_pair[key] = formated_values_array
+    
+    return key_values_pair
+    
+def generate_train_test_keys(train_subjects: np.ndarray,
+                             test_subjects: np.ndarray,
+                             key_list: np.ndarray
+                             ) -> tuple[np.ndarray, np.ndarray]:
+
+    formated_inputs = format_keys({key: locals()[key] 
+                                   for key in ['train_subjects',
+                                               'test_subjects']})
+
+    formated_inputs['train_subjects'] = sanatize_training_list(
+        *formated_inputs.values()
+        )
+    
+    train_keys = key_list[
+        np.isin(key_list,formated_inputs['train_subjects'])[:,0],
+                          :]
+    
+    test_keys = key_list[
+        np.isin(key_list,formated_inputs['test_subjects'])[:,0],
+        :]
+    
+    return train_keys, test_keys
+    
 def extract_cap_name_list(big_data: dict,
-                          keys_list: list[tuple[str, ...]]) -> list[str]:
+                          keys_list: np.ndarray) -> list[str]:
     """Extract the list of CAP names from the encapuslated dictionary.
     
     Args:
@@ -165,11 +273,11 @@ def extract_cap_name_list(big_data: dict,
     Returns:
         list: The list of CAP names
     """
-    subject, session, task, run = keys_list[0]
+    subject, session, task, run = keys_list[0,:]
     return big_data[subject][session][task][run]['brainstates']['labels']
 
-def get_real_cap_name(cap_names: str | list[str],
-                      cap_list: list[str]) -> list:
+def get_real_cap_name_and_idx(cap_name: str,
+                      cap_list: list[str]) -> tuple[str,int]:
     """Get the real CAP name based on a substring from the list of CAP names.
     
     Args:
@@ -177,15 +285,11 @@ def get_real_cap_name(cap_names: str | list[str],
         cap_list (list): The list of CAP names
     
     Returns:
-        str: The real CAP name
+        tuple[str,int]: The real cap name and its index in the list
     """
-    real_cap_names = list()
-    if isinstance(cap_names,str):
-        cap_names = [cap_names]
-    for cap_name in cap_names:
-        real_cap_names.extend([cap for cap in cap_list if cap_name in cap])
-    
-    return real_cap_names
+    real_cap_name = [cap for cap in cap_list if cap_name in cap][0]
+    real_cap_idx = cap_list.index(real_cap_name)
+    return real_cap_name, real_cap_idx
 
 def crop_data(array: np.ndarray, 
               axis: int = -1, 
@@ -243,7 +347,7 @@ def trim_array(array: np.ndarray,
 def create_big_feature_array(big_data: dict,
                              modality: str,
                              array_name: str,
-                             keys_list: list[tuple[str, ...]],
+                             keys_list: np.ndarray,
                              trim_args: tuple = (None,None)
                              ) -> np.ndarray:
     """Gather one type of data across subject and arange it in an array.
@@ -256,17 +360,36 @@ def create_big_feature_array(big_data: dict,
         modality (str): The modality to consider.
         array_name (str): The name of the array from the modality to get.
                           Can be either one of 'feature', 'artifact_mask'.
-        index_to_get (int): The index to get the data from. If None, the entire
-                            array is considered
-        axis_to_get (int): The axis to get the data from. If None, the entire
-                                array is considered.
-        keys_list (list): The list of keys to access the data in the dictionary.
-        axis_to_concatenate (int): The axis to concatenate the data along.
-        start_crop (int): The start index to crop the data.
-        stop_crop (int): The stop index to crop the data.
+        keys_list (np.ndarray): The list of keys to access the data in the
+                                dictionary. Should be a 2D array with the first
+                                dimension being the individual data and the
+                                second dimension being the keys for that
+                                specific data. 
+                                keys_list.shape = (nb_data, nb_keys). The number
+                                of keys is equal to 4 and always in that order:
+                                subject, session, task, run.
+        trim_args (tuple): The arguments to trim the data. It is a tuple of int
+                           that define the first and last sample of the original 
+                           data we want to select. If the value is positive the
+                           samples are taken from the begninning of the data.
+                           If the value is negative the samples are taken from
+                           the end of the data.
+                           
     
     Returns:
         np.ndarray: The concatenated array
+    
+    
+    Example:
+        Here are some example on how to set the parameters trim_args.
+        - We want to select a portion of the data 20 samples 
+            from the beginning to 40 samples from the end of 
+            the original data: the arguments will be 
+            trim_args = (20,-40).
+        - We want a selection starting at 10 samples and ending at 50 samples 
+        from the beginning of the original data: trim_args = (10,50).
+        - We want a selection starting at 80 to 10 samples from the end of the 
+        original data: trim_args = (-80,-10).
 
     """
     
@@ -280,8 +403,6 @@ def create_big_feature_array(big_data: dict,
                 ][task
                     ][run
                         ][modality][array_name]
-        print(f'            sub-{subject} ses-{session}'\
-f' array of shape {extracted_array.shape}')
         
         if extracted_array.ndim < 2:
             extracted_array = np.reshape(
@@ -383,33 +504,44 @@ def get_specific_location(data_dict: Dict,
     return mask if mask.any() else None
 
 def combine_masks(big_data:dict,
-                  key_list: list,
-                  modalities: list | str = ['pupil'],
+                  key_list: np.ndarray,
+                  features_args: dict,
                   trim_args : tuple = (None, None),
-                  ) -> np.ndarray[bool]:
+                  ) -> np.ndarray:
     """Combine the masks from different modalities.
 
     Args:
         big_data (dict): The encapsulated dictionary containing all the data.
-        key_list (list): The list of keys to access the data in the dictionary.
+        key_list (np.ndarray): The list of keys to access the data in the dictionary.
         modalities (list, optional): The modality to get the mask from. 
                                      Defaults to ['pupil','brainstates'].
-        start_crop (int | None, optional): The index to crop from the start. 
-                                           Defaults to None.
-        stop_crop (int | None, optional): The index to crop at the end. 
-                                          Defaults to None.
+        trim_args (tuple): The arguments to trim the data. It is a tuple of int
+                           that define the first and last sample of the original 
+                           data we want to select. If the value is positive the
+                           samples are taken from the begninning of the data.
+                           If the value is negative the samples are taken from
+                           the end of the data.
 
     Returns:
         np.ndarray[bool]: The combined mask.
+
+    Example:
+        Here are some example on how to set the parameters trim_args.
+        - We want to select a portion of the data 20 samples from the beginning 
+        to 40 samples from the end of the original data: the arguments will be 
+        trim_args = (20,-40).
+        - We want a selection starting at 10 samples and ending at 50 samples 
+        from the beginning of the original data: trim_args = (10,50).
+        - We want a selection starting at 80 to 10 samples from the end of the 
+        original data: trim_args = (-80,-10).
     """
 
+    modalities = list(features_args.keys())
     if len(modalities) > 1:
         modalities = list(np.unique(modalities))
-
-    if isinstance(modalities, str):
-        modalities = [modalities]
+    if 'brainstates' not in modalities:
+        modalities.append('brainstates') 
         
-    modalities.append('brainstates') 
     masks = []
     
     for modality in modalities:
@@ -425,14 +557,14 @@ def combine_masks(big_data:dict,
 
         masks.append(temp_mask > 0.5)
     
-    masks = np.array(masks)
+    masks_array = np.array(masks)
 
-    return np.all(masks, axis = 0)
+    return np.all(masks_array, axis = 0)
     
 def build_windowed_mask(big_data: dict,
-                        key_list:list,
+                        key_list: np.ndarray,
+                        features_args: dict,
                         window_length: int = 45,
-                        modalities = ['pupil','brainstates'],
                         keepdims: bool = True,
                         trim_args: tuple = (None, None)
                         ) -> np.ndarray:
@@ -462,7 +594,7 @@ def build_windowed_mask(big_data: dict,
 
     joined_masks = combine_masks(big_data,
                                  key_list,
-                                 modalities = modalities,
+                                 features_args=features_args,
                                  trim_args=trim_args
                                  )
     
@@ -520,7 +652,7 @@ def normalize_data(array: np.ndarray,
     
     return scipy.stats.zscore(array, axis=-1)
 
-def fool_proof_key(key: str) -> str:
+def fool_proof_key(key: str) -> str | None:
     """Because I have a  very bad memory I need to normalize keys.
     
     This function is to transform key into normalized dict key. If I think that 
@@ -541,7 +673,7 @@ def fool_proof_key(key: str) -> str:
     return None
 
 def create_X(big_data: dict,
-             keys_list: list[tuple[str,...]],
+             keys_list: np.ndarray,
              features_args: dict,
              trim_args: tuple = (None, None)
              ) -> np.ndarray:
@@ -586,6 +718,7 @@ def create_X(big_data: dict,
             modality = modality,
             array_name = "feature",
             trim_args=trim_args
+        )
 
         if 'EEG' in modality:
             bands_list = ['delta','theta','alpha','beta','gamma']
@@ -661,13 +794,18 @@ def create_X(big_data: dict,
     return features
             
 def create_Y(big_data: dict,
-             keys_list: list[tuple[str,...]],
+             keys_list: np.ndarray,
              cap_name: str,
              trim_args: tuple = (None, None)
              ) -> np.ndarray:
-    cap_names_list = extract_cap_name_list(big_data,keys_list)
-    real_cap_name = get_real_cap_name(cap_name,cap_names_list)
-    cap_index = [cap_names_list.index(cap) for cap in real_cap_name][0]
+    
+    cap_names_list = extract_cap_name_list(big_data,
+                                           keys_list)
+
+    _, cap_index = get_real_cap_name_and_idx(
+        cap_name,
+        cap_names_list
+        )
     
     array = create_big_feature_array(
         big_data            = big_data,
@@ -685,7 +823,7 @@ def create_Y(big_data: dict,
     return selection
 
 def create_X_and_Y(big_data: dict,
-                   keys_list: list[tuple[str, ...]],
+                   keys_list: np.ndarray,
                    X_args: dict,
                    cap_name: str,
                    window_length: int = 45,
@@ -754,11 +892,10 @@ def create_X_and_Y(big_data: dict,
     
     return windowed_X, windowed_Y
 
-#%%
 def dimension_rejection_mask(mask: np.ndarray,
                                threshold: float= 0.75,
                                axis: int = 3
-                                ) -> np.ndarray[bool]:
+                                ) -> np.ndarray:
     """Reject time windows based on the percentage of data rejected.
     
     Based on the windowed mask, it evaluate the amount of data rejected. Then
@@ -802,29 +939,6 @@ def reshape_array(array: np.ndarray) -> np.ndarray:
     
     return reshaped_swaped_array
 
-def reject_groups(X: np.ndarray,
-                  Y:np.ndarray,
-                  window_rejection_mask: np.ndarray,
-                  threshold: int = 25) -> tuple:
-    
-    group_rejection_mask = dimension_rejection_mask(window_rejection_mask, 
-                                                    threshold=threshold, 
-                                                    axis=2)
-    group_rejection_mask = np.squeeze(group_rejection_mask)
-    
-    if group_rejection_mask.size == 1 and not group_rejection_mask:
-        return None, None, None
-    
-    elif group_rejection_mask.size == 1 and group_rejection_mask:
-        return window_rejection_mask, X, Y
-    
-    else:
-        window_rejection_mask = window_rejection_mask[group_rejection_mask,:,:,:]
-        group_rejected_X = X[group_rejection_mask,:,:]
-        group_rejected_Y = Y[group_rejection_mask,:,:]
-        
-        return window_rejection_mask, group_rejected_X, group_rejected_Y
-    
 def arange_X_Y(X: np.ndarray, 
                Y: np.ndarray, 
                mask: np.ndarray,
@@ -844,20 +958,37 @@ def arange_X_Y(X: np.ndarray,
                                                      threshold=0.75, 
                                                      axis=3)
     print(f"window rejection mask shape: {window_rejection_mask.shape}")
-    #if group_rejection:
-    #    window_rejection_mask, X, Y = reject_groups(X, Y, window_rejection_mask)
+    
+    if group_rejection:
+        group_rejection_mask = dimension_rejection_mask(mask = window_rejection_mask,
+                                                        threshold = 0.25,
+                                                        axis = 2)
+        group_rejection_mask = np.squeeze(group_rejection_mask)
+        
+        
+        if not group_rejection_mask.shape and not group_rejection_mask:
+            return None, None
+
+        elif group_rejection_mask.shape:
+            window_rejection_mask = window_rejection_mask[
+                group_rejection_mask, :, :, :, 
+                ]
+            X = X[group_rejection_mask,:,:,:]
+            Y = Y[group_rejection_mask,:,:]
+    
     print("Reshaping X...")
     reshaped_X = reshape_array(X)
     
     print("Reshaping Y...")
     reshaped_Y = np.reshape(Y, -1)
-    
+
     print("Reshaping mask...")
     reshaped_mask = np.squeeze(reshape_array(window_rejection_mask))
     
+    
     return reshaped_X[reshaped_mask,:], reshaped_Y[reshaped_mask]
 
-def print_keys(keys_list: list[tuple[str, ...]], title = None):
+def print_keys(keys_list: np.ndarray, title = None):
     """Format the keys list to print them in a nice way.
 
     Args:
@@ -875,8 +1006,8 @@ def print_keys(keys_list: list[tuple[str, ...]], title = None):
         print(f"            Session: {session}")
         hold_subject = subject
 
-def sanatize_training_list(training_list: list[str],
-                           test_str: str) -> list[str]:
+def sanatize_training_list(training_list: np.ndarray,
+                           test_str: np.ndarray) -> np.ndarray:
     """Sanatize the training list by removing the test label. 
     
     This sanatation prevent from leakage.
@@ -888,15 +1019,13 @@ def sanatize_training_list(training_list: list[str],
     Returns:
         list[str]: The sanatized training list
     """
-    return [label for label in training_list if label != test_str]
+
+    t = training_list[np.where(training_list != test_str)]
+    return t
 
 def create_train_test_data(big_data: dict,
-                           train_subjects: list[str] | str,
-                           train_sessions: list[str],
-                           test_subject: str,
-                           test_sessions: str | list[str],
-                           task: str,
-                           runs: list[str],
+                           train_keys: np.ndarray,
+                           test_keys: np.ndarray,
                            cap_name: str,
                            features_args: dict,
                            window_length: int = 45,
@@ -907,14 +1036,7 @@ def create_train_test_data(big_data: dict,
 
     Args:
         big_data (dict): The encapsulated dictionary containing all the data.
-        train_subjects (list[str] | 'str'): The list of subjects to train on.
-                                            I can be a list or a string. If it's
-                                            a string, the only value is 'all'.
-        train_sessions (list[str]): The list of sessions to train on.
-        test_subject (str): The subject to test on.
-        test_sessions (str | list[str]): The session to test on.
-        task (str): The task to consider.
-        runs (list[str]): The runs to consider.
+        train_keys (np.ndarray)
         cap_name (str): The CAP name to consider.
         modality(str): The modality to consider.
         band_name (str | None): The name of the EEG band to consider if the
@@ -934,35 +1056,11 @@ def create_train_test_data(big_data: dict,
         tuple[np.ndarray]: the train and test data
     """
     
-    if train_subjects == 'all':
-        train_subjects = [sub.split('-')[1] for sub in big_data.keys()]
+    #print_keys(train_keys, title = "Train data")
+    #print("")
     
-    train_subjects = sanatize_training_list(train_subjects, test_subject)
-    
-    train_keys = generate_key_list(
-        big_data = big_data,
-        subjects = train_subjects,
-        sessions = train_sessions,
-        task     = task,
-        runs     = runs
-        )
-
-    print_keys(train_keys, title = "Train data")
-    print("")
-    
-    test_keys = generate_key_list(
-        big_data = big_data,
-        subjects = [test_subject],
-        sessions = [test_sessions],
-        task     = task,
-        runs     = runs
-        )
-
-    print_keys(test_keys, title = "Test data")
-    print("")
-    
-    if test_keys == []:
-        raise ValueError(f'No data for:sub-{test_subject}_ses-{test_sessions}')
+    #print_keys(test_keys, title = "Test data")
+    #print("")
     
     X_train, Y_train = create_X_and_Y(
         big_data         = big_data,
@@ -996,14 +1094,16 @@ def create_train_test_data(big_data: dict,
             key_list = train_keys,
             window_length=window_length,
             trim_args = trim_args,
-            modalities = list(features_args.keys()))
+            features_args=features_args)
+            
         
         test_mask = build_windowed_mask(
             big_data,
             key_list=test_keys, 
             window_length=window_length,
             trim_args = trim_args,
-            modalities = list(features_args.keys()))
+            features_args=features_args)
+        
     
         print(f"train mask shape: {train_mask.shape}")
         print(f"test mask shape: {test_mask.shape}\n")
@@ -1012,11 +1112,17 @@ def create_train_test_data(big_data: dict,
         print(f"Aranging training data:")
         X_train, Y_train = arange_X_Y(X = X_train, 
                                       Y = Y_train, 
-                                      mask = train_mask)
+                                      mask = train_mask,
+                                      group_rejection = False)
         print(f"\nAranging test data")
         X_test, Y_test = arange_X_Y(X = X_test, 
                                     Y = Y_test, 
-                                    mask = test_mask)
+                                    mask = test_mask,
+                                    group_rejection= False)
+        
+        if X_test is None:
+            print('Not enough data for test')
+            return None, None, None, None
                         
 
     print(f"aranged X train shape: {X_train.shape}")
@@ -1025,130 +1131,156 @@ def create_train_test_data(big_data: dict,
     print(f"aranged X test shape: {X_test.shape}")
     print(f"aranged Y test shape: {Y_test.shape}\n")
         
-    if X_test is None or Y_test is None:
-        raise ValueError(f'Test data excluded for sub-{test_subject} ses-{test_sessions}')
-    
     return (X_train, 
             Y_train, 
             X_test, 
             Y_test)
 
-#%%
-    
-study_directory = (
-    "/data2/Projects/eeg_fmri_natview/derivatives"
-    "/multimodal_prediction_models/data_prep"
-    f"/prediction_model_data_eeg_features_v2/group_data_Hz-3.8"
-    )
-
-rand_generator = np.random.default_rng()
-caps = np.array(['tsCAP1',
-        'tsCAP2',
-        'tsCAP3',
-        'tsCAP4',
-        'tsCAP5',
-        'tsCAP6',
-        'tsCAP7',
-        'tsCAP8'])
-
-bands = ['delta','theta','alpha','beta','gamma']
-runs = ['01']#, '02']
-TASK = 'checker'
-SAMPLING_RATE_HZ = 3.8
-WINDOW_LENGTH_SECONDS = 10
-train_sessions = ['01', '02']
-test_sessions = ['01','02']
-
-big_d = combine_data_from_filename(
-    reading_dir = study_directory,
-    task        = TASK,
-    run         = runs[0])
-
-models = {sub : {cap: {} for cap in caps} for sub in big_d.keys()}
-subjects = np.array(list(models.keys()))
-feat_args = {"pupil":["pupil_dilation","first_derivative","second_derivative"],
-             "EEGbandsEnvelopes":{
-                 "channel": ["Fp1", "O2"],
-                 "band": ["delta","alpha"]
-             }
-}
-rand_generator.shuffle(subjects)
-r_data_for_df = {'subject':[],
-                 'session':[],
-                 'ts_CAPS':[],
-                 'pearson_r':[]}
-
-for subject in subjects:
-    rand_generator.shuffle(caps)
-    for cap in caps:
-        for test_session in test_sessions:
-            print(f"===== {cap} =====")
-            try:
-
-                X_train, Y_train, X_test, Y_test = create_train_test_data(
-                    big_data=big_d,
-                    train_subjects='all',
-                    train_sessions=train_sessions,
-                    test_subject=subject.split('-')[1],
-                    test_sessions=test_session,
-                    task = TASK,
-                    runs = runs,
-                    cap_name = cap,
-                    features_args=feat_args,
-                    window_length=int(SAMPLING_RATE_HZ*WINDOW_LENGTH_SECONDS),
-                    masking = True,
-                    trim_args = (5,None)
+def plot_corr(df_pearson_r):
+    df_pearson_r = df_pearson_r.sort_values(by = ['subject', 'ts_CAPS']).reset_index()        
+    fig, ax = plt.subplots(figsize=(6,3))
+    sns.stripplot(data = df_pearson_r,
+                x = 'ts_CAPS',
+                y = 'pearson_r',
+                ax = ax,
+                palette = 'Paired',
+                alpha=0.5, 
+                size=5, 
+                zorder=0
                 )
-                    
-                estimator = sklearn.linear_model.RidgeCV(cv=5)
-                model = estimator.fit(X_train,Y_train)
-                Y_hat = estimator.predict(X_test)
-                r = np.corrcoef(Y_test.T,Y_hat.T)[0,1]
-                for key, values in zip(
-                    ['subject','session','ts_CAPS','pearson_r'],
-                    [subject,test_session,cap,r]):
-                    r_data_for_df[key].append(values)
-                
-            except Exception as e:
-                raise e
-                #print(f'{subject} {cap} {e}')
-                #continue
-#%% 
-df_pearson_r = pd.DataFrame(r_data_for_df)
-df_pearson_r = df_pearson_r.sort_values(by = ['subject', 'ts_CAPS']).reset_index()        
-fig, ax = plt.subplots(figsize=(6,3))
-sns.stripplot(data = df_pearson_r,
-            x = 'ts_CAPS',
-            y = 'pearson_r',
-            ax = ax,
-            palette = 'Paired',
-            alpha=0.5, 
-            size=5, 
-            zorder=0
-            )
 
-sns.barplot(data = df_pearson_r, 
-            x = 'ts_CAPS', 
-            y = 'pearson_r', 
-            errorbar = ('ci',68),
-            ax = ax, 
-            palette = 'Paired',
-            alpha=0.6, 
-            width=0.8, 
-            zorder=1
-            )
+    sns.barplot(data = df_pearson_r, 
+                x = 'ts_CAPS', 
+                y = 'pearson_r', 
+                errorbar = ('ci',68),
+                ax = ax, 
+                palette = 'Paired',
+                alpha=0.6, 
+                width=0.8, 
+                zorder=1
+                )
 
-caps_names = ['CAP1','CAP2','CAP3','CAP4','CAP5','CAP6','CAP7','CAP8']
-plt.ylim(-0.4,1)
-plt.xlabel('')
-plt.ylabel('Correlation(yhat,ytest)')#, size = 12)
-plt.xticks(ticks = np.arange(8), labels = caps_names)#, size = 12)
-plt.axhline(0, 
-            linewidth = 1.5,
-            color = 'black')
-#plt.axhline(0.5, 
-            #linestyle = '--',
-            #linewidth = 1,
-            #color = "black",
-            #alpha = 0.5)
+    caps_names = ['CAP1','CAP2','CAP3','CAP4','CAP5','CAP6','CAP7','CAP8']
+    plt.ylim(-0.4,1)
+    plt.xlabel('')
+    plt.ylabel('Correlation(yhat,ytest)')#, size = 12)
+    plt.xticks(ticks = np.arange(8), labels = caps_names)#, size = 12)
+    plt.axhline(0, 
+                linewidth = 1.5,
+                color = 'black')
+    
+    #plt.axhline(0.5, 
+    #            linestyle = '--',
+    #            linewidth = 1,
+    #            color = "black",
+    #            alpha = 0.5)
+    
+    return fig, ax
+#%%
+if __name__ == "__main__":
+    study_directory = (
+        "/data2/Projects/eeg_fmri_natview/derivatives"
+        "/multimodal_prediction_models/data_prep"
+        f"/prediction_model_data_eeg_features_v2/group_data_Hz-3.8"
+        )
+
+    rand_generator = np.random.default_rng()
+    caps = np.array(['tsCAP1',
+            'tsCAP2',
+            'tsCAP3',
+            'tsCAP4',
+            'tsCAP5',
+            'tsCAP6',
+            'tsCAP7',
+            'tsCAP8'])
+
+    bands = ['delta','theta','alpha','beta','gamma']
+    runs = ['01', '02']
+    tasks = ['rest']#['tp','dme','monkey1','monkey2','monkey5','inscape']
+    SAMPLING_RATE_HZ = 3.8
+    WINDOW_LENGTH_SECONDS = 10
+    sessions = ["01","02"]
+
+    big_d = combine_data_from_filename(
+        reading_dir = study_directory,
+        sessions    = sessions,
+        tasks        = tasks,
+        runs         = runs)
+
+    subjects = np.array(list(big_d.keys()))
+    feat_args = {"pupil":["pupil_dilation","first_derivative","second_derivative"],
+                #"EEGbandsEnvelopes":{
+                #    "channel": ["Fp1", "O2"],
+                #    "band": ["delta","alpha"]
+                }
+    #}
+    r_data_for_df = {'subject':[],
+                    'session':[],
+                    'run': [],
+                    'task': [],
+                    'ts_CAPS':[],
+                    'pearson_r':[]}
+
+
+    for task in tasks:
+        for run in runs:
+            for subject in subjects:
+                print(' '.join([subject,task,run]))
+                all_possible_keys = generate_key_list(
+                    subjects=list(subjects),
+                    sessions = sessions,
+                    tasks = [task],
+                    runs = [run],
+                    big_data = big_d
+                )
+                if all_possible_keys.size == 0:
+                    continue
+                train_keys, test_keys = generate_train_test_keys(
+                    train_subjects=subjects,
+                    test_subjects=subject,
+                    key_list=all_possible_keys,
+                )
+                for cap in caps:
+                    i = 0
+                    for test_key in test_keys:
+                        i += 1
+                        print(f"===== {cap} =====")
+                        _, test_session, _, _ = test_key
+                        try:
+                            X_train, Y_train, X_test, Y_test = create_train_test_data(
+                                big_data=big_d,
+                                train_keys=train_keys,
+                                test_keys=test_key[np.newaxis,:],
+                                cap_name = cap,
+                                features_args=feat_args,
+                                window_length=int(SAMPLING_RATE_HZ*WINDOW_LENGTH_SECONDS),
+                                masking = True,
+                                trim_args = (5,None)
+                            )
+
+                            if X_test is None \
+                                or X_test.size == 0 \
+                                    or Y_test is None or Y_test.size == 0:
+                                continue
+                            
+                            estimator = sklearn.linear_model.RidgeCV(cv=5, )
+                            model = estimator.fit(X_train,Y_train)
+                            Y_hat = estimator.predict(X_test)
+                            r = np.corrcoef(Y_test.T,Y_hat.T)[0,1]
+                            for key, values in zip(
+                                ['subject','session','task','run','ts_CAPS','pearson_r'],
+                                [test_key[0],
+                                 test_key[1],
+                                 test_key[2],
+                                 test_key[3],
+                                 cap,
+                                 r]):
+                                r_data_for_df[key].append(values)
+                            
+                        except Exception as e:
+                            raise e
+                            #print(e)
+                            #continue
+    df_pearson_r = pd.DataFrame(r_data_for_df)
+    df_pearson_r.to_csv(f'corr_{tasks[0]}.csv')
 # %%

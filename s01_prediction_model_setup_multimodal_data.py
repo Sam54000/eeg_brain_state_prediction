@@ -32,7 +32,7 @@ PREDHZ = np.round(TR_PERIOD_DIVIDING/TR_PERIOD, 1)
 
 #2.1/8 = 0.2625
 
-base_out_dir = os.path.join(base_dir,'data_prep', 'prediction_model_data_eeg_features_v2')
+base_out_dir = os.path.join(base_dir,'data_prep', 'prediction_model_data_eeg_features_checker')
 
 out_dir = os.path.join(base_out_dir, f"group_data_Hz-{PREDHZ}")
 if not os.path.exists(out_dir):
@@ -48,23 +48,23 @@ subjects = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11',
             '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22']
 sessions = [ '01', '02' ]
 tasks = [
-    'tp_run-01',
-    'tp_run-02', 
-    'dme_run-01',
-    'dme_run-02',
-    'dmh_run-01',
-    'dmh_run-02',
-    'monkey1_run-01',
-    'monkey1_run-02',
-    'monkey2_run-01',
-    'monkey2_run-02', 
-    'monkey5_run-01', 
-    'monkey5_run-02',
+    #'tp_run-01',
+    #'tp_run-02', 
+    #'dme_run-01',
+    #'dme_run-02',
+    #'dmh_run-01',
+    #'dmh_run-02',
+    #'monkey1_run-01',
+    #'monkey1_run-02',
+    #'monkey2_run-01',
+    #'monkey2_run-02', 
+    #'monkey5_run-01', 
+    #'monkey5_run-02',
     'checker_run-01',
-    'checker_run-02',
-    'rest_run-01',
-    'rest_run-02', 
-    'inscapes_run-01'
+    #'checker_run-02',
+    #'rest_run-01',
+    #'rest_run-02', 
+    #'inscapes_run-01'
     ]
 bstate = 'cap_ts' # 'pca_cap_ts'
 
@@ -99,12 +99,13 @@ for sub in subjects:
             # check if EEG or fMRI data exists
             
             try:
-                data_exist, existing_state_dict = hf.data_exists(sub, 
+                _, existing_state_dict = hf.data_exists(sub, 
                                             ses, 
                                             task, 
                                             fmri_data_dir= fmri_data_dir,
                                             eyetrack_data_dir=eyetrack_data_dir, 
-                                            #eeg_proc_data_dir=eeg_proc_data_dir,
+                                            eeg_proc_data_dir=eeg_proc_data_dir,
+                                            #respiration_data_dir=respiration_data_dir,
                                             verbose = True
                                             )
                 data_keys_dict = {
@@ -118,11 +119,6 @@ for sub in subjects:
                                          ignore_index=True)
                 
                 i += 1
-                #if not ( has_eeg & has_fmri & has_pd & has_resp ):
-
-                #    print("---> not all features <---")
-                #    continue
-                
                 # ----------------------------------------------------------------------------
                 # FMRI DATA
 
@@ -133,7 +129,11 @@ for sub in subjects:
                                                              TR_PERIOD)
 
                 print(type(brainstate_data))
-                if data_exist and isinstance(brainstate_data, pd.DataFrame):
+                if existing_state_dict['brainstates_data'] and \
+                   existing_state_dict['pupil_data'] and \
+                   isinstance(brainstate_data, pd.DataFrame) and\
+                    existing_state_dict.get('eeg_data',False):
+                       
                     resampled_time = hf.resample_time(brainstate_data['time'].values,
                                                     tr_value=TR_PERIOD,
                                                     resampling_factor=TR_PERIOD_DIVIDING)
@@ -164,6 +164,18 @@ for sub in subjects:
                                                         resampling_factor=TR_PERIOD_DIVIDING)
                     pupil_data_resampled = hf.resample_data(pupil_data, 
                                                             time_resampled=resampled_time_et)
+                    
+                    pupil_data_resampled['first_derivative'] = np.diff(
+                        pupil_data_resampled['pupil_size'].values, 
+                        prepend=pupil_data_resampled['pupil_size'].values[0]
+                        )
+                    
+                    pupil_data_resampled['second_derivative'] = np.diff(
+                        pupil_data_resampled['pupil_size'].values, 
+                        n=2, 
+                        prepend=pupil_data_resampled['pupil_size'].values[:2]
+                        )
+                    
                     eyetrack_dict =  hf.dataframe_to_dict(
                         pupil_data_resampled,
                         column_names=[col for col in pupil_data_resampled.columns 
@@ -172,10 +184,13 @@ for sub in subjects:
                         info = 'Pupil data'
                     )
                     eyetrack_dict.update({'mask': pupil_data_resampled['tmask'].values})
+
+                    
                     multimodal_data_dict['pupil'] = eyetrack_dict
                 
                 # ----------------------------------------------------------------------------
                 # RESPIRATION DATA
+                if existing_state_dict.get('respiration_data', False):
                     if (task[:2]=='tp'):
                         bstask = task
                     else:
@@ -201,38 +216,42 @@ for sub in subjects:
                     })
                     multimodal_data_dict['respiration'] = respiration_data_dict
                     # change the column name StdDev_6s to respiration
-
                 # ----------------------------------------------------------------------------
                 # EEG DATA
-#                    sub_dir_eeg = os.path.join(eeg_proc_data_dir, f"sub-{sub}", f"ses-{ses}", "eeg")
-#                    eeg_features = {
-#                        'EEGbandsEnvelopes': None,
-#                        'CustomEnvelopes': None,
-#                        'MorletTFR': None
-#                    }
-#                    if (task[:2]=='tp'):
-#                        bstask = task
-#                    else:
-#                        bstask = task[:(len(task)-7)]
-#                    
-#                    for key in eeg_features.keys():
-#                        filename = os.path.join(
-#                            sub_dir_eeg, 
-#                            f"sub-{sub}_ses-{ses}_task-{task}_desc-{key}BlinksRemoved_eeg.pkl")
-#                        
-#                        data = np.load(filename, allow_pickle=True)
-#                        resampled_eeg_time = hf.resample_time(
-#                            data['time'],
-#                            tr_value = TR_PERIOD,
-#                            resampling_factor = TR_PERIOD_DIVIDING
-#                            
-#                        )
-#                        eeg_features[key] = hf.resample_eeg_features(data, 
-#                                                                    resampled_eeg_time,
-#                                                                    verbose = True)
-#
-#                    multimodal_data_dict|= eeg_features
+                if  existing_state_dict['brainstates_data'] and \
+                   existing_state_dict['pupil_data'] and \
+                   isinstance(brainstate_data, pd.DataFrame) and\
+                    existing_state_dict.get('eeg_data',False):
+                    sub_dir_eeg = os.path.join(eeg_proc_data_dir, f"sub-{sub}", f"ses-{ses}", "eeg")
+                    eeg_features = {
+                        'EEGbandsEnvelopes': None,
+                        'CustomEnvelopes': None,
+                        'MorletTFR': None
+                    }
+                    if (task[:2]=='tp'):
+                        bstask = task
+                    else:
+                        bstask = task[:(len(task)-7)]
+                    
+                    for key in eeg_features.keys():
+                        filename = os.path.join(
+                            sub_dir_eeg, 
+                            f"sub-{sub}_ses-{ses}_task-{task}_desc-{key}BlinksRemoved_eeg.pkl")
+                        
+                        data = np.load(filename, allow_pickle=True)
+                        resampled_eeg_time = hf.resample_time(
+                            data['time'],
+                            tr_value = TR_PERIOD,
+                            resampling_factor = TR_PERIOD_DIVIDING
+                            
+                        )
+                        eeg_features[key] = hf.resample_eeg_features(data, 
+                                                                    resampled_eeg_time,
+                                                                    verbose = True)
 
+                    multimodal_data_dict|= eeg_features
+
+                if all(existing_state_dict.values()):
                     end_times = []
                     print("\n")
                     for data_name, data in multimodal_data_dict.items():
@@ -271,9 +290,6 @@ for sub in subjects:
                     with open(saving_name, "wb") as file:
                         pickle.dump( multimodal_data_dict, file)
                         
-                else:
-                    print('data not found')
-            
             except Exception as e:
                 #raise e
                 print(f"Error sub-{sub}_ses-{ses}_task-{task}: {e}")

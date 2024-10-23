@@ -357,7 +357,7 @@ def data_exists(sub: str,
     
     if brainstates_data:
         caps_ts_file = os.path.join(fmri_data_dir, 'cap_ts', basename + ".txt")
-        existing_states['caps_ts_file'] = os.path.exists(caps_ts_file)
+        existing_states['brainstates_data'] = os.path.exists(caps_ts_file)
 
         if verbose:
             print(caps_ts_file)
@@ -371,7 +371,7 @@ def data_exists(sub: str,
     if eeg_proc_data_dir:
         eeg_data = os.path.join(eeg_proc_data_dir, f"sub-{sub}", f"ses-{ses}", "eeg", f"sub-{sub}_ses-{ses}_task-{task}_desc-EEGbandsEnvelopesBlinksRemoved_eeg.pkl")
         #eeg_data = os.path.join(eeg_proc_data_dir, f"sub-{sub}_ses-{ses}_task-{task}_eeg.edf")
-        existing_states['eeg_proc_data_dir'] = os.path.exists(eeg_data)
+        existing_states['eeg_data'] = os.path.exists(eeg_data)
 
         if verbose:
             print(f"eeg data exists - {os.path.exists(eeg_data)}")
@@ -384,14 +384,14 @@ def data_exists(sub: str,
         eyetrack_data = os.path.join(
             eyetrack_data_dir, 
             f"sub-{sub}_ses-{ses}_task-{task}_eyelink-pupil-eye-position.tsv") #!! TO MODIFY
-        existing_states['eyetrack_data_dir'] = os.path.exists(eyetrack_data)
+        existing_states['pupil_data'] = os.path.exists(eyetrack_data)
 
         if verbose:
             print(f"pupil data exists - {os.path.exists(eyetrack_data)}")
     
     if respiration_data_dir:
         respiration_data = os.path.join(respiration_data_dir, f"sub-{sub}_ses-{ses}_task-{bstask}_resp_stdevs.csv")
-        existing_states['respiration_data_dir'] = os.path.exists(respiration_data)
+        existing_states['respiration_data'] = os.path.exists(respiration_data)
 
         if verbose:
             print(f"respiration data exists - {os.path.exists(respiration_data)}")
