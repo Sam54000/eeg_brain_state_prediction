@@ -33,6 +33,7 @@ def xcorr_with_ttest(subject_list: list,
                      run: str,
                      cap_name: str,
                      sampling_rate: str,
+                     nb_features = 5,
                      ):
     """ Returns dictionary of t-tested cross correlations. 
     Returns dictionary of t-tested cross correlations for a given list of 
@@ -59,10 +60,13 @@ def xcorr_with_ttest(subject_list: list,
     band_list = ["delta","theta","alpha","beta","gamma"]
 
     #initialize dictionary to hold t-tested xcorrs
-    dict_xcorr_t = dict()
 
+    pupil_analysis_list = ["PD","PD-firstder","PD-secondder"]
+    pupil_analysis_keys = ["pupil_dilation","first_derivative","second_derivative"]
+    chan_populating_list = list()
     #iterate over channel-band combos
     for channel in channel_list:
+        band_populating_list = list()
         for band in band_list:
             #create label to be used for dict_xcorr_t keys
             channel_band = f"{channel}-{band}"
@@ -74,38 +78,20 @@ def xcorr_with_ttest(subject_list: list,
                 f"task-{task}_{cap_name}_{channel}-{band}-raw_xcorr-full.csv")
             try:
                 df_ts = pd.read_csv(ts_path)
+                sub_idx_in_df = [col for col in df_ts.columns
+                                 if col.split('_')[0] in subject_list]
+                selection = df_ts[sub_idx_in_df]
             except Exception as e:
-                #raise e
+                raise e
                 continue
+            band_populating_list.append(selection.to_numpy().T)
+        
+        bands_array = np.stack(band_populating_list,axis = 2)
+        chan_populating_list.append(bands_array)
+    chan_array = np.stack(chan_populating_list,axis = 1)
 
-            #iterate over subjects to create abridged dataframe
-            ts_dict_abrgd = dict()
-
-            for subject in subject_list:
-                for session in sessions:
-                    try:
-                        ts_dict_abrgd[f"{subject}_ses-{session}_run-{run}"] = df_ts[f"{subject}_ses-{session}"]
-                    except Exception as e:
-                        #raise e
-                        continue
-            
-            df_ts_abrgd = pd.DataFrame(ts_dict_abrgd)
-
-            #t-test abridged dataframe
-            t_series = np.zeros(df_ts_abrgd.shape[0])
-            for index, row in df_ts_abrgd.iterrows():
-                t_stat, p_val = scipy.stats.ttest_1samp(row, popmean=0)
-                t_series[index] = t_stat
-
-            #add to master t-stat dictionary
-            dict_xcorr_t[channel_band] = t_series
-
-
-    #now CAPxPD!
-    pupil_analysis_list = ["PD","PD-firstder","PD-secondder"]
-    pupil_analysis_keys = ["pupil_dilation","first_derivative","second_derivative"]
-
-    for pupil_analysis, pupil_key in zip(pupil_analysis_list, pupil_analysis_keys): 
+    pupil_populating_list = list()
+    for pupil_analysis in pupil_analysis_list: 
         #open group data
         ts_path = os.path.join(
             pupil_files_path,
@@ -113,93 +99,50 @@ def xcorr_with_ttest(subject_list: list,
             f"task-{task}_{cap_name}_{pupil_analysis}_xcorr-full.csv")
         try:
             df_ts = pd.read_csv(ts_path)
+            selection = df_ts[sub_idx_in_df]
             #open xcorr dataframe
         except Exception as e:
             #raise e
             continue   
 
-        #iterate over subjects to create abridged dataframe
-        ts_dict_abrgd = dict()
+        pupil_populating_list.append(selection.to_numpy().T)
+    pupil_array = np.stack(pupil_populating_list, axis = 1)
+    pupil_array = np.expand_dims(pupil_array, axis = 3)
+    pupil_array = np.repeat(pupil_array, 5, axis = -1)
+    assembled_array = np.concatenate([chan_array, pupil_array], axis = 1)
+    t_stat, _ = scipy.stats.ttest_1samp(assembled_array, popmean=0, axis = 0)
 
-        for subject in subject_list:
-            for session in sessions:
-                try:
-                    ts_dict_abrgd[f"{subject}_ses-{session}_run-{run}"] = df_ts[f"{subject}_ses-{session}"]
-                except Exception as e:
-                    #raise e
-                    continue
+    channel_list = channel_list + pupil_analysis_keys
+    t_stat[~ np.isfinite(t_stat)] = np.nan
+    max_array = np.nanmax(t_stat,axis = 1)
+    sorted_array = np.argsort(max_array, axis = None)[::-1]
+    index_matrix = np.stack(np.unravel_index(sorted_array,max_array.shape), axis = 0)
+    #for channel, band in 
+    dict_xcorr_t = dict()
+
+    for pupil_index in [61,62,63]:
+        idx = np.where(index_matrix[0,:] == pupil_index)[0][1:]
+        index_matrix = np.delete(index_matrix,idx, axis = 1)
+    
+    if any(index_matrix[0,:nb_features] >= 61):
+        dict_xcorr_t['pupil'] = list()
+    if any(index_matrix[0,:nb_features] < 61):
+        dict_xcorr_t['EEGbandsEnvelopes'] = {
+            'channel' : list(),
+            'band' : list()
+        } 
+    for feat_idx in range(nb_features):
+        chan, band = (channel_list[index_matrix[0,feat_idx]] ,
+                      band_list[index_matrix[1, feat_idx]])
         
-        df_ts_abrgd = pd.DataFrame(ts_dict_abrgd)
-
-        #t-test abridged dataframe
-        t_series = np.zeros(df_ts_abrgd.shape[0])
-        for index, row in df_ts_abrgd.iterrows():
-            t_stat, p_val = scipy.stats.ttest_1samp(row, popmean=0)
-            t_series[index] = t_stat
-
-        #add to master t-stat dictionary
-        dict_xcorr_t[pupil_key] = t_series
-    
-    return dict_xcorr_t
-
-def select_feature(dict_xcorr_t: dict,
-                   nb_features: int = 5) -> dict:
-    abs_max_t = dict()
-    for key, values in dict_xcorr_t.items():
-        abs_max_t[key] = np.max(np.abs(values))
-    
-    sorted_dict = dict(sorted(abs_max_t.items(), 
-                              key=lambda item: item[1], 
-                              reverse=True)
-    )
-    
-    return list(sorted_dict.keys())[:nb_features]
-
-def format_features_info(features_info: list):
-    output_info = {"EEGbandsEnvelopes":{
-        "channel":list(),
-        "band":list()
-    },
-                   "pupil":list()
-    }
-    
-    for feature_info in features_info:
-        if "pupil" in feature_info or "derivative" in feature_info:
-           output_info["pupil"].append(feature_info)
-           
+        if index_matrix[0,feat_idx] >= 61:
+            dict_xcorr_t['pupil'].append(chan)
         else:
-            channel, band = feature_info.split('-')
-            output_info["EEGbandsEnvelopes"]["channel"].append(channel)
-            output_info["EEGbandsEnvelopes"]["band"].append(band)
-    
-    
-    
-    return {key: value for key, value in output_info.items() if value}
+            dict_xcorr_t['EEGbandsEnvelopes']['channel'].append(chan)
+            dict_xcorr_t['EEGbandsEnvelopes']['band'].append(band)
+        
+    return dict_xcorr_t       
 
-def main_xcorr(subject_list:list,
-                sessions: list,
-                task: str,
-                run: str,
-                cap_name: str,
-                sampling_rate: str = '3.8-Hz',
-                nb_features: int = 5) -> dict:
-    
-    dict_xcorr_t = xcorr_with_ttest(
-        subject_list=subject_list,
-        eeg_files_path=f'/home/thoppe/fmri-analysis/natview/FMRI-EEG-files/xcorr-data/{task}/cap-band-full-truncated/raw',
-        pupil_files_path = f'/home/thoppe/fmri-analysis/natview/FMRI-PD-files/xcorr-data/{task}',
-        sessions = sessions,
-        task = task,
-        run = run,
-        cap_name = cap_name,
-        sampling_rate=str(sampling_rate))
-    
-    selected_features = select_feature(dict_xcorr_t=dict_xcorr_t,
-                                       nb_features=nb_features)
-    formated_features_info = format_features_info(selected_features)
-    
-    return formated_features_info  
-    
 def splitter(lst: list[str], 
                         test: str,
                         num_combinations: int, 
@@ -1418,9 +1361,10 @@ def Main():
             'tsCAP8'])
 
     runs = ['01']#, '02']
-    tasks = ['checker']#['tp','dme','monkey1','monkey2','monkey5','inscape']
+    tasks = ['checker','rest']#['tp','dme','monkey1','monkey2','monkey5','inscape']
     SAMPLING_RATE_HZ = 3.8
     WINDOW_LENGTH_SECONDS = 10
+    NB_BEST_FEATURES = ''
     sessions = ["01","02"]
 
     big_d = combine_data_from_filename(
@@ -1435,56 +1379,61 @@ def Main():
     channels = np.array(channels).flatten()
 
     subjects = np.array(list(big_d.keys()))
-    feat_args = {"pupil":["pupil_dilation","first_derivative","second_derivative"],
+    #feat_args = {"pupil":["pupil_dilation","first_derivative","second_derivative"],
     #            "EEGbandsEnvelopes":{
     #                "channel": channels,#["Fp1", "O2"],
     #                "band": bands#["delta","alpha"]
     #            }
-    }
+    #}
     r_data_for_df = {
-        #'iteration':[],
+                    'iteration':[],
                     'subject':[],
                     'session':[],
                     'run': [],
                     'task': [],
                     'ts_CAPS':[],
-                    'pearson_r':[]}
-
+                    'pearson_r':[],
+                    'eye_features': [],
+                    'eeg_features_channel': [],
+                    'eeg_features_band': []}
 
     for task in tasks:
-        for run in runs:
-            for subject in subjects:
-                all_possible_keys = generate_key_list(
-                    subjects=list(subjects),
-                    sessions = sessions,
-                    tasks = [task],
-                    runs = [run],
-                    big_data = big_d
-                )
-                if all_possible_keys.size == 0:
-                    continue
-                training_subjects, feature_subjects = splitter(
-                    list(subjects),
-                    test=subject,
-                    num_combinations=10,
-                )
-                i = 0    
-                for feature_subject_list, training_subject_list in zip(
-                    feature_subjects, training_subjects):
-                    i += 1
+        for nb_best_features in range(1,65):
+            for run in runs:
+                for subject in subjects:
+                    all_possible_keys = generate_key_list(
+                        subjects=list(subjects),
+                        sessions = sessions,
+                        tasks = [task],
+                        runs = [run],
+                        big_data = big_d
+                    )
+                    if all_possible_keys.size == 0:
+                        continue
+                    training_subjects, feature_subjects = splitter(
+                        list(subjects),
+                        test=subject,
+                        num_combinations=10,
+                    )
+                    i = 0    
+                    for feature_subject_list, training_subject_list in zip(
+                        feature_subjects, training_subjects):
+                        i += 1
                     for cap in caps:
-                #        feat_args = main_xcorr(
-                #            subject_list= feature_subject_list,
-                #            sessions = ['01','02'],
-                #            task = task,
-                #            run = '01',
-                #            cap_name=cap,
-                #            sampling_rate='3.8-Hz',
-                #            nb_features = 3
-                #        )
+                        feat_args = xcorr_with_ttest(
+                            subject_list= feature_subject_list,
+                            eeg_files_path=f'/home/thoppe/fmri-analysis/natview/FMRI-EEG-files/xcorr-data/{task}/cap-band-full-truncated/raw',
+                            pupil_files_path = f'/home/thoppe/fmri-analysis/natview/FMRI-PD-files/xcorr-data/{task}',
+                            sessions = ['01','02'],
+                            task = task,
+                            run = '01',
+                            cap_name=cap,
+                            sampling_rate='3.8-Hz',
+                            nb_features = nb_best_features
+                        )
 
                         train_keys, test_keys = generate_train_test_keys(
-                            train_subjects=training_subject_list,
+                            train_subjects=subjects,#training_subject_list,
                             test_subjects=subject,
                             key_list=all_possible_keys,
                         )
@@ -1512,24 +1461,31 @@ def Main():
                                 estimator.fit(X_train,Y_train)
                                 Y_hat = estimator.predict(X_test)
                                 r = np.corrcoef(Y_test.T,Y_hat.T)[0,1]
+                                eeg_features = feat_args.get('EEGbandsEnvelopes', False)
                                 for key, values in zip(
                                     [
-    #                                    'iteration',
+                                        'iteration',
                                         'subject',
                                         'session',
                                         'task',
                                         'run',
                                         'ts_CAPS',
                                         'pearson_r',
+                                        'eye_features',
+                                        'eeg_features_channel',
+                                        'eeg_features_band',
                                         ],
                                     [
-    #                                    i,
+                                        i,
                                         test_key[0],
                                         test_key[1],
                                         test_key[2],
                                         test_key[3],
                                         cap,
-                                        r
+                                        r,
+                                        feat_args.get('pupil', 'NA'),
+                                        eeg_features['channel'] if eeg_features else 'NA',
+                                        eeg_features['band'] if eeg_features else 'NA',
                                     ]):
                                     r_data_for_df[key].append(values)
                                 
@@ -1537,8 +1493,9 @@ def Main():
                                 #raise e
                                 print(e)
                                 continue
-    df_pearson_r = pd.DataFrame(r_data_for_df)
-    df_pearson_r.to_csv(f'nested-like_{tasks[0]}.csv')
+            df_pearson_r = pd.DataFrame(r_data_for_df)
+            df_pearson_r.to_csv(f'nested_CV_{task}_{nb_best_features}_ft.csv')
+            #df_pearson_r.to_csv(f'ALL_{tasks[0]}.csv')
 
 if __name__ == "__main__":
     Main()

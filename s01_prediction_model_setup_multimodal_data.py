@@ -60,9 +60,9 @@ tasks = [
     #'monkey2_run-02', 
     #'monkey5_run-01', 
     #'monkey5_run-02',
-    'checker_run-01',
+    #'checker_run-01',
     #'checker_run-02',
-    #'rest_run-01',
+    'rest_run-01',
     #'rest_run-02', 
     #'inscapes_run-01'
     ]
