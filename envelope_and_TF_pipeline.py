@@ -244,6 +244,13 @@ class EEGfeatures:
                                             return_time = True)
     
 
+    def extract_raw(self) -> 'EEGfeatures':
+        self.time = self.raw.copy().crop(*self.croping_values).times
+        self.feature = self.raw.copy().crop(*self.croping_values).get_data()
+        self.frequencies = None
+        self.feature_info = "Raw EEG signal"
+        return self
+
     def _extract_envelope(self, frequencies: list[tuple[float,float]])-> 'EEGfeatures':
         temp_envelopes_list = list()
         for band in frequencies:
@@ -426,9 +433,9 @@ def individual_process(filename: str,
             
 
     process_file_desc_pairs = {
-        'run_wavelets': 'MorletTFR',
+        'extract_raw': 'raw',
         'extract_eeg_band_envelope': 'EEGbandsEnvelopes',
-        'extract_custom_band_envelope': 'CustomEnvelopes'
+        #'extract_custom_band_envelope': 'CustomEnvelopes'
     }
 
     for process, file_description in process_file_desc_pairs.items():
