@@ -1,10 +1,14 @@
 #%%
 import shutil
 from pathlib import Path
-source_directory = Path('/home/thoppe/physio-analysis/resp-analysis/resp_stdevs')
-modality = 'respiration'
+from glob import glob
+source_directory = Path('/projects/EEG_FMRI/bids_eeg/BIDS/NEW/DERIVATIVES/eeg_features_extraction/third_run')
+files = glob(f"{source_directory}/*/*/eeg/*desc-rawBlinksRemoved_eeg.pkl")
+modality = 'eeg'
 target_directory = Path('/data2/Projects/eeg_fmri_natview/derivatives/')
-for file in source_directory.iterdir():
+#%%
+for file in files:
+    file = Path(file)
     if file.is_file():
         file_parts = file.stem.split('_')
         subject = file_parts[0]
