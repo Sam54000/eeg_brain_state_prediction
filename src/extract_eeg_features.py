@@ -26,6 +26,9 @@
 This pipeline is used in the project of brain state prediction from EEG data in
 collaboration with John Hopkins University. It is used to extract the envelope 
 of the EEG signal and the time-frequency representation of the signal.
+
+Rule: EEG should always be a 3D array where the first dimension is the channels
+the second dimension is the time and the third dimension the frequencies.
 """
 import os
 nthreads = "32" 
@@ -247,10 +250,26 @@ class EEGfeatures:
     def extract_raw(self) -> 'EEGfeatures':
         self.time = self.raw.copy().crop(*self.croping_values).times
         self.feature = self.raw.copy().crop(*self.croping_values).get_data()
+        self.feature = np.expand_dims(self.feature, axis = 2)
         self.frequencies = None
         self.feature_info = "Raw EEG signal"
         return self
-
+    
+    def extract_gfp(self) -> 'EEGfeatures':
+        self.time = self.raw.copy().crop(*self.croping_values).times
+        self.feature = np.expand_dims(
+                np.var(
+                    self.raw.copy().crop(*self.croping_values).get_data(),
+                    axis = 0
+                ),
+                axis = 0
+        )
+        self.feature = np.expand_dims(self.feature, axis = 2)
+        
+        self.frequencies = None
+        self.feature_info = "GFP of EEG signal"
+        return self
+            
     def _extract_envelope(self, frequencies: list[tuple[float,float]])-> 'EEGfeatures':
         temp_envelopes_list = list()
         for band in frequencies:
@@ -434,6 +453,7 @@ def individual_process(filename: str,
 
     process_file_desc_pairs = {
         'extract_raw': 'raw',
+        'extract_gfp': 'gfp',
         'extract_eeg_band_envelope': 'EEGbandsEnvelopes',
         #'extract_custom_band_envelope': 'CustomEnvelopes'
     }

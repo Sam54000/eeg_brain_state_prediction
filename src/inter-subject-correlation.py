@@ -1,152 +1,464 @@
 import numpy as np
-from scipy.linalg import eigh
-from timeit import default_timer
+from scipy import linalg as sp_linalg
+from scipy import diag as sp_diag
+
+def calc_corrca(data: np.ndarray, 
+                times: np.ndarray, 
+                parameters: dict):
+    """ Calculate Correlated Component Analysis (CorrCA).
 
 
-def train_cca(data):
-    """Run Correlated Component Analysis on your training data.
+    Args:
+        data (np.ndarray): Array of shape (n_subjects, n_channels, n_times)
+                           representing the EEG signal data across subjects.
+        times (np.ndarray): Array of shape (n_times,) representing time points 
+                            corresponding to the data.
+        parameters (dict): Additional parameters for the analysis. 
 
-        Parameters:
-        ----------
-        data : dict
-            Dictionary with keys are names of conditions and values are numpy
-            arrays structured like (subjects, channels, samples).
-            The number of channels must be the same between all conditions!
+    Returns:
+        np.ndarray: **W** in the shape of (n_channels, n_components) wich is the 
+                        backward model (signal to components)
 
-        Returns:
-        -------
-        W : np.array
-            Columns are spatial filters. They are sorted in descending order, it means that first column-vector maximize
-            correlation the most.
-        ISC : np.array
-            Inter-subject correlation sorted in descending order
+        np.ndarray: **ISC** array of shape (n_components,) representing 
+                          the inter-subject correlation values.
 
+        A (np.ndarray): array of shape (n_channels, n_components) representing 
+                        the forward model (components to signal).
+
+        Y (np.ndarray): array of shape (n_subjects, n_components, n_times)
+                        representing the transformed signal within the response 
+                        window.
+
+        Yfull (np.ndarray): array of shape (n_subjects, n_components, n_times)
+                            representing transformed signal for the entire epoch 
+                            duration.
+
+        ISC_thr (float): Threshold for inter-subject correlation values based on 
+                         surrogate data.
+    
+    The format parameters is::
+        
+        response_window (tuple[float, float]): Start and end time for the 
+            response window.
+        gamma (float): Regularization parameter for the within-subject 
+            covariance matrix.
+        K (int): Number of components to retain.
+        n_surrogates (int): Number of surrogate datasets to use for 
+            statistical testing.
+        alpha (float): Significance level for statistical testing.
+        stats (bool): Whether to calculate statistics.
+      
     """
+    ini_ix = time2ix(times, parameters['response_window'][0])
+    end_ix = time2ix(times, parameters['response_window'][1])
+    X = np.array(data)[..., ini_ix : end_ix]
 
-    start = default_timer()
+    W, ISC, A = fit(X, gamma= parameters['gamma'], k= parameters['K'])
 
-    C = len(data.keys())
-    print(f'train_cca - calculations started. There are {C} conditions')
+    n_components = W.shape[1]
+    if stats:
+        print('Calculating statistics...')
+        ISC_thr, ISC_null = stats(X, parameters['gamma'], parameters['K'], parameters['n_surrogates'], parameters['alpha'])
+        n_components = sum(ISC > ISC_thr)
+        W, ISC, A = W[:, :n_components], ISC[:n_components], A[:, :n_components]
+        
+    Y = transform(X, W)
+    Yfull = transform(np.array(data), W)
+    output = {
+        'W': W,
+        'ISC': ISC,
+        'A': A,
+        'Y': Y,
+        'Yfull': Yfull,
+        'ISC_thr': ISC_thr
+    }
+    return output
 
-    gamma = 0.1
-    Rw, Rb = 0, 0
-    for cond in data.values():
-        N, D, T, = cond.shape
-        print(f'Condition has {N} subjects, {D} sensors and {T} samples')
-        cond = cond.reshape(D * N, T)
+##################
+# MAIN FUNCTIONS #
+##################
+def fit(X, version=2, gamma=0, k=None):
+    '''
+    Correlated Component Analysis (CorrCA).
 
-        # Rij
-        Rij = np.swapaxes(np.reshape(np.cov(cond), (N, D, N, D)), 1, 2)
+    Parameters
+    ----------
+    X : ndarray of shape = (n_subj, n_dim, n_times)
+        Signal to calculate CorrCA.
+    k : int,
+        Truncates eigenvalues on the Kth component.
+    gamma : float,
+        Truncates eigenvalues using SVD.
 
-        # Rw
-        Rw = Rw + np.mean([Rij[i, i, :, :]
-                           for i in range(0, N)], axis=0)
+    Returns
+    -------
+    W : ndarray of shape = (n_times, n_components)
+        Backward model (signal to components).
+    ISC : list of floats
+        Inter-subject Correlation values.
+    A : ndarray of shape = (n_times, n_components)
+        Forward model (components to signal).
+    '''
 
-        # Rb
-        Rb = Rb + np.mean([Rij[i, j, :, :]
-                           for i in range(0, N)
-                           for j in range(0, N) if i != j], axis=0)
+    # TODO: implement case 3, tsvd truncation
 
-    # Divide by number of condition
-    Rw, Rb = Rw/C, Rb/C
+    N, D, T = X.shape # subj x dim x times (instead of times x dim x subj)
 
-    # Regularization
-    Rw_reg = (1 - gamma) * Rw + gamma * np.mean(eigh(Rw)[0]) * np.identity(Rw.shape[0])
+    if k is not None: # truncate eigenvalues using SVD
+        gamma = 0
+    else:
+        k = D
 
-    # ISCs and Ws
-    [ISC, W] = eigh(Rb, Rw_reg)
+    # Compute within- (Rw) and between-subject (Rb) covariances
+    if False: # Intuitive but innefficient way to calculate Rb and Rw
+        Xcat = X.reshape((N * D, T)) # T x (D + N) note: dimensions vary first, then subjects
+        Rkl = np.cov(Xcat).reshape((N, D, N, D)).swapaxes(1, 2)
+        Rw = Rkl[range(N), range(N), ...].sum(axis=0) # Sum within subject covariances
+        Rt = Rkl.reshape(N*N, D, D).sum(axis=0)
+        Rb = (Rt - Rw) / (N-1)
 
-    # Make descending order
-    ISC, W = ISC[::-1], W[:, ::-1]
+    # Rw = sum(np.cov(X[n,...]) for n in range(N))
+    # Rt = N**2 * np.cov(X.mean(axis=0))
+    # Rb = (Rt - Rw) / (N-1)
 
-    stop = default_timer()
+    # fix for channel specific bad trial
+    temp = [np.cov(X[n,...]) for n in range(N)]
+    Rw = np.nansum(temp, axis=0)
+    Rt = N**2 * np.cov(np.nanmean(X, axis=0))
+    Rb = (Rt - Rw) / (N-1)
 
-    print(f'Elapsed time: {round(stop - start)} seconds.')
-    return W, ISC
+    rank = np.linalg.matrix_rank(Rw)
+    if rank < D and gamma != 0:
+        print('Warning: data is rank deficient (gamma not used).')
+
+    k = min(k, rank) # handle rank deficient data.
+    if k < D:
+        def regInv(R, k):
+            '''PCA regularized inverse of square symmetric positive definite matrix R.'''
+
+            U, S, Vh = np.linalg.svd(R)
+            invR = U[:, :k].dot(sp_diag(1 / S[:k])).dot(Vh[:k, :])
+            return invR
+
+        invR = regInv(Rw, k)
+        ISC, W = sp_linalg.eig(invR.dot(Rb))
+        ISC, W = ISC[:k], W[:, :k]
+
+    else:
+        Rw_reg = (1-gamma) * Rw + gamma * Rw.diagonal().mean() * np.identity(D)
+        ISC, W = sp_linalg.eig(Rb, Rw_reg) # W is already sorted by eigenvalue and normalized
+
+    ISC = np.diagonal(W.T.dot(Rb).dot(W)) / np.diag(W.T.dot(Rw).dot(W))
+
+    ISC, W = np.real(ISC), np.real(W)
+
+    if k==D:
+        A = Rw.dot(W).dot(sp_linalg.inv(W.T.dot(Rw).dot(W)))
+    else:
+        A = Rw.dot(W).dot(np.diag(1 / np.diag(W.T.dot(Rw).dot(W))))
+
+    return W, ISC, A
+
+def transform(X, W):
+    '''
+    Get CorrCA components from signal(X), e.g. epochs or evoked, using backward model (W).
+
+    Parameters
+    ----------
+    X : ndarray of shape = (n_subj, n_dim, n_times) or (n_dim, n_times)
+        Signal  to transform.
+    W : ndarray of shape = (n_times, n_components)
+        Backward model (signal to components).
+
+    Returns
+    -------
+    Y : ndarray of shape = (n_subj, n_components, n_times) or (n_components, n_times)
+        CorrCA components.
+    '''
+
+    flag = False
+    if X.ndim == 2:
+        flag = True
+        X = X[np.newaxis, ...]
+    N, _, T = X.shape
+    K = W.shape[1]
+    Y = np.zeros((N, K, T))
+    for n in range(N):
+        Y[n, ...] = W.T.dot(X[n, ...])
+    if flag:
+        Y = np.squeeze(Y, axis=0)
+    return Y
+
+def get_ISC(X, W):
+    '''
+    Get ISC values from signal (X) and backward model (W)
+
+    Parameters
+    ----------
+    X : ndarray of shape = (n_subj, n_dim, n_times)
+        Signal to calculate CorrCA.
+    W : ndarray of shape = (n_times, n_components)
+        Backward model (signal to components).
+
+    Returns
+    -------
+    ISC : list of floats
+        Inter-subject Correlation values.
+    '''
+    N, D, T = X.shape
+
+    Rw = sum(np.cov(X[n,...]) for n in range(N))
+    Rt = N**2 * np.cov(X.mean(axis=0))
+    Rb = (Rt - Rw) / (N-1)
+
+    ISC = np.diagonal(W.T.dot(Rb).dot(W)) / np.diag(W.T.dot(Rw).dot(W))
+    return np.real(ISC)
+
+def get_forwardmodel(X, W):
+    '''
+    Get forward model from signal(X) and backward model (W).
+
+    Parameters
+    ----------
+    X : ndarray of shape = (n_subj, n_dim, n_times)
+        Signal  to transform.
+    W : ndarray of shape = (n_times, n_components)
+        Backward model (signal to components).
+
+    Returns
+    -------
+    A : ndarray of shape = (n_times, n_components)
+        Forward model (components to signal).
+    '''
+
+    N, D, T = X.shape # subj x dim x times (instead of times x dim x subj)
+
+    Rw = sum(np.cov(X[n,...]) for n in range(N))
+    Rt = N**2 * np.cov(X.mean(axis=0))
+    Rb = (Rt - Rw) / (N-1)
+
+    k = np.linalg.matrix_rank(Rw)
+    if k==D:
+        A = Rw.dot(W).dot(sp_linalg.inv(W.T.dot(Rw).dot(W)))
+    else:
+        A = Rw.dot(W).dot(np.diag(1 / np.diag(W.T.dot(Rw).dot(W))))
+    return A
+
+def reconstruct(Y, A):
+    '''
+    Reconstruct signal(X) from components (Y) and forward model (A).
+
+    Parameters
+    ----------
+    Y : ndarray of shape = (n_subj, n_components, n_times) or (n_components, n_times)
+        CorrCA components.
+    A : ndarray of shape = (n_times, n_components)
+        Forward model (components to signal).
+
+    Returns
+    -------
+    X : ndarray of shape = (n_subj, n_dim, n_times) or (n_dim, n_times)
+        Signal.
+    '''
+
+    flag = False
+    if Y.ndim == 2:
+        flag = True
+        Y = Y[np.newaxis, ...]
+    N, _, T = Y.shape
+    D = A.shape[0]
+    X = np.zeros((N, D, T))
+    for n in range(N):
+        X[n, ...] = A.dot(Y[n, ...])
+
+    if flag:
+        X = np.squeeze(X, axis=0)
+    return X
+
+def stats(X, gamma=0, k=None, n_surrogates=200, alpha=0.05):
+    '''
+    Compute ISC statistical threshold using circular shift surrogates.
+    Parameters
+    ----------
+    Y : ndarray of shape = (n_subj, n_components, n_times) or (n_components, n_times)
+        CorrCA components.
+    A : ndarray of shape = (n_times, n_components)
+        Forward model (components to signal).
+
+    Returns
+    -------
+    '''
+    ISC_null = []
+    for n in range(n_surrogates):
+        if n%10==0:
+            print('#', end='')
+        surrogate = circular_shift(X)
+        W, ISC, A = fit(surrogate, gamma=gamma, k=k)
+        ISC_null.append(ISC[0]) # get max ISC
+    ISC_null = np.array(ISC_null)
+    thr = np.percentile(ISC_null, (1 - alpha) * 100)
+    print('')
+    return thr, ISC_null
+
+def circular_shift(X):
+    n_reps, n_dims, n_times = X.shape
+    shifts = np.random.choice(range(n_times), n_reps, replace=True)
+    surrogate = np.zeros_like(X)
+    for i in range(n_reps):
+        surrogate[i, ...] = np.roll(X[i, ...], shifts[i], axis=1)
+    return surrogate
+
+def time2ix(times, t):
+    return np.abs(times - t).argmin()
+
+def get_id(params):
+    CCA_id = 'CorrCA_{}_{}'.format(params['response_window'][0], params['response_window'][1])
+    if params['stats']:
+        CCA_id += '_stats_K_{}_surr_{}_alpha_{}_gamma_{}'.format(params['K'], params['n_surrogates'], params['alpha'], params['gamma'])
+    return CCA_id
+
+############
+# PLOTTING #
+############
+def plot_CCA(CCA, plot_trials=True, plot_evk=False, plot_signal=False, collapse=False, xlim=(-0.3,0.6), ylim=(-7,5), norm=True, trials_alpha=0.5, width=10):
+    times = CCA['times']
+    
+    Y = CorrCA.transform(CCA['epochs'], CCA['W'] )
+    Ymean = np.mean(Y, axis=0)
+
+    ISC, A, times, info = CCA['ISC'], CCA['A'], CCA['times'], CCA['info']
+    n_CC = Y.shape[-2]
+
+    n_rows = 2 if plot_signal else 1
+    height = 6 if plot_signal else 0
+    n_rows = 2 if plot_signal else 0
+    height += 12 if collapse else 2.5 * n_CC
+    n_rows += 2 if collapse else n_CC
+    n_cols = n_CC if collapse else 3
+    
+    fig = plt.figure(figsize=(width, height))
+
+    if plot_signal:
+        plot_evoked(CCA['evoked'], CCA['times'], CCA['info'], fig=fig, xlim=xlim, ylim=ylim, norm=norm)
+
+    if CCA['W'].shape[1]!=0:
+        if collapse:
+            gs = fig.add_gridspec(3, min(8, n_CC), top=0.49, hspace=0.5)
+            ax = fig.add_subplot(gs[:2, :])
+            if plot_evk:
+                ax.plot(times, CCA['evoked'].T, color='tab:grey', linewidth=0.3)
+
+            for n in range(n_CC):
+                ax.plot(times, Ymean[n, :], label = 'Component {} - ISC = {:.2f}'.format(n+1, CCA['ISC'][n]), linewidth=1.8)
+
+            ax.legend(loc='lower left')
+            ax.set_xlim(xlim)
+
+            for n in range(min(8, n_CC)):
+                vmax = np.max(np.abs(A))
+                ax2 = fig.add_subplot(gs[2, n])
+                im, cn = mne.viz.plot_topomap(A[:, n], pos=info, axes=ax2, show=False, vmax=vmax, vmin=-vmax)
+                ax2.set_title('Component {}'.format(n+1))
+
+                if n == n_CC-1:
+                    plt.colorbar(im, ax=ax2, fraction=0.04, pad=0.04)
+        else:
+            top = 0.49 if plot_signal else 0.88
+            gs = fig.add_gridspec(n_CC, 3, top=top, hspace=0.3)
+            for i in range(n_CC):
+                ax = fig.add_subplot(gs[i, :2])
+
+                if plot_trials:
+                    ax.plot(times, Y[:, i, :].T, linewidth=0.5, color='tab:blue', alpha=trials_alpha)
+
+                if plot_evk:
+                    ax.plot(times, CCA['evoked'].T, color='tab:grey', linewidth=0.3)
+
+                ax.plot(times, Ymean[i], color='black')
+
+                ax.set_xlim(xlim)
+                ax.set_title('Component {} - ISC = {:.2f}'.format(i+1, ISC[i]))
+
+                ax2 = fig.add_subplot(gs[i, 2])
+                im, cn = mne.viz.plot_topomap(A[:, i], pos=info, axes=ax2, show=False)
+
+        return fig
 
 
-def apply_cca(X, W, fs):
-    """Applying precomputed spatial filters to your data.
 
-        Parameters:
-        ----------
-        X : ndarray
-            3-D numpy array structured like (subject, channel, sample)
-        W : ndarray
-            Spatial filters.
-        fs : int
-            Frequency sampling.
-        Returns:
-        -------
-        ISC : ndarray
-            Inter-subject correlations values are sorted in descending order.
-        ISC_persecond : ndarray
-            Inter-subject correlations values per second where first row is the most correlated.
-        ISC_bysubject : ndarray
-            Description goes here.
-        A : ndarray
-            Scalp projections of ISC.
-    """
+# Translation of original matlab function by Parra
+def CorrCA_matlab(X, W=None, version=2, gamma=0, k=None):
+    '''
+    Correlated Component Analysis.
 
-    start = default_timer()
-    print('apply_cca - calculations started')
+    Parameters
+    ----------
+    X : array, shape (n_subj, n_dim, n_times)
+    k : int,
+        Truncates eigenvalues on the Kth component.
 
-    subjects, channels, samples = X.shape
-    # gamma = 0.1
-    window_sec = 5
-    X = X.reshape(channels * subjects, samples)
+    Returns
+    -------
+    W
+    ISC
+    Y
+    A
+    '''
 
-    # Rij
-    Rij = np.swapaxes(np.reshape(np.cov(X), (subjects, channels, subjects, channels)), 1, 2)
+    # TODO: implement case 3, tsvd truncation
 
-    # Rw
-    Rw = np.mean([Rij[subject,subject, :, :]
-                  for subject in range(0, subjects)], axis=0)
-    # Rw_reg = (1 - gamma) * Rw + gamma * np.mean(eigh(Rw)[0]) * np.identity(Rw.shape[0])
+    N, D, T = X.shape # subj x dim x times (instead of times x dim x subj)
 
-    # Rb
-    Rb = np.mean([Rij[i, j, :, :]
-                  for i in range(0, subjects)
-                  for j in range(0, subjects) if i != j], axis=0)
+    if k is not None: # truncate eigenvalues using SVD
+        gamma = 0
+    else:
+        k = D
 
-    # ISCs
-    ISC = np.sort(np.diag(np.transpose(W) @ Rb @ W) / np.diag(np.transpose(W) @ Rw @ W))[::-1]
+    # Compute within- and between-subject covariances
+    if version == 1:
+        Xcat = X.reshape((N * D, T)) # T x (D + N) note: dimensions vary first, then subjects
+        Rkl = np.cov(Xcat).reshape((N, D, N, D)).swapaxes(1, 2)
+        Rw = Rkl[range(N), range(N), ...].sum(axis=0) # Sum within subject covariances
+        Rt = Rkl.reshape(N*N, D, D).sum(axis=0)
+        Rb = (Rt - Rw) / (N-1)
 
-    # Scalp projections
-    A = np.linalg.solve(Rw @ W, np.transpose(W) @ Rw @ W)
+    elif version == 2:
+        Rw = sum(np.cov(X[n,...]) for n in range(N))
+        Rt = N**2 * np.cov(X.mean(axis=0))
+        Rb = (Rt - Rw) / (N-1)
 
-    # ISC by subject
-    print('by subject is calculating')
-    ISC_bysubject = np.empty((channels, subjects))
+    elif version == 3:
+        pass
 
-    for subj_k in range(0, subjects):
-        Rw, Rb = 0, 0
-        Rw = np.mean([Rw + 1 / (subjects - 1) * (Rij[subj_k, subj_k, :, :] + Rij[subj_l, subj_l, :, :])
-                      for subj_l in range(0, subjects) if subj_k != subj_l], axis=0)
-        Rb = np.mean([Rb + 1 / (subjects - 1) * (Rij[subj_k, subj_l, :, :] + Rij[subj_l, subj_k, :, :])
-                      for subj_l in range(0, subjects) if subj_k != subj_l], axis=0)
+    if W is None:
+        k = min(k, np.linalg.matrix_rank(Rw)) # handle rank deficient data.
+        if k < D:
+            def regInv(R, k):
+                '''PCA regularized inverse of square symmetric positive definite matrix R.'''
 
-        ISC_bysubject[:, subj_k] = np.diag(np.transpose(W) @ Rb @ W) / np.diag(np.transpose(W) @ Rw @ W)
+                U, S, Vh = np.linalg.svd(R)
+                invR = U[:, :k].dot(sp_diag(1 / S[:k])).dot(Vh[:k, :])
+                return invR
 
-    # ISC per second
-    print('by persecond is calculating')
-    ISC_persecond = np.empty((channels, int(samples / fs) + 1))
-    window_i = 0
+            invR = regInv(Rw, k)
+            ISC, W = sp_linalg.eig(invR.dot(Rb))
+            ISC, W = ISC[:k], W[:, :k]
 
-    for t in range(0, samples, fs):
+        else:
+            Rw_reg = (1-gamma) * Rw + gamma * Rw.diagonal().mean() * np.identity(D)
+            ISC, W = sp_linalg.eig(Rb, Rw_reg) # W is already sorted by eigenvalue and normalized
 
-        Xt = X[:, t:t+window_sec*fs]
-        Rij = np.cov(Xt)
-        Rw = np.mean([Rij[i:i + channels, i:i + channels]
-                      for i in range(0, channels * subjects, channels)], axis=0)
-        Rb = np.mean([Rij[i:i + channels, j:j + channels]
-                      for i in range(0, channels * subjects, channels)
-                      for j in range(0, channels * subjects, channels) if i != j], axis=0)
+    ISC = np.diagonal(W.T.dot(Rb).dot(W)) / np.diag(W.T.dot(Rw).dot(W))
 
-        ISC_persecond[:, window_i] = np.diag(np.transpose(W) @ Rb @ W) / np.diag(np.transpose(W) @ Rw @ W)
-        window_i += 1
+    ISC, W = np.real(ISC), np.real(W)
 
-    stop = default_timer()
-    print(f'Elapsed time: {round(stop - start)} seconds.')
+    Y = np.zeros((N, k, T))
+    for n in range(N):
+        Y[n, ...] = W.T.dot(X[n, ...])
 
-    return ISC, ISC_persecond, ISC_bysubject, A
+    if k==D:
+        A = Rw.dot(W).dot(sp_linalg.inv(W.T.dot(Rw).dot(W)))
+    else:
+        A = Rw.dot(W).dot(np.diag(1 / np.diag(W.T.dot(Rw).dot(W))))
+
+    return W, ISC, Y, A

@@ -1493,7 +1493,7 @@ def Main():
                                     print(e)
                                     continue
             df_pearson_r = pd.DataFrame(r_data_for_df)
-            df_pearson_r.to_csv(f'../data/nested_CV_{task}_{nb_best_features}_ft.csv')
+            df_pearson_r.to_csv(f'/home/slouviot/01_projects/eeg_brain_state_prediction/data/nested_CV_{task}_{nb_best_features}_ft.csv')
             #df_pearson_r.to_csv(f'ALL_{tasks[0]}.csv')
 
 if __name__ == "__main__":
