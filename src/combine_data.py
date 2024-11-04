@@ -748,7 +748,7 @@ def create_X(big_data: dict,
                 )
             )
             
-        if 'pupil' in modality:
+        elif 'pupil' in modality:
             copied_array = array[:,0,:,:].copy()
             pupil_dilation = np.reshape(
                 copied_array,
@@ -779,6 +779,9 @@ def create_X(big_data: dict,
                 selected_feature.append(locals()[value])
             
             selected_feature = np.concatenate(selected_feature,axis=1)
+        
+        else: 
+            selected_feature = array.copy()
             
         features.append(selected_feature)
         
@@ -1380,123 +1383,108 @@ def Main():
     channels = np.array(channels).flatten()
 
     subjects = np.array(list(big_d.keys()))
-    #feat_args = {"pupil":["pupil_dilation","first_derivative","second_derivative"],
-    #            "EEGbandsEnvelopes":{
-    #                "channel": channels,#["Fp1", "O2"],
-    #                "band": bands#["delta","alpha"]
+    feat_args = {"pupil":["pupil_dilation","first_derivative","second_derivative"],
+    #            "gfp":{
+    #                "channel": None,#channels,#["Fp1", "O2"],
+    #                "band": None #bands#["delta","alpha"]
     #            }
-    #}
+    }
 
+    r_data_for_df = {
+                    'iteration':[],
+                    'subject':[],
+                    'session':[],
+                    'run': [],
+                    'task': [],
+                    'ts_CAPS':[],
+                    'pearson_r':[],
+                    'eye_features': [],
+                    'eeg_features_channel': [],
+                    'eeg_features_band': []}
     for task in tasks:
-        for nb_best_features in range(1,65):
-            r_data_for_df = {
-                            'iteration':[],
-                            'subject':[],
-                            'session':[],
-                            'run': [],
-                            'task': [],
-                            'ts_CAPS':[],
-                            'pearson_r':[],
-                            'eye_features': [],
-                            'eeg_features_channel': [],
-                            'eeg_features_band': []}
-            for run in runs:
-                for subject in subjects:
-                    all_possible_keys = generate_key_list(
-                        subjects=list(subjects),
-                        sessions = sessions,
-                        tasks = [task],
-                        runs = [run],
-                        big_data = big_d
+        for run in runs:
+            for subject in subjects:
+                all_possible_keys = generate_key_list(
+                    subjects=list(subjects),
+                    sessions = sessions,
+                    tasks = [task],
+                    runs = [run],
+                    big_data = big_d
+                )
+                if all_possible_keys.size == 0:
+                    continue
+                training_subjects, feature_subjects = splitter(
+                    list(subjects),
+                    test=subject,
+                    num_combinations=10,
+                )
+                i = 0    
+                for cap in caps:
+                    train_keys, test_keys = generate_train_test_keys(
+                        train_subjects=subjects,#training_subject_list,
+                        test_subjects=subject,
+                        key_list=all_possible_keys,
                     )
-                    if all_possible_keys.size == 0:
-                        continue
-                    training_subjects, feature_subjects = splitter(
-                        list(subjects),
-                        test=subject,
-                        num_combinations=10,
-                    )
-                    i = 0    
-                    for feature_subject_list, training_subject_list in zip(
-                        feature_subjects, training_subjects):
-                        i += 1
-                    for cap in caps:
-                        feat_args = xcorr_with_ttest(
-                            subject_list= feature_subject_list,
-                            eeg_files_path=f'/home/thoppe/fmri-analysis/natview/FMRI-EEG-files/xcorr-data/{task}/cap-band-full-truncated/raw',
-                            pupil_files_path = f'/home/thoppe/fmri-analysis/natview/FMRI-PD-files/xcorr-data/{task}',
-                            sessions = ['01','02'],
-                            task = task,
-                            run = '01',
-                            cap_name=cap,
-                            sampling_rate='3.8-Hz',
-                            nb_features = nb_best_features
-                        )
+                    for test_key in test_keys:
+                        print(f"===== {cap} =====")
+                        _, test_session, _, _ = test_key
+                        try:
+                            X_train, Y_train, X_test, Y_test = create_train_test_data(
+                                big_data=big_d,
+                                train_keys=train_keys,
+                                test_keys=test_key[np.newaxis,:],
+                                cap_name = cap,
+                                features_args=feat_args,
+                                window_length=int(SAMPLING_RATE_HZ*WINDOW_LENGTH_SECONDS),
+                                masking = True,
+                                trim_args = (5,None)
+                            )
 
-                        train_keys, test_keys = generate_train_test_keys(
-                            train_subjects=subjects,#training_subject_list,
-                            test_subjects=subject,
-                            key_list=all_possible_keys,
-                        )
-                        for test_key in test_keys:
-                            print(f"===== {cap} =====")
-                            _, test_session, _, _ = test_key
-                            try:
-                                X_train, Y_train, X_test, Y_test = create_train_test_data(
-                                    big_data=big_d,
-                                    train_keys=train_keys,
-                                    test_keys=test_key[np.newaxis,:],
-                                    cap_name = cap,
-                                    features_args=feat_args,
-                                    window_length=int(SAMPLING_RATE_HZ*WINDOW_LENGTH_SECONDS),
-                                    masking = True,
-                                    trim_args = (5,None)
-                                )
-
-                                if X_test is None \
-                                    or X_test.size == 0 \
-                                        or Y_test is None or Y_test.size == 0:
-                                    continue
-                                
-                                estimator = sklearn.linear_model.RidgeCV(cv=5, )
-                                estimator.fit(X_train,Y_train)
-                                Y_hat = estimator.predict(X_test)
-                                r = np.corrcoef(Y_test.T,Y_hat.T)[0,1]
-                                eeg_features = feat_args.get('EEGbandsEnvelopes', False)
-                                for key, values in zip(
-                                    [
-                                        'iteration',
-                                        'subject',
-                                        'session',
-                                        'task',
-                                        'run',
-                                        'ts_CAPS',
-                                        'pearson_r',
-                                        'eye_features',
-                                        'eeg_features_channel',
-                                        'eeg_features_band',
-                                        ],
-                                    [
-                                        i,
-                                        test_key[0],
-                                        test_key[1],
-                                        test_key[2],
-                                        test_key[3],
-                                        cap,
-                                        r,
-                                        feat_args.get('pupil', 'NA'),
-                                        eeg_features['channel'] if eeg_features else 'NA',
-                                        eeg_features['band'] if eeg_features else 'NA',
-                                    ]):
-                                    r_data_for_df[key].append(values)
-                                
-                            except Exception as e:
-                                #raise e
-                                print(e)
+                            if X_test is None \
+                                or X_test.size == 0 \
+                                    or Y_test is None or Y_test.size == 0:
                                 continue
-            df_pearson_r = pd.DataFrame(r_data_for_df)
-            df_pearson_r.to_csv(f'nested_CV_{task}_{nb_best_features}_ft.csv')
-            #df_pearson_r.to_csv(f'ALL_{tasks[0]}.csv')
+                            
+                            estimator = sklearn.linear_model.RidgeCV(cv=5, )
+                            estimator.fit(X_train,Y_train)
+                            Y_hat = estimator.predict(X_test)
+                            r = np.corrcoef(Y_test.T,Y_hat.T)[0,1]
+                            eeg_features = feat_args.get('EEGbandsEnvelopes', False)
+                            for key, values in zip(
+                                [
+                                    'iteration',
+                                    'subject',
+                                    'session',
+                                    'task',
+                                    'run',
+                                    'ts_CAPS',
+                                    'pearson_r',
+                                    'eye_features',
+                                    'eeg_features_channel',
+                                    'eeg_features_band',
+                                    ],
+                                [
+                                    i,
+                                    test_key[0],
+                                    test_key[1],
+                                    test_key[2],
+                                    test_key[3],
+                                    cap,
+                                    r,
+                                    feat_args.get('pupil', 'NA'),
+                                    eeg_features['channel'] if eeg_features else 'NA',
+                                    eeg_features['band'] if eeg_features else 'NA',
+                                ]):
+                                r_data_for_df[key].append(values)
+                            
+                        except Exception as e:
+                            raise e
+                            print(e)
+                            continue
+
+    df_pearson_r = pd.DataFrame(r_data_for_df)
+    df_pearson_r.to_csv(f'prediction_pupil_only.csv')
+    #df_pearson_r.to_csv(f'ALL_{tasks[0]}.csv')
 
 if __name__ == "__main__":
     Main()
