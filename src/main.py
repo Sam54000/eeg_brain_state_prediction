@@ -20,6 +20,7 @@ from typing import Any
 from numpy.lib.stride_tricks import sliding_window_view
 import pickle
 import pandas as pd
+from pathlib import Path
 from glob import glob
 import matplotlib.pyplot as plt
 
@@ -37,11 +38,12 @@ def parse_filename(filename: str | os.PathLike) -> dict[str,str]:
     filename_parts = {}
     for part in splitted_filename:
         splitted_part = part.split('-')
-        if splitted_part[0] in ['sub','ses','run','task']:
+        if splitted_part[0] in ['sub','ses','run','task', 'desc']:
             label, value = splitted_part
             filename_parts[label] = value
         
     return filename_parts
+
 
 def populate_encapsulated_dict(existing_dict: dict,
                                subject: str,
@@ -76,14 +78,14 @@ def populate_encapsulated_dict(existing_dict: dict,
     else:
         return {subject: {session: {task: {run: data}}}}
     
-def combine_data_from_filename(reading_dir: str | os.PathLike,
+def combine_data_from_filename(filename_instruction: str,
                                sessions: list[str],
                                tasks: list[str] = ["checker"],
                                runs: list[str] = ["01"]):
     """Combine the data from the files in the reading directory.
 
     Args:
-        reading_dir (str | os.PathLike): The directory where the data is stored.
+        filename_instruction (str): The instruction to give to the glob function.
         task (str, optional): The task to concatenate. Defaults to "checker".
         run (str, optional): Either it's run-01 or run-01BlinksRemoved. 
                              Defaults to "01".
@@ -92,15 +94,17 @@ def combine_data_from_filename(reading_dir: str | os.PathLike,
         _type_: _description_
     """
     big_data = dict()
-    filename_list = os.listdir(reading_dir)
+    filename_list = glob(filename_instruction)
+    print(filename_list)
     for file_idx, filename in enumerate(filename_list):
-        filename_parts = parse_filename(filename)
+        filename = Path(filename)
+        filename_parts = parse_filename(filename.name)
         subject = filename_parts['sub']
         filename_match = (filename_parts['ses'] in sessions,
                           filename_parts['task'] in tasks,
                           filename_parts['run'] in runs)
         if filename_match:
-            with open(os.path.join(reading_dir,filename), 'rb') as file: 
+            with open(filename, 'rb') as file: 
                 data = pickle.load(file)
                 if file_idx == 0:
                     big_data = {f'sub-{subject}':{}}
@@ -1343,11 +1347,8 @@ def splitter(lst: list[str],
 #%%
 
 def Main():
-    study_directory = (
-        "/data2/Projects/eeg_fmri_natview/derivatives"
-        "/multimodal_prediction_models/data_prep"
-        f"/prediction_model_data_eeg_features_checker/group_data_Hz-3.8"
-        )
+    study_directory = "/data2/Projects/eeg_fmri_natview/derivatives"
+    filename_instruction = "sub-*_ses-*_task-*run-*_desc-gfp_multimodal.pkl"
 
     rand_generator = np.random.default_rng()
     caps = np.array(['tsCAP1',
@@ -1372,10 +1373,10 @@ def Main():
         tasks        = tasks,
         runs         = runs)
 
-    channels = _find_item('channel_name',big_d) * 5
-    bands = [[band] * 61 for band in ['delta','theta','alpha','beta','gamma']]
-    bands = np.array(bands).flatten()
-    channels = np.array(channels).flatten()
+    #channels = _find_item('channel_name',big_d) * 5
+    #bands = [[band] * 61 for band in ['delta','theta','alpha','beta','gamma']]
+    #bands = np.array(bands).flatten()
+    #channels = np.array(channels).flatten()
 
     subjects = np.array(list(big_d.keys()))
     #feat_args = {"pupil":["pupil_dilation","first_derivative","second_derivative"],
