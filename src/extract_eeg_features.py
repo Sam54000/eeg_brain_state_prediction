@@ -265,16 +265,8 @@ class EEGfeatures:
         return self
 
     def extract_gfp(self) -> "EEGfeatures":
-        self.time = self.raw.copy().crop(*self.croping_values).times
-        self.feature = np.expand_dims(
-            np.std(
-                self.raw.copy().filter(0.5, 40).crop(*self.croping_values).get_data(),
-                axis=0,
-            ),
-            axis=0,
-        )
-        self.feature = np.expand_dims(self.feature, axis=2)
-
+        
+        self._extract_gfp([(0.5,40)])
         self.frequencies = None
         self.feature_info = "GFP of EEG signal"
         return self
@@ -293,11 +285,54 @@ class EEGfeatures:
         self.feature = np.stack(temp_envelopes_list, axis=-1)
         return self
 
+    def _extract_gfp(
+        self, frequencies: list[tuple[float, float]]
+    ) -> "EEGfeatures":
+        temp_gfp_list = list()
+        for band in frequencies:
+            filtered = self.raw.copy().filter(*band).crop(*self.croping_values)
+            gfp = np.std(filtered.get_data(),axis = 0, keepdims= True)
+            temp_gfp_list.append(gfp)
+                                 
+        self.time = filtered.times
+        self.feature = np.stack(temp_gfp_list, axis=-1)
+        print(f"        Resulting Array's Shape: {self.feature.shape}")
+        print(f"        Contains NaN: {any(np.isnan(self.feature.flatten()))}")
+        return self
+
+    def extract_eeg_band_gfp(self: "EEGfeatures") -> "EEGfeatures":
+        self.frequencies = np.array([(0.5, 4), (4, 8), (8, 13), (13, 30), (30, 40)])
+
+        self._extract_gfp(self.frequencies)
+        self.feature_info = "GFP of bands envelopes"
+
+        return self
+
     def extract_eeg_band_envelope(self: "EEGfeatures") -> "EEGfeatures":
         self.frequencies = np.array([(0.5, 4), (4, 8), (8, 13), (13, 30), (30, 40)])
 
         self._extract_envelope(self.frequencies)
         self.feature_info = "EEG bands envelopes"
+
+        return self
+
+    def extract_custom_band_gfp(
+        self: "EEGfeatures",
+        highest_frequency: int = 40,
+        lowest_frequency: int = 1,
+        frequency_step: int = 1,
+    ) -> "EEGfeatures":
+        self.frequencies = list()
+        for low_frequency in range(lowest_frequency, highest_frequency, frequency_step):
+            high_frequency = low_frequency + frequency_step
+            self.frequencies.append((low_frequency - 1, high_frequency))
+
+        self._extract_gfp(self.frequencies)
+        self.frequencies = np.array(self.frequencies)
+        self.feature_info = f"""
+        GFP of custom band
+        from {lowest_frequency} to {highest_frequency} Hz
+        """
 
         return self
 
@@ -351,7 +386,7 @@ class EEGfeatures:
         annotator_instance.detect_muscles(
             filter_freq=(30, None)
         ).detect_other().merge_annotations()
-        annotator_instance.print_statistics()
+        annotator_instance.compute_statistics().print_statistics()
         annotator_instance.generate_mask()
         self.mask = annotator_instance.mask
 
@@ -367,7 +402,7 @@ class EEGfeatures:
             "feature_info": self.feature_info,
             "mask": self.mask,
         }
-        print(f"saving into {filename}")
+        print(f"\nsaving into {filename}")
         with open(filename, "wb") as file:
             pickle.dump(param_to_save, file)
 
@@ -412,7 +447,7 @@ def specific_crop(
     picked_events = mne.pick_events(events, include=[event_id[gradient_trigger_name]])
     start = picked_events[0][0] / raw.info["sfreq"] - margin
     stop = (picked_events[-1][0] / raw.info["sfreq"] + gradient_time) + margin
-    print(f"\tcropping: from {start} to {stop} seconds\n")
+    print(f"    cropping: from {start} to {stop} seconds\n")
     if return_time:
         return (start, stop)
     else:
@@ -457,17 +492,19 @@ def individual_process(
         description = "Bk"
 
     process_file_desc_pairs = {
-        "extract_raw": f"raw{description}",
-        "extract_gfp": f"gfp{description}",
-        "extract_eeg_band_envelope": f"bandsEnv{description}",
-        "extract_custom_band_envelope": f"customEnv{description}",
+        "extract_raw": f"Raw{description}",
+        "extract_gfp": f"Gfp{description}",
+        "extract_eeg_band_gfp": f"BandsGfp{description}",
+        "extract_custom_band_gfp": f"CustomGfp{description}",
+        "extract_eeg_band_envelope": f"BandsEnv{description}",
+        "extract_custom_band_envelope": f"CustomEnv{description}",
     }
 
     for process, file_description in process_file_desc_pairs.items():
         bids_path.update(description=file_description)
         saving_path = Path(os.path.splitext(bids_path.fpath)[0] + ".pkl")
         if not saving_path.exists() or overwrite:
-            print(f"\t{process}")
+            print(f"    {process.upper()}")
             if blank_run:
                 pass
             else:
@@ -476,18 +513,19 @@ def individual_process(
                 if any(np.isnan(features_object.feature.flatten())):
                     raise Exception("ERROR: NAN GENERATED")
                 features_object.save(saving_path)
-            print(f"\tsaving into {saving_path}\n")
         else:
             continue
 
 
 def loop(
     overwrite=True,
-    task=["rest", "checker"],
+    tasks =["rest", "checker"],
     blank_run=True,
     remove_blinks=False,
     derivatives_path=None,
 ):
+    if blank_run:
+        print("\n!!!!!! BLANK RUN !!!!!\n")
     raw_path = Path("/projects/EEG_FMRI/bids_eeg/BIDS/NEW/PREP_BVA_GR_CB_BK_NOV2024")
     if remove_blinks:
         description = "GdCb"
@@ -496,17 +534,13 @@ def loop(
 
     files = glob.glob(str(raw_path) + f"/sub-*_ses-*_task-*_run-*_desc-{description}_eeg.edf")
 
-    for filename in files:
-        # try:
-        filename = Path(filename)
-        file_entities = parse_file_entities(filename)
-
-        conditions = (
-            file_entities["task"] in task,
-            not "GradientStep1" in filename.name,
+    for task in tasks:
+        files = Path(raw_path).rglob(
+            f"sub-*_ses-*_task-{task}_run-*_desc-{description}_eeg.edf"
         )
+        
+        for filename in files:
 
-        if all(conditions):
             individual_process(
                 filename,
                 overwrite=overwrite,
@@ -524,14 +558,13 @@ def loop(
 if __name__ == "__main__":
     blink_removal = [False, True]
     saving_path = Path("/data2/Projects/eeg_fmri_natview/derivatives/")
-    for blink in blink_removal:
-        loop(
-            overwrite=True,
-            task=["rest", "checker"],
-            blank_run=False,
-            remove_blinks=blink,
-            derivatives_path=saving_path,
-        )
+    loop(
+        overwrite=False,
+        tasks=['checker','rest','dme','dmh','inscapes','monkey1','monkey2','monkey5','peer','tp'],
+        blank_run=False,
+        remove_blinks=False,
+        derivatives_path=saving_path,
+    )
 
 # TODO The frequencies need a better handling because it changes datastructure
 #      from list of tuple to numpy array. It could be better to keep it as np.array

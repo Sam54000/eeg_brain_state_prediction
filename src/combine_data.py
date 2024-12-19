@@ -23,66 +23,11 @@ import pandas as pd
 from pathlib import Path
 from glob import glob
 import matplotlib.pyplot as plt
+from eeg_research.system.bids_selector import BidsPath, BidsArchitecture, BidsDescriptor
+
 
 #%%
-
-#%%
-def parse_filename(filename: str | os.PathLike) -> dict[str,str]:
-    """parse filename that are somewhat like BIDS but not rigoursly like it.
-
-    Args:
-        filename (str | os.PathLike): The filename to be parsed
-
-    Returns:
-        dict[str,str]: The filename parts
-    """
-    splitted_filename = filename.split('_')
-    filename_parts = {}
-    for part in splitted_filename:
-        splitted_part = part.split('-')
-        if splitted_part[0] in ['sub','ses','run','task', 'desc']:
-            label, value = splitted_part
-            filename_parts[label] = value
-        
-    return filename_parts
-
-def populate_encapsulated_dict(existing_dict: dict,
-                               subject: str,
-                               session: str,
-                               task: str,
-                               run: str,
-                               data: dict):
-    """Making encapsulated dict is the root of all evil. TO CHANGE
-
-    Args:
-        existing_dict (dict): _description_
-        subject (str): _description_
-        session (str): _description_
-        task (str): _description_
-        run (str): _description_
-        data (dict): _description_
-
-    Returns:
-        _type_: _description_
-    """
-    if existing_dict:
-        if existing_dict.get(subject):
-            if existing_dict[subject].get(session):
-                if existing_dict[subject][session].get(task):
-                    return existing_dict[subject][session][task].update({run: data})
-                else:
-                    return existing_dict[subject][session].update({task: {run: data}})
-            else:
-                return existing_dict[subject].update({session: {task: {run: data}}})
-        else:
-            return existing_dict.update({subject: {session: {task: {run: data}}}})
-    else:
-        return {subject: {session: {task: {run: data}}}}
-    
-def combine_data_from_filename(filename_instruction: str,
-                               sessions: list[str],
-                               tasks: list[str] = ["checker"],
-                               runs: list[str] = ["01"]):
+def pick_data(architecture):
     """Combine the data from the files in the reading directory.
 
     Args:
@@ -94,31 +39,19 @@ def combine_data_from_filename(filename_instruction: str,
     Returns:
         _type_: _description_
     """
+    
     big_data = dict()
-    filename_list = glob(filename_instruction)
-    for file_idx, filename in enumerate(filename_list):
-        filename = Path(filename)
-        filename_parts = parse_filename(filename.name)
-        subject = filename_parts['sub']
-        filename_match = (filename_parts['ses'] in sessions,
-                          filename_parts['task'] in tasks,
-                          filename_parts['run'] in runs)
-        if filename_match:
-            with open(filename, 'rb') as file: 
-                data = pickle.load(file)
-                if file_idx == 0:
-                    big_data = {f'sub-{subject}':{}}
-                
-                populate_encapsulated_dict(
-                    existing_dict = big_data,
-                    subject = f'sub-{subject}',
-                    session = f'ses-{filename_parts["ses"]}',
-                    task = f'task-{filename_parts["task"]}',
-                    run = f'run-{filename_parts["run"]}',
-                    data = data
-                )
+    for _, db_row in architecture.database.iterrows():
+        with open(db_row['filename'], 'rb') as file: 
+            data = pickle.load(file)
+        big_data[db_row['filename'].stem.replace("_multimodal","")] = data
                     
     return big_data
+#%%
+def generate_key_list(architecture: BidsArchitecture,
+                      **kwargs) -> np.ndarray:
+    selection = architecture.select(**kwargs)
+    return selection['filename'].apply(lambda s:s.stem.replace("_multimodal","")).values
 
 def filter_data(data: np.ndarray, 
                 low_freq_cutoff: float | None = None,
@@ -155,113 +88,37 @@ def filter_data(data: np.ndarray,
     filtered_data = scipy.signal.sosfilt(filtered_data, data, axis=1)
     return filtered_data
 
-def generate_key_list(subjects: list[str] | str,
-                      sessions: list[str] | str,
-                      tasks: list[str] | str,
-                      runs: list[str] | str,
-                      big_data: dict | None,
-                      ) -> np.ndarray:
-    """Generate a list of keys to access the data an encapsulated dictionary.
+def generate_train_test_architectures(train_subjects: np.ndarray,
+                                      test_subjects: np.ndarray,
+                                      architecture: BidsArchitecture,
+                             ) -> tuple[BidsArchitecture,BidsArchitecture]:
     
-    Args:
-        big_data (dict): The big dictionary containing all the data
-        subjects (list[str] | str): The list of subjects to consider
-        sessions (list[str] | str): The list of sessions to consider
-        tasks (str): The task to consider
-        runs (list[str] | str): The list of runs to consider
-    
-    Returns:
-        list[tuple[str]]: The list of keys to access the data
-    """
-    key_list = list()
-    arg_keys = ['subjects','sessions','tasks','runs']
-    arg_dict = {key: locals()[key] for key in arg_keys}
-    formated_arg_dict = format_keys(arg_dict)
-            
-    for subject in formated_arg_dict['subjects']:
-        if subject not in list(big_data.keys()):
-            continue
-        for session in formated_arg_dict['sessions']:
-            if session not in big_data[subject].keys():
-                continue
-            for task in formated_arg_dict['tasks']:
-                if task not in big_data[subject][session].keys():
-                    continue
-                for run in formated_arg_dict['runs']:
-                    if run not in big_data[subject][session][task].keys():
-                        continue
-                    key_list.append((subject, session, task, run))
-    
-    key_list_array = np.array(key_list)
-    if key_list_array.ndim == 1:
-        key_list_array = np.reshape(key_list_array,(1,-1))
-                    
-    return key_list_array
 
-def format_keys(key_values_pair: dict):
-    """Format the input. 
-    
-    For example the user wants subjects from 1 to 10 and give as input:
-    {subjects: ["01",..."10"]}, this function will reformat by adding the
-    prefix in front of the values.
+    train_architecture = architecture.copy().select(subject = train_subjects)
+    test_architecture = architecture.copy().select(subject = test_subjects)
 
-    Args:
-        key_values_pair (dict): _description_
-    """
-    for key, values in key_values_pair.items():
-        if "subject" in key:
-            prefix = 'sub-'
-        elif "session" in key:
-            prefix = 'ses-'
-        elif "task" in key:
-            prefix = 'task-'
-        elif "run" in key:
-            prefix = 'run-'
-        elif "description" in key:
-            prefix = 'desc-'
-        else:
-            raise ValueError('please check for typo')
-        
-        if isinstance(values,str):
-            values = [values]
-        
-        formated_values = [prefix + val 
-                            if prefix not in val else val 
-                            for val in values ]
-        
-        formated_values_array = np.array(formated_values)
-        if formated_values_array.ndim == 1:
-            formated_values = np.reshape(formated_values_array,(1,-1))
+    train_database = sanatize_training_list(
+        train_architecture = train_architecture,
+        test_architecture = test_architecture
+    )
 
-        key_values_pair[key] = formated_values_array
-    
-    return key_values_pair
-    
-def generate_train_test_keys(train_subjects: np.ndarray,
-                             test_subjects: np.ndarray,
-                             key_list: np.ndarray
-                             ) -> tuple[np.ndarray, np.ndarray]:
 
-    formated_inputs = format_keys({key: locals()[key] 
-                                   for key in ['train_subjects',
-                                               'test_subjects']})
+    return train_database, test_architecture.database
 
-    formated_inputs['train_subjects'] = sanatize_training_list(
-        *formated_inputs.values()
-        )
-    
-    train_keys = key_list[
-        np.isin(key_list,formated_inputs['train_subjects'])[:,0],
-                          :]
-    
-    test_keys = key_list[
-        np.isin(key_list,formated_inputs['test_subjects'])[:,0],
-        :]
-    
+def generate_train_test_keys(
+    train_database: pd.DataFrame,
+    test_database: pd.DataFrame,
+    ) -> tuple[np.ndarray, np.ndarray]:
+
+    train_keys = train_database['filename'].apply(
+        lambda s: s.stem.replace("_multimodal","")
+    ).values
+
+    test_keys = test_database['filename'].stem.replace("_multimodal","")
     return train_keys, test_keys
     
-def extract_cap_name_list(big_data: dict,
-                          keys_list: np.ndarray) -> list[str]:
+
+def extract_cap_name_list(big_data: dict) -> list[str]:
     """Extract the list of CAP names from the encapuslated dictionary.
     
     Args:
@@ -271,9 +128,8 @@ def extract_cap_name_list(big_data: dict,
     Returns:
         list: The list of CAP names
     """
-    subject, session, task, run = keys_list[0,:]
-    return big_data[subject][session][task][run]['brainstates']['labels']
-
+    return big_data[list(big_data.keys())[0]]['brainstates']['labels']
+    
 def get_real_cap_name_and_idx(cap_name: str,
                       cap_list: list[str]) -> tuple[str,int]:
     """Get the real CAP name based on a substring from the list of CAP names.
@@ -346,7 +202,8 @@ def create_big_feature_array(big_data: dict,
                              modality: str,
                              array_name: str,
                              keys_list: np.ndarray,
-                             trim_args: tuple = (None,None)
+                             trim_args: tuple = (None,None),
+                             verbose = False
                              ) -> np.ndarray:
     """Gather one type of data across subject and arange it in an array.
 
@@ -392,16 +249,12 @@ def create_big_feature_array(big_data: dict,
     """
     
     concatenation_list = list()
-    print(f'     Gathering {array_name} from {modality}:')
-    for keys in keys_list:
-        subject, session, task, run = keys
+    if verbose:
+        print(f'     Gathering {array_name} from {modality}:')
+    for key in keys_list:
         
         try:
-            extracted_array = big_data[subject
-                ][session
-                    ][task
-                        ][run
-                            ][modality][array_name]
+            extracted_array = big_data[key][modality][array_name]
             
             if extracted_array.ndim < 2:
                 extracted_array = np.reshape(
@@ -414,21 +267,24 @@ def create_big_feature_array(big_data: dict,
 
             concatenation_list.append(extracted_array)
         except Exception as e:
+            raise e
             continue
-    print('     stacking arrays and trimming...')
     array_time_length = [array.shape[1] for array in concatenation_list]
     min_length = min(array_time_length)
     concatenation_list = [crop_data(array, axis = 1, stop = min_length)
                           for array in concatenation_list]
     array = np.array(concatenation_list)
-    
-    print(f"        array before trimming: {array.shape}")
+    if verbose:
+        print('     stacking arrays and trimming...')
+        print(f"        array before trimming: {array.shape}")
     array = trim_array(array = array,
                        trim = trim_args)
-    print(f"        array after trimming: {array.shape}")
+    if verbose:
+        print(f"        array after trimming: {array.shape}")
     
     return array
 
+#%%
 def _find_item(desired_key: str, obj: Dict[str, Any]) -> Any:
     """Find any item in an encapsulated dictionary."
 
@@ -676,7 +532,8 @@ def fool_proof_key(key: str) -> str | None:
 def create_X(big_data: dict,
              keys_list: np.ndarray,
              features_args: dict,
-             trim_args: tuple = (None, None)
+             trim_args: tuple = (None, None),
+             verbose = False,
              ) -> np.ndarray:
     """Generate the X array for ML training.
 
@@ -701,7 +558,7 @@ def create_X(big_data: dict,
         Feature 3 is the EEGbandsEnvelopes (specifically for O2 along the alpha band)
 
         {
-            'EEGbandsEnvelopes': {
+            'eeg': {
                     'bands': ['theta','alpha','theta']
                     'channels': ['Fp1', 'O2', 'Fp2']
                 },
@@ -711,7 +568,8 @@ def create_X(big_data: dict,
     """
 
     features = list()
-    print(' CREATING X:')
+    if verbose:
+        print(' CREATING X:')
     for modality in features_args.keys():
         array = create_big_feature_array(
             big_data = big_data,
@@ -721,22 +579,29 @@ def create_X(big_data: dict,
             trim_args=trim_args
         )
 
-        if 'EEG' in modality:
-            bands_list = ['delta','theta','alpha','beta','gamma']
+        if 'eeg' in modality:
+            #WE NEED TO SET BANDS AS INDEX AND NOT STRING
+
             selected_feature = list()
 
             channels = features_args[modality]['channel']
+            channels = [channels] if channels is None or isinstance(channels, int) else channels
             bands = features_args[modality]['band']
+            bands = [bands] if isinstance(bands,int) else bands
             for band, channel in zip(bands,channels):
                 copied_array = array.copy()
-                index_band = bands_list.index(band)
-                index_channel = get_specific_location(
-                    data_dict=big_data,
-                    channel_names=channel
-                )
+                if channel is None:
+                    index_channel = 0
+                elif isinstance(channel,str):
+                    index_channel = get_specific_location(
+                        data_dict=big_data,
+                        channel_names=channel
+                    )
+                elif isinstance(channel, int):
+                    index_channel = channel
                 
                 selected_feature.append(
-                    copied_array[:,index_channel,:,index_band] 
+                    copied_array[:,index_channel,:,band] 
                 )
               
             selected_feature = np.concatenate(selected_feature,axis = 1)
@@ -750,7 +615,7 @@ def create_X(big_data: dict,
                 )
             )
             
-        elif 'pupil' in modality:
+        elif 'eyetracking' in modality:
             copied_array = array[:,0,:,:].copy()
             pupil_dilation = np.reshape(
                 copied_array,
@@ -803,8 +668,7 @@ def create_Y(big_data: dict,
              trim_args: tuple = (None, None)
              ) -> np.ndarray:
     
-    cap_names_list = extract_cap_name_list(big_data,
-                                           keys_list)
+    cap_names_list = extract_cap_name_list(big_data)
 
     _, cap_index = get_real_cap_name_and_idx(
         cap_name,
@@ -919,7 +783,7 @@ def dimension_rejection_mask(mask: np.ndarray,
     valid_data = np.sum(mask, axis = axis, keepdims=True)
     return valid_data > threshold* mask.shape[axis]
 
-def reshape_array(array: np.ndarray) -> np.ndarray:
+def reshape_array(array: np.ndarray, verbose = False) -> np.ndarray:
     """ Reshape 4D array to 2D or 1D array.
 
     Args:
@@ -939,14 +803,16 @@ def reshape_array(array: np.ndarray) -> np.ndarray:
         swaped_array.shape[0]*swaped_array.shape[1],
         -1)
                                        )
-    print(f"reshaped array shape: {reshaped_swaped_array.shape}")
+    if verbose:
+        print(f"reshaped array shape: {reshaped_swaped_array.shape}")
     
     return reshaped_swaped_array
 
 def arange_X_Y(X: np.ndarray, 
                Y: np.ndarray, 
                mask: np.ndarray,
-               group_rejection = False) -> tuple:
+               group_rejection = False,
+               verbose = False) -> tuple:
     """Arange the X and Y data by reshaping them and applying the mask.
 
     Args:
@@ -961,7 +827,8 @@ def arange_X_Y(X: np.ndarray,
     window_rejection_mask = dimension_rejection_mask(mask, 
                                                      threshold=0.75, 
                                                      axis=3)
-    print(f"window rejection mask shape: {window_rejection_mask.shape}")
+    if verbose:
+        print(f"window rejection mask shape: {window_rejection_mask.shape}")
     
     if group_rejection:
         group_rejection_mask = dimension_rejection_mask(mask = window_rejection_mask,
@@ -980,13 +847,16 @@ def arange_X_Y(X: np.ndarray,
             X = X[group_rejection_mask,:,:,:]
             Y = Y[group_rejection_mask,:,:]
     
-    print("Reshaping X...")
+    if verbose:
+        print("Reshaping X...")
     reshaped_X = reshape_array(X)
     
-    print("Reshaping Y...")
+    if verbose:
+        print("Reshaping Y...")
     reshaped_Y = np.reshape(Y, -1)
 
-    print("Reshaping mask...")
+    if verbose:
+        print("Reshaping mask...")
     reshaped_mask = np.squeeze(reshape_array(window_rejection_mask))
     
     
@@ -1010,8 +880,8 @@ def print_keys(keys_list: np.ndarray, title = None):
         print(f"            Session: {session}")
         hold_subject = subject
 
-def sanatize_training_list(training_list: np.ndarray,
-                           test_str: np.ndarray) -> np.ndarray:
+def sanatize_training_list(train_architecture: BidsArchitecture,
+                           test_architecture: BidsArchitecture) -> np.ndarray:
     """Sanatize the training list by removing the test label. 
     
     This sanatation prevent from leakage.
@@ -1023,9 +893,10 @@ def sanatize_training_list(training_list: np.ndarray,
     Returns:
         list[str]: The sanatized training list
     """
-
-    t = training_list[np.where(training_list != test_str)]
-    return t
+    
+    return train_architecture.database[~train_architecture.database.isin(
+        test_architecture.database.to_dict(orient='list')).all(axis=1)
+                                      ]
 
 def create_train_test_data(big_data: dict,
                            train_keys: np.ndarray,
@@ -1034,7 +905,8 @@ def create_train_test_data(big_data: dict,
                            features_args: dict,
                            window_length: int = 45,
                            masking: bool = False,
-                           trim_args: tuple = (None, None)
+                           trim_args: tuple = (None, None),
+                           verbose = False,
                            ) -> tuple[Any,Any,Any,Any]:
     """Create the train and test data using leave one out method.
 
@@ -1075,8 +947,9 @@ def create_train_test_data(big_data: dict,
         trim_args        = trim_args
         )
     
-    print(f"X train shape: {X_train.shape}")
-    print(f"Y train shape: {Y_train.shape}\n")
+    if verbose:
+        print(f"X train shape: {X_train.shape}")
+        print(f"Y train shape: {Y_train.shape}\n")
     
     
 
@@ -1089,8 +962,9 @@ def create_train_test_data(big_data: dict,
         trim_args        = trim_args
         )
 
-    print(f"X test shape: {X_test.shape}")
-    print(f"Y test shape: {Y_test.shape}\n")
+    if verbose:
+        print(f"X test shape: {X_test.shape}")
+        print(f"Y test shape: {Y_test.shape}\n")
 
     if masking:
         train_mask = build_windowed_mask(
@@ -1109,31 +983,27 @@ def create_train_test_data(big_data: dict,
             features_args=features_args)
         
     
-        print(f"train mask shape: {train_mask.shape}")
-        print(f"test mask shape: {test_mask.shape}\n")
-        
-
-        print(f"Aranging training data:")
         X_train, Y_train = arange_X_Y(X = X_train, 
                                       Y = Y_train, 
                                       mask = train_mask,
                                       group_rejection = False)
-        print(f"\nAranging test data")
         X_test, Y_test = arange_X_Y(X = X_test, 
                                     Y = Y_test, 
                                     mask = test_mask,
                                     group_rejection= False)
-        
         if X_test is None:
             print('Not enough data for test')
             return None, None, None, None
-                        
 
-    print(f"aranged X train shape: {X_train.shape}")
-    print(f"aranged Y train shape: {Y_train.shape}\n")
+        if verbose:
+            print(f"train mask shape: {train_mask.shape}")
+            print(f"test mask shape: {test_mask.shape}\n")
+    if verbose:
+        print(f"aranged X train shape: {X_train.shape}")
+        print(f"aranged Y train shape: {Y_train.shape}\n")
 
-    print(f"aranged X test shape: {X_test.shape}")
-    print(f"aranged Y test shape: {Y_test.shape}\n")
+        print(f"aranged X test shape: {X_test.shape}")
+        print(f"aranged Y test shape: {Y_test.shape}\n")
         
     return (X_train, 
             Y_train, 
@@ -1172,12 +1042,6 @@ def plot_corr(df_pearson_r):
     plt.axhline(0, 
                 linewidth = 1.5,
                 color = 'black')
-    
-    #plt.axhline(0.5, 
-    #            linestyle = '--',
-    #            linewidth = 1,
-    #            color = "black",
-    #            alpha = 0.5)
     
     return fig, ax
 
@@ -1281,7 +1145,7 @@ def xcorr_with_ttest(subject_list: list,
         index_matrix = np.delete(index_matrix,idx, axis = 1)
     
     if any(index_matrix[0,:nb_features] >= 61):
-        dict_xcorr_t['pupil'] = list()
+        dict_xcorr_t['eyetracking'] = list()
     if any(index_matrix[0,:nb_features] < 61):
         dict_xcorr_t['EEGbandsEnvelopes'] = {
             'channel' : list(),
@@ -1350,13 +1214,8 @@ def splitter(lst: list[str],
 #%%
 
 def Main():
-    study_directory = (
-        "/data2/Projects/eeg_fmri_natview/derivatives"
-        "/multimodal_prediction_models/data_prep"
-        f"/prediction_model_data_eeg_features_checker/group_data_Hz-3.8"
-        )
+    study_directory = ("/data2/Projects/eeg_fmri_natview/derivatives")
 
-    rand_generator = np.random.default_rng()
     caps = np.array(['tsCAP1',
             'tsCAP2',
             'tsCAP3',
@@ -1373,11 +1232,12 @@ def Main():
     NB_BEST_FEATURES = ''
     sessions = ["01","02"]
 
-    big_d = combine_data_from_filename(
-        reading_dir = study_directory,
-        sessions    = sessions,
-        tasks        = tasks,
-        runs         = runs)
+    big_d = pick_data(
+        root         = study_directory,
+        datatype     = "multimodal",
+        suffix       = "multimodal",
+        description  = "customGfp8",
+        run          = runs)
 
     channels = _find_item('channel_name',big_d) * 5
     bands = [[band] * 61 for band in ['delta','theta','alpha','beta','gamma']]
@@ -1406,15 +1266,7 @@ def Main():
     for task in tasks:
         for run in runs:
             for subject in subjects:
-                all_possible_keys = generate_key_list(
-                    subjects=list(subjects),
-                    sessions = sessions,
-                    tasks = [task],
-                    runs = [run],
-                    big_data = big_d
-                )
-                if all_possible_keys.size == 0:
-                    continue
+
                 training_subjects, feature_subjects = splitter(
                     list(subjects),
                     test=subject,
@@ -1425,7 +1277,6 @@ def Main():
                     train_keys, test_keys = generate_train_test_keys(
                         train_subjects=subjects,#training_subject_list,
                         test_subjects=subject,
-                        key_list=all_possible_keys,
                     )
                     for test_key in test_keys:
                         print(f"===== {cap} =====")
@@ -1485,7 +1336,7 @@ def Main():
                             continue
 
     df_pearson_r = pd.DataFrame(r_data_for_df)
-    df_pearson_r.to_csv(f'prediction_pupil_only.csv')
+    df_pearson_r.to_csv(f'prediction_pupil_and_gfp.csv')
     #df_pearson_r.to_csv(f'ALL_{tasks[0]}.csv')
 
 if __name__ == "__main__":

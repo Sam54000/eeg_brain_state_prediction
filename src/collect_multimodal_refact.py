@@ -1,36 +1,11 @@
+import os
 from scipy.interpolate import CubicSpline
 import numpy as np
-from eeg_research.system.bids_selector import BIDSselector
+from eeg_research.system.bids_selector import BidsArchitecture,BidsDescriptor, BidsSelector, BidsPath
 import pickle
+import pandas as pd
 from pathlib import Path
 import matplotlib.pyplot as plt
-
-
-def put_placeholders(filename):
-    desc_idx = filename.find("_desc-")
-    fname = filename[:desc_idx] + f"<description>_<suffix>.pkl"
-    return fname.replace("/eeg/", f"/<datatype>/")
-
-
-def rename_fname(filename, modality, eeg_description="bandsEnv"):
-    placeholders = put_placeholders(filename)
-    if modality == "brainstates":
-        description = "_desc-caps"
-    elif modality == "eeg":
-        description = f"_desc-{eeg_description}"
-    else:
-        description = ""
-
-    placeholders = placeholders.replace("<datatype>", modality)
-    placeholders = placeholders.replace("<description>", description)
-    placeholders = placeholders.replace("<suffix>", modality)
-    return placeholders
-
-
-def modality_file_exists(filename, modality):
-    new_filename = rename_fname(filename, modality)
-    return Path(new_filename).exists()
-
 
 def resample_time(
     time: np.ndarray,
@@ -80,7 +55,7 @@ def resample_time(
         increment_in_seconds = (tr_value**power_one) * (resampling_factor**-1)
 
         time_resampled = np.arange(
-            time[0], time[-1] + increment_in_seconds, increment_in_seconds
+            time[0], time[-1], increment_in_seconds
         )
 
         return time_resampled
@@ -114,94 +89,184 @@ def trim_to_min_time(multimodal_dict: dict):
     return multimodal_dict
 
 
+def nice_print(subject,
+               session,
+               task,
+               description,
+               run,
+               dict_modalities):
+    eeg_file = dict_modalities['eeg']
+    brainstates_file = dict_modalities['brainstates']
+    eyetracking_file = dict_modalities['eyetracking']
+    print(f"\n==================================================================")
+    print(f"Subject: {subject} | Task: {task} | Description: {description}")
+    print(f"└── Session: {session}")
+    print(f"    └── Run: {run}")
+    print(f"        ├── EEG file        : {eeg_file}")
+    print(f"        ├── brainstates file: {brainstates_file }")
+    print(f"        └── eyetracking file: {eyetracking_file }")
+
+            
 if __name__ == "__main__":
-    root = "/data2/Projects/eeg_fmri_natview/derivatives"
-    selector = BIDSselector(
-        root,
-        subject="*",
-        task=["checker", "rest"],
-        extension=".pkl",
-        datatype="eeg",
-        suffix="eeg",
-    )
-    files = selector.layout
-    multimodal = {}
-    resampling_factor = 8
-
-    for file in files:
+    root = Path("/data2/Projects/eeg_fmri_natview/derivatives")
+    tasks = ['peer',
+             'monkey1',
+             'checker',
+             'rest',
+             'tp',
+             'inscapes',
+             'dme',
+             'dmh',
+             'monkey5',
+             'monkey2',
+    ]
+    overwrite = True
+    for task in tasks:
+        print(task)
+        architecture = BidsArchitecture(root = root,
+                                        task = task)
+        
+        resampling_factor = 8
+        subjects = architecture.database['subject'].unique()
         eeg_descriptions = [
-            #"bandsEnv",
-            #"bandsEnvBk",
-            "customEnv",
-            "customEnvBk",
-            #"gfp",
-            #"gfpBk",
+            #"GfpBk",
+            #"CustomGfpBk",
+            #"BandsGfpBk",
+            #"BandsEnvBk",
+            #"CustomEnvBk",
+            "IscBandsEnvBk",
         ]
+        
+        multimodal = {}
+        
 
-        for eeg_description in eeg_descriptions:
-            if eeg_description in file:
-                print("\nReading:")
-                for modality in ["eeg", "brainstates", "eyetracking"]:
-                    fname = rename_fname(file, modality, eeg_description)
-                    if modality_file_exists(file, modality):
-                        print(fname)
-                        with open(fname, "rb") as data_file:
-                            data = pickle.load(data_file)
+        for subject in subjects:
+            selection = architecture.copy().select(subject = subject, 
+                                            datatype = ['brainstates','eeg','eyetracking'],
+                                            suffix = ['brainstates','eeg','eyetracking'],
+                                            extension = ".pkl")
+            descriptor = selection.report()
+            modalities = descriptor.suffixs
 
-                        resampled_time = resample_time(
-                            data["time"],
-                            tr_value=2.1,
-                            resampling_factor=resampling_factor,
-                        )
+            #Put a print here to evaluate session(s) and run(s)
 
-                        resampled_features = resample_data(
-                            data=data["feature"],
-                            not_resampled_time=data["time"],
-                            resampled_time=resampled_time,
-                        )
+            for description in eeg_descriptions:
+                print(modalities)
+                if len(modalities) == 3:
+                    for session in descriptor.sessions:
+                        for run in descriptor.runs:
+                            path = BidsPath(root = root,
+                                    subject = subject,
+                                    session = session,
+                                    datatype = "multimodal",
+                                    task = task,
+                                    run = run,
+                                    description = f"{description}{resampling_factor}",
+                                    suffix = "multimodal",
+                                    extension = ".pkl")
+                            if path.fullpath.exists() and not(overwrite):
+                                continue
+                            mother_selection = selection.copy().select(
+                                subject = subject,
+                                run = run,
+                                session = session,
+                                task = task,
+                                extension = ".pkl"
+                            )
+                                
+                            
+                            bs_selection = mother_selection.copy().select(
+                                datatype = "brainstates",
+                                suffix = "brainstates",
+                                description = "caps"
+                            )
+                            eye_selection = mother_selection.copy().select(
+                                datatype = "eyetracking",
+                                suffix = "eyetracking",
+                            )
+                            eeg_selection = mother_selection.copy().select(
+                                datatype = "eeg",
+                                suffix = "eeg",
+                                description = description,
+                            )
 
-                        resampled_mask = resample_data(
-                            data=data["mask"],
-                            not_resampled_time=data["time"],
-                            resampled_time=resampled_time,
-                        )
-
-                        data.update(
-                            {
-                                "time": resampled_time,
-                                "feature": resampled_features,
-                                "mask": resampled_mask,
+                            dict_modality = {
+                                'brainstates': bs_selection.database['filename'].values[0] if not(bs_selection.database.empty) else 'Not Existing',
+                                'eyetracking': eye_selection.database['filename'].values[0] if not(eye_selection.database.empty) else 'Not Existing',
+                                'eeg': eeg_selection.database['filename'].values[0] if not(eeg_selection.database.empty) else 'Not Existing',
                             }
-                        )
+                                
+                            nice_print(subject,
+                                       session,
+                                       task,
+                                       description,
+                                       run,
+                                       dict_modality)
+                            
+                            if any([bs_selection.database.empty, 
+                                    eye_selection.database.empty, 
+                                    eeg_selection.database.empty]):
+                                continue
 
-                        multimodal[modality] = data
+                            temp_df = pd.concat([bs_selection.database, 
+                                                 eye_selection.database, 
+                                                 eeg_selection.database])
 
-                for modality, data in multimodal.items():
-                    print(f"\n{str(modality).capitalize()} before triming")
-                    print(f'time shape: {data['time'].shape}')
-                    print(f'data shape: {data['feature'].shape}')
-                    print(f'mask shape: {data['mask'].shape}')
+                            for _,row in temp_df.iterrows():
+                                with open(row['filename'], "rb") as data_file:
+                                    data = pickle.load(data_file)
 
-                trimed_multimodal = trim_to_min_time(multimodal_dict=multimodal)
-                for modality, data in trimed_multimodal.items():
-                    print(f"\n{str(modality).capitalize()} after triming")
-                    print(f'time shape: {data['time'].shape}')
-                    print(f'data shape: {data['feature'].shape}')
-                    print(f'mask shape: {data['mask'].shape}')
+                                resampled_time = resample_time(
+                                    data["time"],
+                                    tr_value=2.1,
+                                    resampling_factor=resampling_factor,
+                                )
 
-                fname_placeholders = put_placeholders(file)
-                for placeholder, value in zip(
-                    ["<datatype>", "<description>", "<suffix>"],
-                    [
-                        "multimodal",
-                        f"_desc-{eeg_description}{str(resampling_factor)}",
-                        "multimodal",
-                    ],
-                ):
-                    fname_placeholders = fname_placeholders.replace(placeholder, value)
+                                resampled_features = resample_data(
+                                    data=data["feature"],
+                                    not_resampled_time=data["time"],
+                                    resampled_time=resampled_time,
+                                )
 
-                Path(fname_placeholders).parent.mkdir(parents=True, exist_ok=True)
+                                resampled_mask = resample_data(
+                                    data=data["mask"],
+                                    not_resampled_time=data["time"],
+                                    resampled_time=resampled_time,
+                                )
 
-                print(f"\nSaving to: {fname_placeholders}")
-                with open(fname_placeholders, "wb") as saving_file:
-                    pickle.dump(trimed_multimodal, saving_file)
+                                data.update(
+                                    {
+                                        "time": resampled_time,
+                                        "feature": resampled_features,
+                                        "mask": resampled_mask,
+                                    }
+                                )
+
+                                multimodal[row['datatype']] = data
+
+                            trimed_multimodal = trim_to_min_time(multimodal_dict=multimodal)
+                            for modality, data in multimodal.items():
+                                print(f"\n{str(modality).upper()}")
+                                print(f"    Before Trimming")
+                                print(f"        time shape: {data['time'].shape}")
+                                print(f"        data shape: {data['feature'].shape}")
+                                print(f"        mask shape: {data['mask'].shape}")
+
+                                print(f"    After Trimming")
+                                print(f"        time shape: {trimed_multimodal[modality]['time'].shape}")
+                                print(f"        data shape: {trimed_multimodal[modality]['feature'].shape}")
+                                print(f"        mask shape: {trimed_multimodal[modality]['mask'].shape}")
+
+
+                            path = BidsPath(root = root,
+                                    subject = subject,
+                                    session = session,
+                                    datatype = "multimodal",
+                                    task = task,
+                                    run = run,
+                                    description = f"{description}{resampling_factor}",
+                                    suffix = "multimodal",
+                                    extension = ".pkl")
+                            print(f"\nSaving to: {path.fullpath}")
+                            with open(path.fullpath, "wb") as saving_file:
+                                pickle.dump(trimed_multimodal, saving_file)

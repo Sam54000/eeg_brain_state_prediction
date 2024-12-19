@@ -1210,7 +1210,9 @@ def xcorr_with_ttest(subject_list: list,
                     'T7','T8','C5','C3','C1','Cz','C2','C4','C6','TP9','TP7','TP8','TP10',
                     'CP5','CP3','CP1','CPz','CP2','CP4','CP6','P7','P5','P3','P1','Pz',
                     'P2','P4','P6','P8','PO7','PO3','POz','PO4','PO8','O1','O2','Oz']
-    band_list = ["delta","theta","alpha","beta","gamma"]
+    #band_list = ["delta","theta","alpha","beta","gamma"]
+    band_list = [f"{frequency}Hz" for frequency in range(1,41)]
+
 
     #initialize dictionary to hold t-tested xcorrs
 
