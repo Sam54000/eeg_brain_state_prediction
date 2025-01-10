@@ -14,13 +14,12 @@ import sklearn.model_selection
 import pandas as pd
 import argparse
 import combine_data
-from eeg_research.system.bids_selector import BidsArchitecture, BidsDescriptor
+import bids_explorer.architecture as arch
 
 
 def Main(args):
-    study_directory = Path("/data2/Projects/eeg_fmri_natview/derivatives")
     paramters = {
-        "root": study_directory,
+        "root": Path("/data2/Projects/eeg_fmri_natview/derivatives"),
         "datatype": "multimodal",
         "suffix": "multimodal",
         "description": "CustomEnvBk8",
@@ -29,8 +28,7 @@ def Main(args):
         "extension": ".pkl",
     }
 
-    architecture = BidsArchitecture(**paramters)
-    descriptor = architecture.report()
+    architecture = arch.BidsArchitecture(**paramters)
     
     caps = np.array(['CAP1',
                      'CAP2',
@@ -57,20 +55,19 @@ def Main(args):
     
     big_d = combine_data.pick_data(architecture=architecture)
     
-    train_database, test_database = combine_data.generate_train_test_architectures(
+    train_architecture, test_architecture= combine_data.generate_train_test_architectures(
             architecture = architecture,
-            train_subjects = list(descriptor.subjects),
+            train_subjects = architecture.subjects,
             test_subjects = args.subject,
         )
 
-    for _, test_session in test_database.iterrows():
-        train_keys, test_keys = combine_data.generate_train_test_keys(
-            train_database = train_database,
-            test_database = test_session
-        )
+    for test_keys, test_session in test_architecture:
+
+        train_keys = train_architecture.database.index.values
+
         for band in range(39):
             for channel in range(61):
-                feat_args = {"eyetracking":["pupil_dilation","first_derivative","second_derivative"],
+                feat_args = {#"eyetracking":["pupil_dilation","first_derivative","second_derivative"],
                             "eeg":{
                                 "channel": channel,
                                 "band": band,
@@ -128,12 +125,13 @@ def Main(args):
                         raise e
 
     df_pearson_r = pd.DataFrame(r_data_for_df)
-    df_pearson_r.to_csv(f'/home/slouviot/01_projects/eeg_brain_state_prediction/data/sub-{args.subject}_task-{args.task}_desc-CustomEnvBk_predictions.csv')
+    df_pearson_r.to_csv(f'/home/slouviot/01_projects/eeg_brain_state_prediction/data/sub-{args.subject}_task-{args.task}_desc-{args.desc}_predictions.csv')
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(prog='train_custom_envelope',)
     parser.add_argument('--subject', default='01')
-    parser.add_argument('--task', default = "checker")
+    parser.add_argument('--task', default = "rest")
+    parser.add_argument('--desc', default = "CustomEnvBk", help="What to put in desc")
     args = parser.parse_args()
     Main(args)

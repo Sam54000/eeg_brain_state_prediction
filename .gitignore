@@ -6,3 +6,6 @@ models
 *.pdf
 *.txt
 *.csv
+data/
+figures/
+logs/

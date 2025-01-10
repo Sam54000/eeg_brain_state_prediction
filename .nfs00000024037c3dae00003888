@@ -1,0 +1,20 @@
+parallel: SIGHUP received. No new jobs will be started.
+parallel: Waiting for these 18 jobs to finish. Send SIGTERM to stop now.
+parallel: python3 /home/slouviot/01_projects/eeg_brain_state_prediction/src/train_custom_envelope.py --subject 20 --task rest
+parallel: python3 /home/slouviot/01_projects/eeg_brain_state_prediction/src/train_custom_envelope.py --subject 06 --task rest
+parallel: python3 /home/slouviot/01_projects/eeg_brain_state_prediction/src/train_custom_envelope.py --subject 17 --task rest
+parallel: python3 /home/slouviot/01_projects/eeg_brain_state_prediction/src/train_custom_envelope.py --subject 14 --task rest
+parallel: python3 /home/slouviot/01_projects/eeg_brain_state_prediction/src/train_custom_envelope.py --subject 11 --task rest
+parallel: python3 /home/slouviot/01_projects/eeg_brain_state_prediction/src/train_custom_envelope.py --subject 16 --task rest
+parallel: python3 /home/slouviot/01_projects/eeg_brain_state_prediction/src/train_custom_envelope.py --subject 09 --task rest
+parallel: python3 /home/slouviot/01_projects/eeg_brain_state_prediction/src/train_custom_envelope.py --subject 02 --task rest
+parallel: python3 /home/slouviot/01_projects/eeg_brain_state_prediction/src/train_custom_envelope.py --subject 07 --task rest
+parallel: python3 /home/slouviot/01_projects/eeg_brain_state_prediction/src/train_custom_envelope.py --subject 04 --task rest
+parallel: python3 /home/slouviot/01_projects/eeg_brain_state_prediction/src/train_custom_envelope.py --subject 22 --task rest
+parallel: python3 /home/slouviot/01_projects/eeg_brain_state_prediction/src/train_custom_envelope.py --subject 18 --task rest
+parallel: python3 /home/slouviot/01_projects/eeg_brain_state_prediction/src/train_custom_envelope.py --subject 13 --task rest
+parallel: python3 /home/slouviot/01_projects/eeg_brain_state_prediction/src/train_custom_envelope.py --subject 12 --task rest
+parallel: python3 /home/slouviot/01_projects/eeg_brain_state_prediction/src/train_custom_envelope.py --subject 01 --task rest
+parallel: python3 /home/slouviot/01_projects/eeg_brain_state_prediction/src/train_custom_envelope.py --subject 08 --task rest
+parallel: python3 /home/slouviot/01_projects/eeg_brain_state_prediction/src/train_custom_envelope.py --subject 21 --task rest
+parallel: python3 /home/slouviot/01_projects/eeg_brain_state_prediction/src/train_custom_envelope.py --subject 15 --task rest

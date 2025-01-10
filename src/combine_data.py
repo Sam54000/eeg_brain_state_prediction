@@ -23,7 +23,7 @@ import pandas as pd
 from pathlib import Path
 from glob import glob
 import matplotlib.pyplot as plt
-from eeg_research.system.bids_selector import BidsPath, BidsArchitecture, BidsDescriptor
+import bids_explorer.architecture as arch
 
 
 #%%
@@ -37,18 +37,19 @@ def pick_data(architecture):
                              Defaults to "01".
 
     Returns:
-        _type_: _description_
+        bids_data: A dictionary containing all the data combined for the entire
+        population
     """
     
     big_data = dict()
-    for _, db_row in architecture.database.iterrows():
+    for key, db_row in architecture:
         with open(db_row['filename'], 'rb') as file: 
             data = pickle.load(file)
-        big_data[db_row['filename'].stem.replace("_multimodal","")] = data
+        big_data[key] = data
                     
     return big_data
 #%%
-def generate_key_list(architecture: BidsArchitecture,
+def generate_key_list(architecture: arch.BidsArchitecture,
                       **kwargs) -> np.ndarray:
     selection = architecture.select(**kwargs)
     return selection['filename'].apply(lambda s:s.stem.replace("_multimodal","")).values
@@ -90,31 +91,24 @@ def filter_data(data: np.ndarray,
 
 def generate_train_test_architectures(train_subjects: np.ndarray,
                                       test_subjects: np.ndarray,
-                                      architecture: BidsArchitecture,
-                             ) -> tuple[BidsArchitecture,BidsArchitecture]:
+                                      architecture: arch.BidsArchitecture,
+                             ) -> tuple[arch.BidsArchitecture,arch.BidsArchitecture]:
     
 
-    train_architecture = architecture.copy().select(subject = train_subjects)
-    test_architecture = architecture.copy().select(subject = test_subjects)
-
-    train_database = sanatize_training_list(
-        train_architecture = train_architecture,
-        test_architecture = test_architecture
-    )
+    test_architecture = architecture.select(subject = test_subjects)
+    train_architecture = architecture.remove(subject = test_subjects)
 
 
-    return train_database, test_architecture.database
+    return train_architecture, test_architecture
 
 def generate_train_test_keys(
-    train_database: pd.DataFrame,
-    test_database: pd.DataFrame,
+    train_architecture: arch.BidsArchitecture,
+    test_index: pd.Index,
     ) -> tuple[np.ndarray, np.ndarray]:
 
-    train_keys = train_database['filename'].apply(
-        lambda s: s.stem.replace("_multimodal","")
-    ).values
+    train_keys = train_architecture.database.index.values
 
-    test_keys = test_database['filename'].stem.replace("_multimodal","")
+    test_keys = test_architecture.index.values
     return train_keys, test_keys
     
 
@@ -597,7 +591,7 @@ def create_X(big_data: dict,
                         data_dict=big_data,
                         channel_names=channel
                     )
-                elif isinstance(channel, int):
+                elif isinstance(channel, np.int64) or isinstance(channel, int):
                     index_channel = channel
                 
                 selected_feature.append(
@@ -879,24 +873,6 @@ def print_keys(keys_list: np.ndarray, title = None):
             print(f"        Subject: {subject}")
         print(f"            Session: {session}")
         hold_subject = subject
-
-def sanatize_training_list(train_architecture: BidsArchitecture,
-                           test_architecture: BidsArchitecture) -> np.ndarray:
-    """Sanatize the training list by removing the test label. 
-    
-    This sanatation prevent from leakage.
-    
-    Args:
-        training_list (list[str]): The list of training labels.
-        test_str (str): The test label
-    
-    Returns:
-        list[str]: The sanatized training list
-    """
-    
-    return train_architecture.database[~train_architecture.database.isin(
-        test_architecture.database.to_dict(orient='list')).all(axis=1)
-                                      ]
 
 def create_train_test_data(big_data: dict,
                            train_keys: np.ndarray,
