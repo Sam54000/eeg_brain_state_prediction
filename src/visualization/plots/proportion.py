@@ -13,7 +13,7 @@ class SignalProportionPlot(BasePlot):
         self.config = config or ProportionConfig()
         super().__init__(data, Path('figures'))
         
-    def prepare_data(self) -> dict:
+    def get_cap_frequency_pairs(self) -> dict:
         return self._calculate_proportions()
     
     def create_plot(self) -> None:

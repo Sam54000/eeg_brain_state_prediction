@@ -111,7 +111,8 @@ def aggregate_df_across_subjects(dataframe: pd.DataFrame,
     ])
 
     aggregated = getattr(grouped,stat_func)()
-    return aggregated.reset_index()
+    aggregated.reset_index(inplace = True)
+    return aggregated
 
     
 def get_best_n_feature_combinations(
@@ -128,17 +129,19 @@ def get_best_n_feature_combinations(
             (features_dataframe["subject"] == subject) & 
             (features_dataframe["ts_CAPS"] == cap)
         )
+        features_dataframe = features_dataframe[boolean_indices]
     else:
+        boolean_indices = features_dataframe["ts_CAPS"] == cap
+        features_dataframe = features_dataframe[boolean_indices]
         features_dataframe = aggregate_df_across_subjects(
             features_dataframe, 
             stat_func=aggregation_mode,
             )
-        boolean_indices = features_dataframe["ts_CAPS"] == cap
             
-    features_dataframe = features_dataframe.loc[boolean_indices]
     features_dataframe.sort_values(by='pearson_r', 
                                    ascending=False,
                                    inplace = True)
+
     channels = features_dataframe['electrode'].values[:n_features]
     bands = features_dataframe['frequency_Hz'].apply(lambda x: x-1).values[:n_features]
     feature_sets = {
@@ -154,7 +157,6 @@ def pipeline(
     architecture: arch.BidsArchitecture, 
     subject: str, 
     config: ModelConfig,
-    max_features:int,
     features_dataframe: pd.DataFrame,
     nb_feat_steps: int = 4,
     task: str = 'rest',
@@ -170,8 +172,11 @@ def pipeline(
         test_subjects=subject
     )
 
+    max_features = len(features_dataframe['electrode'].unique()) *\
+                   len(features_dataframe['frequency_Hz'].unique())
+                   
     results = initialize_results_dict()
-    for n_features in range(1, max_features + 1, nb_feat_steps):
+    for n_features in range(max_features - 1, max_features, nb_feat_steps):
         
         for test_keys, test_session in test_arch:
             train_keys = train_arch.database.index.values
@@ -233,7 +238,6 @@ def main(args: argparse.Namespace) -> None:
         architecture=architecture, 
         subject=args.subject, 
         config=config,
-        max_features=len(features_dataframe),
         features_dataframe=features_dataframe,
         task = args.task,
         description=args.desc,

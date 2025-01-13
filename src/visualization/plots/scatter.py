@@ -2,6 +2,7 @@ from pathlib import Path
 from typing import Optional, Union
 import pandas as pd
 import seaborn as sns
+import matplotlib.pyplot as plt
 from ..core.base_plot import BasePlot
 from ..config.plot_config import ScatterConfig
 
@@ -12,7 +13,7 @@ class EEGScatterPlot(BasePlot):
         self.config = config or ScatterConfig()
         super().__init__(data, Path('figures'))
         
-    def prepare_data(self) -> pd.DataFrame:
+    def get_cap_frequency_pairs(self) -> pd.DataFrame:
         return self._calculate_signal_quality()
     
     def create_plot(self) -> None:

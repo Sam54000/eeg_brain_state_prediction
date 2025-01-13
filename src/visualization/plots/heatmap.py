@@ -2,6 +2,7 @@ from pathlib import Path
 from typing import Optional, Union, List
 import numpy as np
 import pandas as pd
+from matplotlib.backends.backend_pdf import PdfPages
 import seaborn as sns
 import matplotlib.pyplot as plt
 from typing import Dict
@@ -49,13 +50,23 @@ class EEGHeatmapPlot(BasePlot):
         self.stats_func = stats_func
         self.stats_kwargs = stats_kwargs
         self.stats_attribute = stats_attribute
-        super().__init__(self.data, Path('figures'))
-
-    def prepare_data(self, **kwargs) -> pd.DataFrame:
+        super().__init__(self.data)
+    
+    def get_cap_frequency_pairs(self, **kwargs) -> pd.DataFrame:
         """Prepare and pivot data for heatmap plotting"""
-        func = self._get_stat_function()
-        cap_data = self.data[self.data["ts_CAPS"] == kwargs["cap"]]
-        return cap_data.pivot_table(
+        
+        boolean_selection = []
+        for key, value in kwargs.items():
+            boolean_selection.append(self.data[key] == value)
+        
+        boolean_selection = np.all(np.stack(boolean_selection), axis = 0)
+        selected_data = self.data[boolean_selection]
+        if kwargs.get('subject', False):
+            func = "mean"
+        else:
+            func = self._get_stat_function()
+
+        return selected_data.pivot_table(
             index='ch_name',
             columns='frequency_Hz',
             values='pearson_r',
@@ -70,7 +81,9 @@ class EEGHeatmapPlot(BasePlot):
             return lambda x: getattr(self.stats_func(x, **self.stats_kwargs),
                                      self.stats_attribute)
         
-    def create_plot(self, caps: Optional[List[str]] = None) -> None:
+    def _plot_population_level(self, 
+                                caps: Optional[List[str]] = None
+                                ) -> None:
         """Create multi-panel heatmap plot
         
         Args:
@@ -94,18 +107,63 @@ class EEGHeatmapPlot(BasePlot):
             else:
                 cbar_kws = None
 
-            self._plot_single_cap(ax, cap, anatomy_labels=anatomy_labels,
-                                  cbar = True,cbar_kws = cbar_kws)
-            
-        self.fig.tight_layout()
+            self._plot_single_cap(ax, 
+                                  anatomy_labels=anatomy_labels,
+                                  cbar = True,
+                                  cbar_kws = cbar_kws
+                                  )
+            ax.set_ylabel('')
+            ax.set_yticks([])
 
-    def _plot_single_cap(self, ax: plt.Axes, cap: str, anatomy_labels: bool = False,
+        self.fig.tight_layout()
+    
+    def _plot_subject_level(self):
+        with PdfPages(self.config.output_filename) as pdf:
+            for subject in self.data['subject'].unique():
+                for cap in self.data['ts_CAPS'].unique():
+                    self.fig, ax = plt.subplots(figsize = self.config.figsize)
+                    selection = self.get_cap_frequency_pairs(
+                        subject = subject,
+                        cap = cap
+                        )
+                    self._plot_single_cap(
+                        selection,
+                        ax, 
+                        anatomy_labels=True,
+                        chan_labels=True,
+                        cbar = True,
+                        cbar_kws = {"label": "Pearson's R"}
+                        )
+                    
+                    ax.set_ylabel('')
+                    ax.set_yticks([])
+                    ax.set_title(f"sub-{subject} {cap}")
+                    pdf.savefig(self.fig)
+                    plt.close(self.fig)
+                    
+
+    def create_plot(self, level = "subject"):
+        """Main function to create the plot
+
+        Args:
+            level (str, optional): The level to plot the heatmap can be at the
+                                   subject level (Default) or at the population
+                                   level.
+        """
+        pass
+
+
+
+    def _plot_single_cap(self, 
+                         selection: pd.DataFrame,
+                         ax: plt.Axes, 
+                         anatomy_labels: bool = False,
+                         chan_labels: bool = True,
                          **heatmap_args) -> None:
         """Plot heatmap for a single CAP value"""
-        cap_data = self.prepare_data(cap = cap)
         
         # Sort anatomical regions
-        sorted_data, anatomy_info = self._sort_anatomical_data(cap_data)
+        sorted_data, anatomy_info = self._sort_anatomical_data(selection)
         
         # Create heatmap
         sns.heatmap(
@@ -121,12 +179,18 @@ class EEGHeatmapPlot(BasePlot):
         # Add anatomical separators
         self._add_anatomical_separators(ax, anatomy_info)
         
-        if anatomy_labels:
-            self._add_anatomy_labels(ax=ax, anatomy_info=anatomy_info)
-        
-        # Customize appearance
-        self._customize_axis(ax, cap)
+        if chan_labels:
+            ax.set_yticklabels(list(sorted_data.index))
+            self._add_channel_names(ax=ax)
 
+        if anatomy_labels:
+            if chan_labels:
+                xpos = -1.5
+            else:
+                xpos = -0.15
+
+            self._add_anatomy_labels(ax=ax, anatomy_info=anatomy_info,xpos=xpos)
+        
     def _sort_anatomical_data(self, data) -> tuple[pd.DataFrame, pd.DataFrame]:
         """Sort data by anatomical regions.
         Returns:
@@ -166,23 +230,29 @@ class EEGHeatmapPlot(BasePlot):
     
         # Add horizontal lines at anatomy boundaries
         for idx in anatomy_changes:
-            ax.axhline(y=idx + 1, color='white', linewidth=2)
+            ax.axhline(y=idx + 1, **self.config.anat_sep_args)
+                       
     
-    def _add_anatomy_labels(self, ax: plt.Axes, anatomy_info: pd.DataFrame) -> None:
+    def _add_channel_names(self, ax:plt.Axes,):
+        anatomy_to_channels = self.data.groupby('anatomy')['ch_name']\
+            .unique().reindex(self.config.anatomical_order)
+        if ax is not None:
+            for label in ax.get_yticklabels():
+                channel_name = label.get_text()
+                for anatomy, channels in anatomy_to_channels.items():
+                    if channel_name in channels:
+                        label.set_color(
+                            self.config.anatomy_colors[anatomy]
+                            )
+                        break
+    
+    def _add_anatomy_labels(self, ax: plt.Axes, anatomy_info: pd.DataFrame,
+                            xpos: float) -> None:
         # Add anatomy labels
         anatomy_changes = np.where(anatomy_info['anatomy'].values[1:] != 
                                  anatomy_info['anatomy'].values[:-1])[0]
         anatomy_changes = np.append(anatomy_changes, len(anatomy_info))
         unique_anatomies = anatomy_info['anatomy'].unique()
-        color_palette = sns.diverging_palette(
-            150, 
-            40, 
-            l=50, 
-            center="dark",
-            n=len(self.config.anatomical_order)
-            )
-
-        anatomy_colors = dict(zip(self.config.anatomical_order, color_palette))
         
         # Force exact positioning by using transform coordinates
 
@@ -194,18 +264,15 @@ class EEGHeatmapPlot(BasePlot):
                 middle = (anatomy_changes[i-1] + anatomy_changes[i]) / 2
 
             # Use transform to maintain exact float coordinates
-            ax.text(-0.15, middle, 
+            ax.text(xpos, 
+                    middle, 
                     anatomy.capitalize(),
                     rotation=0,
-                    color=anatomy_colors[anatomy],
+                    color=self.config.anatomy_colors[anatomy],
                     va='center',
                     ha='right',
+                    fontdict={
+                        "size": 12,
+                        "fontweight": "bold"
+                    }
             ) 
-
-    def _customize_axis(self, ax: plt.Axes, title: str) -> None:
-        """Customize axis appearance"""
-        ax.set_title(title)
-        ax.set_ylabel('')
-        ax.set_yticks([])
-        if title != "CAP8":  # Only show xlabel for bottom row
-            ax.set_xlabel('')
