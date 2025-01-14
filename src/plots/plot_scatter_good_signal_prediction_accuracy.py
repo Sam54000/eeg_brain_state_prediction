@@ -180,7 +180,6 @@ def main(args):
     fig, ax = plt.subplots(figsize=(6, 6))
     ani = FuncAnimation(fig, animate, interval=100, frames = len(df_freq_cap))
     ani.save(f'/home/slouviot/01_projects/eeg_brain_state_prediction/figures/animated_scatter_{args.task}_desc-{desc}.mp4', writer='ffmpeg')
-# %%
 if __name__ == "__main__":
     parser = argparse.ArgumentParser("plot_boxplot")
     parser.add_argument("--task", default = "rest")
