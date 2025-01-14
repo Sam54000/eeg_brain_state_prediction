@@ -107,36 +107,46 @@ class EEGHeatmapPlot(BasePlot):
             else:
                 cbar_kws = None
 
-            self._plot_single_cap(ax, 
-                                  anatomy_labels=anatomy_labels,
-                                  cbar = True,
-                                  cbar_kws = cbar_kws
-                                  )
+            selection = self.get_cap_frequency_pairs(
+                ts_CAPS = cap
+            )
+            self._plot_single_cap(
+                selection = selection,
+                ax = ax, 
+                anatomy_labels=anatomy_labels,
+                chan_labels=False,
+                cbar = True,
+                cbar_kws = cbar_kws
+            )
             ax.set_ylabel('')
             ax.set_yticks([])
 
         self.fig.tight_layout()
     
     def _plot_subject_level(self):
+        self.config.ylabel = ""
+        self.config.xlabel = "Frequency (Hz)"
         with PdfPages(self.config.output_filename) as pdf:
             for subject in self.data['subject'].unique():
                 for cap in self.data['ts_CAPS'].unique():
-                    self.fig, ax = plt.subplots(figsize = self.config.figsize)
+                    self.fig, ax = plt.subplots(figsize=self.config.figsize)
+                    self.fig.subplots_adjust(**self.config.layout_args)
+                    
                     selection = self.get_cap_frequency_pairs(
-                        subject = subject,
-                        cap = cap
-                        )
+                        subject=subject,
+                        ts_CAPS=cap
+                    )
                     self._plot_single_cap(
                         selection,
-                        ax, 
+                        ax,
                         anatomy_labels=True,
                         chan_labels=True,
-                        cbar = True,
-                        cbar_kws = {"label": "Pearson's R"}
-                        )
+                        cbar=True,
+                        cbar_kws={"label": "Pearson's R"}
+                    )
                     
                     ax.set_ylabel('')
-                    ax.set_yticks([])
+                    ax.set_xlabel("Frequency (Hz)")
                     ax.set_title(f"sub-{subject} {cap}")
                     pdf.savefig(self.fig)
                     plt.close(self.fig)
@@ -150,7 +160,10 @@ class EEGHeatmapPlot(BasePlot):
                                    subject level (Default) or at the population
                                    level.
         """
-        pass
+        if level == "subject":
+            self._plot_subject_level()
+        else:
+            self._plot_population_level()
 
 
 
@@ -185,7 +198,7 @@ class EEGHeatmapPlot(BasePlot):
 
         if anatomy_labels:
             if chan_labels:
-                xpos = -1.5
+                xpos = -2.2
             else:
                 xpos = -0.15
 
@@ -276,3 +289,31 @@ class EEGHeatmapPlot(BasePlot):
                         "fontweight": "bold"
                     }
             ) 
+
+    def preview_single_plot(self, subject: str, cap: str, chan_labels: bool = True) -> None:
+        """Preview a single plot for a specific subject and CAP
+        
+        Args:
+            subject: Subject ID to plot
+            cap: CAP value to plot
+        """
+        self.fig, ax = plt.subplots(figsize=self.config.figsize)
+        self.fig.subplots_adjust(**self.config.layout_args)
+        
+        selection = self.get_cap_frequency_pairs(
+            subject=subject,
+            ts_CAPS=cap
+        )
+        
+        self._plot_single_cap(
+            selection,
+            ax,
+            anatomy_labels=True,
+            chan_labels=chan_labels,
+            cbar=True,
+            cbar_kws={"label": "Pearson's R"}
+        )
+        
+        ax.set_ylabel('')
+        ax.set_title(f"sub-{subject} {cap}")
+        plt.show()  # This will display the plot instead of saving it

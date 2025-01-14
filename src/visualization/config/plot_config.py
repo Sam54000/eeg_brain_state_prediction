@@ -12,15 +12,36 @@ class BaseConfig:
     ])
     root = Path(__file__).parents[3]
     output_dir: Path = root / Path('data/figures')
-    color_palette = sns.diverging_palette(
-        150, 
-        40, 
-        l=50, 
-        center="dark",
-        n=12,
-        )
+    output_filename: Path = Path("plot.png")  # Default filename
+    
+    # Define color palette parameters
+    palette_type: str = "diverging"  # can be "diverging", "sequential", etc.
+    palette_args: dict = field(default_factory=lambda: {
+        "h_neg": 150,  # hue for negative values
+        "h_pos": 40,   # hue for positive values
+        "l": 50,       # lightness
+        "s": 75,       # saturation
+        "center": "dark",
+        "n": 12        # number of colors
+    })
 
-    anatomy_colors = dict(zip(anatomical_order, color_palette))
+    def __post_init__(self):
+        # Generate the color palette based on parameters
+        if self.palette_type == "diverging":
+            self.color_palette = sns.diverging_palette(
+                self.palette_args["h_neg"],
+                self.palette_args["h_pos"],
+                l=self.palette_args["l"],
+                center=self.palette_args["center"],
+                n=self.palette_args["n"]
+            )
+        # Add more palette types as needed
+        
+        # Create the anatomy color mapping
+        self.anatomy_colors = dict(zip(self.anatomical_order, self.color_palette))
+        
+        # Ensure output_filename is a full path
+        self.output_filename = self.output_dir / self.output_filename
 
 @dataclass
 class HeatmapConfig(BaseConfig):
@@ -30,18 +51,24 @@ class HeatmapConfig(BaseConfig):
     vmax: float = 0.3
     linewidths: float = 0.5
     figsize: tuple = (15,20)
-    anat_sep_args:dict = field(default_factory=lambda: {
+    anat_sep_args: dict = field(default_factory=lambda: {
         "color": "black",
         "alpha": 0.5,
         "linewidth": 2,
         "linestyle": "-"
     })
-    xlabel = "Frequency (Hz)"
-    ylabel = "Channel Name"
+    # Add layout parameters
+    layout_args: dict = field(default_factory=lambda: {
+        "left": 0.25,    # left margin
+        "right": 0.95,   # right margin
+        "top": 0.95,     # top margin
+        "bottom": 0.1    # bottom margin
+    })
+    xlabel: str = "Frequency (Hz)"
+    ylabel: str = "Channel Name"
 
 @dataclass
 class BoxPlotConfig(BaseConfig):
-    output_filename: Path = Path("a_plot.png")
     figsize: tuple = (13, 15)
     animation_interval: int = 100
     x: str = 'pearson_r'
@@ -63,9 +90,6 @@ class BoxPlotConfig(BaseConfig):
         "fliersize": 0,
         "capwidths": 0,
     })
-
-    def __post_init__(self):
-        self.output_filename = self.output_dir / self.output_filename
 
 @dataclass
 class ScatterConfig(BaseConfig):
