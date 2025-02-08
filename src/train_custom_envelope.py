@@ -13,7 +13,7 @@ from pathlib import Path
 import sklearn.model_selection
 import pandas as pd
 import argparse
-import combine_data
+import src.training_testing_pipeline.combine_data as combine_data
 import bids_explorer.architecture as arch
 
 

@@ -42,22 +42,18 @@ def pick_data(architecture):
     """
     
     big_data = dict()
-    for key, db_row in architecture:
+    for idx, db_row in architecture:
         with open(db_row['filename'], 'rb') as file: 
             data = pickle.load(file)
-        big_data[key] = data
+        big_data[idx] = data
                     
     return big_data
 #%%
-def generate_key_list(architecture: arch.BidsArchitecture,
-                      **kwargs) -> np.ndarray:
-    selection = architecture.select(**kwargs)
-    return selection['filename'].apply(lambda s:s.stem.replace("_multimodal","")).values
 
 def filter_data(data: np.ndarray, 
                 low_freq_cutoff: float | None = None,
                 high_freq_cutoff: float | None = None,
-                ):
+                ) -> np.ndarray:
     """Filter the data using a bandpass filter.
 
     Args:
@@ -79,6 +75,8 @@ def filter_data(data: np.ndarray,
     elif high_freq_cutoff and low_freq_cutoff:
         filter_type = 'band'
         freq = [low_freq_cutoff, high_freq_cutoff]
+    else:
+        raise ValueError("Either low_freq_cutoff or high_freq_cutoff must be provided")
     
     filtered_data = scipy.signal.butter(
         4, 
@@ -103,7 +101,7 @@ def generate_train_test_architectures(train_subjects: np.ndarray,
 
 def generate_train_test_keys(
     train_architecture: arch.BidsArchitecture,
-    test_index: pd.Index,
+    test_architecture: arch.BidsArchitecture,
     ) -> tuple[np.ndarray, np.ndarray]:
 
     train_keys = train_architecture.database.index.values
@@ -564,7 +562,9 @@ def create_X(big_data: dict,
     features = list()
     if verbose:
         print(' CREATING X:')
-    for modality in features_args.keys():
+    for modality, modality_args in features_args.items():
+        if modality_args is None:
+            continue
         array = create_big_feature_array(
             big_data = big_data,
             keys_list=keys_list,
@@ -573,11 +573,8 @@ def create_X(big_data: dict,
             trim_args=trim_args
         )
 
-        if 'eeg' in modality:
-            #WE NEED TO SET BANDS AS INDEX AND NOT STRING
-
+        if modality == 'eeg':
             selected_feature = list()
-
             channels = features_args[modality]['channel']
             channels = [channels] if channels is None or isinstance(channels, int) else channels
             bands = features_args[modality]['band']
@@ -986,40 +983,6 @@ def create_train_test_data(big_data: dict,
             X_test, 
             Y_test)
 
-def plot_corr(df_pearson_r):
-    df_pearson_r = df_pearson_r.sort_values(by = ['subject', 'ts_CAPS']).reset_index()        
-    fig, ax = plt.subplots(figsize=(6,3))
-    sns.stripplot(data = df_pearson_r,
-                x = 'ts_CAPS',
-                y = 'pearson_r',
-                ax = ax,
-                palette = 'Paired',
-                alpha=0.5, 
-                size=5, 
-                zorder=0
-                )
-
-    sns.barplot(data = df_pearson_r, 
-                x = 'ts_CAPS', 
-                y = 'pearson_r', 
-                errorbar = ('ci',68),
-                ax = ax, 
-                palette = 'Paired',
-                alpha=0.6, 
-                width=0.8, 
-                zorder=1
-                )
-
-    caps_names = ['CAP1','CAP2','CAP3','CAP4','CAP5','CAP6','CAP7','CAP8']
-    plt.ylim(-0.4,1)
-    plt.xlabel('')
-    plt.ylabel('Correlation(yhat,ytest)')#, size = 12)
-    plt.xticks(ticks = np.arange(8), labels = caps_names)#, size = 12)
-    plt.axhline(0, 
-                linewidth = 1.5,
-                color = 'black')
-    
-    return fig, ax
 
 def xcorr_with_ttest(subject_list: list, 
                      eeg_files_path: str | os.PathLike,
@@ -1048,7 +1011,8 @@ def xcorr_with_ttest(subject_list: list,
         _type_: _description_
     """
     
-    channel_list = ['Fp1','Fpz','Fp2','AF7','AF3','AF4','AF8','F7','F5','F3','F1','Fz',
+    channel_list = ['Fp1','Fpz','Fp2','AF7','AF3','AF4','AF8','F7','F5','F3',
+                    'F1','Fz',
                     'F2','F4','F6','F8','FT7','FT8','FC5','FC3','FC1','FC2','FC4','FC6',
                     'T7','T8','C5','C3','C1','Cz','C2','C4','C6','TP9','TP7','TP8','TP10',
                     'CP5','CP3','CP1','CPz','CP2','CP4','CP6','P7','P5','P3','P1','Pz',
@@ -1186,134 +1150,3 @@ def splitter(lst: list[str],
                     break
     
     return training_subjects, feature_subjects
-
-#%%
-
-def Main():
-    study_directory = ("/data2/Projects/eeg_fmri_natview/derivatives")
-
-    caps = np.array(['tsCAP1',
-            'tsCAP2',
-            'tsCAP3',
-            'tsCAP4',
-            'tsCAP5',
-            'tsCAP6',
-            'tsCAP7',
-            'tsCAP8'])
-
-    runs = ['01']#, '02']
-    tasks = ['checker','rest']#['tp','dme','monkey1','monkey2','monkey5','inscape']
-    SAMPLING_RATE_HZ = 3.8
-    WINDOW_LENGTH_SECONDS = 10
-    NB_BEST_FEATURES = ''
-    sessions = ["01","02"]
-
-    big_d = pick_data(
-        root         = study_directory,
-        datatype     = "multimodal",
-        suffix       = "multimodal",
-        description  = "customGfp8",
-        run          = runs)
-
-    channels = _find_item('channel_name',big_d) * 5
-    bands = [[band] * 61 for band in ['delta','theta','alpha','beta','gamma']]
-    bands = np.array(bands).flatten()
-    channels = np.array(channels).flatten()
-
-    subjects = np.array(list(big_d.keys()))
-    feat_args = {"pupil":["pupil_dilation","first_derivative","second_derivative"],
-    #            "gfp":{
-    #                "channel": None,#channels,#["Fp1", "O2"],
-    #                "band": None #bands#["delta","alpha"]
-    #            }
-    }
-
-    r_data_for_df = {
-                    'iteration':[],
-                    'subject':[],
-                    'session':[],
-                    'run': [],
-                    'task': [],
-                    'ts_CAPS':[],
-                    'pearson_r':[],
-                    'eye_features': [],
-                    'eeg_features_channel': [],
-                    'eeg_features_band': []}
-    for task in tasks:
-        for run in runs:
-            for subject in subjects:
-
-                training_subjects, feature_subjects = splitter(
-                    list(subjects),
-                    test=subject,
-                    num_combinations=10,
-                )
-                i = 0    
-                for cap in caps:
-                    train_keys, test_keys = generate_train_test_keys(
-                        train_subjects=subjects,#training_subject_list,
-                        test_subjects=subject,
-                    )
-                    for test_key in test_keys:
-                        print(f"===== {cap} =====")
-                        _, test_session, _, _ = test_key
-                        try:
-                            X_train, Y_train, X_test, Y_test = create_train_test_data(
-                                big_data=big_d,
-                                train_keys=train_keys,
-                                test_keys=test_key[np.newaxis,:],
-                                cap_name = cap,
-                                features_args=feat_args,
-                                window_length=int(SAMPLING_RATE_HZ*WINDOW_LENGTH_SECONDS),
-                                masking = True,
-                                trim_args = (5,None)
-                            )
-
-                            if X_test is None \
-                                or X_test.size == 0 \
-                                    or Y_test is None or Y_test.size == 0:
-                                continue
-                            
-                            estimator = sklearn.linear_model.RidgeCV(cv=5, )
-                            estimator.fit(X_train,Y_train)
-                            Y_hat = estimator.predict(X_test)
-                            r = np.corrcoef(Y_test.T,Y_hat.T)[0,1]
-                            eeg_features = feat_args.get('EEGbandsEnvelopes', False)
-                            for key, values in zip(
-                                [
-                                    'iteration',
-                                    'subject',
-                                    'session',
-                                    'task',
-                                    'run',
-                                    'ts_CAPS',
-                                    'pearson_r',
-                                    'eye_features',
-                                    'eeg_features_channel',
-                                    'eeg_features_band',
-                                    ],
-                                [
-                                    i,
-                                    test_key[0],
-                                    test_key[1],
-                                    test_key[2],
-                                    test_key[3],
-                                    cap,
-                                    r,
-                                    feat_args.get('pupil', 'NA'),
-                                    eeg_features['channel'] if eeg_features else 'NA',
-                                    eeg_features['band'] if eeg_features else 'NA',
-                                ]):
-                                r_data_for_df[key].append(values)
-                            
-                        except Exception as e:
-                            raise e
-                            print(e)
-                            continue
-
-    df_pearson_r = pd.DataFrame(r_data_for_df)
-    df_pearson_r.to_csv(f'prediction_pupil_and_gfp.csv')
-    #df_pearson_r.to_csv(f'ALL_{tasks[0]}.csv')
-
-if __name__ == "__main__":
-    Main()

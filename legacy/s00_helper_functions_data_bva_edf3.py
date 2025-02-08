@@ -84,6 +84,8 @@ def get_brainstate_data_all(sub: str,
     if any([(task[:2] == "tp"),
             ("monkey" in task),
             ("dmh" in task),
+            ("rest" in task),
+            ("checker" in task),
            ("dme" in task)]):
         bstask = task
     else:
@@ -94,10 +96,10 @@ def get_brainstate_data_all(sub: str,
     caps_ts_file = os.path.join(fmri_data_dir, 'cap_ts', basename + ".txt")
     caps_pca_file = os.path.join(fmri_data_dir, 'pca_cap_ts', basename + ".txt")
     fmri_timeseries_dir = os.path.join(fmri_data_dir, 'extracted_ts')
-    net_yeo7_file = os.path.join(fmri_timeseries_dir ,          f"{basename}{mri_process_name}NR_Yeo7.csv")
-    net_yeo17_file = os.path.join(fmri_timeseries_dir ,         f"{basename}{mri_process_name}NR_Yeo17.csv")
-    global_signal_file = os.path.join(fmri_timeseries_dir ,     f"{basename}{mri_process_name}NR_GS.csv")
-    global_signal_raw_file = os.path.join(fmri_timeseries_dir , f"{basename}{mri_process_name}GS-raw.csv")
+    net_yeo7_file = os.path.join(fmri_timeseries_dir ,          f"{basename}{mri_process_name}bold_NR_Yeo7.csv")
+    net_yeo17_file = os.path.join(fmri_timeseries_dir ,         f"{basename}{mri_process_name}bold_NR_Yeo17.csv")
+    global_signal_file = os.path.join(fmri_timeseries_dir ,     f"{basename}{mri_process_name}bold_NR_GS.csv")
+    global_signal_raw_file = os.path.join(fmri_timeseries_dir , f"{basename}{mri_process_name}bold_GS-raw.csv")
 
     print(f"caps_ts_file exists - {os.path.exists(caps_ts_file)}")
     print(f"caps_pca_file exists - {os.path.exists(caps_pca_file)}")
@@ -107,18 +109,19 @@ def get_brainstate_data_all(sub: str,
     print(f"global_signal_raw_file exists - {os.path.exists(global_signal_raw_file)}")
 
     #  & os.path.exists(caps_pca_file)
-    all_brainstates_exists = (os.path.exists(caps_ts_file) & 
-                               #os.path.exists(net_yeo7_file) &
-                               #os.path.exists(net_yeo17_file) &
-                               os.path.exists(global_signal_file) &
-                               os.path.exists(global_signal_raw_file))
+    all_brainstates_exists = (#os.path.exists(caps_ts_file) #& 
+                               #os.path.exists(net_yeo7_file) #&
+                               os.path.exists(net_yeo17_file) #&
+                               #os.path.exists(global_signal_file) &
+                               #os.path.exists(global_signal_raw_file))
+    )
 
     brainstate_data = pd.DataFrame()
     if os.path.exists(caps_ts_file):
         # kmeans CAPs
-        caps_ts_data = pd.read_csv(caps_ts_file, sep='\t')
+        #caps_ts_data = pd.read_csv(caps_ts_file, sep='\t')
         #caps_ts_data = caps_ts_data.iloc[:,:8]
-        brainstate_data = pd.concat((brainstate_data,caps_ts_data.add_prefix("ts", axis=1)), axis=1, ignore_index=False, sort=False)
+        #brainstate_data = pd.concat((brainstate_data,caps_ts_data.add_prefix("ts", axis=1)), axis=1, ignore_index=False, sort=False)
         # PCA CAPs
         #caps_pca_data = pd.read_csv(caps_pca_file, sep='\t')
         #caps_pca_data = caps_pca_data.iloc[:,:10]
@@ -126,11 +129,11 @@ def get_brainstate_data_all(sub: str,
         # Yeo 7 Networks
         #net_yeo7_data = pd.read_csv(net_yeo7_file, sep='\t', header=None)
         #net_yeo7_data.columns = ['net'+f"{col_name+1}" for col_name in net_yeo7_data.columns]
-        #brainstate_data = pd.concat((brainstate_data,net_yeo7_data.add_prefix("yeo7", axis=1)), axis=1, ignore_index=False, sort=False)
+        #brainstate_data = pd.concat((brainstate_data,net_yeo7_data), axis=1, ignore_index=False, sort=False)
         ## Yeo 17 Networks
-        #net_yeo17_data = pd.read_csv(net_yeo17_file, sep='\t', header=None)
-        #net_yeo17_data.columns = ['net'+f"{col_name+1}" for col_name in net_yeo17_data.columns]
-        #brainstate_data = pd.concat((brainstate_data,net_yeo17_data.add_prefix("yeo17", axis=1)), axis=1, ignore_index=False, sort=False)
+        net_yeo17_data = pd.read_csv(net_yeo17_file, sep='\t', header=None)
+        net_yeo17_data.columns = ['net'+f"{col_name+1}" for col_name in net_yeo17_data.columns]
+        brainstate_data = pd.concat((brainstate_data,net_yeo17_data.add_prefix("yeo17", axis=1)), axis=1, ignore_index=False, sort=False)
         ## GS
         #global_signal_data = pd.read_csv(global_signal_file, sep='\t', header=None)
         #global_signal_data.columns = ["GS"]

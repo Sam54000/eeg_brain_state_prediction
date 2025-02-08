@@ -46,7 +46,7 @@ tasks = [ 'checker_run-01', 'rest_run-01', 'inscapes_run-01',
             'dme_run-01', 'dme_run-02', 'monkey1_run-01', 'monkey1_run-02', 'tp_run-01', 'tp_run-02', 
             'dmh_run-01', 'dmh_run-02', 'monkey2_run-01', 'monkey2_run-02', 'monkey5_run-01', 'monkey5_run-02' ]
 #tasks = [ 'checker_run-01', 'rest_run-01' ]
-bstate = 'cap_ts' # 'pca_cap_ts'
+bstate = #'cap_ts' # 'pca_cap_ts'
 
 brainstate_dir = os.path.join(fmri_data_dir, bstate)
 

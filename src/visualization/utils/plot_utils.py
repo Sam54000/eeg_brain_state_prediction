@@ -1,4 +1,5 @@
-from typing import Optional
+import re
+from typing import Optional, Tuple
 import matplotlib.pyplot as plt
 import seaborn as sns
 
@@ -28,3 +29,7 @@ def add_labels(ax: plt.Axes,
         ax.set_ylabel(ylabel, fontsize=12)
     if title:
         ax.set_title(title, fontsize=14, pad=20)
+
+def split_camel_case(text: str) -> str:
+    """Split camel case string while preserving case."""
+    return re.sub(r'(?<!^)(?=[A-Z])', ' ', text)

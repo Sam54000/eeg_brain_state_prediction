@@ -1,7 +1,9 @@
 from dataclasses import dataclass, field
 from typing import List, Optional
+import itertools
 from pathlib import Path
 import seaborn as sns
+from ..utils.plot_utils import split_camel_case
 
 @dataclass
 class BaseConfig:
@@ -101,3 +103,55 @@ class ProportionConfig(BaseConfig):
     figsize: tuple = (12, 6)
     cmap: str = 'RdYlGn'
     bar_width: float = 0.8
+
+@dataclass
+class BarPlotConfig:
+    """Configuration for EEG bar plot visualization
+    
+    This class is used to configure bar plots for Pearson's R between
+    predicted and real brainstate for each subject. The comparison was done
+    in a leav-one-out manner training the model on n-1 subject and testing on
+    the remaining subject. This class helps for the configuration of the bar
+    plot displaying the result of these comparison. The data for the plot
+    Should be a pandas.DataFrame object for one specific task, one specific
+    description spanning across all subject, sessions and runs.
+    
+    Args:
+        figsize (tuple): The size of the figure.
+        palette (str): The seaborn palette to use for the plot.
+        strip_alpha (float): The alpha value for the strip plot representing
+                             individual R values for each subject.
+        strip_size (int): The size of the strip plot markers representing 
+                          individual R values for each subject.
+        bar_alpha (float): The alpha value for the bar plot representing
+                           the average of R values across the population.
+        bar_width (float): The width of the bar plot.
+        ylim (tuple): The limits of the y-axis.
+        elements (list): What element of brain state to plot (can be 'CAP',
+                         'magnitude', 'phase', 'real', 'yeo7net', 'yeo17net',
+                         etc.).
+        format (str): Chose to either save every figures in a single pdf or 
+                      save each figures into one png file.
+        tasks (list): The tasks to plot.
+        descriptions (list): The descriptions chosen to plot.
+        additional_info (str): What to add into the title.
+    """
+    
+    output_dir: Path
+    pdf_outpout_filename: Path | str
+    figsize: tuple = (6, 3)
+    palette: str = 'Paired'
+    strip_alpha: float = 0.5
+    strip_size: int = 5
+    bar_alpha: float = 0.6
+    bar_width: float = 0.8
+    ylim: tuple = (-0.4, 1)
+    ylabel: str = 'Correlation(yhat,ytest)'
+    elements: list = field(default_factory=lambda: ["magnitude", "phase", "real"])
+    saving_format: str = 'png'
+    combinations: itertools.product
+    additional_info: str = ''
+
+    def __post_init__(self):
+        if not self.output_dir.exists():
+            self.output_dir.mkdir(exist_ok=True, parents=True)

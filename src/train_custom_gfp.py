@@ -12,7 +12,7 @@ import numpy as np
 from pathlib import Path
 import sklearn.model_selection
 import pandas as pd
-import combine_data
+import src.training_testing_pipeline.combine_data as combine_data
 from eeg_research.system.bids_selector import BidsArchitecture, BidsDescriptor
 
 def Main(task):

@@ -3,15 +3,27 @@ The aggregation across subject is done either with mean or median
 """
 
 import os
+nthreads = "32" # 64 on synapse
+
+os.environ["OMP_NUM_THREADS"] = nthreads
+os.environ["OPENBLAS_NUM_THREADS"] = nthreads
+os.environ["MKL_NUM_THREADS"] = nthreads
+os.environ["VECLIB_MAXIMUM_THREADS"] = nthreads
+os.environ["NUMEXPR_NUM_THREADS"] = nthreads
+
+import scipy.stats
 import sklearn
+import time
 import numpy as np
 from pathlib import Path
+import scipy
 import sklearn.model_selection
 import pandas as pd
 import argparse
-import combine_data
+import src.training_testing_pipeline.combine_data as combine_data
 import bids_explorer.architecture as arch
-from typing import Dict, List, Tuple, Any
+from typing import Dict, List, Callable, Optional, Union, Any, Tuple
+from types import FunctionType
 from dataclasses import dataclass, field
 
 @dataclass
@@ -24,8 +36,13 @@ class ModelConfig:
     ]))
     n_bands: int = 39
     n_channels: int = 61
+    aggregation_function: Callable[[np.ndarray, float], tuple[float, float]] = scipy.stats.ttest_1samp
+    stat_func_kwargs: Dict[str, Any] = field(default_factory=lambda: {"popmean": 0})
+    nb_desired_features: List[int] = field(
+        default_factory=lambda: np.arange(1, 51, 1)
+    )
 
-def set_thread_env(nthreads: str = "1") -> None:
+def set_thread_env(nthreads: str = "32") -> None:
     """Set environment variables for thread control"""
     thread_vars = [
         "OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS", "MKL_NUM_THREADS",
@@ -40,7 +57,7 @@ def create_bids_architecture(root_path: str, task: str) -> arch.BidsArchitecture
         "root": Path(root_path),
         "datatype": "multimodal",
         "suffix": "multimodal",
-        "description": "CustomEnvBk8",
+        "description": "CustomEnvBk8Caps",
         "run": "01",
         "task": task,
         "extension": ".pkl",
@@ -85,20 +102,28 @@ def save_results(results_df: pd.DataFrame,
                  subject: str, 
                  task: str, 
                  description: str,
-                 aggregation_mode: str,
+                 aggregation_mode_str: str,
+                 n_features: int,
                  ) -> None:
     """Save results to CSV file"""
-    output_path = "/home/slouviot/01_projects/eeg_brain_state_prediction/data"\
-        f"/sub-{subject}_task-{task}_desc-{description}FeatureSelectionAgg"\
-        f"{aggregation_mode.capitalize()}_predictions.csv"
+    output_path = "/home/slouviot/01_projects/eeg_brain_state_prediction/data/"\
+        f"custom_envelope/group_level_feature_selection/sub-{subject}_task-{task}_desc-{description}FeatureSelectionAgg"\
+        f"{aggregation_mode_str.capitalize()}WithPupil_predictions.csv"
     results_df.to_csv(output_path, index=False)
 
 def get_all_features_dataframe(csv_file: str | Path) -> pd.DataFrame:
     return pd.read_csv(csv_file)
 
 def aggregate_df_across_subjects(dataframe: pd.DataFrame,
-                                 stat_func: str = 'mean') -> pd.DataFrame:
-    "When getting features for the entire population."
+                                 config: ModelConfig,
+                                 ) -> pd.DataFrame:
+    """When getting features for the entire population."""
+    if isinstance(config.aggregation_function, str):
+        func = config.aggregation_function
+    else:
+        def func(x):
+            return scipy.stats.ttest_1samp(x, popmean=0).statistic
+
     grouped = dataframe[[
         "frequency_Hz",
         "electrode",
@@ -110,60 +135,67 @@ def aggregate_df_across_subjects(dataframe: pd.DataFrame,
         "ts_CAPS",
     ])
 
-    aggregated = getattr(grouped,stat_func)()
-    aggregated.reset_index(inplace = True)
-    return aggregated
+    aggregated = grouped.aggregate(func)
+    return aggregated.reset_index()
 
-    
 def get_best_n_feature_combinations(
     n_features: int, 
-    cap: str,
-    features_dataframe: pd.DataFrame,
-    subject: dict | None,
-    aggregation_mode: str = "median",
-    ) -> Dict[str,Dict[str,List]]: # TODO: TO MODIFY
-    """Generate feature combinations based on number of features"""
+    aggregated_selection: pd.DataFrame,
+    to_sort: str = "pearson_r",
+) -> Dict[str, Dict[str, np.ndarray]]:
+    """Generate feature combinations based on number of features.
+    
+    Args:
+        n_features: Number of features to select
+        aggregated_selection: DataFrame containing feature selection data
+        subject: Optional subject information
+        config: Model configuration
+        tstats (bool): Wether the dataframe provided is the tstats or not.
+        
+    Returns:
+        Dictionary containing selected channels and bands
+    """
+    aggregated_selection = aggregated_selection.sort_values(
+        by=to_sort,
+        ascending=False,
+    )
 
-    if subject is not None:
-        boolean_indices = (
-            (features_dataframe["subject"] == subject) & 
-            (features_dataframe["ts_CAPS"] == cap)
-        )
-        features_dataframe = features_dataframe[boolean_indices]
-    else:
-        boolean_indices = features_dataframe["ts_CAPS"] == cap
-        features_dataframe = features_dataframe[boolean_indices]
-        features_dataframe = aggregate_df_across_subjects(
-            features_dataframe, 
-            stat_func=aggregation_mode,
-            )
-            
-    features_dataframe.sort_values(by='pearson_r', 
-                                   ascending=False,
-                                   inplace = True)
-
-    channels = features_dataframe['electrode'].values[:n_features]
-    bands = features_dataframe['frequency_Hz'].apply(lambda x: x-1).values[:n_features]
-    feature_sets = {
+    channels = aggregated_selection['electrode'].values[:n_features]
+    bands = aggregated_selection['frequency_Hz'].apply(lambda x: x-1).values[:n_features]
+    
+    return {
         "eeg": {
             "channel": channels,
             "band": bands,
         }
     }
-    
-    return feature_sets
 
 def pipeline(
-    architecture: arch.BidsArchitecture, 
+    architecture: 'arch.BidsArchitecture',  # Using string literal for forward reference
     subject: str, 
     config: ModelConfig,
-    features_dataframe: pd.DataFrame,
-    nb_feat_steps: int = 4,
+    aggregated_selection: pd.DataFrame,
     task: str = 'rest',
-    description: str = 'CustomEnvBk',
-    aggregation_mode: str = "median",
-
-    ) -> None:
+    description: str = 'CustomEnvBkCaps',
+    aggregation_mode: Union[str, FunctionType] = "median",
+) -> None:
+    """Run iterative feature selection process.
+    
+    Args:
+        architecture: BIDS architecture object
+        subject: Subject identifier
+        config: Model configuration
+        aggregated_selection: DataFrame with feature selection results
+        task: Task identifier
+        description: Description string
+        aggregation_mode: Method for aggregating results
+    """
+    aggregation_mode_str = (
+        aggregation_mode.__name__ 
+        if isinstance(aggregation_mode, FunctionType)
+        else aggregation_mode
+    )
+    
     """Run iterative feature selection process"""
     big_data = combine_data.pick_data(architecture=architecture)
     train_arch, test_arch = combine_data.generate_train_test_architectures(
@@ -172,11 +204,8 @@ def pipeline(
         test_subjects=subject
     )
 
-    max_features = len(features_dataframe['electrode'].unique()) *\
-                   len(features_dataframe['frequency_Hz'].unique())
-                   
     results = initialize_results_dict()
-    for n_features in range(max_features - 1, max_features, nb_feat_steps):
+    for n_features in config.nb_desired_features:#range(max_features - 1, max_features, nb_feat_steps):
         
         for test_keys, test_session in test_arch:
             train_keys = train_arch.database.index.values
@@ -185,11 +214,10 @@ def pipeline(
                 try:
                     feature_set = get_best_n_feature_combinations(
                         n_features,
-                        features_dataframe=features_dataframe,
-                        cap = cap,
-                        subject = None,
-                        aggregation_mode=aggregation_mode
+                        aggregated_selection[aggregated_selection['ts_CAPS'] == cap],
+                        to_sort="t_stat",
                     )
+                    #feature_set['eyetracking'] = ["pupil_dilation", "first_derivative", "second_derivative"]
                     X_train, Y_train, X_test, Y_test = process_single_iteration(
                         big_data, 
                         train_keys,
@@ -217,43 +245,65 @@ def pipeline(
                     results['n_features'].append(n_features)
                     
                 except Exception as e:
-                    print(f"Error processing feature set: {feature_set}, cap: {cap}")
+                    print(f"Error processing feature set: whatever, cap: {cap}")
+                    raise e
                     print(e)
                     continue
         
     results_df = pd.DataFrame(results)
-    save_results(results_df, subject, task, description, aggregation_mode)
+    save_results(results_df, 
+                 subject, 
+                 task, 
+                 description, 
+                 aggregation_mode_str, 
+                 n_features)
 
 def main(args: argparse.Namespace) -> None:
     """Main function to orchestrate the feature selection process"""
     set_thread_env()
     config = ModelConfig()
     architecture = create_bids_architecture("/data2/Projects/eeg_fmri_natview/derivatives", args.task)
-    features_dataframe = get_all_features_dataframe(
+    #features_dataframe = get_all_features_dataframe(
+    #    "/home/slouviot/01_projects/eeg_brain_state_prediction/data/"\
+    #    "custom_envelope_caps/group_level/"\
+    #    f"sub-all_task-{args.task}_desc-{args.desc}_predictions.csv"
+    #)
+    #     
+    #aggregated_selection = aggregate_df_across_subjects(
+    #    features_dataframe,
+    #    config=config,
+    #    )
+    aggregated_selection = pd.read_csv(
         "/home/slouviot/01_projects/eeg_brain_state_prediction/data/"\
-        f"sub-all_task-{args.task}_desc-{args.desc}_predictions.csv"
+        "custom_envelope_caps/group_level/"\
+        f"sub-all_task-{args.task}_desc-{args.desc}_tstats.csv"
     )
-         
-    pipeline(
-        architecture=architecture, 
-        subject=args.subject, 
-        config=config,
-        features_dataframe=features_dataframe,
-        task = args.task,
-        description=args.desc,
-        aggregation_mode=args.agg,
-        nb_feat_steps=1,
+        
+
+    for subject in architecture.subjects:
+        pipeline(
+            architecture=architecture, 
+            subject=subject, 
+            config=config,
+            aggregated_selection=aggregated_selection,
+            task = args.task,
+            description=args.desc,
+            aggregation_mode='tstats',
         )
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(prog='train_custom_envelope_features_selection')
-    parser.add_argument('--subject', default='01')
-    parser.add_argument('--task', default="checker")
+    parser = argparse.ArgumentParser(
+        prog='train_custom_envelope_features_selection',
+        description='Train and test with feature selection across subjects'
+    )
+    parser.add_argument('--subject', default='01', help='Subject identifier')
+    parser.add_argument('--task', default="rest", help='Task identifier')
     parser.add_argument(
         '--agg',
-        default="median",
+        default="ttstats",
         help='How to combine the correlation across subjects: median or mean'
     )
-    parser.add_argument('--desc', default = 'CustomEnvBk')
+    parser.add_argument('--desc', default='CustomEnvBk', help='Description string')
+    
     args = parser.parse_args()
     main(args)

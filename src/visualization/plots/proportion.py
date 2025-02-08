@@ -1,3 +1,11 @@
+"""Create proportion of good signal.
+
+In the investigation of the influence of data quality on prediction, the amount
+(proportion in percent) of good signal was plotted. This was done by counting
+the number of sample rejected from the combined mask and compare it to the 
+total number of sample of the signal.
+
+"""
 from pathlib import Path
 from typing import Optional, Union
 import pandas as pd
