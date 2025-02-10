@@ -1,0 +1,9 @@
+2025-02-10 12:39:08 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - ERROR - Error in make_multimodal_dictionary: make_multimodal_dictionary() got an unexpected keyword argument 'dict_modalities'
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/utils.py", line 79, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+TypeError: make_multimodal_dictionary() got an unexpected keyword argument 'dict_modalities'
+2025-02-10 12:40:45 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: brainstates
+2025-02-10 12:40:45 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: eeg
+2025-02-10 12:40:45 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: eyetracking

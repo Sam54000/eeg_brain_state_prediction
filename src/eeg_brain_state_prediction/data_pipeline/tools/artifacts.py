@@ -1,10 +1,5 @@
-import os
-
-import matplotlib as mpl
-import matplotlib.pyplot as plt
 import mne
 import numpy as np
-from matplotlib.patches import ConnectionPatch
 from mne.preprocessing import annotate_muscle_zscore
 
 

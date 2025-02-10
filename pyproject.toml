@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "eeg-brain-state-prediction"
+version = "1.0.0"
+description = "Repository dedicated to the research project on predicting brainstate with EEG"
+authors = ["Dr. Samuel Louviot, PhD. <samuel.louviot@pm.me>"]
+license = "GPLv3.0"
+readme = "README.md"
+packages = [{include = "eeg_brain_state_prediction", from = "src"}]
+
+
+[tool.poetry.dependencies]
+python = "^3.12"
+numpy = "^1.26.4"
+scipy = "^1.12.0"
+pandas = "^2.2.1"
+scikit-learn = "^1.4.1"
+matplotlib = "^3.8.3"
+seaborn = "^0.13.2"
+mne = "^1.6.1"
+python-dotenv = "^1.0.1"
+bids-explorer = "^0.1.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

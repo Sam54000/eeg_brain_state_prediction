@@ -64,7 +64,6 @@ class ModalityCombiner(BaseEstimator, TransformerMixin):
     
     def _align_modalities(self, modal_data):
         """Aligns different modalities to common timepoints"""
-        # Get common time range
         start_times = []
         end_times = []
         for data in modal_data.values():

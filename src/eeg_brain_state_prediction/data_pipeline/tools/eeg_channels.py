@@ -105,7 +105,7 @@ def get_laterality(channel: str) -> str:
     if "z" in channel.lower():
         return "midline"
     else:
-        number = re.findall(r"\d+", channel)[0]
+        number = int(re.findall(r"\d+", channel)[0])
         if number % 2 == 0:
             return "right"
         else:

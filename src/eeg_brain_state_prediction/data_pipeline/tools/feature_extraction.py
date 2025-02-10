@@ -1,21 +1,27 @@
 import numpy as np
 import mne
-from artifacts import Detector
-import eeg_channels
-from typing import Optional
-import utils
-import pickle
-from src.data_pipeline.tools.configs import EegFeaturesConfig, EegConfig
-import numpy as np
-import scipy.signal as signal
+from dataclasses import dataclass
 
-def apply_fir_filter(data, 
-                     sfreq, 
-                     l_freq=None, 
-                     h_freq=None, 
-                     filter_length='auto', 
-                     l_trans_bandwidth=0.5, 
-                     h_trans_bandwidth=0.5):
+import eeg_brain_state_prediction.data_pipeline.tools.eeg_channels as eeg_channels
+from typing import Optional
+import pickle
+from eeg_brain_state_prediction.data_pipeline.tools.configs import EegFeaturesConfig, EegConfig
+import scipy.signal as signal
+from eeg_brain_state_prediction.data_pipeline.tools.artifacts import Detector
+from eeg_brain_state_prediction.data_pipeline.tools.utils import (
+    log_execution,
+    setup_logger,
+)
+
+logger = setup_logger(__name__, "feature_extraction.log")
+
+def apply_fir_filter(data: np.ndarray, 
+                     sfreq: float, 
+                     l_freq: Optional[float] = None, 
+                     h_freq: Optional[float] = None, 
+                     filter_length: str = 'auto', 
+                     l_trans_bandwidth: float = 0.5, 
+                     h_trans_bandwidth: float = 0.5) -> np.ndarray:
     """
     Apply a zero-phase FIR filter to a time series along the time dimension (axis 1).
 
@@ -81,6 +87,7 @@ def apply_fir_filter(data,
 
     return filtered_data
 
+@log_execution(logger)
 def extract_frequency_bands(
     eeg_features: "EEGfeatures",
     feature_config: EegFeaturesConfig
@@ -108,27 +115,32 @@ def extract_frequency_bands(
     eeg_features.feature_info.append(f"{len(feature_config.frequencies)} frequency bands extracted from {feature_config.frequencies[0][0]} to {feature_config.frequencies[-1][1]} Hz")
     return eeg_features
 
+@log_execution(logger)
 def crop(eeg_features: "EEGfeatures",
          eeg_config: EegConfig,
          ) -> "EEGfeatures":
     if eeg_config.tmin is not None:
         tmin_idx = np.argmin(np.abs(eeg_features.time - eeg_config.tmin))
         eeg_features.feature = eeg_features.feature[:, tmin_idx:]
+        eeg_features.mask = eeg_features.mask[:, tmin_idx:]
         eeg_features.time = eeg_features.time[tmin_idx:]
     if eeg_config.tmax is not None:
         tmax_idx = np.argmin(np.abs(eeg_features.time - eeg_config.tmax))
         eeg_features.feature = eeg_features.feature[:, :tmax_idx]
+        eeg_features.mask = eeg_features.mask[:, :tmax_idx]
         eeg_features.time = eeg_features.time[:tmax_idx]
     eeg_features.feature_info.append(
         f"Cropped from {eeg_features.time[0]}s to {eeg_features.time[-1]}s")
     return eeg_features
 
+@log_execution(logger)
 def extract_gfp(eeg_features: "EEGfeatures") -> "EEGfeatures":
     gfp = np.std(eeg_features.feature, axis=0, keepdims=True)
     eeg_features.feature = gfp
     eeg_features.feature_info.append("GFP extracted")
     return eeg_features
 
+@log_execution(logger)
 def extract_envelope(eeg_features: "EEGfeatures") -> "EEGfeatures":
     analytic_signal = signal.hilbert(eeg_features.feature, axis=1)
     envelope = np.abs(analytic_signal)
@@ -136,30 +148,59 @@ def extract_envelope(eeg_features: "EEGfeatures") -> "EEGfeatures":
     eeg_features.feature_info.append("Envelope extracted")
     return eeg_features
 
+@log_execution(logger)
 def resample(eeg_features: "EEGfeatures",
              eeg_config: EegConfig,
+             raw: mne.io.Raw,
              ) -> "EEGfeatures":
-    eeg_features.raw = eeg_features.raw.resample(eeg_config.sampling_rate_hz)
-    eeg_features.feature_info.append(
-        f"Resampled to {eeg_config.sampling_rate_hz} Hz")
+    """Resample the EEG data to a new sampling rate.
+    
+    This implementation follows MNE's approach using a FIR filter design for resampling.
+    The function applies anti-aliasing filtering before resampling to prevent aliasing artifacts.
+    
+    Args:
+        eeg_features (EEGfeatures): The EEG features object containing the data
+        eeg_config (EegConfig): Configuration containing the target sampling rate
+        
+    Returns:
+        EEGfeatures: The resampled EEG features
+    """
+    eeg_features.raw.resample(eeg_config.sampling_rate_hz)
+    eeg_features.feature_info.append(f"Resampled from {eeg_features.sfreq} Hz to {eeg_config.sampling_rate_hz} Hz")
     return eeg_features
 
+@dataclass
 class EEGfeatures:
-    def __init__(self, raw: mne.io.Raw, 
-                 channels: Optional[list[str]] = None,
-                 config: Optional[EegFeaturesConfig] = None):
-        map = eeg_channels.map_types(raw)
-        raw.set_channel_types(map)
-        montage = mne.channels.make_standard_montage(config.montage)
-        raw.set_montage(montage)
-        raw.pick_types(eeg=True)
-        self.feature = raw.get_data(picks=channels)
-        self.feature = np.expand_dims(self.feature, axis=2)
-        self.time = raw.times
+    raw: mne.io.Raw
+    feature_config: EegFeaturesConfig
+    eeg_config: EegConfig
+
+    def __post_init__(self):
+        map = eeg_channels.map_types(self.raw)
+        self.raw.set_channel_types(map)
+        montage = mne.channels.make_standard_montage(self.eeg_config.montage)
+        self.raw.set_montage(montage)
+        self.raw.pick_types(eeg=True)
+        channel_selection = self._get_existing_channels()
+        self._feature = self.raw.get_data(picks=channel_selection)
+        self.feature = np.expand_dims(self._feature, axis=2)
         self.feature_info = list()
-        self.channel_names = raw.info["ch_names"]
-        self.frequencies = list()
-        self.mask = self.annotate_artifacts(raw)
+        self.channel_names = self.raw.info["ch_names"]
+        self._resample()
+        self.frequencies = self.feature_config.frequencies
+        self.mask = self.annotate_artifacts(self.raw)
+
+    def _resample(self):
+        self.feature_info.append(f"Resampled from {self.raw.info['sfreq']} Hz to {self.eeg_config.sampling_rate_hz} Hz")
+        self.raw.resample(self.eeg_config.sampling_rate_hz)
+        self.time = self.raw.times
+        return self
+
+    def _get_existing_channels(self):
+        existing_channels = set(self.raw.info["ch_names"])
+        requested_channels = set(self.eeg_config.channels)
+        selection = existing_channels.intersection(requested_channels)
+        return list(selection)
 
     def annotate_artifacts(self, raw: mne.io.Raw):
         annotator_instance = Detector(raw)

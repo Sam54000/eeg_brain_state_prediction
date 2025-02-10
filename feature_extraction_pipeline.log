@@ -1,0 +1,766 @@
+2025-02-10 10:00:01 - __main__ - ERROR - Error in pipeline: tuple indices must be integers or slices, not str
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 37, in wrapper
+    logger.info("Starting processing of file: %s", architecture_row["filename"])
+                                                   ~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+TypeError: tuple indices must be integers or slices, not str
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/utils.py", line 79, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 55, in wrapper
+    raise ProcessingError(e)
+eeg_brain_state_prediction.data_pipeline.tools.utils.ProcessingError: tuple indices must be integers or slices, not str
+2025-02-10 10:02:37 - __main__ - INFO - Starting processing of file: /data2/Projects/eeg_fmri_natview/raw/sub-01/ses-01/eeg/sub-01_ses-01_task-tp_run-01_eeg.edf
+2025-02-10 10:02:37 - __main__ - ERROR - Error in pipeline: setup_path() missing 1 required positional argument: 'eeg_config'
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 42, in wrapper
+    output_path = setup_path(architecture_row, pipeline_config)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: setup_path() missing 1 required positional argument: 'eeg_config'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/utils.py", line 79, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 55, in wrapper
+    raise ProcessingError(e)
+eeg_brain_state_prediction.data_pipeline.tools.utils.ProcessingError: setup_path() missing 1 required positional argument: 'eeg_config'
+2025-02-10 10:03:33 - __main__ - INFO - Starting processing of file: /data2/Projects/eeg_fmri_natview/raw/sub-01/ses-01/eeg/sub-01_ses-01_task-tp_run-01_eeg.edf
+2025-02-10 10:03:33 - __main__ - ERROR - Error in pipeline: bids_explorer.paths.bids.BidsPath() got multiple values for keyword argument 'datatype'
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 42, in wrapper
+    output_path = setup_path(architecture_row, pipeline_config, eeg_config)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 64, in setup_path
+    bids_path = bids.BidsPath(
+                ^^^^^^^^^^^^^^
+TypeError: bids_explorer.paths.bids.BidsPath() got multiple values for keyword argument 'datatype'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/utils.py", line 79, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 55, in wrapper
+    raise ProcessingError(e)
+eeg_brain_state_prediction.data_pipeline.tools.utils.ProcessingError: bids_explorer.paths.bids.BidsPath() got multiple values for keyword argument 'datatype'
+2025-02-10 10:04:16 - __main__ - INFO - Starting processing of file: /data2/Projects/eeg_fmri_natview/raw/sub-01/ses-01/eeg/sub-01_ses-01_task-tp_run-01_eeg.edf
+2025-02-10 10:08:03 - __main__ - INFO - Starting processing of file: /data2/Projects/eeg_fmri_natview/raw/sub-01/ses-01/eeg/sub-01_ses-01_task-tp_run-01_eeg.edf
+2025-02-10 10:08:20 - __main__ - ERROR - Error in pipeline: bids_explorer.paths.bids.BidsPath() got multiple values for keyword argument 'description'
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 42, in wrapper
+    output_path = setup_path(architecture_row, pipeline_config, eeg_config)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 65, in setup_path
+    bids_path = bids.BidsPath(
+                ^^^^^^^^^^^^^^
+TypeError: bids_explorer.paths.bids.BidsPath() got multiple values for keyword argument 'description'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/utils.py", line 79, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 55, in wrapper
+    raise ProcessingError(e)
+eeg_brain_state_prediction.data_pipeline.tools.utils.ProcessingError: bids_explorer.paths.bids.BidsPath() got multiple values for keyword argument 'description'
+2025-02-10 10:09:07 - __main__ - INFO - Starting processing of file: /data2/Projects/eeg_fmri_natview/raw/sub-01/ses-01/eeg/sub-01_ses-01_task-tp_run-01_eeg.edf
+2025-02-10 10:09:10 - __main__ - ERROR - Error in pipeline: BidsPath.__init__() got an unexpected keyword argument 'space'
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 42, in wrapper
+    output_path = setup_path(architecture_row, pipeline_config, eeg_config)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 66, in setup_path
+    bids_path = bids.BidsPath(
+                ^^^^^^^^^^^^^^
+TypeError: BidsPath.__init__() got an unexpected keyword argument 'space'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/utils.py", line 79, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 55, in wrapper
+    raise ProcessingError(e)
+eeg_brain_state_prediction.data_pipeline.tools.utils.ProcessingError: BidsPath.__init__() got an unexpected keyword argument 'space'
+2025-02-10 10:23:28 - __main__ - INFO - Starting processing of file: /data2/Projects/eeg_fmri_natview/raw/sub-01/ses-01/eeg/sub-01_ses-01_task-tp_run-01_eeg.edf
+2025-02-10 10:23:32 - __main__ - ERROR - Error in pipeline: BidsPath.__init__() got an unexpected keyword argument 'space'
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 42, in wrapper
+    output_path = setup_path(architecture_row, pipeline_config, eeg_config)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 66, in setup_path
+    bids_path = bids.BidsPath(
+                ^^^^^^^^^^^^^^
+TypeError: BidsPath.__init__() got an unexpected keyword argument 'space'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/utils.py", line 79, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 55, in wrapper
+    raise ProcessingError(e)
+eeg_brain_state_prediction.data_pipeline.tools.utils.ProcessingError: BidsPath.__init__() got an unexpected keyword argument 'space'
+2025-02-10 10:24:40 - __main__ - INFO - Starting processing of file: /data2/Projects/eeg_fmri_natview/raw/sub-01/ses-01/eeg/sub-01_ses-01_task-tp_run-01_eeg.edf
+2025-02-10 10:24:42 - __main__ - ERROR - Error in pipeline: BidsPath.__init__() got an unexpected keyword argument 'space'
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 42, in wrapper
+    output_path = setup_path(architecture_row, pipeline_config, eeg_config)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 66, in setup_path
+    bids_path = bids.BidsPath(
+                ^^^^^^^^^^^^^^
+TypeError: BidsPath.__init__() got an unexpected keyword argument 'space'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/utils.py", line 79, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 55, in wrapper
+    raise ProcessingError(e)
+eeg_brain_state_prediction.data_pipeline.tools.utils.ProcessingError: BidsPath.__init__() got an unexpected keyword argument 'space'
+2025-02-10 10:28:41 - __main__ - INFO - Starting processing of file: /data2/Projects/eeg_fmri_natview/raw/sub-01/ses-01/eeg/sub-01_ses-01_task-tp_run-01_eeg.edf
+2025-02-10 10:28:43 - __main__ - ERROR - Error in pipeline: BidsPath.__init__() got an unexpected keyword argument 'space'
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 42, in wrapper
+    output_path = setup_path(architecture_row, pipeline_config, eeg_config)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 66, in setup_path
+    bids_path = bids.BidsPath(
+                ^^^^^^^^^^^^^^
+TypeError: BidsPath.__init__() got an unexpected keyword argument 'space'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/utils.py", line 79, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 55, in wrapper
+    raise ProcessingError(e)
+eeg_brain_state_prediction.data_pipeline.tools.utils.ProcessingError: BidsPath.__init__() got an unexpected keyword argument 'space'
+2025-02-10 10:34:23 - __main__ - INFO - Starting processing of file: /data2/Projects/eeg_fmri_natview/raw/sub-01/ses-01/eeg/sub-01_ses-01_task-tp_run-01_eeg.edf
+2025-02-10 10:34:26 - __main__ - ERROR - Error in pipeline: BidsPath.__init__() got an unexpected keyword argument 'space'
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 42, in wrapper
+    output_path = setup_path(architecture_row, pipeline_config, eeg_config)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 66, in setup_path
+    bids_path = bids.BidsPath(
+                ^^^^^^^^^^^^^^
+TypeError: BidsPath.__init__() got an unexpected keyword argument 'space'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/utils.py", line 79, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 55, in wrapper
+    raise ProcessingError(e)
+eeg_brain_state_prediction.data_pipeline.tools.utils.ProcessingError: BidsPath.__init__() got an unexpected keyword argument 'space'
+2025-02-10 10:47:33 - __main__ - INFO - Starting processing of file: /data2/Projects/eeg_fmri_natview/raw/sub-01/ses-01/eeg/sub-01_ses-01_task-tp_run-01_eeg.edf
+2025-02-10 10:47:33 - __main__ - ERROR - Error in pipeline: 'BidsPath' object has no attribute 'parent'
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 44, in wrapper
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 73, in setup_path
+    bids_path.parent.mkdir(parents=True, exist_ok=True)
+       ^^^^^^^^^^^^^^^^
+AttributeError: 'BidsPath' object has no attribute 'parent'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/utils.py", line 79, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 57, in wrapper
+    return wrapper
+            ^^^^^^^
+eeg_brain_state_prediction.data_pipeline.tools.utils.ProcessingError: 'BidsPath' object has no attribute 'parent'
+2025-02-10 10:48:16 - __main__ - INFO - Starting processing of file: /data2/Projects/eeg_fmri_natview/raw/sub-01/ses-01/eeg/sub-01_ses-01_task-tp_run-01_eeg.edf
+2025-02-10 10:48:19 - __main__ - ERROR - Error in pipeline: 'BidsPath' object has no attribute 'full_path'
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 43, in wrapper
+    output_path = setup_path(architecture_row, pipeline_config, eeg_config)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 72, in setup_path
+    if not bids_path.full_path.parent.exists():
+           ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'BidsPath' object has no attribute 'full_path'. Did you mean: 'fullpath'?
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/utils.py", line 79, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 56, in wrapper
+    raise ProcessingError(e)
+eeg_brain_state_prediction.data_pipeline.tools.utils.ProcessingError: 'BidsPath' object has no attribute 'full_path'
+2025-02-10 10:48:47 - __main__ - INFO - Starting processing of file: /data2/Projects/eeg_fmri_natview/raw/sub-01/ses-01/eeg/sub-01_ses-01_task-tp_run-01_eeg.edf
+2025-02-10 10:49:09 - __main__ - ERROR - Error in pipeline: 'EegFeaturesConfig' object has no attribute 'montage'
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 46, in wrapper
+    return func(architecture_row,
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 103, in pipeline
+    eeg_features = EEGfeatures(
+                   ^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/feature_extraction.py", line 224, in __init__
+    montage = mne.channels.make_standard_montage(config.montage)
+                                                 ^^^^^^^^^^^^^^
+AttributeError: 'EegFeaturesConfig' object has no attribute 'montage'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 53, in wrapper
+    raise ProcessingError(e)
+eeg_brain_state_prediction.data_pipeline.tools.utils.ProcessingError: 'EegFeaturesConfig' object has no attribute 'montage'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/utils.py", line 79, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 56, in wrapper
+    raise ProcessingError(e)
+eeg_brain_state_prediction.data_pipeline.tools.utils.ProcessingError: 'EegFeaturesConfig' object has no attribute 'montage'
+2025-02-10 10:51:36 - __main__ - INFO - Starting processing of file: /data2/Projects/eeg_fmri_natview/raw/sub-01/ses-01/eeg/sub-01_ses-01_task-tp_run-01_eeg.edf
+2025-02-10 10:51:49 - __main__ - ERROR - Error in pipeline: EEGfeatures.__init__() got an unexpected keyword argument 'config'
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 46, in wrapper
+    return func(architecture_row,
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 103, in pipeline
+    eeg_features = EEGfeatures(
+                   ^^^^^^^^^^^^
+TypeError: EEGfeatures.__init__() got an unexpected keyword argument 'config'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 53, in wrapper
+    raise ProcessingError(e)
+eeg_brain_state_prediction.data_pipeline.tools.utils.ProcessingError: EEGfeatures.__init__() got an unexpected keyword argument 'config'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/utils.py", line 79, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 56, in wrapper
+    raise ProcessingError(e)
+eeg_brain_state_prediction.data_pipeline.tools.utils.ProcessingError: EEGfeatures.__init__() got an unexpected keyword argument 'config'
+2025-02-10 10:52:18 - __main__ - INFO - Starting processing of file: /data2/Projects/eeg_fmri_natview/raw/sub-01/ses-01/eeg/sub-01_ses-01_task-tp_run-01_eeg.edf
+2025-02-10 10:52:31 - __main__ - ERROR - Error in pipeline: Channel(s) ['FPz', 'FT9', 'FT10'] could not be picked, because they are not present in the info instance.
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 46, in wrapper
+    return func(architecture_row,
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 103, in pipeline
+    eeg_features = EEGfeatures(
+                   ^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/feature_extraction.py", line 228, in __init__
+    self.feature = raw.get_data(picks=eeg_config.channels)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<decorator-gen-190>", line 12, in get_data
+  File "/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/mne/io/base.py", line 933, in get_data
+    picks = _picks_to_idx(self.info, picks, "all", exclude=())
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/mne/_fiff/pick.py", line 1252, in _picks_to_idx
+    picks = _picks_str_to_idx(
+            ^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/mne/_fiff/pick.py", line 1406, in _picks_str_to_idx
+    raise ValueError(
+ValueError: Channel(s) ['FPz', 'FT9', 'FT10'] could not be picked, because they are not present in the info instance.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 53, in wrapper
+    raise ProcessingError(e)
+eeg_brain_state_prediction.data_pipeline.tools.utils.ProcessingError: Channel(s) ['FPz', 'FT9', 'FT10'] could not be picked, because they are not present in the info instance.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/utils.py", line 79, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 56, in wrapper
+    raise ProcessingError(e)
+eeg_brain_state_prediction.data_pipeline.tools.utils.ProcessingError: Channel(s) ['FPz', 'FT9', 'FT10'] could not be picked, because they are not present in the info instance.
+2025-02-10 10:56:30 - __main__ - INFO - Starting processing of file: /data2/Projects/eeg_fmri_natview/raw/sub-01/ses-01/eeg/sub-01_ses-01_task-tp_run-01_eeg.edf
+2025-02-10 10:56:35 - __main__ - ERROR - Error in pipeline: 'EEGfeatures' object has no attribute 'eeg_config'
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 46, in wrapper
+    return func(architecture_row,
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 103, in pipeline
+    eeg_features = EEGfeatures(
+                   ^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/feature_extraction.py", line 228, in __init__
+    self.feature = raw.get_data(picks=self._get_existing_channels(raw))
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/feature_extraction.py", line 239, in _get_existing_channels
+    existing_channels_picks = raw.ch_names.index(self.eeg_config.channels)
+                                                 ^^^^^^^^^^^^^^^
+AttributeError: 'EEGfeatures' object has no attribute 'eeg_config'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 53, in wrapper
+    raise ProcessingError(e)
+eeg_brain_state_prediction.data_pipeline.tools.utils.ProcessingError: 'EEGfeatures' object has no attribute 'eeg_config'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/utils.py", line 79, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 56, in wrapper
+    raise ProcessingError(e)
+eeg_brain_state_prediction.data_pipeline.tools.utils.ProcessingError: 'EEGfeatures' object has no attribute 'eeg_config'
+2025-02-10 10:57:31 - __main__ - INFO - Starting processing of file: /data2/Projects/eeg_fmri_natview/raw/sub-01/ses-01/eeg/sub-01_ses-01_task-tp_run-01_eeg.edf
+2025-02-10 10:57:39 - __main__ - ERROR - Error in pipeline: ['Fp1', 'Fp2', 'F3', 'F4', 'C3', 'C4', 'P3', 'P4', 'O1', 'O2', 'F7', 'F8', 'T7', 'T8', 'P7', 'P8', 'FPz', 'Fz', 'Cz', 'Pz', 'POz', 'Oz', 'FT9', 'FT10', 'TP9', 'TP10'] is not in list
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 46, in wrapper
+    return func(architecture_row,
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 103, in pipeline
+    eeg_features = EEGfeatures(
+                   ^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/feature_extraction.py", line 230, in __init__
+    self.feature = raw.get_data(picks=self._get_existing_channels(raw))
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/feature_extraction.py", line 241, in _get_existing_channels
+    existing_channels_picks = raw.ch_names.index(self.eeg_config.channels)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: ['Fp1', 'Fp2', 'F3', 'F4', 'C3', 'C4', 'P3', 'P4', 'O1', 'O2', 'F7', 'F8', 'T7', 'T8', 'P7', 'P8', 'FPz', 'Fz', 'Cz', 'Pz', 'POz', 'Oz', 'FT9', 'FT10', 'TP9', 'TP10'] is not in list
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 53, in wrapper
+    raise ProcessingError(e)
+eeg_brain_state_prediction.data_pipeline.tools.utils.ProcessingError: ['Fp1', 'Fp2', 'F3', 'F4', 'C3', 'C4', 'P3', 'P4', 'O1', 'O2', 'F7', 'F8', 'T7', 'T8', 'P7', 'P8', 'FPz', 'Fz', 'Cz', 'Pz', 'POz', 'Oz', 'FT9', 'FT10', 'TP9', 'TP10'] is not in list
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/utils.py", line 79, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 56, in wrapper
+    raise ProcessingError(e)
+eeg_brain_state_prediction.data_pipeline.tools.utils.ProcessingError: ['Fp1', 'Fp2', 'F3', 'F4', 'C3', 'C4', 'P3', 'P4', 'O1', 'O2', 'F7', 'F8', 'T7', 'T8', 'P7', 'P8', 'FPz', 'Fz', 'Cz', 'Pz', 'POz', 'Oz', 'FT9', 'FT10', 'TP9', 'TP10'] is not in list
+2025-02-10 10:59:12 - __main__ - INFO - Starting processing of file: /data2/Projects/eeg_fmri_natview/raw/sub-01/ses-01/eeg/sub-01_ses-01_task-tp_run-01_eeg.edf
+2025-02-10 10:59:13 - __main__ - ERROR - Error in pipeline: ['Fp1', 'Fp2', 'F3', 'F4', 'C3', 'C4', 'P3', 'P4', 'O1', 'O2', 'F7', 'F8', 'T7', 'T8', 'P7', 'P8', 'FPz', 'Fz', 'Cz', 'Pz', 'POz', 'Oz', 'FT9', 'FT10', 'TP9', 'TP10'] is not in list
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 46, in wrapper
+    return func(architecture_row,
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 103, in pipeline
+    eeg_features = EEGfeatures(
+                   ^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/feature_extraction.py", line 230, in __init__
+    channel_selection = self._get_existing_channels(raw)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/feature_extraction.py", line 242, in _get_existing_channels
+    existing_channels_picks = raw.ch_names.index(self.eeg_config.channels)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: ['Fp1', 'Fp2', 'F3', 'F4', 'C3', 'C4', 'P3', 'P4', 'O1', 'O2', 'F7', 'F8', 'T7', 'T8', 'P7', 'P8', 'FPz', 'Fz', 'Cz', 'Pz', 'POz', 'Oz', 'FT9', 'FT10', 'TP9', 'TP10'] is not in list
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 53, in wrapper
+    raise ProcessingError(e)
+eeg_brain_state_prediction.data_pipeline.tools.utils.ProcessingError: ['Fp1', 'Fp2', 'F3', 'F4', 'C3', 'C4', 'P3', 'P4', 'O1', 'O2', 'F7', 'F8', 'T7', 'T8', 'P7', 'P8', 'FPz', 'Fz', 'Cz', 'Pz', 'POz', 'Oz', 'FT9', 'FT10', 'TP9', 'TP10'] is not in list
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/utils.py", line 79, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 56, in wrapper
+    raise ProcessingError(e)
+eeg_brain_state_prediction.data_pipeline.tools.utils.ProcessingError: ['Fp1', 'Fp2', 'F3', 'F4', 'C3', 'C4', 'P3', 'P4', 'O1', 'O2', 'F7', 'F8', 'T7', 'T8', 'P7', 'P8', 'FPz', 'Fz', 'Cz', 'Pz', 'POz', 'Oz', 'FT9', 'FT10', 'TP9', 'TP10'] is not in list
+2025-02-10 11:03:08 - __main__ - INFO - Starting processing of file: /data2/Projects/eeg_fmri_natview/raw/sub-01/ses-01/eeg/sub-01_ses-01_task-tp_run-01_eeg.edf
+2025-02-10 11:03:09 - __main__ - ERROR - Error in pipeline: ['Fp1', 'Fp2', 'F3', 'F4', 'C3', 'C4', 'P3', 'P4', 'O1', 'O2', 'F7', 'F8', 'T7', 'T8', 'P7', 'P8', 'FPz', 'Fz', 'Cz', 'Pz', 'POz', 'Oz', 'FT9', 'FT10', 'TP9', 'TP10'] is not in list
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 46, in wrapper
+    return func(architecture_row,
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 103, in pipeline
+    eeg_features = EEGfeatures(
+                   ^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/feature_extraction.py", line 230, in __init__
+    channel_selection = self._get_existing_channels(raw)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/feature_extraction.py", line 243, in _get_existing_channels
+    existing_channels_picks = raw.ch_names.index(self.eeg_config.channels)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: ['Fp1', 'Fp2', 'F3', 'F4', 'C3', 'C4', 'P3', 'P4', 'O1', 'O2', 'F7', 'F8', 'T7', 'T8', 'P7', 'P8', 'FPz', 'Fz', 'Cz', 'Pz', 'POz', 'Oz', 'FT9', 'FT10', 'TP9', 'TP10'] is not in list
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 53, in wrapper
+    raise ProcessingError(e)
+eeg_brain_state_prediction.data_pipeline.tools.utils.ProcessingError: ['Fp1', 'Fp2', 'F3', 'F4', 'C3', 'C4', 'P3', 'P4', 'O1', 'O2', 'F7', 'F8', 'T7', 'T8', 'P7', 'P8', 'FPz', 'Fz', 'Cz', 'Pz', 'POz', 'Oz', 'FT9', 'FT10', 'TP9', 'TP10'] is not in list
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/utils.py", line 79, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 56, in wrapper
+    raise ProcessingError(e)
+eeg_brain_state_prediction.data_pipeline.tools.utils.ProcessingError: ['Fp1', 'Fp2', 'F3', 'F4', 'C3', 'C4', 'P3', 'P4', 'O1', 'O2', 'F7', 'F8', 'T7', 'T8', 'P7', 'P8', 'FPz', 'Fz', 'Cz', 'Pz', 'POz', 'Oz', 'FT9', 'FT10', 'TP9', 'TP10'] is not in list
+2025-02-10 11:04:05 - __main__ - INFO - Starting processing of file: /data2/Projects/eeg_fmri_natview/raw/sub-01/ses-01/eeg/sub-01_ses-01_task-tp_run-01_eeg.edf
+2025-02-10 11:04:52 - __main__ - INFO - Starting processing of file: /data2/Projects/eeg_fmri_natview/raw/sub-01/ses-01/eeg/sub-01_ses-01_task-tp_run-01_eeg.edf
+2025-02-10 11:04:56 - __main__ - ERROR - Error in pipeline: DigMontage is only a subset of info. There are 62 channel positions not present in the DigMontage. The channels missing from the montage are:
+
+['Fp1', 'Fp2', 'F3', 'F4', 'C3', 'C4', 'P3', 'P4', 'O1', 'O2', 'F7', 'F8', 'T7', 'T8', 'P7', 'P8', 'Fz', 'Cz', 'Pz', 'Oz', 'FC1', 'FC2', 'CP1', 'CP2', 'FC5', 'FC6', 'CP5', 'CP6', 'TP9', 'TP10', 'POz', 'F1', 'F2', 'C1', 'C2', 'P1', 'P2', 'AF3', 'AF4', 'FC3', 'FC4', 'CP3', 'CP4', 'PO3', 'PO4', 'F5', 'F6', 'C5', 'C6', 'P5', 'P6', 'AF7', 'AF8', 'FT7', 'FT8', 'TP7', 'TP8', 'PO7', 'PO8', 'Fpz', 'CPz', 'FCz'].
+
+Consider using inst.rename_channels to match the montage nomenclature, or inst.set_channel_types if these are not EEG channels, or use the on_missing parameter if the channel positions are allowed to be unknown in your analyses.
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 46, in wrapper
+    return func(architecture_row,
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 103, in pipeline
+    eeg_features = EEGfeatures(
+                   ^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/feature_extraction.py", line 228, in __init__
+    raw.set_montage(montage)
+  File "<decorator-gen-22>", line 12, in set_montage
+  File "/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/mne/_fiff/meas_info.py", line 422, in set_montage
+    _set_montage(info, montage, match_case, match_alias, on_missing)
+  File "/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/mne/channels/montage.py", line 1250, in _set_montage
+    _on_missing(on_missing, missing_coord_msg)
+  File "/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/mne/utils/check.py", line 1191, in _on_missing
+    raise error_klass(msg)
+ValueError: DigMontage is only a subset of info. There are 62 channel positions not present in the DigMontage. The channels missing from the montage are:
+
+['Fp1', 'Fp2', 'F3', 'F4', 'C3', 'C4', 'P3', 'P4', 'O1', 'O2', 'F7', 'F8', 'T7', 'T8', 'P7', 'P8', 'Fz', 'Cz', 'Pz', 'Oz', 'FC1', 'FC2', 'CP1', 'CP2', 'FC5', 'FC6', 'CP5', 'CP6', 'TP9', 'TP10', 'POz', 'F1', 'F2', 'C1', 'C2', 'P1', 'P2', 'AF3', 'AF4', 'FC3', 'FC4', 'CP3', 'CP4', 'PO3', 'PO4', 'F5', 'F6', 'C5', 'C6', 'P5', 'P6', 'AF7', 'AF8', 'FT7', 'FT8', 'TP7', 'TP8', 'PO7', 'PO8', 'Fpz', 'CPz', 'FCz'].
+
+Consider using inst.rename_channels to match the montage nomenclature, or inst.set_channel_types if these are not EEG channels, or use the on_missing parameter if the channel positions are allowed to be unknown in your analyses.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 53, in wrapper
+    raise ProcessingError(e)
+eeg_brain_state_prediction.data_pipeline.tools.utils.ProcessingError: DigMontage is only a subset of info. There are 62 channel positions not present in the DigMontage. The channels missing from the montage are:
+
+['Fp1', 'Fp2', 'F3', 'F4', 'C3', 'C4', 'P3', 'P4', 'O1', 'O2', 'F7', 'F8', 'T7', 'T8', 'P7', 'P8', 'Fz', 'Cz', 'Pz', 'Oz', 'FC1', 'FC2', 'CP1', 'CP2', 'FC5', 'FC6', 'CP5', 'CP6', 'TP9', 'TP10', 'POz', 'F1', 'F2', 'C1', 'C2', 'P1', 'P2', 'AF3', 'AF4', 'FC3', 'FC4', 'CP3', 'CP4', 'PO3', 'PO4', 'F5', 'F6', 'C5', 'C6', 'P5', 'P6', 'AF7', 'AF8', 'FT7', 'FT8', 'TP7', 'TP8', 'PO7', 'PO8', 'Fpz', 'CPz', 'FCz'].
+
+Consider using inst.rename_channels to match the montage nomenclature, or inst.set_channel_types if these are not EEG channels, or use the on_missing parameter if the channel positions are allowed to be unknown in your analyses.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/utils.py", line 79, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 56, in wrapper
+    raise ProcessingError(e)
+eeg_brain_state_prediction.data_pipeline.tools.utils.ProcessingError: DigMontage is only a subset of info. There are 62 channel positions not present in the DigMontage. The channels missing from the montage are:
+
+['Fp1', 'Fp2', 'F3', 'F4', 'C3', 'C4', 'P3', 'P4', 'O1', 'O2', 'F7', 'F8', 'T7', 'T8', 'P7', 'P8', 'Fz', 'Cz', 'Pz', 'Oz', 'FC1', 'FC2', 'CP1', 'CP2', 'FC5', 'FC6', 'CP5', 'CP6', 'TP9', 'TP10', 'POz', 'F1', 'F2', 'C1', 'C2', 'P1', 'P2', 'AF3', 'AF4', 'FC3', 'FC4', 'CP3', 'CP4', 'PO3', 'PO4', 'F5', 'F6', 'C5', 'C6', 'P5', 'P6', 'AF7', 'AF8', 'FT7', 'FT8', 'TP7', 'TP8', 'PO7', 'PO8', 'Fpz', 'CPz', 'FCz'].
+
+Consider using inst.rename_channels to match the montage nomenclature, or inst.set_channel_types if these are not EEG channels, or use the on_missing parameter if the channel positions are allowed to be unknown in your analyses.
+2025-02-10 11:05:33 - __main__ - INFO - Starting processing of file: /data2/Projects/eeg_fmri_natview/raw/sub-01/ses-01/eeg/sub-01_ses-01_task-tp_run-01_eeg.edf
+2025-02-10 11:05:39 - __main__ - ERROR - Error in pipeline: ['Fp1', 'Fp2', 'F3', 'F4', 'C3', 'C4', 'P3', 'P4', 'O1', 'O2', 'F7', 'F8', 'T7', 'T8', 'P7', 'P8', 'FPz', 'Fz', 'Cz', 'Pz', 'POz', 'Oz', 'FT9', 'FT10', 'TP9', 'TP10'] is not in list
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 46, in wrapper
+    return func(architecture_row,
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 103, in pipeline
+    eeg_features = EEGfeatures(
+                   ^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/feature_extraction.py", line 230, in __init__
+    channel_selection = self._get_existing_channels(raw)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/feature_extraction.py", line 243, in _get_existing_channels
+    existing_channels_picks = raw.ch_names.index(self.eeg_config.channels)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: ['Fp1', 'Fp2', 'F3', 'F4', 'C3', 'C4', 'P3', 'P4', 'O1', 'O2', 'F7', 'F8', 'T7', 'T8', 'P7', 'P8', 'FPz', 'Fz', 'Cz', 'Pz', 'POz', 'Oz', 'FT9', 'FT10', 'TP9', 'TP10'] is not in list
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 53, in wrapper
+    raise ProcessingError(e)
+eeg_brain_state_prediction.data_pipeline.tools.utils.ProcessingError: ['Fp1', 'Fp2', 'F3', 'F4', 'C3', 'C4', 'P3', 'P4', 'O1', 'O2', 'F7', 'F8', 'T7', 'T8', 'P7', 'P8', 'FPz', 'Fz', 'Cz', 'Pz', 'POz', 'Oz', 'FT9', 'FT10', 'TP9', 'TP10'] is not in list
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/utils.py", line 79, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 56, in wrapper
+    raise ProcessingError(e)
+eeg_brain_state_prediction.data_pipeline.tools.utils.ProcessingError: ['Fp1', 'Fp2', 'F3', 'F4', 'C3', 'C4', 'P3', 'P4', 'O1', 'O2', 'F7', 'F8', 'T7', 'T8', 'P7', 'P8', 'FPz', 'Fz', 'Cz', 'Pz', 'POz', 'Oz', 'FT9', 'FT10', 'TP9', 'TP10'] is not in list
+2025-02-10 11:07:03 - __main__ - INFO - Starting processing of file: /data2/Projects/eeg_fmri_natview/raw/sub-01/ses-01/eeg/sub-01_ses-01_task-tp_run-01_eeg.edf
+2025-02-10 11:07:08 - __main__ - ERROR - Error in pipeline: picks must be a list of int (indices) or list of str (names). The provided data type object is invalid.
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 46, in wrapper
+    return func(architecture_row,
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 103, in pipeline
+    eeg_features = EEGfeatures(
+                   ^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/feature_extraction.py", line 232, in __init__
+    self.feature = raw.get_data(picks=channel_selection)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<decorator-gen-190>", line 12, in get_data
+  File "/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/mne/io/base.py", line 933, in get_data
+    picks = _picks_to_idx(self.info, picks, "all", exclude=())
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/mne/_fiff/pick.py", line 1271, in _picks_to_idx
+    raise TypeError(msg)
+TypeError: picks must be a list of int (indices) or list of str (names). The provided data type object is invalid.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 53, in wrapper
+    raise ProcessingError(e)
+eeg_brain_state_prediction.data_pipeline.tools.utils.ProcessingError: picks must be a list of int (indices) or list of str (names). The provided data type object is invalid.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/utils.py", line 79, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 56, in wrapper
+    raise ProcessingError(e)
+eeg_brain_state_prediction.data_pipeline.tools.utils.ProcessingError: picks must be a list of int (indices) or list of str (names). The provided data type object is invalid.
+2025-02-10 11:07:30 - __main__ - INFO - Starting processing of file: /data2/Projects/eeg_fmri_natview/raw/sub-01/ses-01/eeg/sub-01_ses-01_task-tp_run-01_eeg.edf
+2025-02-10 11:17:06 - __main__ - INFO - Starting processing of file: /data2/Projects/eeg_fmri_natview/raw/sub-01/ses-01/eeg/sub-01_ses-01_task-tp_run-01_eeg.edf
+2025-02-10 11:17:11 - __main__ - ERROR - Error in pipeline: 'EEGfeatures' object has no attribute 'feature_info'
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 46, in wrapper
+    return func(architecture_row,
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 103, in pipeline
+    eeg_features = EEGfeatures(
+                   ^^^^^^^^^^^^
+  File "<string>", line 6, in __init__
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/feature_extraction.py", line 184, in __post_init__
+    self._resample()
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/feature_extraction.py", line 195, in _resample
+    self.feature_info.append(f"Resampled from {self.sfreq} Hz to {self.eeg_config.sampling_rate_hz} Hz")
+    ^^^^^^^^^^^^^^^^^
+AttributeError: 'EEGfeatures' object has no attribute 'feature_info'. Did you mean: 'feature_config'?
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 53, in wrapper
+    raise ProcessingError(e)
+eeg_brain_state_prediction.data_pipeline.tools.utils.ProcessingError: 'EEGfeatures' object has no attribute 'feature_info'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/utils.py", line 79, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 56, in wrapper
+    raise ProcessingError(e)
+eeg_brain_state_prediction.data_pipeline.tools.utils.ProcessingError: 'EEGfeatures' object has no attribute 'feature_info'
+2025-02-10 11:18:06 - __main__ - INFO - Starting processing of file: /data2/Projects/eeg_fmri_natview/raw/sub-01/ses-01/eeg/sub-01_ses-01_task-tp_run-01_eeg.edf
+2025-02-10 11:18:11 - __main__ - ERROR - Error in pipeline: EEGfeatures._get_existing_channels() takes 1 positional argument but 2 were given
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 46, in wrapper
+    return func(architecture_row,
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 103, in pipeline
+    eeg_features = EEGfeatures(
+                   ^^^^^^^^^^^^
+  File "<string>", line 6, in __init__
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/feature_extraction.py", line 184, in __post_init__
+    channel_selection = self._get_existing_channels(self.raw)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: EEGfeatures._get_existing_channels() takes 1 positional argument but 2 were given
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 53, in wrapper
+    raise ProcessingError(e)
+eeg_brain_state_prediction.data_pipeline.tools.utils.ProcessingError: EEGfeatures._get_existing_channels() takes 1 positional argument but 2 were given
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/utils.py", line 79, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 56, in wrapper
+    raise ProcessingError(e)
+eeg_brain_state_prediction.data_pipeline.tools.utils.ProcessingError: EEGfeatures._get_existing_channels() takes 1 positional argument but 2 were given
+2025-02-10 11:18:41 - __main__ - INFO - Starting processing of file: /data2/Projects/eeg_fmri_natview/raw/sub-01/ses-01/eeg/sub-01_ses-01_task-tp_run-01_eeg.edf
+2025-02-10 11:18:46 - __main__ - ERROR - Error in pipeline: 'EEGfeatures' object has no attribute 'sfreq'
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 46, in wrapper
+    return func(architecture_row,
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 103, in pipeline
+    eeg_features = EEGfeatures(
+                   ^^^^^^^^^^^^
+  File "<string>", line 6, in __init__
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/feature_extraction.py", line 189, in __post_init__
+    self._resample()
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/feature_extraction.py", line 195, in _resample
+    self.feature_info.append(f"Resampled from {self.sfreq} Hz to {self.eeg_config.sampling_rate_hz} Hz")
+                                               ^^^^^^^^^^
+AttributeError: 'EEGfeatures' object has no attribute 'sfreq'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 53, in wrapper
+    raise ProcessingError(e)
+eeg_brain_state_prediction.data_pipeline.tools.utils.ProcessingError: 'EEGfeatures' object has no attribute 'sfreq'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/utils.py", line 79, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 56, in wrapper
+    raise ProcessingError(e)
+eeg_brain_state_prediction.data_pipeline.tools.utils.ProcessingError: 'EEGfeatures' object has no attribute 'sfreq'
+2025-02-10 11:19:22 - __main__ - INFO - Starting processing of file: /data2/Projects/eeg_fmri_natview/raw/sub-01/ses-01/eeg/sub-01_ses-01_task-tp_run-01_eeg.edf
+2025-02-10 11:20:03 - __main__ - ERROR - Error in pipeline: not all arguments converted during string formatting
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 46, in wrapper
+    return func(architecture_row,
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 114, in pipeline
+    eeg_features.save(output_path)
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/feature_extraction.py", line 214, in save
+    channel_info = eeg_channels.generate_dictionary(self.channel_names)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/eeg_channels.py", line 141, in generate_dictionary
+    get_laterality(channel),
+    ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/eeg_channels.py", line 109, in get_laterality
+    if number % 2 == 0:
+       ~~~~~~~^~~
+TypeError: not all arguments converted during string formatting
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 53, in wrapper
+    raise ProcessingError(e)
+eeg_brain_state_prediction.data_pipeline.tools.utils.ProcessingError: not all arguments converted during string formatting
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/utils.py", line 79, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 56, in wrapper
+    raise ProcessingError(e)
+eeg_brain_state_prediction.data_pipeline.tools.utils.ProcessingError: not all arguments converted during string formatting
+2025-02-10 11:22:08 - __main__ - INFO - Starting processing of file: /data2/Projects/eeg_fmri_natview/raw/sub-01/ses-01/eeg/sub-01_ses-01_task-tp_run-01_eeg.edf
+2025-02-10 11:22:33 - __main__ - INFO - Starting processing of file: /data2/Projects/eeg_fmri_natview/raw/sub-01/ses-01/eeg/sub-01_ses-01_task-tp_run-01_eeg.edf
+2025-02-10 11:22:39 - __main__ - ERROR - Error in pipeline: int() argument must be a string, a bytes-like object or a real number, not 'list'
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 46, in wrapper
+    return func(architecture_row,
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 114, in pipeline
+    eeg_features.save(output_path)
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/feature_extraction.py", line 214, in save
+    channel_info = eeg_channels.generate_dictionary(self.channel_names)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/eeg_channels.py", line 141, in generate_dictionary
+    get_laterality(channel),
+    ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/eeg_channels.py", line 108, in get_laterality
+    number = int(re.findall(r"\d+", channel))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'list'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 53, in wrapper
+    raise ProcessingError(e)
+eeg_brain_state_prediction.data_pipeline.tools.utils.ProcessingError: int() argument must be a string, a bytes-like object or a real number, not 'list'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/utils.py", line 79, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 56, in wrapper
+    raise ProcessingError(e)
+eeg_brain_state_prediction.data_pipeline.tools.utils.ProcessingError: int() argument must be a string, a bytes-like object or a real number, not 'list'
+2025-02-10 11:24:12 - __main__ - INFO - Starting processing of file: /data2/Projects/eeg_fmri_natview/raw/sub-01/ses-01/eeg/sub-01_ses-01_task-tp_run-01_eeg.edf
+2025-02-10 11:24:24 - __main__ - ERROR - Error in pipeline: expected str, bytes or os.PathLike object, not BidsPath
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 46, in wrapper
+    return func(architecture_row,
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 114, in pipeline
+    eeg_features.save(output_path)
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/feature_extraction.py", line 226, in save
+    with open(filename, "wb") as file:
+         ^^^^^^^^^^^^^^^^^^^^
+TypeError: expected str, bytes or os.PathLike object, not BidsPath
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 53, in wrapper
+    raise ProcessingError(e)
+eeg_brain_state_prediction.data_pipeline.tools.utils.ProcessingError: expected str, bytes or os.PathLike object, not BidsPath
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/utils.py", line 79, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 56, in wrapper
+    raise ProcessingError(e)
+eeg_brain_state_prediction.data_pipeline.tools.utils.ProcessingError: expected str, bytes or os.PathLike object, not BidsPath
+2025-02-10 11:25:33 - __main__ - INFO - Starting processing of file: /data2/Projects/eeg_fmri_natview/raw/sub-01/ses-01/eeg/sub-01_ses-01_task-tp_run-01_eeg.edf
+2025-02-10 11:28:13 - __main__ - INFO - Starting processing of file: /data2/Projects/eeg_fmri_natview/raw/sub-01/ses-01/eeg/sub-01_ses-01_task-rest_run-01_eeg.edf
+2025-02-10 11:30:33 - __main__ - INFO - Starting processing of file: /data2/Projects/eeg_fmri_natview/raw/sub-01/ses-01/eeg/sub-01_ses-01_task-rest_run-01_eeg.edf
+2025-02-10 11:30:47 - __main__ - INFO - Starting processing of file: /data2/Projects/eeg_fmri_natview/raw/sub-01/ses-01/eeg/sub-01_ses-01_task-checker_run-01_eeg.edf
+2025-02-10 11:31:30 - __main__ - INFO - Starting processing of file: /data2/Projects/eeg_fmri_natview/raw/sub-01/ses-01/eeg/sub-01_ses-01_task-rest_run-01_eeg.edf
