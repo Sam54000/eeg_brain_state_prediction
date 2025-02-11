@@ -1,7 +1,7 @@
 import numpy as np
 import mne
 from dataclasses import dataclass
-
+from typing import Optional, List
 import eeg_brain_state_prediction.data_pipeline.tools.eeg_channels as eeg_channels
 from typing import Optional
 import pickle
@@ -12,7 +12,7 @@ from eeg_brain_state_prediction.data_pipeline.tools.utils import (
     log_execution,
     setup_logger,
 )
-
+from eeg_brain_state_prediction.data_pipeline.tools import features
 logger = setup_logger(__name__, "feature_extraction.log")
 
 def apply_fir_filter(data: np.ndarray, 
@@ -170,25 +170,62 @@ def resample(eeg_features: "EEGfeatures",
     return eeg_features
 
 @dataclass
-class EEGfeatures:
-    raw: mne.io.Raw
-    feature_config: EegFeaturesConfig
-    eeg_config: EegConfig
+class EEGfeatures(features.BaseFeatures):
+    raw: Optional[mne.io.Raw] = None
+    feature_config: Optional[EegFeaturesConfig] = None
+    eeg_config: Optional[EegConfig] = None
+    time: Optional[np.ndarray] = None
+    feature: Optional[np.ndarray] = None
+    mask: Optional[np.ndarray] = None
+    feature_info: Optional[List[str]] = None
+    labels: Optional[List] = None
 
     def __post_init__(self):
-        map = eeg_channels.map_types(self.raw)
-        self.raw.set_channel_types(map)
-        montage = mne.channels.make_standard_montage(self.eeg_config.montage)
-        self.raw.set_montage(montage)
-        self.raw.pick_types(eeg=True)
-        channel_selection = self._get_existing_channels()
-        self._feature = self.raw.get_data(picks=channel_selection)
-        self.feature = np.expand_dims(self._feature, axis=2)
-        self.feature_info = list()
-        self.channel_names = self.raw.info["ch_names"]
-        self._resample()
-        self.frequencies = self.feature_config.frequencies
-        self.mask = self.annotate_artifacts(self.raw)
+        super().__post_init__()
+        conditions = (
+            self.raw is not None,
+            self.feature_config is not None,
+            self.eeg_config is not None
+        )
+        if all(conditions):
+            map = eeg_channels.map_types(self.raw)
+            self.raw.set_channel_types(map)
+            montage = mne.channels.make_standard_montage(self.eeg_config.montage)
+            self.raw.set_montage(montage)
+            self.raw.pick_types(eeg=True)
+            channel_selection = self._get_existing_channels()
+            self.feature = np.expand_dims(
+                self.raw.get_data(picks=channel_selection), 
+                axis=2
+            )
+            self.feature_info = list()
+            self.channel_names = self.raw.info["ch_names"]
+            self._resample()
+            self.frequencies = self.feature_config.frequencies
+            self.mask = self.annotate_artifacts(self.raw)
+            self.time = self.raw.times
+            self.labels = {
+                "channels_info": eeg_channels.generate_dictionary(
+                    self.channel_names
+                ),
+                "frequencies": self.feature_config.frequencies,
+            }
+
+    @classmethod
+    def from_raw(cls, raw: mne.io.Raw, feature_config: EegFeaturesConfig, eeg_config: EegConfig):
+        return cls(raw = raw, 
+                   feature_config = feature_config,
+                   eeg_config = eeg_config)
+    
+    
+    def to_dict(self):
+        return {
+            "time": self.time,
+            "labels": self.labels,
+            "feature": self.feature,
+            "feature_info": self.feature_info,
+            "mask": self.mask,
+        }
 
     def _resample(self):
         self.feature_info.append(f"Resampled from {self.raw.info['sfreq']} Hz to {self.eeg_config.sampling_rate_hz} Hz")
@@ -211,17 +248,6 @@ class EEGfeatures:
         return annotator_instance.mask
 
     def save(self, filename):
-        channel_info = eeg_channels.generate_dictionary(self.channel_names)
-        param_to_save = {
-            "time": self.time,
-            "labels": {
-                "channels_info": channel_info,
-                "frequencies": self.frequencies,
-            },
-            "feature": self.feature,
-            "feature_info": self.feature_info,
-            "mask": self.mask,
-        }
         print(f"\nsaving into {filename}")
         with open(filename, "wb") as file:
-            pickle.dump(param_to_save, file)
+            pickle.dump(self.to_dict(), file)

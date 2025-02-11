@@ -1,66 +1,62 @@
-import logging
 import os
 import functools
 from pathlib import Path
 
 import pandas as pd
 import mne
-import numpy as np
 import bids_explorer.paths.bids as bids
-from bids_explorer.paths.bids import BidsPath
 
 from bids_explorer.utils.parsing import parse_bids_filename
 
 import bids_explorer.architecture.architecture as arch
 import eeg_brain_state_prediction.data_pipeline.tools.utils as utils
 from eeg_brain_state_prediction.data_pipeline.tools.configs import PipelineConfig, EegConfig, EegFeaturesConfig
-from eeg_brain_state_prediction.data_pipeline.tools.feature_extraction import (
+from eeg_brain_state_prediction.data_pipeline.tools.eeg import (
     EEGfeatures,
     crop,
-    extract_envelope,
-    extract_frequency_bands,
-    extract_gfp,
-    resample,
 )
 
-from eeg_brain_state_prediction.data_pipeline.tools.utils import ProcessingError, log_execution, validate_data
+from eeg_brain_state_prediction.data_pipeline.tools.utils import ProcessingError, log_execution
 
 logger = utils.setup_logger(__name__, "feature_extraction_pipeline.log")
 
 def prepare_pipeline(func):
     @functools.wraps(func)
-    def wrapper(architecture_row: pd.Series,
-                pipeline_config: PipelineConfig,
-                eeg_config: EegConfig,
-                eeg_features_config: EegFeaturesConfig,
-                ) -> None:
-        try:
-            logger.info("Starting processing of file: %s", architecture_row["filename"])
+    def wrapper(*args, **kwargs) -> None:
+        path = bids.BidsPath(
+            root = kwargs["raw_path"],
+            subject = kwargs["subject"],
+            session = kwargs["session"],
+            task = kwargs["task"],
+            run = kwargs["run"],
+            datatype = "eeg",
+            suffix = "eeg",
+            extension = ".edf",
+            )
+        
+        logger.info("Starting processing of file: %s", path.fullpath)
             
-            if not os.path.exists(architecture_row["filename"]):
-                raise FileNotFoundError(f"Input file not found: {architecture_row['filename']}")
-                
-            output_path = setup_path(architecture_row, pipeline_config, eeg_config)
+        if not os.path.exists(path.fullpath):
+            raise FileNotFoundError(f"Input file not found: {path.fullpath}")
+            
+        output_path = setup_path(
+            filename = path.fullpath,
+            pipeline_config = kwargs["pipeline_config"],
+            eeg_config = kwargs["eeg_config"]
+            )
 
-            try:
-                return func(architecture_row,
-                            pipeline_config,
-                            eeg_config,
-                            eeg_features_config,
-                            output_path,
-                            )
-            except Exception as e:
-                raise ProcessingError(e)
+        #try:
+        return func(*args, **kwargs, output_path=output_path)
+        #except Exception as e:
+        #    raise ProcessingError(e)
             
-        except Exception as e:
-            raise ProcessingError(e)
     return wrapper
 
-def setup_path(architecture_row: pd.Series,
+def setup_path(filename: str | Path,
                pipeline_config: PipelineConfig,
                eeg_config: EegConfig,
                ) -> bids.BidsPath:
-    file_entities = parse_bids_filename(architecture_row["filename"])
+    file_entities = parse_bids_filename(filename)
     file_entities.update(extension=".pkl")
     file_entities.update(description=eeg_config.description)
 
@@ -77,7 +73,11 @@ def setup_path(architecture_row: pd.Series,
 @log_execution(logger)
 @prepare_pipeline
 def pipeline(
-    architecture_row: pd.Series,
+    raw_path: Path,
+    subject: str,
+    session: str,
+    task: str,
+    run: str,
     pipeline_config: PipelineConfig,
     eeg_config: EegConfig,
     eeg_features_config: EegFeaturesConfig,
@@ -95,8 +95,19 @@ def pipeline(
         ProcessingError: If processing fails
         FileNotFoundError: If input file doesn't exist
     """
+    raw_path = bids.BidsPath(
+        root = raw_path,
+        subject = subject,
+        session = session,
+        task = task,
+        run = run,
+        datatype = "eeg",
+        suffix = "eeg",
+        extension = ".edf",
+        )
+
     raw = mne.io.read_raw_edf(
-        architecture_row["filename"], 
+        raw_path.fullpath,
         preload=True
         )
     
@@ -120,14 +131,21 @@ def main(pipeline_config: PipelineConfig,
     
     architecture = arch.BidsArchitecture(
         root = pipeline_config.raw_path,
-        subject = "01",
     )
 
-    architecture.select(task=pipeline_config.tasks, inplace=True)
+    architecture.select(
+        subject=pipeline_config.subjects,
+        task=pipeline_config.tasks,
+        inplace=True
+        )
 
     for file_id, element in architecture:
         pipeline(
-            architecture_row=element,
+            raw_path=pipeline_config.raw_path,
+            subject=element.subject,
+            session=element.session,
+            task=element.task,
+            run=element.run,
             pipeline_config=pipeline_config,
             eeg_config=eeg_config,
             eeg_features_config=eeg_features_config,

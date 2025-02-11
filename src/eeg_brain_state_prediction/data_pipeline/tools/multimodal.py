@@ -2,11 +2,16 @@ import os
 import pickle
 from pathlib import Path
 from typing import Any, Dict, List, Union
-
+import copy
+import re
 import numpy as np
 from bids_explorer import architecture as arch
 from scipy.interpolate import CubicSpline
 
+from eeg_brain_state_prediction.data_pipeline.tools.eeg import EEGfeatures
+from eeg_brain_state_prediction.data_pipeline.tools.brainstates import BrainstatesFeatures
+from eeg_brain_state_prediction.data_pipeline.tools.eyetracking import EyeFeatures
+from eeg_brain_state_prediction.data_pipeline.tools import features
 from eeg_brain_state_prediction.data_pipeline.tools.configs import MultimodalConfig
 from eeg_brain_state_prediction.data_pipeline.tools.utils import (
     ProcessingError,
@@ -26,6 +31,7 @@ def print_shapes(func):
         print(f"\n{title}")
         for modality, data in result.items():
             print(f"    {modality}")
+            print(f"            duration  : {data['time'][-1]:.2f} seconds")
             print(f"            time shape: {data['time'].shape}")
             print(f"            data shape: {data['feature'].shape}")
             print(f"            mask shape: {data['mask'].shape}")
@@ -55,7 +61,7 @@ def validate_time_series(time: np.ndarray, data: np.ndarray) -> None:
 @log_execution(logger)
 def resample_time(
     time: np.ndarray,
-    tr_value: float = 2.1,
+    tr_time_seconds: float = 2.1,
     resampling_factor: float = 8,
     units: str = "seconds",
 ) -> np.ndarray:
@@ -63,7 +69,7 @@ def resample_time(
 
     Args:
         time (np.ndarray): The time points of the data
-        tr_value (float): The frequency of the TR if the argument
+        tr_time_seconds (float): The frequency of the TR if the argument
                           units = seconds or the period of the TR if
                           the argument units = hertz
         resampling_factor (float): The factor by which the data should be
@@ -79,7 +85,7 @@ def resample_time(
         ProcessingError: If resampling fails
     """
     try:
-        if not any([tr_value, resampling_factor]):
+        if not any([tr_time_seconds, resampling_factor]):
             raise ValueError("You must provide the TR value and the resampling factor")
             
         if units.lower() not in ["seconds", "hertz"]:
@@ -92,7 +98,7 @@ def resample_time(
         elif "hertz" in units.lower():
             power_one = -1
 
-        increment_in_seconds = (tr_value**power_one) * (resampling_factor**-1)
+        increment_in_seconds = (tr_time_seconds**power_one) * (resampling_factor**-1)
 
         time_resampled = np.arange(
             time[0], time[-1], increment_in_seconds
@@ -153,20 +159,36 @@ def make_multimodal_dictionary(
     """
     multimodal_dict = {}
     
-    for modality, filename in dict_modality.items():
-        if filename is None:
+    classes = {
+        "eeg": EEGfeatures,
+        "brainstates": BrainstatesFeatures,
+        "eyetracking": EyeFeatures,
+    }
+    
+    
+    for modality, filenames in dict_modality.items():
+        if filenames is None:
             logger.debug("Skipping None filename for modality: %s", modality)
             continue
             
         try:
+            collection = []
+            label_prefix = []
             logger.info("Loading data for modality: %s", modality)
-            with open(filename, "rb") as data_file:
-                data = pickle.load(data_file)
+            if len(filenames) > 1:
+                for filename in filenames:
+                    temp = classes[modality].from_file(filename)
+                    collection.append(temp)
+                    label_prefix.append(re.search(
+                        r"desc-\w+(?=_)",
+                        filename.name).group(0).split("-")[1]
+                        )
+                data = features.concatenate(collection,labels_prefix=label_prefix)
+            else:
+                data = classes[modality].from_file(filenames[0])
+
                 
-            if not isinstance(data, dict):
-                raise ValidationError(f"Data for modality {modality} must be a dictionary")
-                
-            multimodal_dict[modality] = data
+            multimodal_dict[modality] = data.to_dict()
             logger.debug("Successfully loaded data for modality: %s", modality)
             
         except Exception as e:
@@ -178,15 +200,16 @@ def make_multimodal_dictionary(
 @print_shapes
 def resample_all(
     multimodal_dict: Dict[str, Dict[str, Any]],
-    multimodal_config: MultimodalConfig, 
+    tr_time_seconds: float,
+    resampling_factor: float,
     ) -> Dict[str, Dict[str, Any]]:
 
     resampled_multimodal = {}
     for modality, data in multimodal_dict.items():
         resampled_time = resample_time(
             data["time"],
-            tr_value=multimodal_config.tr_time_seconds,
-            resampling_factor=multimodal_config.resampling_factor,
+            tr_time_seconds=tr_time_seconds,
+            resampling_factor=resampling_factor,
         )
 
         resampled_features = resample_data(
@@ -228,11 +251,11 @@ def trim_to_min_time(
 
     trimed_multimodal = {}
     min_time = min([data["time"][-1] for data in multimodal_dict.values()])
-    min_length = np.argmin(
-        abs(multimodal_dict["brainstates"]["time"] - np.floor(min_time))
-    )
 
     for modality in multimodal_dict.keys():
+        min_length = np.argmin(
+            abs(multimodal_dict[modality]["time"] - np.floor(min_time))
+        )
         trimed_multimodal[modality] = {
                 "time": multimodal_dict[modality]["time"][:min_length],
                 "feature": multimodal_dict[modality]["feature"][:, :min_length, ...],
@@ -241,7 +264,7 @@ def trim_to_min_time(
 
     return trimed_multimodal
 
-def nice_print(
+def print_filenames(
     subject: str,
     session: str,
     task: str,
@@ -260,9 +283,9 @@ def nice_print(
         dict_modalities (Dict[str, Path | str | None]): A dictionary containing
             the filenames for each modality.
     """
-    eeg_file = dict_modalities['eeg']
-    brainstates_file = dict_modalities['brainstates']
-    eyetracking_file = dict_modalities['eyetracking']
+    eeg_file = dict_modalities.get('eeg', None)
+    brainstates_file = dict_modalities.get('brainstates', None)
+    eyetracking_file = dict_modalities.get('eyetracking', None)
     print(f"└── Session: {session}")
     print(f"    └── Run: {run}")
     print(f"        ├── EEG file        : {eeg_file}")
@@ -277,7 +300,7 @@ def collect_filenames(
     multimodal_config: MultimodalConfig,
     data_architecture: arch.BidsArchitecture,
     modalities: List[str],
-) -> Dict[str, Path | str | None] | None:
+) -> Dict[str, Path | str | None]:
     """Collect the filenames of the multimodal data.
 
     This function will generate a dictionary listing the filenames for
@@ -305,26 +328,24 @@ def collect_filenames(
         suffix = modalities,
         extension = ".pkl"
     )
-    if selection.database.empty:
-        return None
 
-    modalities = selection.suffixes
-
-    if len(modalities) != len(modalities):
-        return None
-        
     dict_modality = {}
     for modality in modalities:
+        if selection.database.empty:
+            dict_modality[modality] = None
+            continue
+        
         sub_selection = selection.select(
             datatype = modality,
             suffix = modality,
             description = getattr(multimodal_config, modality).description
         )
         temp = sub_selection.database.get('filename', None)
+
         if temp is None:
             dict_modality[modality] = None
         else:
-            dict_modality[modality] = temp.values[0]
+            dict_modality[modality] = temp.values
 
     return dict_modality
 
@@ -332,22 +353,22 @@ def collect_filenames(
 def save(
     path: Path,
     multimodal_dict: Dict[str, Dict[str, Any]],
-    multimodal_config: MultimodalConfig
+    additional_description: str
 ) -> None:
     """Save multimodal dictionary to file
     
     Args:
         path (Path): Path to save file
         multimodal_dict (Dict[str, Dict[str, Any]]): Data to save
-        multimodal_config (MultimodalConfig): Configuration object
-        
+        additional_description (str): Additional description to add to the
+        path.description
     Raises:
         ProcessingError: If saving fails
     """
     try:
         saving_path = os.fspath(path.fullpath).replace(
             path.description,
-            path.description + multimodal_config.additional_description
+            path.description + additional_description
         )
         
         logger.info("Saving data to: %s", saving_path)

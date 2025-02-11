@@ -6,6 +6,7 @@ for brain state prediction.
 """
 
 from . import tools
-from . import pipelines
+from . import feature_extraction
+from . import multimodal
 
-__all__ = ['tools', 'pipelines'] 
+__all__ = ['tools', 'feature_extraction', 'multimodal'] 

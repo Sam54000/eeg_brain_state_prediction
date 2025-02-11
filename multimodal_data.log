@@ -7,3 +7,607 @@ TypeError: make_multimodal_dictionary() got an unexpected keyword argument 'dict
 2025-02-10 12:40:45 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: brainstates
 2025-02-10 12:40:45 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: eeg
 2025-02-10 12:40:45 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: eyetracking
+2025-02-10 13:04:18 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: brainstates
+2025-02-10 13:04:18 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: eeg
+2025-02-10 13:04:18 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: eyetracking
+2025-02-10 14:01:45 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: brainstates
+2025-02-10 14:01:45 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: eeg
+2025-02-10 14:01:45 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: eyetracking
+2025-02-10 16:30:12 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: brainstates
+2025-02-10 17:03:13 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: brainstates
+2025-02-10 17:03:13 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - ERROR - Failed to load data for brainstates: type object 'BrainstatesFeatures' has no attribute 'from_file'
+2025-02-10 17:03:13 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - ERROR - Error in make_multimodal_dictionary: Failed to load data for modality brainstates: type object 'BrainstatesFeatures' has no attribute 'from_file'
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/multimodal_data.py", line 179, in make_multimodal_dictionary
+    temp = classes[modality].from_file(data_file)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: type object 'BrainstatesFeatures' has no attribute 'from_file'. Did you mean: 'from_dict'?
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/utils.py", line 79, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/multimodal_data.py", line 199, in make_multimodal_dictionary
+    raise ProcessingError(f"Failed to load data for modality {modality}: {str(e)}")
+eeg_brain_state_prediction.data_pipeline.tools.utils.ProcessingError: Failed to load data for modality brainstates: type object 'BrainstatesFeatures' has no attribute 'from_file'
+2025-02-10 17:04:27 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: brainstates
+2025-02-10 17:04:27 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - ERROR - Failed to load data for brainstates: expected str, bytes or os.PathLike object, not BufferedReader
+2025-02-10 17:04:27 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - ERROR - Error in make_multimodal_dictionary: Failed to load data for modality brainstates: expected str, bytes or os.PathLike object, not BufferedReader
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/multimodal_data.py", line 179, in make_multimodal_dictionary
+    temp = classes[modality].from_file(data_file)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/features.py", line 37, in from_file
+    with open(file_path, "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^
+TypeError: expected str, bytes or os.PathLike object, not BufferedReader
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/utils.py", line 79, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/multimodal_data.py", line 199, in make_multimodal_dictionary
+    raise ProcessingError(f"Failed to load data for modality {modality}: {str(e)}")
+eeg_brain_state_prediction.data_pipeline.tools.utils.ProcessingError: Failed to load data for modality brainstates: expected str, bytes or os.PathLike object, not BufferedReader
+2025-02-10 17:08:34 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: brainstates
+2025-02-10 17:08:34 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - ERROR - Failed to load data for brainstates: 'super' object has no attribute '__post_init__'
+2025-02-10 17:08:34 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - ERROR - Error in make_multimodal_dictionary: Failed to load data for modality brainstates: 'super' object has no attribute '__post_init__'
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/multimodal_data.py", line 178, in make_multimodal_dictionary
+    temp = classes[modality].from_file(filename)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/features.py", line 39, in from_file
+    return cls(**data)
+           ^^^^^^^^^^^
+  File "<string>", line 8, in __init__
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/brainstates.py", line 12, in __post_init__
+    super().__post_init__()
+    ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'super' object has no attribute '__post_init__'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/utils.py", line 79, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/multimodal_data.py", line 197, in make_multimodal_dictionary
+    raise ProcessingError(f"Failed to load data for modality {modality}: {str(e)}")
+eeg_brain_state_prediction.data_pipeline.tools.utils.ProcessingError: Failed to load data for modality brainstates: 'super' object has no attribute '__post_init__'
+2025-02-10 17:12:01 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: brainstates
+2025-02-10 17:12:19 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - ERROR - Failed to load data for brainstates: 'NoneType' object has no attribute 'group'
+2025-02-10 17:12:19 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - ERROR - Error in make_multimodal_dictionary: Failed to load data for modality brainstates: 'NoneType' object has no attribute 'group'
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/multimodal_data.py", line 183, in make_multimodal_dictionary
+    os.fspath(filename)).group(0)
+                         ^^^^^
+AttributeError: 'NoneType' object has no attribute 'group'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/utils.py", line 79, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/multimodal_data.py", line 197, in make_multimodal_dictionary
+    raise ProcessingError(f"Failed to load data for modality {modality}: {str(e)}")
+eeg_brain_state_prediction.data_pipeline.tools.utils.ProcessingError: Failed to load data for modality brainstates: 'NoneType' object has no attribute 'group'
+2025-02-10 17:12:42 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: brainstates
+2025-02-10 17:14:36 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: brainstates
+2025-02-10 17:15:31 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: brainstates
+2025-02-10 17:16:12 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: brainstates
+2025-02-10 17:18:05 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: brainstates
+2025-02-10 17:18:58 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: brainstates
+2025-02-10 17:19:39 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: brainstates
+2025-02-10 17:19:56 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - ERROR - Failed to load data for brainstates: 'BrainstatesFeatures' object has no attribute 'features'
+2025-02-10 17:19:56 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - ERROR - Error in make_multimodal_dictionary: Failed to load data for modality brainstates: 'BrainstatesFeatures' object has no attribute 'features'
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/multimodal_data.py", line 185, in make_multimodal_dictionary
+    data = features.concatenate(
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/features.py", line 118, in concatenate
+    if not dimensions_compatible(features_cls):
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/features.py", line 96, in dimensions_compatible
+    if not all(
+           ^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/features.py", line 97, in <genexpr>
+    feature_cls.features.shape[0] == features_cls[0].features.shape[0]
+    ^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'BrainstatesFeatures' object has no attribute 'features'. Did you mean: 'feature'?
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/utils.py", line 79, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/multimodal_data.py", line 201, in make_multimodal_dictionary
+    raise ProcessingError(f"Failed to load data for modality {modality}: {str(e)}")
+eeg_brain_state_prediction.data_pipeline.tools.utils.ProcessingError: Failed to load data for modality brainstates: 'BrainstatesFeatures' object has no attribute 'features'
+2025-02-10 17:21:50 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: brainstates
+2025-02-10 17:22:00 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - ERROR - Failed to load data for brainstates: Features dimensions are not compatible
+2025-02-10 17:22:00 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - ERROR - Error in make_multimodal_dictionary: Failed to load data for modality brainstates: Features dimensions are not compatible
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/multimodal_data.py", line 185, in make_multimodal_dictionary
+    data = features.concatenate(
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/features.py", line 119, in concatenate
+    raise ValueError("Features dimensions are not compatible")
+ValueError: Features dimensions are not compatible
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/utils.py", line 79, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/multimodal_data.py", line 201, in make_multimodal_dictionary
+    raise ProcessingError(f"Failed to load data for modality {modality}: {str(e)}")
+eeg_brain_state_prediction.data_pipeline.tools.utils.ProcessingError: Failed to load data for modality brainstates: Features dimensions are not compatible
+2025-02-10 17:24:05 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: brainstates
+2025-02-10 17:26:29 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: brainstates
+2025-02-10 17:26:55 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - ERROR - Failed to load data for brainstates: zero-dimensional arrays cannot be concatenated
+2025-02-10 17:26:55 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - ERROR - Error in make_multimodal_dictionary: Failed to load data for modality brainstates: zero-dimensional arrays cannot be concatenated
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/multimodal_data.py", line 185, in make_multimodal_dictionary
+    data = features.concatenate(
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/features.py", line 138, in concatenate
+    feature_info = list(np.concatenate([feature_info, feature_cls.feature_info]))
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: zero-dimensional arrays cannot be concatenated
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/utils.py", line 79, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/multimodal_data.py", line 201, in make_multimodal_dictionary
+    raise ProcessingError(f"Failed to load data for modality {modality}: {str(e)}")
+eeg_brain_state_prediction.data_pipeline.tools.utils.ProcessingError: Failed to load data for modality brainstates: zero-dimensional arrays cannot be concatenated
+2025-02-10 17:27:52 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: brainstates
+2025-02-10 17:28:44 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - ERROR - Failed to load data for brainstates: zero-dimensional arrays cannot be concatenated
+2025-02-10 17:28:44 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - ERROR - Error in make_multimodal_dictionary: Failed to load data for modality brainstates: zero-dimensional arrays cannot be concatenated
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/multimodal_data.py", line 185, in make_multimodal_dictionary
+    data = features.concatenate(
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/features.py", line 138, in concatenate
+    feature_info = list(np.concatenate([feature_info, feature_cls.feature_info]))
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: zero-dimensional arrays cannot be concatenated
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/utils.py", line 79, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/multimodal_data.py", line 201, in make_multimodal_dictionary
+    raise ProcessingError(f"Failed to load data for modality {modality}: {str(e)}")
+eeg_brain_state_prediction.data_pipeline.tools.utils.ProcessingError: Failed to load data for modality brainstates: zero-dimensional arrays cannot be concatenated
+2025-02-10 17:29:15 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: brainstates
+2025-02-10 17:30:50 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: brainstates
+2025-02-10 17:31:02 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - ERROR - Failed to load data for brainstates: all input arrays must have the same shape
+2025-02-10 17:31:02 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - ERROR - Error in make_multimodal_dictionary: Failed to load data for modality brainstates: all input arrays must have the same shape
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/multimodal_data.py", line 185, in make_multimodal_dictionary
+    data = features.concatenate(
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/features.py", line 128, in concatenate
+    feature = np.stack(
+              ^^^^^^^^^
+  File "/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/numpy/core/shape_base.py", line 449, in stack
+    raise ValueError('all input arrays must have the same shape')
+ValueError: all input arrays must have the same shape
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/utils.py", line 79, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/multimodal_data.py", line 201, in make_multimodal_dictionary
+    raise ProcessingError(f"Failed to load data for modality {modality}: {str(e)}")
+eeg_brain_state_prediction.data_pipeline.tools.utils.ProcessingError: Failed to load data for modality brainstates: all input arrays must have the same shape
+2025-02-10 17:35:20 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: brainstates
+2025-02-10 17:35:43 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - ERROR - Failed to load data for brainstates: all input arrays must have the same shape
+2025-02-10 17:35:43 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - ERROR - Error in make_multimodal_dictionary: Failed to load data for modality brainstates: all input arrays must have the same shape
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/multimodal_data.py", line 185, in make_multimodal_dictionary
+    data = features.concatenate(
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/features.py", line 136, in concatenate
+    feature = np.stack(feature, axis=0)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/numpy/core/shape_base.py", line 449, in stack
+    raise ValueError('all input arrays must have the same shape')
+ValueError: all input arrays must have the same shape
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/utils.py", line 79, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/multimodal_data.py", line 201, in make_multimodal_dictionary
+    raise ProcessingError(f"Failed to load data for modality {modality}: {str(e)}")
+eeg_brain_state_prediction.data_pipeline.tools.utils.ProcessingError: Failed to load data for modality brainstates: all input arrays must have the same shape
+2025-02-10 17:36:56 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: brainstates
+2025-02-10 17:37:42 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: brainstates
+2025-02-10 17:38:07 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - ERROR - Failed to load data for brainstates: all input arrays must have the same shape
+2025-02-10 17:38:07 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - ERROR - Error in make_multimodal_dictionary: Failed to load data for modality brainstates: all input arrays must have the same shape
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/multimodal_data.py", line 185, in make_multimodal_dictionary
+    data = features.concatenate(collection,labels_prefix=label_prefix)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/features.py", line 136, in concatenate
+    feature = np.stack(feature, axis=0)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/numpy/core/shape_base.py", line 449, in stack
+    raise ValueError('all input arrays must have the same shape')
+ValueError: all input arrays must have the same shape
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/utils.py", line 79, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/multimodal_data.py", line 198, in make_multimodal_dictionary
+    raise ProcessingError(f"Failed to load data for modality {modality}: {str(e)}")
+eeg_brain_state_prediction.data_pipeline.tools.utils.ProcessingError: Failed to load data for modality brainstates: all input arrays must have the same shape
+2025-02-10 17:38:43 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: brainstates
+2025-02-10 17:38:50 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - ERROR - Failed to load data for brainstates: zero-dimensional arrays cannot be concatenated
+2025-02-10 17:38:50 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - ERROR - Error in make_multimodal_dictionary: Failed to load data for modality brainstates: zero-dimensional arrays cannot be concatenated
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/multimodal_data.py", line 185, in make_multimodal_dictionary
+    data = features.concatenate(collection,labels_prefix=label_prefix)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/features.py", line 138, in concatenate
+    feature_info = np.concatenate(feature_info, axis=0)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: zero-dimensional arrays cannot be concatenated
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/utils.py", line 79, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/multimodal_data.py", line 198, in make_multimodal_dictionary
+    raise ProcessingError(f"Failed to load data for modality {modality}: {str(e)}")
+eeg_brain_state_prediction.data_pipeline.tools.utils.ProcessingError: Failed to load data for modality brainstates: zero-dimensional arrays cannot be concatenated
+2025-02-10 17:39:39 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: brainstates
+2025-02-10 17:39:44 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - ERROR - Failed to load data for brainstates: Data for modality brainstates must be a dictionary
+2025-02-10 17:39:44 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - ERROR - Error in make_multimodal_dictionary: Failed to load data for modality brainstates: Data for modality brainstates must be a dictionary
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/multimodal_data.py", line 191, in make_multimodal_dictionary
+    raise ValidationError(f"Data for modality {modality} must be a dictionary")
+eeg_brain_state_prediction.data_pipeline.tools.utils.ValidationError: Data for modality brainstates must be a dictionary
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/utils.py", line 79, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/multimodal_data.py", line 198, in make_multimodal_dictionary
+    raise ProcessingError(f"Failed to load data for modality {modality}: {str(e)}")
+eeg_brain_state_prediction.data_pipeline.tools.utils.ProcessingError: Failed to load data for modality brainstates: Data for modality brainstates must be a dictionary
+2025-02-10 17:41:35 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: brainstates
+2025-02-10 17:42:26 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: eeg
+2025-02-10 17:42:27 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - ERROR - Failed to load data for eeg: EEGfeatures.from_dict() got an unexpected keyword argument 'time'
+2025-02-10 17:42:27 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - ERROR - Error in make_multimodal_dictionary: Failed to load data for modality eeg: EEGfeatures.from_dict() got an unexpected keyword argument 'time'
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/multimodal_data.py", line 187, in make_multimodal_dictionary
+    data = classes[modality].from_file(filenames[0])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/eeg.py", line 211, in from_file
+    return cls.from_dict(**data)
+           ^^^^^^^^^^^^^^^^^^^^^
+TypeError: EEGfeatures.from_dict() got an unexpected keyword argument 'time'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/utils.py", line 79, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/multimodal_data.py", line 195, in make_multimodal_dictionary
+    raise ProcessingError(f"Failed to load data for modality {modality}: {str(e)}")
+eeg_brain_state_prediction.data_pipeline.tools.utils.ProcessingError: Failed to load data for modality eeg: EEGfeatures.from_dict() got an unexpected keyword argument 'time'
+2025-02-10 17:44:58 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: brainstates
+2025-02-10 17:45:09 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: eeg
+2025-02-10 17:45:09 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - ERROR - Failed to load data for eeg: EEGfeatures.from_dict() got an unexpected keyword argument 'time'
+2025-02-10 17:45:09 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - ERROR - Error in make_multimodal_dictionary: Failed to load data for modality eeg: EEGfeatures.from_dict() got an unexpected keyword argument 'time'
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/multimodal_data.py", line 187, in make_multimodal_dictionary
+    data = classes[modality].from_file(filenames[0])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/eeg.py", line 216, in from_file
+    return cls.from_dict(**data)
+           ^^^^^^^^^^^^^^^^^^^^^
+TypeError: EEGfeatures.from_dict() got an unexpected keyword argument 'time'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/utils.py", line 79, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/multimodal_data.py", line 195, in make_multimodal_dictionary
+    raise ProcessingError(f"Failed to load data for modality {modality}: {str(e)}")
+eeg_brain_state_prediction.data_pipeline.tools.utils.ProcessingError: Failed to load data for modality eeg: EEGfeatures.from_dict() got an unexpected keyword argument 'time'
+2025-02-10 17:47:03 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: brainstates
+2025-02-10 17:47:07 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: eeg
+2025-02-10 17:47:07 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - ERROR - Failed to load data for eeg: 'EEGfeatures' object has no attribute 'channel_names'
+2025-02-10 17:47:07 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - ERROR - Error in make_multimodal_dictionary: Failed to load data for modality eeg: 'EEGfeatures' object has no attribute 'channel_names'
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/multimodal_data.py", line 190, in make_multimodal_dictionary
+    multimodal_dict[modality] = data.to_dict()
+                                ^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/eeg.py", line 216, in to_dict
+    channel_info = eeg_channels.generate_dictionary(self.channel_names)
+                                                    ^^^^^^^^^^^^^^^^^^
+AttributeError: 'EEGfeatures' object has no attribute 'channel_names'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/utils.py", line 79, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/multimodal_data.py", line 195, in make_multimodal_dictionary
+    raise ProcessingError(f"Failed to load data for modality {modality}: {str(e)}")
+eeg_brain_state_prediction.data_pipeline.tools.utils.ProcessingError: Failed to load data for modality eeg: 'EEGfeatures' object has no attribute 'channel_names'
+2025-02-11 05:37:20 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: brainstates
+2025-02-11 05:37:23 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: eeg
+2025-02-11 05:37:23 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - ERROR - Failed to load data for eeg: 'EEGfeatures' object has no attribute 'channel_names'
+2025-02-11 05:37:23 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - ERROR - Error in make_multimodal_dictionary: Failed to load data for modality eeg: 'EEGfeatures' object has no attribute 'channel_names'
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/multimodal_data.py", line 190, in make_multimodal_dictionary
+    multimodal_dict[modality] = data.to_dict()
+                                ^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/eeg.py", line 216, in to_dict
+    channel_info = eeg_channels.generate_dictionary(self.channel_names)
+                                                    ^^^^^^^^^^^^^^^^^^
+AttributeError: 'EEGfeatures' object has no attribute 'channel_names'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/utils.py", line 79, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/multimodal_data.py", line 195, in make_multimodal_dictionary
+    raise ProcessingError(f"Failed to load data for modality {modality}: {str(e)}")
+eeg_brain_state_prediction.data_pipeline.tools.utils.ProcessingError: Failed to load data for modality eeg: 'EEGfeatures' object has no attribute 'channel_names'
+2025-02-11 05:40:12 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: brainstates
+2025-02-11 05:40:20 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: eeg
+2025-02-11 05:40:20 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - ERROR - Failed to load data for eeg: 'EEGfeatures' object has no attribute 'channel_info'
+2025-02-11 05:40:20 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - ERROR - Error in make_multimodal_dictionary: Failed to load data for modality eeg: 'EEGfeatures' object has no attribute 'channel_info'
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/multimodal_data.py", line 190, in make_multimodal_dictionary
+    multimodal_dict[modality] = data.to_dict()
+                                ^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/eeg.py", line 222, in to_dict
+    "channels_info": self.channel_info,
+                     ^^^^^^^^^^^^^^^^^
+AttributeError: 'EEGfeatures' object has no attribute 'channel_info'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/utils.py", line 79, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/multimodal_data.py", line 195, in make_multimodal_dictionary
+    raise ProcessingError(f"Failed to load data for modality {modality}: {str(e)}")
+eeg_brain_state_prediction.data_pipeline.tools.utils.ProcessingError: Failed to load data for modality eeg: 'EEGfeatures' object has no attribute 'channel_info'
+2025-02-11 05:42:52 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: brainstates
+2025-02-11 05:42:56 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: eeg
+2025-02-11 05:43:06 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: eyetracking
+2025-02-11 05:49:09 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: brainstates
+2025-02-11 05:49:09 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - ERROR - Failed to load data for brainstates: only integer scalar arrays can be converted to a scalar index
+2025-02-11 05:49:09 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - ERROR - Error in make_multimodal_dictionary: Failed to load data for modality brainstates: only integer scalar arrays can be converted to a scalar index
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/multimodal_data.py", line 185, in make_multimodal_dictionary
+    data = features.concatenate(collection,labels_prefix=label_prefix)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/features.py", line 138, in concatenate
+    mask = np.ndarray(mask)
+           ^^^^^^^^^^^^^^^^
+TypeError: only integer scalar arrays can be converted to a scalar index
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/utils.py", line 79, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/multimodal_data.py", line 195, in make_multimodal_dictionary
+    raise ProcessingError(f"Failed to load data for modality {modality}: {str(e)}")
+eeg_brain_state_prediction.data_pipeline.tools.utils.ProcessingError: Failed to load data for modality brainstates: only integer scalar arrays can be converted to a scalar index
+2025-02-11 05:53:16 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: brainstates
+2025-02-11 05:54:02 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: eeg
+2025-02-11 05:54:03 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: eyetracking
+2025-02-11 06:17:57 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: brainstates
+2025-02-11 06:18:04 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: eeg
+2025-02-11 06:18:06 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: eyetracking
+2025-02-11 06:18:38 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/derivatives/sub-01/ses-01/multimodal/sub-01_ses-01_task-checker_run-01_desc-RawBk8NotResampled_multimodal.pkl
+2025-02-11 06:18:38 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Successfully saved data
+2025-02-11 06:23:37 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: brainstates
+2025-02-11 06:23:41 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: eeg
+2025-02-11 06:23:41 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: eyetracking
+2025-02-11 06:24:59 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: brainstates
+2025-02-11 06:24:59 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: eeg
+2025-02-11 06:24:59 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: eyetracking
+2025-02-11 06:39:42 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: brainstates
+2025-02-11 06:39:42 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: eeg
+2025-02-11 06:39:42 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: eyetracking
+2025-02-11 07:18:45 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: brainstates
+2025-02-11 07:18:45 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: eeg
+2025-02-11 07:18:45 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: eyetracking
+2025-02-11 07:18:58 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/derivatives/sub-01/ses-01/multimodal/sub-01_ses-01_task-checker_run-01_desc-RawBk8NotResampled_multimodal.pkl
+2025-02-11 07:18:58 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Successfully saved data
+2025-02-11 07:28:19 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: brainstates
+2025-02-11 07:28:19 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: eeg
+2025-02-11 07:28:19 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: eyetracking
+2025-02-11 07:29:13 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/derivatives/sub-01/ses-01/multimodal/sub-01_ses-01_task-checker_run-01_desc-RawBk8NotResampled_multimodal.pkl
+2025-02-11 07:29:13 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Successfully saved data
+2025-02-11 07:31:13 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: brainstates
+2025-02-11 07:31:13 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: eeg
+2025-02-11 07:31:13 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: eyetracking
+2025-02-11 07:31:21 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/derivatives/sub-01/ses-01/multimodal/sub-01_ses-01_task-checker_run-01_desc-RawBk8NotResampled_multimodal.pkl
+2025-02-11 07:31:21 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Successfully saved data
+2025-02-11 07:31:50 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: brainstates
+2025-02-11 07:31:50 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: eeg
+2025-02-11 07:31:50 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: eyetracking
+2025-02-11 07:31:50 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/derivatives/sub-01/ses-01/multimodal/sub-01_ses-01_task-checker_run-01_desc-RawBk8NotResampled_multimodal.pkl
+2025-02-11 07:31:50 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Successfully saved data
+2025-02-11 07:33:14 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: brainstates
+2025-02-11 07:33:14 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: eeg
+2025-02-11 07:33:14 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: eyetracking
+2025-02-11 07:33:14 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/derivatives/sub-01/ses-01/multimodal/sub-01_ses-01_task-checker_run-01_desc-RawBk8NotResampled_multimodal.pkl
+2025-02-11 07:33:14 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Successfully saved data
+2025-02-11 07:34:36 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: brainstates
+2025-02-11 07:34:36 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: eeg
+2025-02-11 07:34:36 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: eyetracking
+2025-02-11 07:34:36 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/derivatives/sub-01/ses-01/multimodal/sub-01_ses-01_task-checker_run-01_desc-RawBk8NotResampled_multimodal.pkl
+2025-02-11 07:34:36 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Successfully saved data
+2025-02-11 07:38:45 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: brainstates
+2025-02-11 07:38:45 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: eeg
+2025-02-11 07:38:45 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: eyetracking
+2025-02-11 07:38:45 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/derivatives/sub-01/ses-01/multimodal/sub-01_ses-01_task-checker_run-01_desc-RawBk8NotResampled_multimodal.pkl
+2025-02-11 07:38:45 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Successfully saved data
+2025-02-11 07:39:01 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: brainstates
+2025-02-11 07:39:01 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: eeg
+2025-02-11 07:39:01 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: eyetracking
+2025-02-11 07:39:01 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/derivatives/sub-01/ses-01/multimodal/sub-01_ses-01_task-rest_run-01_desc-RawBk8NotResampled_multimodal.pkl
+2025-02-11 07:39:01 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Successfully saved data
+2025-02-11 07:42:40 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: brainstates
+2025-02-11 07:42:40 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: eeg
+2025-02-11 07:42:40 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: eyetracking
+2025-02-11 07:42:40 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/derivatives/sub-01/ses-01/multimodal/sub-01_ses-01_task-checker_run-01_desc-RawBk8NotResampled_multimodal.pkl
+2025-02-11 07:42:40 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Successfully saved data
+2025-02-11 07:42:40 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: brainstates
+2025-02-11 07:42:40 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: eeg
+2025-02-11 07:42:40 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: eyetracking
+2025-02-11 07:42:40 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/derivatives/sub-01/ses-01/multimodal/sub-01_ses-01_task-rest_run-01_desc-RawBk8NotResampled_multimodal.pkl
+2025-02-11 07:42:40 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Successfully saved data
+2025-02-11 08:27:18 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: brainstates
+2025-02-11 08:27:19 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: eeg
+2025-02-11 08:27:19 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: eyetracking
+2025-02-11 08:27:22 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - ERROR - Error in save: save() got an unexpected keyword argument 'multimodal_config'
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/utils.py", line 79, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+TypeError: save() got an unexpected keyword argument 'multimodal_config'
+2025-02-11 08:29:13 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: brainstates
+2025-02-11 08:29:13 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: eeg
+2025-02-11 08:29:13 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: eyetracking
+2025-02-11 08:29:15 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/derivatives/sub-01/ses-01/multimodal/sub-01_ses-01_task-checker_run-01_desc-RawBk8NotResampled_multimodal.pkl
+2025-02-11 08:29:15 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Successfully saved data
+2025-02-11 08:29:25 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: brainstates
+2025-02-11 08:29:25 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: eeg
+2025-02-11 08:29:25 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Loading data for modality: eyetracking
+2025-02-11 08:29:29 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/derivatives/sub-01/ses-01/multimodal/sub-01_ses-01_task-rest_run-01_desc-RawBk8NotResampled_multimodal.pkl
+2025-02-11 08:29:29 - eeg_brain_state_prediction.data_pipeline.tools.multimodal_data - INFO - Successfully saved data
+2025-02-11 11:41:00 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-02-11 11:41:00 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-02-11 11:41:00 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eyetracking
+2025-02-11 11:41:00 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/derivatives/sub-01/ses-01/multimodal/sub-01_ses-01_task-checker_run-01_desc-RawBk8NotResampled_multimodal.pkl
+2025-02-11 11:41:00 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-02-11 11:41:00 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-02-11 11:41:00 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-02-11 11:41:00 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eyetracking
+2025-02-11 11:41:00 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/derivatives/sub-02/ses-01/multimodal/sub-02_ses-01_task-checker_run-01_desc-RawBk8NotResampled_multimodal.pkl
+2025-02-11 11:41:01 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-02-11 11:41:01 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-02-11 11:41:01 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-02-11 11:41:01 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eyetracking
+2025-02-11 11:41:01 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/derivatives/sub-03/ses-01/multimodal/sub-03_ses-01_task-checker_run-01_desc-RawBk8NotResampled_multimodal.pkl
+2025-02-11 11:41:01 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-02-11 11:41:01 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-02-11 11:41:01 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-02-11 11:41:02 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eyetracking
+2025-02-11 11:41:02 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/derivatives/sub-05/ses-02/multimodal/sub-05_ses-02_task-checker_run-01_desc-RawBk8NotResampled_multimodal.pkl
+2025-02-11 11:41:02 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-02-11 11:41:02 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-02-11 11:41:02 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-02-11 11:41:02 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eyetracking
+2025-02-11 11:41:02 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/derivatives/sub-06/ses-01/multimodal/sub-06_ses-01_task-checker_run-01_desc-RawBk8NotResampled_multimodal.pkl
+2025-02-11 11:41:02 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-02-11 11:41:02 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-02-11 11:41:02 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-02-11 11:41:03 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eyetracking
+2025-02-11 11:41:03 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/derivatives/sub-06/ses-02/multimodal/sub-06_ses-02_task-checker_run-01_desc-RawBk8NotResampled_multimodal.pkl
+2025-02-11 11:41:03 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-02-11 11:41:03 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-02-11 11:41:03 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-02-11 11:41:03 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eyetracking
+2025-02-11 11:41:03 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/derivatives/sub-07/ses-01/multimodal/sub-07_ses-01_task-checker_run-01_desc-RawBk8NotResampled_multimodal.pkl
+2025-02-11 11:41:03 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-02-11 11:41:03 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-02-11 11:41:04 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-02-11 11:41:04 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eyetracking
+2025-02-11 11:41:04 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/derivatives/sub-07/ses-02/multimodal/sub-07_ses-02_task-checker_run-01_desc-RawBk8NotResampled_multimodal.pkl
+2025-02-11 11:41:04 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-02-11 11:41:04 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-02-11 11:41:04 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-02-11 11:41:04 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eyetracking
+2025-02-11 11:41:04 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/derivatives/sub-08/ses-01/multimodal/sub-08_ses-01_task-checker_run-01_desc-RawBk8NotResampled_multimodal.pkl
+2025-02-11 11:41:04 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-02-11 11:41:05 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-02-11 11:41:05 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-02-11 11:41:05 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eyetracking
+2025-02-11 11:41:05 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/derivatives/sub-08/ses-02/multimodal/sub-08_ses-02_task-checker_run-01_desc-RawBk8NotResampled_multimodal.pkl
+2025-02-11 11:41:05 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-02-11 11:41:05 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-02-11 11:41:05 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-02-11 11:41:05 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eyetracking
+2025-02-11 11:41:05 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/derivatives/sub-09/ses-01/multimodal/sub-09_ses-01_task-checker_run-01_desc-RawBk8NotResampled_multimodal.pkl
+2025-02-11 11:41:06 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-02-11 11:41:06 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-02-11 11:41:06 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-02-11 11:41:06 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eyetracking
+2025-02-11 11:41:06 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/derivatives/sub-11/ses-01/multimodal/sub-11_ses-01_task-checker_run-01_desc-RawBk8NotResampled_multimodal.pkl
+2025-02-11 11:41:06 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-02-11 11:41:06 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-02-11 11:41:07 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-02-11 11:41:07 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eyetracking
+2025-02-11 11:41:07 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/derivatives/sub-11/ses-02/multimodal/sub-11_ses-02_task-checker_run-01_desc-RawBk8NotResampled_multimodal.pkl
+2025-02-11 11:41:07 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-02-11 11:41:07 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-02-11 11:41:07 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-02-11 11:41:07 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eyetracking
+2025-02-11 11:41:07 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/derivatives/sub-12/ses-01/multimodal/sub-12_ses-01_task-checker_run-01_desc-RawBk8NotResampled_multimodal.pkl
+2025-02-11 11:41:07 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-02-11 11:41:08 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-02-11 11:41:08 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-02-11 11:41:08 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eyetracking
+2025-02-11 11:41:08 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/derivatives/sub-12/ses-02/multimodal/sub-12_ses-02_task-checker_run-01_desc-RawBk8NotResampled_multimodal.pkl
+2025-02-11 11:41:08 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-02-11 11:44:09 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-02-11 11:44:09 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-02-11 11:44:09 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eyetracking
+2025-02-11 11:44:09 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/derivatives/sub-01/ses-01/multimodal/sub-01_ses-01_task-rest_run-01_desc-RawBk8NotResampled_multimodal.pkl
+2025-02-11 11:44:09 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-02-11 11:50:36 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-02-11 11:50:36 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-02-11 11:50:36 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eyetracking
+2025-02-11 11:50:36 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/derivatives/sub-01/ses-01/multimodal/sub-01_ses-01_task-checker_run-01_desc-RawBk8NotResampled_multimodal.pkl
+2025-02-11 11:50:36 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-02-11 11:50:36 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-02-11 11:50:36 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-02-11 11:50:36 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eyetracking
+2025-02-11 11:50:36 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/derivatives/sub-01/ses-01/multimodal/sub-01_ses-01_task-rest_run-01_desc-RawBk8NotResampled_multimodal.pkl
+2025-02-11 11:50:37 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data

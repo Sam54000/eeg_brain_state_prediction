@@ -1,13 +1,17 @@
-from . import multimodal_data
+from . import multimodal
 from . import utils
 from . import artifacts
-from . import feature_extraction
+from . import eeg
 from . import eeg_channels
 from . import configs
+from . import brainstates
+from . import features
 
-__all__ = ["multimodal_data", 
+__all__ = ["multimodal", 
            "utils", 
            "configs",
            "artifacts",
-           "feature_extraction",
-           "eeg_channels"]
+           "eeg",
+           "eeg_channels",
+           "brainstates",
+           "features"]

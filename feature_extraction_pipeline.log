@@ -764,3 +764,173 @@ eeg_brain_state_prediction.data_pipeline.tools.utils.ProcessingError: expected s
 2025-02-10 11:30:33 - __main__ - INFO - Starting processing of file: /data2/Projects/eeg_fmri_natview/raw/sub-01/ses-01/eeg/sub-01_ses-01_task-rest_run-01_eeg.edf
 2025-02-10 11:30:47 - __main__ - INFO - Starting processing of file: /data2/Projects/eeg_fmri_natview/raw/sub-01/ses-01/eeg/sub-01_ses-01_task-checker_run-01_eeg.edf
 2025-02-10 11:31:30 - __main__ - INFO - Starting processing of file: /data2/Projects/eeg_fmri_natview/raw/sub-01/ses-01/eeg/sub-01_ses-01_task-rest_run-01_eeg.edf
+2025-02-11 08:56:23 - __main__ - ERROR - Error in pipeline: pipeline() got an unexpected keyword argument 'architecture_row'
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/utils.py", line 79, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+TypeError: pipeline() got an unexpected keyword argument 'architecture_row'
+2025-02-11 09:41:41 - __main__ - ERROR - Error in pipeline: pipeline() got an unexpected keyword argument 'subject'
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/utils.py", line 79, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+TypeError: pipeline() got an unexpected keyword argument 'subject'
+2025-02-11 09:47:36 - __main__ - INFO - Starting processing of file: /data2/Projects/eeg_fmri_natview/raw/sub-01/ses-01/eeg/sub-01_ses-01_task-rest_run-01_eeg.edf
+2025-02-11 09:47:36 - __main__ - ERROR - Error in pipeline: pipeline() got an unexpected keyword argument 'pipeline_config'
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 50, in wrapper
+    return func(*args, **kwargs, output_path=output_path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: pipeline() got an unexpected keyword argument 'pipeline_config'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 52, in wrapper
+    raise ProcessingError(e)
+eeg_brain_state_prediction.data_pipeline.tools.utils.ProcessingError: pipeline() got an unexpected keyword argument 'pipeline_config'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/utils.py", line 79, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/pipelines/feature_extraction_pipelines.py", line 55, in wrapper
+    raise ProcessingError(e)
+eeg_brain_state_prediction.data_pipeline.tools.utils.ProcessingError: pipeline() got an unexpected keyword argument 'pipeline_config'
+2025-02-11 09:48:42 - __main__ - INFO - Starting processing of file: /data2/Projects/eeg_fmri_natview/raw/sub-01/ses-01/eeg/sub-01_ses-01_task-rest_run-01_eeg.edf
+2025-02-11 09:48:52 - __main__ - INFO - Starting processing of file: /data2/Projects/eeg_fmri_natview/raw/sub-01/ses-01/eeg/sub-01_ses-01_task-checker_run-01_eeg.edf
+2025-02-11 11:37:27 - eeg_brain_state_prediction.data_pipeline.feature_extraction - INFO - Starting processing of file: /data2/Projects/eeg_fmri_natview/raw/sub-01/ses-01/eeg/sub-01_ses-01_task-rest_run-01_eeg.edf
+2025-02-11 11:37:28 - eeg_brain_state_prediction.data_pipeline.feature_extraction - ERROR - Error in pipeline: 'NoneType' object is not iterable
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/feature_extraction.py", line 50, in wrapper
+    return func(*args, **kwargs, output_path=output_path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/feature_extraction.py", line 117, in pipeline
+    eeg_features = EEGfeatures(
+                   ^^^^^^^^^^^^
+  File "<string>", line 11, in __init__
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/eeg.py", line 196, in __post_init__
+    channel_selection = self._get_existing_channels()
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/eeg.py", line 238, in _get_existing_channels
+    requested_channels = set(self.eeg_config.channels)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: 'NoneType' object is not iterable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/feature_extraction.py", line 52, in wrapper
+    raise ProcessingError(e)
+eeg_brain_state_prediction.data_pipeline.tools.utils.ProcessingError: 'NoneType' object is not iterable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/utils.py", line 79, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/feature_extraction.py", line 55, in wrapper
+    raise ProcessingError(e)
+eeg_brain_state_prediction.data_pipeline.tools.utils.ProcessingError: 'NoneType' object is not iterable
+2025-02-11 11:38:27 - eeg_brain_state_prediction.data_pipeline.feature_extraction - INFO - Starting processing of file: /data2/Projects/eeg_fmri_natview/raw/sub-01/ses-01/eeg/sub-01_ses-01_task-rest_run-01_eeg.edf
+2025-02-11 11:38:28 - eeg_brain_state_prediction.data_pipeline.feature_extraction - ERROR - Error in pipeline: 'NoneType' object is not iterable
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/feature_extraction.py", line 49, in wrapper
+    return func(*args, **kwargs, output_path=output_path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/feature_extraction.py", line 114, in pipeline
+    eeg_features = EEGfeatures(
+                   ^^^^^^^^^^^^
+  File "<string>", line 11, in __init__
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/eeg.py", line 196, in __post_init__
+    channel_selection = self._get_existing_channels()
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/eeg.py", line 238, in _get_existing_channels
+    requested_channels = set(self.eeg_config.channels)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: 'NoneType' object is not iterable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/utils.py", line 79, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/feature_extraction.py", line 51, in wrapper
+    raise ProcessingError(e)
+eeg_brain_state_prediction.data_pipeline.tools.utils.ProcessingError: 'NoneType' object is not iterable
+2025-02-11 11:38:55 - eeg_brain_state_prediction.data_pipeline.feature_extraction - INFO - Starting processing of file: /data2/Projects/eeg_fmri_natview/raw/sub-01/ses-01/eeg/sub-01_ses-01_task-rest_run-01_eeg.edf
+2025-02-11 11:38:56 - eeg_brain_state_prediction.data_pipeline.feature_extraction - ERROR - Error in pipeline: 'NoneType' object is not iterable
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/utils.py", line 79, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/feature_extraction.py", line 49, in wrapper
+    return func(*args, **kwargs, output_path=output_path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/feature_extraction.py", line 114, in pipeline
+    eeg_features = EEGfeatures(
+                   ^^^^^^^^^^^^
+  File "<string>", line 11, in __init__
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/eeg.py", line 196, in __post_init__
+    channel_selection = self._get_existing_channels()
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/eeg.py", line 238, in _get_existing_channels
+    requested_channels = set(self.eeg_config.channels)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: 'NoneType' object is not iterable
+2025-02-11 11:40:52 - eeg_brain_state_prediction.data_pipeline.feature_extraction - INFO - Starting processing of file: /data2/Projects/eeg_fmri_natview/raw/sub-01/ses-01/eeg/sub-01_ses-01_task-rest_run-01_eeg.edf
+2025-02-11 11:42:00 - eeg_brain_state_prediction.data_pipeline.feature_extraction - INFO - Starting processing of file: /data2/Projects/eeg_fmri_natview/raw/sub-01/ses-01/eeg/sub-01_ses-01_task-rest_run-01_eeg.edf
+2025-02-11 11:43:48 - eeg_brain_state_prediction.data_pipeline.feature_extraction - INFO - Starting processing of file: /data2/Projects/eeg_fmri_natview/raw/sub-01/ses-01/eeg/sub-01_ses-01_task-rest_run-01_eeg.edf
+2025-02-11 11:47:48 - eeg_brain_state_prediction.data_pipeline.feature_extraction - INFO - Starting processing of file: /data2/Projects/eeg_fmri_natview/raw/sub-01/ses-01/eeg/sub-01_ses-01_task-checker_run-01_eeg.edf
+2025-02-11 11:47:49 - eeg_brain_state_prediction.data_pipeline.feature_extraction - ERROR - Error in pipeline: No appropriate channels found for the given picks ([])
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/utils.py", line 79, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/feature_extraction.py", line 49, in wrapper
+    return func(*args, **kwargs, output_path=output_path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/feature_extraction.py", line 114, in pipeline
+    eeg_features = EEGfeatures(
+                   ^^^^^^^^^^^^
+  File "<string>", line 11, in __init__
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/eeg.py", line 198, in __post_init__
+    self.raw.get_data(picks=channel_selection),
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<decorator-gen-190>", line 12, in get_data
+  File "/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/mne/io/base.py", line 933, in get_data
+    picks = _picks_to_idx(self.info, picks, "all", exclude=())
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/mne/_fiff/pick.py", line 1279, in _picks_to_idx
+    raise ValueError(
+ValueError: No appropriate channels found for the given picks ([])
+2025-02-11 11:48:51 - eeg_brain_state_prediction.data_pipeline.feature_extraction - INFO - Starting processing of file: /data2/Projects/eeg_fmri_natview/raw/sub-01/ses-01/eeg/sub-01_ses-01_task-checker_run-01_eeg.edf
+2025-02-11 11:48:52 - eeg_brain_state_prediction.data_pipeline.feature_extraction - ERROR - Error in pipeline: No appropriate channels found for the given picks ([])
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/utils.py", line 79, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/feature_extraction.py", line 49, in wrapper
+    return func(*args, **kwargs, output_path=output_path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/feature_extraction.py", line 114, in pipeline
+    eeg_features = EEGfeatures(
+                   ^^^^^^^^^^^^
+  File "<string>", line 11, in __init__
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/eeg.py", line 198, in __post_init__
+    self.raw.get_data(picks=channel_selection),
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<decorator-gen-190>", line 12, in get_data
+  File "/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/mne/io/base.py", line 933, in get_data
+    picks = _picks_to_idx(self.info, picks, "all", exclude=())
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/mne/_fiff/pick.py", line 1279, in _picks_to_idx
+    raise ValueError(
+ValueError: No appropriate channels found for the given picks ([])
+2025-02-11 11:50:32 - eeg_brain_state_prediction.data_pipeline.feature_extraction - INFO - Starting processing of file: /data2/Projects/eeg_fmri_natview/raw/sub-01/ses-01/eeg/sub-01_ses-01_task-rest_run-01_eeg.edf
+2025-02-11 11:50:34 - eeg_brain_state_prediction.data_pipeline.feature_extraction - INFO - Starting processing of file: /data2/Projects/eeg_fmri_natview/raw/sub-01/ses-01/eeg/sub-01_ses-01_task-checker_run-01_eeg.edf

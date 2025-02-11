@@ -5,8 +5,6 @@ from typing import List, Optional
 
 import numpy as np
 
-from eeg_brain_state_prediction.data_pipeline.tools.utils import ConfigurationError
-
 @dataclass
 class PipelineConfig:
     """Configuration class for the pipeline
@@ -19,15 +17,18 @@ class PipelineConfig:
         tasks (list[str]): List of tasks to process
     """
     n_threads: int = 32
-    derivatives_path: Path = Path("/data2/Projects/eeg_fmri_natview/derivatives")
     raw_path: Path = Path("/data2/Projects/eeg_fmri_natview/raw")
+    derivatives_path: Path = Path("/data2/Projects/eeg_fmri_natview/derivatives")
     overwrite: bool = False
     code_root: Path = Path(
         os.environ["HOME"],
         "01_projects",
         "eeg_brain_state_prediction",
     )
-    tasks: List[str] = field(default_factory=lambda: ["rest"])
+    tasks: Optional[List[str]] = None
+    subjects: Optional[List[str]] = None
+    sessions: Optional[List[str]] = None
+    runs: Optional[List[str]] = None
 
 @dataclass
 class MultimodalConfig:
