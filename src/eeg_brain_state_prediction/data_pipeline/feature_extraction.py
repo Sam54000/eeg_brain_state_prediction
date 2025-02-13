@@ -10,7 +10,12 @@ from bids_explorer.utils.parsing import parse_bids_filename
 
 import bids_explorer.architecture.architecture as arch
 import eeg_brain_state_prediction.data_pipeline.tools.utils as utils
-from eeg_brain_state_prediction.data_pipeline.tools.configs import PipelineConfig, EegConfig, EegFeaturesConfig
+from eeg_brain_state_prediction.tools.configs import (
+    PipelineConfig, 
+    EegConfig,
+    EegFeaturesConfig,
+)
+
 from eeg_brain_state_prediction.data_pipeline.tools.eeg import (
     EEGfeatures,
     crop,

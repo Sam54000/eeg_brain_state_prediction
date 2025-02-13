@@ -52,8 +52,7 @@ class ModelConfig:
     task: str = "rest"
     additional_info: str = "All"
     feature_set = {
-        "eyetracking": 
-            ["pupil_dilation", "first_derivative", "second_derivative"],
+        "eyetracking": None,
         "eeg": {
             "channel": np.arange(n_channels).repeat(n_bands),
             "band": np.tile(np.arange(n_bands),n_channels),
@@ -75,15 +74,6 @@ def setup_logger(log_file=None):
         ]
     )
     return logging.getLogger(__name__)
-
-def set_thread_env(config) -> None:
-    """Set environment variables for thread control"""
-    thread_vars = [
-        "OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS", "MKL_NUM_THREADS",
-        "VECLIB_MAXIMUM_THREADS", "NUMEXPR_NUM_THREADS"
-    ]
-    for var in thread_vars:
-        os.environ[var] = str(config.n_threads)
 
 def create_bids_architecture(config: "ModelConfig") -> arch.BidsArchitecture:
     """Create BIDS architecture with given parameters"""
@@ -216,10 +206,7 @@ def get_best_n_feature_combinations(
         "eeg": {
             "channel": channels,
             "band": bands,
-        },
-        "eyetracking": ["pupil_dilation", 
-                        "first_derivative",
-                        "second_derivative"]
+        }
     }
 
 def pipeline(
@@ -253,17 +240,18 @@ def pipeline(
     else:
         config.nb_desired_features = [1]
     for n_features in config.nb_desired_features:
+        print(f"Processing {n_features} features")
         
         for test_keys, test_session in test_arch:
             train_keys = train_arch.database.index.values
             
             for cap in config.caps:
                 try:
-                    config.feature_set = get_best_n_feature_combinations(
+                    config.feature_set.update(get_best_n_feature_combinations(
                         n_features=n_features,
                         aggregated_selection=features_csv[features_csv["ts_CAPS"] == cap],
                         to_sort = "t_stat",
-                    )
+                    ))
                     X_train, Y_train, X_test, Y_test = process_single_iteration(
                         big_data, 
                         train_keys,

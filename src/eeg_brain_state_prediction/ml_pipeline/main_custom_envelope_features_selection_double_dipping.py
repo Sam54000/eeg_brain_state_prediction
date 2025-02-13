@@ -34,7 +34,6 @@ def main(config: "utils.ModelConfig") -> None:
     logger.debug(f"HOME environment: {os.environ.get('HOME')}")
     logger.debug(f"Python path: {os.environ.get('PYTHONPATH')}")
     
-    utils.set_thread_env(config)
     config.runs = None
     
     logger.info(f"\nConfig Debug:")
@@ -45,11 +44,11 @@ def main(config: "utils.ModelConfig") -> None:
     architecture = utils.create_bids_architecture(config)
     logger.info(f"Found {len(architecture.subjects)} subjects to process")
          
-    for subject in architecture.subjects:
+    for subject in ["01"]:#architecture.subjects:
         full_path = utils.make_saving_path(config, subject)
-        if full_path.exists():
-            logger.info(f"File already exists: {full_path}")
-            continue
+        #if full_path.exists():
+        #    logger.info(f"File already exists: {full_path}")
+        #    continue
         logger.info(f"\nProcessing subject: {subject}")
         utils.pipeline(
             architecture=architecture, 
@@ -74,12 +73,10 @@ if __name__ == "__main__":
         nb_desired_features=range(1,51),
         data_directory="data/custom_envelope_caps/group_level_feature_selection",
         task = "rest",
-        additional_info="WithPupil",
+        additional_info="EegOnly",
         n_threads = 32,
-        features_data_filename="/home/slouviot/01_projects/eeg_brain_state_prediction/data/custom_envelope_caps/group_level/sub-all_task-rest_desc-CustomEnvBk_tstats.csv",
+        features_data_filename="/home/slouviot/01_projects/eeg_brain_state_prediction/data/custom_envelope_caps/group_level/sub-all_task-checker_desc-CustomEnvBk_tstats.csv",
         
     )
-        
-    utils.set_thread_env(config)
         
     main(config)

@@ -1,7 +1,8 @@
 import os
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import List, Optional
+from typing import List, Optional, Dict, Any, Callable
+import scipy.stats
 
 import numpy as np
 
@@ -19,6 +20,7 @@ class PipelineConfig:
     n_threads: int = 32
     raw_path: Path = Path("/data2/Projects/eeg_fmri_natview/raw")
     derivatives_path: Path = Path("/data2/Projects/eeg_fmri_natview/derivatives")
+    corr_output_path: Path = Path(f"data/eeg_bands_cpca/")
     overwrite: bool = False
     code_root: Path = Path(
         os.environ["HOME"],
@@ -93,3 +95,34 @@ class EegFeaturesConfig:
     frequencies: List[tuple[float, float]] = field(
         default_factory=lambda: [(0.5, 40)]
     )
+    n_bands: int = len(frequencies)
+    n_channels: int = 1
+
+
+
+@dataclass
+class ModelConfig:
+    """Configuration class for model parameters"""
+
+    aggregation_function: Callable[[np.ndarray, float], tuple[float, float]] = scipy.stats.ttest_1samp
+    stat_func_kwargs: Dict[str, Any] = field(default_factory=lambda: {"popmean": 0})
+    nb_desired_features: List[int] = field(
+        default_factory=lambda: [ModelConfig.n_bands * ModelConfig.n_channels]
+    )
+    features_data_filename: Optional[str | Path] = None # This should be defined as a function of the PipelineConfig
+
+    def select_features(self, 
+                        eyetracking_features: list[str],
+                        n_eeg_channels: int,
+                        n_eeg_bands: int
+                        ) -> Dict[str, Any]:
+        """Select the features to use for the model"""
+        feature_set = {
+            "eyetracking": 
+                eyetracking_features,
+            "eeg": {
+                "channel": np.arange(n_eeg_channels).repeat(n_eeg_bands),
+                "band": np.tile(np.arange(n_eeg_bands),n_eeg_channels),
+            }
+        } 
+        return feature_set

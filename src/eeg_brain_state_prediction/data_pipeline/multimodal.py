@@ -1,4 +1,10 @@
-import eeg_brain_state_prediction.data_pipeline.tools.configs as configs
+from eeg_brain_state_prediction.tools.configs import (
+    MultimodalConfig,
+    PipelineConfig,
+    BrainstatesConfig,
+    EegConfig,
+    EyeConfig,
+)
 import bids_explorer.architecture as arch
 import eeg_brain_state_prediction.data_pipeline.tools.multimodal as multimodal
 import bids_explorer.paths.bids as bids
@@ -16,7 +22,7 @@ def pipeline(
     overwrite: bool,
     derivatives_path: Path,
     modalities: list[str],
-    multimodal_config: configs.MultimodalConfig,
+    multimodal_config: MultimodalConfig,
     data_architecture: arch.BidsArchitecture,
     additional_description: str,
     ) -> None:
@@ -72,8 +78,8 @@ def pipeline(
         additional_description = additional_description
         )
     
-def main(multimodal_config: configs.MultimodalConfig,
-         pipeline_config: configs.PipelineConfig):
+def main(multimodal_config: MultimodalConfig,
+         pipeline_config: PipelineConfig):
 
     architecture = arch.BidsArchitecture(
         root = pipeline_config.derivatives_path,
@@ -110,19 +116,19 @@ def main(multimodal_config: configs.MultimodalConfig,
         
 if __name__ == "__main__":
 
-    pipeline_config = configs.PipelineConfig(
+    pipeline_config = PipelineConfig(
         overwrite = True,
         tasks = ["rest", "checker"],
         n_threads = 32,
     )
 
-    brainstates_config = configs.BrainstatesConfig(
+    brainstates_config = BrainstatesConfig(
         description = ["caps", 
                        "Cpca1054NrCombined",
                        "Cpca1054NeIndividual"],
     )
 
-    eeg_config = configs.EegConfig(
+    eeg_config = EegConfig(
         description = "RawBk",
         sampling_rate_hz = 200,
         montage = "easycap-M1",
@@ -130,12 +136,12 @@ if __name__ == "__main__":
         high_frequency_hz = 40,
     )
 
-    eyetracking_config = configs.EyeConfig(
+    eyetracking_config = EyeConfig(
         description = None,
         features = ["pupil_dilation", "first_derivative", "second_derivative"],
     )
 
-    multimodal_config = configs.MultimodalConfig(
+    multimodal_config = MultimodalConfig(
         resampling_factor = 8,
         sampling_rate_hz = 3.8,
         tr_time_seconds = 2.1,

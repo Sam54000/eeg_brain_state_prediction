@@ -3,7 +3,7 @@ import os
 from pathlib import Path
 from eeg_brain_state_prediction.data_pipeline import feature_extraction, multimodal
 import bids_explorer.architecture.architecture as arch
-from eeg_brain_state_prediction.data_pipeline.tools.configs import (
+from eeg_brain_state_prediction.tools.configs import (
     PipelineConfig,
     EegConfig,
     EegFeaturesConfig,

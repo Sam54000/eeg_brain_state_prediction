@@ -101,3 +101,48 @@ Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/cu
 File saved successfully with 800 rows
 Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/custom_envelope_caps/group_level_feature_selection/sub-22_task-rest_desc-CustomEnvBk8CapsWithPupil_predictions.csv
 File saved successfully with 800 rows
+2025-02-13 06:02:17 - INFO - Starting processing with task: rest, description: CustomEnvBk8Caps
+2025-02-13 06:02:17 - INFO - 
+Config Debug:
+2025-02-13 06:02:17 - INFO - Code root: /home/slouviot/01_projects/eeg_brain_state_prediction
+2025-02-13 06:02:17 - INFO - Data root: /data2/Projects/eeg_fmri_natview/derivatives
+2025-02-13 06:02:17 - INFO - Data directory: data/custom_envelope_caps/group_level_feature_selection
+2025-02-13 06:02:17 - INFO - Found 18 subjects to process
+2025-02-13 06:02:17 - INFO - 
+Processing subject: 01
+2025-02-13 06:05:13 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/custom_envelope_caps/group_level_feature_selection/sub-01_task-rest_desc-CustomEnvBk8CapsEegOnly_predictions.csv
+2025-02-13 06:05:13 - INFO - 
+Processing completed successfully
+Creating BIDS architecture with parameters: {'root': PosixPath('/data2/Projects/eeg_fmri_natview/derivatives'), 'datatype': 'multimodal', 'suffix': 'multimodal', 'description': 'CustomEnvBk8Caps', 'run': '01', 'task': 'rest', 'extension': '.pkl'}
+Data root path exists: True
+Full data root path: /data2/Projects/eeg_fmri_natview/derivatives
+Database info: (32, 14)
+Processing 1 features
+Processing 2 features
+Processing 3 features
+Processing 4 features
+Processing 5 features
+Processing 6 features
+Processing 7 features
+Processing 8 features
+Processing 9 features
+Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/custom_envelope_caps/group_level_feature_selection/sub-01_task-rest_desc-CustomEnvBk8CapsEegOnly_predictions.csv
+File saved successfully with 72 rows
+2025-02-13 06:29:54 - INFO - Starting processing with task: rest, description: CustomEnvBk8Caps
+2025-02-13 06:29:54 - INFO - 
+Config Debug:
+2025-02-13 06:29:54 - INFO - Code root: /home/slouviot/01_projects/eeg_brain_state_prediction
+2025-02-13 06:29:54 - INFO - Data root: /data2/Projects/eeg_fmri_natview/derivatives
+2025-02-13 06:29:54 - INFO - Data directory: data/custom_envelope_caps/group_level_feature_selection
+2025-02-13 06:29:54 - INFO - Found 18 subjects to process
+2025-02-13 06:29:54 - INFO - 
+Processing subject: 01
+2025-02-13 06:32:42 - INFO - Starting processing with task: rest, description: CustomEnvBk8Caps
+2025-02-13 06:32:42 - INFO - 
+Config Debug:
+2025-02-13 06:32:42 - INFO - Code root: /home/slouviot/01_projects/eeg_brain_state_prediction
+2025-02-13 06:32:42 - INFO - Data root: /data2/Projects/eeg_fmri_natview/derivatives
+2025-02-13 06:32:42 - INFO - Data directory: data/custom_envelope_caps/subject_level_feature_selection
+2025-02-13 06:32:43 - INFO - Found 18 subjects to process
+2025-02-13 06:32:43 - INFO - 
+Processing subject: 01

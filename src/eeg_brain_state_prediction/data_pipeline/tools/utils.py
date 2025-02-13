@@ -108,34 +108,6 @@ def validate_data(data: np.ndarray,
     if check_inf and np.any(np.isinf(data)):
         raise ValidationError("Data contains infinite values")
 
-def set_thread_env(config) -> None:
-    """Set environment variables for thread control with validation
-
-    Args:
-        config: Configuration object with n_threads attribute
-
-    Raises:
-        ConfigurationError: If thread configuration is invalid
-    """
-    if not hasattr(config, 'n_threads'):
-        raise ConfigurationError("Configuration must have n_threads attribute")
-    
-    if not isinstance(config.n_threads, int) or config.n_threads < 1:
-        raise ConfigurationError(f"Invalid n_threads value: {config.n_threads}")
-
-    thread_vars = [
-        "OMP_NUM_THREADS", 
-        "OPENBLAS_NUM_THREADS",
-        "MKL_NUM_THREADS",
-        "VECLIB_MAXIMUM_THREADS",
-        "NUMEXPR_NUM_THREADS"
-    ]
-    
-    try:
-        for var in thread_vars:
-            os.environ[var] = str(config.n_threads)
-    except Exception as e:
-        raise ConfigurationError(f"Failed to set thread environment variables: {str(e)}")
 
 class BlinkRemover:
     def __init__(self, raw: mne.io.Raw, channels=["Fp1", "Fp2"]):

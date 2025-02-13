@@ -5,7 +5,11 @@ from typing import Optional, List
 import eeg_brain_state_prediction.data_pipeline.tools.eeg_channels as eeg_channels
 from typing import Optional
 import pickle
-from eeg_brain_state_prediction.data_pipeline.tools.configs import EegFeaturesConfig, EegConfig
+from eeg_brain_state_prediction.tools.configs import (
+    EegFeaturesConfig, 
+    EegConfig,
+)
+
 import scipy.signal as signal
 from eeg_brain_state_prediction.data_pipeline.tools.artifacts import Detector
 from eeg_brain_state_prediction.data_pipeline.tools.utils import (

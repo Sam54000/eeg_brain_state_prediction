@@ -12,7 +12,7 @@ from eeg_brain_state_prediction.data_pipeline.tools.eeg import EEGfeatures
 from eeg_brain_state_prediction.data_pipeline.tools.brainstates import BrainstatesFeatures
 from eeg_brain_state_prediction.data_pipeline.tools.eyetracking import EyeFeatures
 from eeg_brain_state_prediction.data_pipeline.tools import features
-from eeg_brain_state_prediction.data_pipeline.tools.configs import MultimodalConfig
+from eeg_brain_state_prediction.tools.configs import MultimodalConfig
 from eeg_brain_state_prediction.data_pipeline.tools.utils import (
     ProcessingError,
     ValidationError,
