@@ -3,7 +3,7 @@ from pathlib import Path
 from typing import Union, Optional
 import matplotlib.pyplot as plt
 import pandas as pd
-from ..utils.validation import validate_input_data
+from eeg_brain_state_prediction.visualization.utils.validation import validate_input_data
 
 class BasePlot(ABC):
     def __init__(self, data: Union[pd.DataFrame, Path]):

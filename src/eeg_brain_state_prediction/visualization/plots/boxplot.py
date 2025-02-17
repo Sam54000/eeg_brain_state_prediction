@@ -3,8 +3,8 @@ from typing import Optional, Union
 import pandas as pd
 import seaborn as sns
 from matplotlib.backends.backend_pdf import PdfPages
-from ..core.base_plot import BasePlot
-from ..config.plot_config import BoxPlotConfig
+from eeg_brain_state_prediction.visualization.core.base_plot import BasePlot
+from eeg_brain_state_prediction.visualization.config.plot_config import BoxPlotConfig
 from matplotlib.animation import FuncAnimation
 from matplotlib import pyplot as plt
 

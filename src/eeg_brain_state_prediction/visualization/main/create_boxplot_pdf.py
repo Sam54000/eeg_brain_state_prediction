@@ -2,8 +2,8 @@ import sys
 import matplotlib.pyplot as plt
 from pathlib import Path
 sys.path.append(str(Path(__file__).parent.parent.parent))
-from visualization.plots.boxplot import EEGBoxPlot
-from visualization.config.plot_config import BoxPlotConfig
+from eeg_brain_state_prediction.visualization.plots.boxplot import EEGBoxPlot
+from eeg_brain_state_prediction.visualization.config.plot_config import BoxPlotConfig
 import scipy
 
 task = "rest"

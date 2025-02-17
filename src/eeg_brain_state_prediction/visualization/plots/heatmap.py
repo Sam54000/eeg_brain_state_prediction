@@ -10,9 +10,9 @@ from types import FunctionType
 import sys
 from pathlib import Path
 sys.path.append(str(Path(__file__).parent.parent.parent))
-from visualization.core.base_plot import BasePlot
-from visualization.utils.validation import validate_input_data
-from visualization.config.plot_config import HeatmapConfig
+from eeg_brain_state_prediction.visualization.core.base_plot import BasePlot
+from eeg_brain_state_prediction.visualization.utils.validation import validate_input_data
+from eeg_brain_state_prediction.visualization.config.plot_config import HeatmapConfig
 
 class EEGHeatmapPlot(BasePlot):
     """EEG Heatmap visualization with anatomical regions

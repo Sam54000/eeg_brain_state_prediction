@@ -3,10 +3,10 @@ from pathlib import Path
 sys.path.append(str(Path(__file__).parent.parent.parent))
 import pandas as pd
 import re
-from visualization.plots.bars import EEGBarPlot
-from visualization.config.plot_config import BarPlotConfig
+from eeg_brain_state_prediction.visualization.plots.bars import EEGBarPlot
+from eeg_brain_state_prediction.visualization.config.plot_config import BarPlotConfig
 from itertools import product
-from visualization.utils.plot_utils import split_camel_case
+from eeg_brain_state_prediction.visualization.utils.plot_utils import split_camel_case
 
 
 tasks = ["rest", "checker"]

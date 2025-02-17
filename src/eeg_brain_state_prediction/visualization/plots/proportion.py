@@ -11,8 +11,8 @@ from typing import Optional, Union
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-from ..core.base_plot import BasePlot
-from ..config.plot_config import ProportionConfig
+from eeg_brain_state_prediction.visualization.core.base_plot import BasePlot
+from eeg_brain_state_prediction.visualization.config.plot_config import ProportionConfig
 
 class SignalProportionPlot(BasePlot):
     def __init__(self, 

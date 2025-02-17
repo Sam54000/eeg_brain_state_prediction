@@ -2,8 +2,8 @@
 import sys
 from pathlib import Path
 sys.path.append(str(Path(__file__).parents[2]))
-from visualization.plots.heatmap import EEGHeatmapPlot 
-from visualization.config.plot_config import HeatmapConfig
+from eeg_brain_state_prediction.visualization.plots.heatmap import EEGHeatmapPlot 
+from eeg_brain_state_prediction.visualization.config.plot_config import HeatmapConfig
 import scipy
 
 task = 'checker'

@@ -3,8 +3,8 @@ from typing import Optional, Union
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
-from ..core.base_plot import BasePlot
-from ..config.plot_config import ScatterConfig
+from eeg_brain_state_prediction.visualization.core.base_plot import BasePlot
+from eeg_brain_state_prediction.visualization.config.plot_config import ScatterConfig
 
 class EEGScatterPlot(BasePlot):
     def __init__(self, 

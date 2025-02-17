@@ -10,7 +10,7 @@ from typing import List, Optional
 import itertools
 from pathlib import Path
 import seaborn as sns
-from ..utils.plot_utils import split_camel_case
+from eeg_brain_state_prediction.visualization.utils.plot_utils import split_camel_case
 
 @dataclass
 class BaseConfig:

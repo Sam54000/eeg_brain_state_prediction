@@ -6,9 +6,9 @@ from itertools import product
 import seaborn as sns
 import numpy as np
 from matplotlib.backends.backend_pdf import PdfPages
-from ..core.base_plot import BasePlot
-from ..config.plot_config import BarPlotConfig
-from ..utils.plot_utils import split_camel_case
+from eeg_brain_state_prediction.visualization.core.base_plot import BasePlot
+from eeg_brain_state_prediction.visualization.config.plot_config import BarPlotConfig
+from eeg_brain_state_prediction.visualization.utils.plot_utils import split_camel_case
 
 class EEGBarPlot(BasePlot):
     """Bar plot visualization for EEG data with correlation metrics"""
