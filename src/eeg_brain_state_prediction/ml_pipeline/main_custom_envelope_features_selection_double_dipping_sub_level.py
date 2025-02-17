@@ -5,7 +5,7 @@ The aggregation across subject is done either with mean or median
 import os
 from datetime import datetime
 
-nthreads = "32" # 64 on synapse
+nthreads = "80" # 64 on synapse
 
 os.environ["OMP_NUM_THREADS"] = nthreads
 os.environ["OPENBLAS_NUM_THREADS"] = nthreads
@@ -72,9 +72,9 @@ if __name__ == "__main__":
                 "CAP8"],
         nb_desired_features=range(1,51),
         data_directory="data/custom_envelope_caps/subject_level_feature_selection",
-        task = "rest",
+        task = "checker",
         additional_info="EegOnly",
-        n_threads = 32,
+        n_threads = 80,
         features_data_filename="/home/slouviot/01_projects/eeg_brain_state_prediction/data/custom_envelope_caps/group_level/sub-all_task-checker_desc-CustomEnvBk_tstats.csv",
         
     )

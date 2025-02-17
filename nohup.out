@@ -146,3 +146,1146 @@ Config Debug:
 2025-02-13 06:32:43 - INFO - Found 18 subjects to process
 2025-02-13 06:32:43 - INFO - 
 Processing subject: 01
+2025-02-13 07:44:59 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/custom_envelope_caps/subject_level_feature_selection/sub-01_task-rest_desc-CustomEnvBk8CapsEegOnly_predictions.csv
+2025-02-13 07:44:59 - INFO - 
+Processing subject: 02
+2025-02-13 08:01:36 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/custom_envelope_caps/group_level_feature_selection/sub-01_task-rest_desc-CustomEnvBk8CapsEegOnly_predictions.csv
+2025-02-13 08:01:36 - INFO - 
+Processing completed successfully
+Creating BIDS architecture with parameters: {'root': PosixPath('/data2/Projects/eeg_fmri_natview/derivatives'), 'datatype': 'multimodal', 'suffix': 'multimodal', 'description': 'CustomEnvBk8Caps', 'run': '01', 'task': 'rest', 'extension': '.pkl'}
+Data root path exists: True
+Full data root path: /data2/Projects/eeg_fmri_natview/derivatives
+Database info: (32, 14)
+Processing 1 features
+Processing 2 features
+Processing 3 features
+Processing 4 features
+Processing 5 features
+Processing 6 features
+Processing 7 features
+Processing 8 features
+Processing 9 features
+Processing 10 features
+Processing 11 features
+Processing 12 features
+Processing 13 features
+Processing 14 features
+Processing 15 features
+Processing 16 features
+Processing 17 features
+Processing 18 features
+Processing 19 features
+Processing 20 features
+Processing 21 features
+Processing 22 features
+Processing 23 features
+Processing 24 features
+Processing 25 features
+Processing 26 features
+Processing 27 features
+Processing 28 features
+Processing 29 features
+Processing 30 features
+Processing 31 features
+Processing 32 features
+Processing 33 features
+Processing 34 features
+Processing 35 features
+Processing 36 features
+Processing 37 features
+Processing 38 features
+Processing 39 features
+Processing 40 features
+Processing 41 features
+Processing 42 features
+Processing 43 features
+Processing 44 features
+Processing 45 features
+Processing 46 features
+Processing 47 features
+Processing 48 features
+Processing 49 features
+Processing 50 features
+Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/custom_envelope_caps/group_level_feature_selection/sub-01_task-rest_desc-CustomEnvBk8CapsEegOnly_predictions.csv
+File saved successfully with 400 rows
+2025-02-13 08:48:19 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/custom_envelope_caps/subject_level_feature_selection/sub-02_task-rest_desc-CustomEnvBk8CapsEegOnly_predictions.csv
+2025-02-13 08:48:19 - INFO - 
+Processing subject: 04
+2025-02-13 10:45:47 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/custom_envelope_caps/subject_level_feature_selection/sub-04_task-rest_desc-CustomEnvBk8CapsEegOnly_predictions.csv
+2025-02-13 10:45:47 - INFO - 
+Processing subject: 06
+2025-02-13 12:51:03 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/custom_envelope_caps/subject_level_feature_selection/sub-06_task-rest_desc-CustomEnvBk8CapsEegOnly_predictions.csv
+2025-02-13 12:51:04 - INFO - 
+Processing subject: 07
+2025-02-13 14:50:54 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/custom_envelope_caps/subject_level_feature_selection/sub-07_task-rest_desc-CustomEnvBk8CapsEegOnly_predictions.csv
+2025-02-13 14:50:54 - INFO - 
+Processing subject: 08
+2025-02-13 16:51:41 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/custom_envelope_caps/subject_level_feature_selection/sub-08_task-rest_desc-CustomEnvBk8CapsEegOnly_predictions.csv
+2025-02-13 16:51:41 - INFO - 
+Processing subject: 09
+2025-02-13 17:54:19 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/custom_envelope_caps/subject_level_feature_selection/sub-09_task-rest_desc-CustomEnvBk8CapsEegOnly_predictions.csv
+2025-02-13 17:54:19 - INFO - 
+Processing subject: 11
+2025-02-13 18:56:58 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/custom_envelope_caps/subject_level_feature_selection/sub-11_task-rest_desc-CustomEnvBk8CapsEegOnly_predictions.csv
+2025-02-13 18:56:58 - INFO - 
+Processing subject: 12
+2025-02-13 20:56:50 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/custom_envelope_caps/subject_level_feature_selection/sub-12_task-rest_desc-CustomEnvBk8CapsEegOnly_predictions.csv
+2025-02-13 20:56:50 - INFO - 
+Processing subject: 13
+2025-02-13 22:56:52 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/custom_envelope_caps/subject_level_feature_selection/sub-13_task-rest_desc-CustomEnvBk8CapsEegOnly_predictions.csv
+2025-02-13 22:56:52 - INFO - 
+Processing subject: 14
+2025-02-14 00:56:44 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/custom_envelope_caps/subject_level_feature_selection/sub-14_task-rest_desc-CustomEnvBk8CapsEegOnly_predictions.csv
+2025-02-14 00:56:44 - INFO - 
+Processing subject: 15
+2025-02-14 02:56:11 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/custom_envelope_caps/subject_level_feature_selection/sub-15_task-rest_desc-CustomEnvBk8CapsEegOnly_predictions.csv
+2025-02-14 02:56:11 - INFO - 
+Processing subject: 16
+2025-02-14 04:57:06 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/custom_envelope_caps/subject_level_feature_selection/sub-16_task-rest_desc-CustomEnvBk8CapsEegOnly_predictions.csv
+2025-02-14 04:57:06 - INFO - 
+Processing subject: 17
+2025-02-14 07:52:19 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/custom_envelope_caps/subject_level_feature_selection/sub-17_task-rest_desc-CustomEnvBk8CapsEegOnly_predictions.csv
+2025-02-14 07:52:20 - INFO - 
+Processing subject: 18
+2025-02-14 08:54:12 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/custom_envelope_caps/subject_level_feature_selection/sub-18_task-rest_desc-CustomEnvBk8CapsEegOnly_predictions.csv
+2025-02-14 08:54:13 - INFO - 
+Processing subject: 20
+2025-02-14 10:53:16 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/custom_envelope_caps/subject_level_feature_selection/sub-20_task-rest_desc-CustomEnvBk8CapsEegOnly_predictions.csv
+2025-02-14 10:53:16 - INFO - 
+Processing subject: 21
+2025-02-14 12:57:15 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/custom_envelope_caps/subject_level_feature_selection/sub-21_task-rest_desc-CustomEnvBk8CapsEegOnly_predictions.csv
+2025-02-14 12:57:15 - INFO - 
+Processing subject: 22
+2025-02-14 14:58:01 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/custom_envelope_caps/subject_level_feature_selection/sub-22_task-rest_desc-CustomEnvBk8CapsEegOnly_predictions.csv
+2025-02-14 14:58:01 - INFO - 
+Processing completed successfully
+Creating BIDS architecture with parameters: {'root': PosixPath('/data2/Projects/eeg_fmri_natview/derivatives'), 'datatype': 'multimodal', 'suffix': 'multimodal', 'description': 'CustomEnvBk8Caps', 'run': '01', 'task': 'rest', 'extension': '.pkl'}
+Data root path exists: True
+Full data root path: /data2/Projects/eeg_fmri_natview/derivatives
+Database info: (32, 14)
+Processing 1 features
+Processing 2 features
+Processing 3 features
+Processing 4 features
+Processing 5 features
+Processing 6 features
+Processing 7 features
+Processing 8 features
+Processing 9 features
+Processing 10 features
+Processing 11 features
+Processing 12 features
+Processing 13 features
+Processing 14 features
+Processing 15 features
+Processing 16 features
+Processing 17 features
+Processing 18 features
+Processing 19 features
+Processing 20 features
+Processing 21 features
+Processing 22 features
+Processing 23 features
+Processing 24 features
+Processing 25 features
+Processing 26 features
+Processing 27 features
+Processing 28 features
+Processing 29 features
+Processing 30 features
+Processing 31 features
+Processing 32 features
+Processing 33 features
+Processing 34 features
+Processing 35 features
+Processing 36 features
+Processing 37 features
+Processing 38 features
+Processing 39 features
+Processing 40 features
+Processing 41 features
+Processing 42 features
+Processing 43 features
+Processing 44 features
+Processing 45 features
+Processing 46 features
+Processing 47 features
+Processing 48 features
+Processing 49 features
+Processing 50 features
+Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/custom_envelope_caps/subject_level_feature_selection/sub-01_task-rest_desc-CustomEnvBk8CapsEegOnly_predictions.csv
+File saved successfully with 400 rows
+Processing 1 features
+Processing 2 features
+Processing 3 features
+Processing 4 features
+Processing 5 features
+Processing 6 features
+Processing 7 features
+Processing 8 features
+Processing 9 features
+Processing 10 features
+Processing 11 features
+Processing 12 features
+Processing 13 features
+Processing 14 features
+Processing 15 features
+Processing 16 features
+Processing 17 features
+Processing 18 features
+Processing 19 features
+Processing 20 features
+Processing 21 features
+Processing 22 features
+Processing 23 features
+Processing 24 features
+Processing 25 features
+Processing 26 features
+Processing 27 features
+Processing 28 features
+Processing 29 features
+Processing 30 features
+Processing 31 features
+Processing 32 features
+Processing 33 features
+Processing 34 features
+Processing 35 features
+Processing 36 features
+Processing 37 features
+Processing 38 features
+Processing 39 features
+Processing 40 features
+Processing 41 features
+Processing 42 features
+Processing 43 features
+Processing 44 features
+Processing 45 features
+Processing 46 features
+Processing 47 features
+Processing 48 features
+Processing 49 features
+Processing 50 features
+Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/custom_envelope_caps/subject_level_feature_selection/sub-02_task-rest_desc-CustomEnvBk8CapsEegOnly_predictions.csv
+File saved successfully with 400 rows
+Processing 1 features
+Processing 2 features
+Processing 3 features
+Processing 4 features
+Processing 5 features
+Processing 6 features
+Processing 7 features
+Processing 8 features
+Processing 9 features
+Processing 10 features
+Processing 11 features
+Processing 12 features
+Processing 13 features
+Processing 14 features
+Processing 15 features
+Processing 16 features
+Processing 17 features
+Processing 18 features
+Processing 19 features
+Processing 20 features
+Processing 21 features
+Processing 22 features
+Processing 23 features
+Processing 24 features
+Processing 25 features
+Processing 26 features
+Processing 27 features
+Processing 28 features
+Processing 29 features
+Processing 30 features
+Processing 31 features
+Processing 32 features
+Processing 33 features
+Processing 34 features
+Processing 35 features
+Processing 36 features
+Processing 37 features
+Processing 38 features
+Processing 39 features
+Processing 40 features
+Processing 41 features
+Processing 42 features
+Processing 43 features
+Processing 44 features
+Processing 45 features
+Processing 46 features
+Processing 47 features
+Processing 48 features
+Processing 49 features
+Processing 50 features
+Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/custom_envelope_caps/subject_level_feature_selection/sub-04_task-rest_desc-CustomEnvBk8CapsEegOnly_predictions.csv
+File saved successfully with 800 rows
+Processing 1 features
+Processing 2 features
+Processing 3 features
+Processing 4 features
+Processing 5 features
+Processing 6 features
+Processing 7 features
+Processing 8 features
+Processing 9 features
+Processing 10 features
+Processing 11 features
+Processing 12 features
+Processing 13 features
+Processing 14 features
+Processing 15 features
+Processing 16 features
+Processing 17 features
+Processing 18 features
+Processing 19 features
+Processing 20 features
+Processing 21 features
+Processing 22 features
+Processing 23 features
+Processing 24 features
+Processing 25 features
+Processing 26 features
+Processing 27 features
+Processing 28 features
+Processing 29 features
+Processing 30 features
+Processing 31 features
+Processing 32 features
+Processing 33 features
+Processing 34 features
+Processing 35 features
+Processing 36 features
+Processing 37 features
+Processing 38 features
+Processing 39 features
+Processing 40 features
+Processing 41 features
+Processing 42 features
+Processing 43 features
+Processing 44 features
+Processing 45 features
+Processing 46 features
+Processing 47 features
+Processing 48 features
+Processing 49 features
+Processing 50 features
+Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/custom_envelope_caps/subject_level_feature_selection/sub-06_task-rest_desc-CustomEnvBk8CapsEegOnly_predictions.csv
+File saved successfully with 800 rows
+Processing 1 features
+Processing 2 features
+Processing 3 features
+Processing 4 features
+Processing 5 features
+Processing 6 features
+Processing 7 features
+Processing 8 features
+Processing 9 features
+Processing 10 features
+Processing 11 features
+Processing 12 features
+Processing 13 features
+Processing 14 features
+Processing 15 features
+Processing 16 features
+Processing 17 features
+Processing 18 features
+Processing 19 features
+Processing 20 features
+Processing 21 features
+Processing 22 features
+Processing 23 features
+Processing 24 features
+Processing 25 features
+Processing 26 features
+Processing 27 features
+Processing 28 features
+Processing 29 features
+Processing 30 features
+Processing 31 features
+Processing 32 features
+Processing 33 features
+Processing 34 features
+Processing 35 features
+Processing 36 features
+Processing 37 features
+Processing 38 features
+Processing 39 features
+Processing 40 features
+Processing 41 features
+Processing 42 features
+Processing 43 features
+Processing 44 features
+Processing 45 features
+Processing 46 features
+Processing 47 features
+Processing 48 features
+Processing 49 features
+Processing 50 features
+Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/custom_envelope_caps/subject_level_feature_selection/sub-07_task-rest_desc-CustomEnvBk8CapsEegOnly_predictions.csv
+File saved successfully with 800 rows
+Processing 1 features
+Processing 2 features
+Processing 3 features
+Processing 4 features
+Processing 5 features
+Processing 6 features
+Processing 7 features
+Processing 8 features
+Processing 9 features
+Processing 10 features
+Processing 11 features
+Processing 12 features
+Processing 13 features
+Processing 14 features
+Processing 15 features
+Processing 16 features
+Processing 17 features
+Processing 18 features
+Processing 19 features
+Processing 20 features
+Processing 21 features
+Processing 22 features
+Processing 23 features
+Processing 24 features
+Processing 25 features
+Processing 26 features
+Processing 27 features
+Processing 28 features
+Processing 29 features
+Processing 30 features
+Processing 31 features
+Processing 32 features
+Processing 33 features
+Processing 34 features
+Processing 35 features
+Processing 36 features
+Processing 37 features
+Processing 38 features
+Processing 39 features
+Processing 40 features
+Processing 41 features
+Processing 42 features
+Processing 43 features
+Processing 44 features
+Processing 45 features
+Processing 46 features
+Processing 47 features
+Processing 48 features
+Processing 49 features
+Processing 50 features
+Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/custom_envelope_caps/subject_level_feature_selection/sub-08_task-rest_desc-CustomEnvBk8CapsEegOnly_predictions.csv
+File saved successfully with 800 rows
+Processing 1 features
+Processing 2 features
+Processing 3 features
+Processing 4 features
+Processing 5 features
+Processing 6 features
+Processing 7 features
+Processing 8 features
+Processing 9 features
+Processing 10 features
+Processing 11 features
+Processing 12 features
+Processing 13 features
+Processing 14 features
+Processing 15 features
+Processing 16 features
+Processing 17 features
+Processing 18 features
+Processing 19 features
+Processing 20 features
+Processing 21 features
+Processing 22 features
+Processing 23 features
+Processing 24 features
+Processing 25 features
+Processing 26 features
+Processing 27 features
+Processing 28 features
+Processing 29 features
+Processing 30 features
+Processing 31 features
+Processing 32 features
+Processing 33 features
+Processing 34 features
+Processing 35 features
+Processing 36 features
+Processing 37 features
+Processing 38 features
+Processing 39 features
+Processing 40 features
+Processing 41 features
+Processing 42 features
+Processing 43 features
+Processing 44 features
+Processing 45 features
+Processing 46 features
+Processing 47 features
+Processing 48 features
+Processing 49 features
+Processing 50 features
+Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/custom_envelope_caps/subject_level_feature_selection/sub-09_task-rest_desc-CustomEnvBk8CapsEegOnly_predictions.csv
+File saved successfully with 400 rows
+Processing 1 features
+Processing 2 features
+Processing 3 features
+Processing 4 features
+Processing 5 features
+Processing 6 features
+Processing 7 features
+Processing 8 features
+Processing 9 features
+Processing 10 features
+Processing 11 features
+Processing 12 features
+Processing 13 features
+Processing 14 features
+Processing 15 features
+Processing 16 features
+Processing 17 features
+Processing 18 features
+Processing 19 features
+Processing 20 features
+Processing 21 features
+Processing 22 features
+Processing 23 features
+Processing 24 features
+Processing 25 features
+Processing 26 features
+Processing 27 features
+Processing 28 features
+Processing 29 features
+Processing 30 features
+Processing 31 features
+Processing 32 features
+Processing 33 features
+Processing 34 features
+Processing 35 features
+Processing 36 features
+Processing 37 features
+Processing 38 features
+Processing 39 features
+Processing 40 features
+Processing 41 features
+Processing 42 features
+Processing 43 features
+Processing 44 features
+Processing 45 features
+Processing 46 features
+Processing 47 features
+Processing 48 features
+Processing 49 features
+Processing 50 features
+Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/custom_envelope_caps/subject_level_feature_selection/sub-11_task-rest_desc-CustomEnvBk8CapsEegOnly_predictions.csv
+File saved successfully with 400 rows
+Processing 1 features
+Processing 2 features
+Processing 3 features
+Processing 4 features
+Processing 5 features
+Processing 6 features
+Processing 7 features
+Processing 8 features
+Processing 9 features
+Processing 10 features
+Processing 11 features
+Processing 12 features
+Processing 13 features
+Processing 14 features
+Processing 15 features
+Processing 16 features
+Processing 17 features
+Processing 18 features
+Processing 19 features
+Processing 20 features
+Processing 21 features
+Processing 22 features
+Processing 23 features
+Processing 24 features
+Processing 25 features
+Processing 26 features
+Processing 27 features
+Processing 28 features
+Processing 29 features
+Processing 30 features
+Processing 31 features
+Processing 32 features
+Processing 33 features
+Processing 34 features
+Processing 35 features
+Processing 36 features
+Processing 37 features
+Processing 38 features
+Processing 39 features
+Processing 40 features
+Processing 41 features
+Processing 42 features
+Processing 43 features
+Processing 44 features
+Processing 45 features
+Processing 46 features
+Processing 47 features
+Processing 48 features
+Processing 49 features
+Processing 50 features
+Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/custom_envelope_caps/subject_level_feature_selection/sub-12_task-rest_desc-CustomEnvBk8CapsEegOnly_predictions.csv
+File saved successfully with 800 rows
+Processing 1 features
+Processing 2 features
+Processing 3 features
+Processing 4 features
+Processing 5 features
+Processing 6 features
+Processing 7 features
+Processing 8 features
+Processing 9 features
+Processing 10 features
+Processing 11 features
+Processing 12 features
+Processing 13 features
+Processing 14 features
+Processing 15 features
+Processing 16 features
+Processing 17 features
+Processing 18 features
+Processing 19 features
+Processing 20 features
+Processing 21 features
+Processing 22 features
+Processing 23 features
+Processing 24 features
+Processing 25 features
+Processing 26 features
+Processing 27 features
+Processing 28 features
+Processing 29 features
+Processing 30 features
+Processing 31 features
+Processing 32 features
+Processing 33 features
+Processing 34 features
+Processing 35 features
+Processing 36 features
+Processing 37 features
+Processing 38 features
+Processing 39 features
+Processing 40 features
+Processing 41 features
+Processing 42 features
+Processing 43 features
+Processing 44 features
+Processing 45 features
+Processing 46 features
+Processing 47 features
+Processing 48 features
+Processing 49 features
+Processing 50 features
+Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/custom_envelope_caps/subject_level_feature_selection/sub-13_task-rest_desc-CustomEnvBk8CapsEegOnly_predictions.csv
+File saved successfully with 800 rows
+Processing 1 features
+Processing 2 features
+Processing 3 features
+Processing 4 features
+Processing 5 features
+Processing 6 features
+Processing 7 features
+Processing 8 features
+Processing 9 features
+Processing 10 features
+Processing 11 features
+Processing 12 features
+Processing 13 features
+Processing 14 features
+Processing 15 features
+Processing 16 features
+Processing 17 features
+Processing 18 features
+Processing 19 features
+Processing 20 features
+Processing 21 features
+Processing 22 features
+Processing 23 features
+Processing 24 features
+Processing 25 features
+Processing 26 features
+Processing 27 features
+Processing 28 features
+Processing 29 features
+Processing 30 features
+Processing 31 features
+Processing 32 features
+Processing 33 features
+Processing 34 features
+Processing 35 features
+Processing 36 features
+Processing 37 features
+Processing 38 features
+Processing 39 features
+Processing 40 features
+Processing 41 features
+Processing 42 features
+Processing 43 features
+Processing 44 features
+Processing 45 features
+Processing 46 features
+Processing 47 features
+Processing 48 features
+Processing 49 features
+Processing 50 features
+Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/custom_envelope_caps/subject_level_feature_selection/sub-14_task-rest_desc-CustomEnvBk8CapsEegOnly_predictions.csv
+File saved successfully with 800 rows
+Processing 1 features
+Processing 2 features
+Processing 3 features
+Processing 4 features
+Processing 5 features
+Processing 6 features
+Processing 7 features
+Processing 8 features
+Processing 9 features
+Processing 10 features
+Processing 11 features
+Processing 12 features
+Processing 13 features
+Processing 14 features
+Processing 15 features
+Processing 16 features
+Processing 17 features
+Processing 18 features
+Processing 19 features
+Processing 20 features
+Processing 21 features
+Processing 22 features
+Processing 23 features
+Processing 24 features
+Processing 25 features
+Processing 26 features
+Processing 27 features
+Processing 28 features
+Processing 29 features
+Processing 30 features
+Processing 31 features
+Processing 32 features
+Processing 33 features
+Processing 34 features
+Processing 35 features
+Processing 36 features
+Processing 37 features
+Processing 38 features
+Processing 39 features
+Processing 40 features
+Processing 41 features
+Processing 42 features
+Processing 43 features
+Processing 44 features
+Processing 45 features
+Processing 46 features
+Processing 47 features
+Processing 48 features
+Processing 49 features
+Processing 50 features
+Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/custom_envelope_caps/subject_level_feature_selection/sub-15_task-rest_desc-CustomEnvBk8CapsEegOnly_predictions.csv
+File saved successfully with 800 rows
+Processing 1 features
+Processing 2 features
+Processing 3 features
+Processing 4 features
+Processing 5 features
+Processing 6 features
+Processing 7 features
+Processing 8 features
+Processing 9 features
+Processing 10 features
+Processing 11 features
+Processing 12 features
+Processing 13 features
+Processing 14 features
+Processing 15 features
+Processing 16 features
+Processing 17 features
+Processing 18 features
+Processing 19 features
+Processing 20 features
+Processing 21 features
+Processing 22 features
+Processing 23 features
+Processing 24 features
+Processing 25 features
+Processing 26 features
+Processing 27 features
+Processing 28 features
+Processing 29 features
+Processing 30 features
+Processing 31 features
+Processing 32 features
+Processing 33 features
+Processing 34 features
+Processing 35 features
+Processing 36 features
+Processing 37 features
+Processing 38 features
+Processing 39 features
+Processing 40 features
+Processing 41 features
+Processing 42 features
+Processing 43 features
+Processing 44 features
+Processing 45 features
+Processing 46 features
+Processing 47 features
+Processing 48 features
+Processing 49 features
+Processing 50 features
+Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/custom_envelope_caps/subject_level_feature_selection/sub-16_task-rest_desc-CustomEnvBk8CapsEegOnly_predictions.csv
+File saved successfully with 800 rows
+Processing 1 features
+Processing 2 features
+Processing 3 features
+Processing 4 features
+Processing 5 features
+Processing 6 features
+Processing 7 features
+Processing 8 features
+Processing 9 features
+Processing 10 features
+Processing 11 features
+Processing 12 features
+Processing 13 features
+Processing 14 features
+Processing 15 features
+Processing 16 features
+Processing 17 features
+Processing 18 features
+Processing 19 features
+Processing 20 features
+Processing 21 features
+Processing 22 features
+Processing 23 features
+Processing 24 features
+Processing 25 features
+Processing 26 features
+Processing 27 features
+Processing 28 features
+Processing 29 features
+Processing 30 features
+Processing 31 features
+Processing 32 features
+Processing 33 features
+Processing 34 features
+Processing 35 features
+Processing 36 features
+Processing 37 features
+Processing 38 features
+Processing 39 features
+Processing 40 features
+Processing 41 features
+Processing 42 features
+Processing 43 features
+Processing 44 features
+Processing 45 features
+Processing 46 features
+Processing 47 features
+Processing 48 features
+Processing 49 features
+Processing 50 features
+Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/custom_envelope_caps/subject_level_feature_selection/sub-17_task-rest_desc-CustomEnvBk8CapsEegOnly_predictions.csv
+File saved successfully with 1200 rows
+Processing 1 features
+Processing 2 features
+Processing 3 features
+Processing 4 features
+Processing 5 features
+Processing 6 features
+Processing 7 features
+Processing 8 features
+Processing 9 features
+Processing 10 features
+Processing 11 features
+Processing 12 features
+Processing 13 features
+Processing 14 features
+Processing 15 features
+Processing 16 features
+Processing 17 features
+Processing 18 features
+Processing 19 features
+Processing 20 features
+Processing 21 features
+Processing 22 features
+Processing 23 features
+Processing 24 features
+Processing 25 features
+Processing 26 features
+Processing 27 features
+Processing 28 features
+Processing 29 features
+Processing 30 features
+Processing 31 features
+Processing 32 features
+Processing 33 features
+Processing 34 features
+Processing 35 features
+Processing 36 features
+Processing 37 features
+Processing 38 features
+Processing 39 features
+Processing 40 features
+Processing 41 features
+Processing 42 features
+Processing 43 features
+Processing 44 features
+Processing 45 features
+Processing 46 features
+Processing 47 features
+Processing 48 features
+Processing 49 features
+Processing 50 features
+Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/custom_envelope_caps/subject_level_feature_selection/sub-18_task-rest_desc-CustomEnvBk8CapsEegOnly_predictions.csv
+File saved successfully with 400 rows
+Processing 1 features
+Processing 2 features
+Processing 3 features
+Processing 4 features
+Processing 5 features
+Processing 6 features
+Processing 7 features
+Processing 8 features
+Processing 9 features
+Processing 10 features
+Processing 11 features
+Processing 12 features
+Processing 13 features
+Processing 14 features
+Processing 15 features
+Processing 16 features
+Processing 17 features
+Processing 18 features
+Processing 19 features
+Processing 20 features
+Processing 21 features
+Processing 22 features
+Processing 23 features
+Processing 24 features
+Processing 25 features
+Processing 26 features
+Processing 27 features
+Processing 28 features
+Processing 29 features
+Processing 30 features
+Processing 31 features
+Processing 32 features
+Processing 33 features
+Processing 34 features
+Processing 35 features
+Processing 36 features
+Processing 37 features
+Processing 38 features
+Processing 39 features
+Processing 40 features
+Processing 41 features
+Processing 42 features
+Processing 43 features
+Processing 44 features
+Processing 45 features
+Processing 46 features
+Processing 47 features
+Processing 48 features
+Processing 49 features
+Processing 50 features
+Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/custom_envelope_caps/subject_level_feature_selection/sub-20_task-rest_desc-CustomEnvBk8CapsEegOnly_predictions.csv
+File saved successfully with 800 rows
+Processing 1 features
+Processing 2 features
+Processing 3 features
+Processing 4 features
+Processing 5 features
+Processing 6 features
+Processing 7 features
+Processing 8 features
+Processing 9 features
+Processing 10 features
+Processing 11 features
+Processing 12 features
+Processing 13 features
+Processing 14 features
+Processing 15 features
+Processing 16 features
+Processing 17 features
+Processing 18 features
+Processing 19 features
+Processing 20 features
+Processing 21 features
+Processing 22 features
+Processing 23 features
+Processing 24 features
+Processing 25 features
+Processing 26 features
+Processing 27 features
+Processing 28 features
+Processing 29 features
+Processing 30 features
+Processing 31 features
+Processing 32 features
+Processing 33 features
+Processing 34 features
+Processing 35 features
+Processing 36 features
+Processing 37 features
+Processing 38 features
+Processing 39 features
+Processing 40 features
+Processing 41 features
+Processing 42 features
+Processing 43 features
+Processing 44 features
+Processing 45 features
+Processing 46 features
+Processing 47 features
+Processing 48 features
+Processing 49 features
+Processing 50 features
+Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/custom_envelope_caps/subject_level_feature_selection/sub-21_task-rest_desc-CustomEnvBk8CapsEegOnly_predictions.csv
+File saved successfully with 800 rows
+Processing 1 features
+Processing 2 features
+Processing 3 features
+Processing 4 features
+Processing 5 features
+Processing 6 features
+Processing 7 features
+Processing 8 features
+Processing 9 features
+Processing 10 features
+Processing 11 features
+Processing 12 features
+Processing 13 features
+Processing 14 features
+Processing 15 features
+Processing 16 features
+Processing 17 features
+Processing 18 features
+Processing 19 features
+Processing 20 features
+Processing 21 features
+Processing 22 features
+Processing 23 features
+Processing 24 features
+Processing 25 features
+Processing 26 features
+Processing 27 features
+Processing 28 features
+Processing 29 features
+Processing 30 features
+Processing 31 features
+Processing 32 features
+Processing 33 features
+Processing 34 features
+Processing 35 features
+Processing 36 features
+Processing 37 features
+Processing 38 features
+Processing 39 features
+Processing 40 features
+Processing 41 features
+Processing 42 features
+Processing 43 features
+Processing 44 features
+Processing 45 features
+Processing 46 features
+Processing 47 features
+Processing 48 features
+Processing 49 features
+Processing 50 features
+Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/custom_envelope_caps/subject_level_feature_selection/sub-22_task-rest_desc-CustomEnvBk8CapsEegOnly_predictions.csv
+File saved successfully with 800 rows
+2025-02-16 08:44:08 - INFO - Starting processing with task: rest, description: CustomEnvBk8Caps
+2025-02-16 08:44:08 - INFO - 
+Config Debug:
+2025-02-16 08:44:08 - INFO - Code root: /home/slouviot/01_projects/eeg_brain_state_prediction
+2025-02-16 08:44:08 - INFO - Data root: /data2/Projects/eeg_fmri_natview/derivatives
+2025-02-16 08:44:08 - INFO - Data directory: data/custom_envelope_caps/subject_level_feature_selection
+2025-02-16 08:44:08 - INFO - Found 18 subjects to process
+2025-02-16 08:44:08 - INFO - 
+Processing subject: 01
+2025-02-16 09:58:40 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/custom_envelope_caps/subject_level_feature_selection/sub-01_task-rest_desc-CustomEnvBk8CapsWithPupil_predictions.csv
+2025-02-16 09:58:40 - INFO - 
+Processing subject: 02
+2025-02-16 11:07:28 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/custom_envelope_caps/subject_level_feature_selection/sub-02_task-rest_desc-CustomEnvBk8CapsWithPupil_predictions.csv
+2025-02-16 11:07:28 - INFO - 
+Processing subject: 04
+2025-02-16 13:16:07 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/custom_envelope_caps/subject_level_feature_selection/sub-04_task-rest_desc-CustomEnvBk8CapsWithPupil_predictions.csv
+2025-02-16 13:16:07 - INFO - 
+Processing subject: 06
+2025-02-16 15:28:50 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/custom_envelope_caps/subject_level_feature_selection/sub-06_task-rest_desc-CustomEnvBk8CapsWithPupil_predictions.csv
+2025-02-16 15:28:50 - INFO - 
+Processing subject: 07
+2025-02-16 17:43:17 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/custom_envelope_caps/subject_level_feature_selection/sub-07_task-rest_desc-CustomEnvBk8CapsWithPupil_predictions.csv
+2025-02-16 17:43:17 - INFO - 
+Processing subject: 08
+2025-02-16 19:56:19 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/custom_envelope_caps/subject_level_feature_selection/sub-08_task-rest_desc-CustomEnvBk8CapsWithPupil_predictions.csv
+2025-02-16 19:56:19 - INFO - 
+Processing subject: 09
+2025-02-16 21:06:14 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/custom_envelope_caps/subject_level_feature_selection/sub-09_task-rest_desc-CustomEnvBk8CapsWithPupil_predictions.csv
+2025-02-16 21:06:14 - INFO - 
+Processing subject: 11
+Error.  nthreads cannot be larger than environment variable "NUMEXPR_MAX_THREADS" (64)2025-02-16 21:17:04 - INFO - Starting processing with task: checker, description: CustomEnvBk8Caps
+2025-02-16 21:17:04 - INFO - 
+Config Debug:
+2025-02-16 21:17:04 - INFO - Code root: /home/slouviot/01_projects/eeg_brain_state_prediction
+2025-02-16 21:17:04 - INFO - Data root: /data2/Projects/eeg_fmri_natview/derivatives
+2025-02-16 21:17:04 - INFO - Data directory: data/custom_envelope_caps/subject_level_feature_selection
+2025-02-16 21:17:04 - INFO - Found 19 subjects to process
+2025-02-16 21:17:04 - INFO - 
+Processing subject: 01
+2025-02-16 21:41:55 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/custom_envelope_caps/subject_level_feature_selection/sub-01_task-checker_desc-CustomEnvBk8CapsEegOnly_predictions.csv
+2025-02-16 21:41:55 - INFO - 
+Processing subject: 02
+2025-02-16 22:05:40 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/custom_envelope_caps/subject_level_feature_selection/sub-02_task-checker_desc-CustomEnvBk8CapsEegOnly_predictions.csv
+2025-02-16 22:05:41 - INFO - 
+Processing subject: 03
+2025-02-16 22:13:02 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/custom_envelope_caps/subject_level_feature_selection/sub-03_task-checker_desc-CustomEnvBk8CapsEegOnly_predictions.csv
+2025-02-16 22:13:02 - INFO - 
+Processing subject: 05
+                                                                                                                                                                                                                                                                                     2025-02-16 22:43:28 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/custom_envelope_caps/subject_level_feature_selection/sub-05_task-checker_desc-CustomEnvBk8CapsEegOnly_predictions.csv
+2025-02-16 22:43:29 - INFO - 
+Processing subject: 06
+2025-02-16 23:29:42 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/custom_envelope_caps/subject_level_feature_selection/sub-06_task-checker_desc-CustomEnvBk8CapsEegOnly_predictions.csv
+2025-02-16 23:29:42 - INFO - 
+Processing subject: 07
+2025-02-17 00:15:23 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/custom_envelope_caps/subject_level_feature_selection/sub-07_task-checker_desc-CustomEnvBk8CapsEegOnly_predictions.csv
+2025-02-17 00:15:23 - INFO - 
+Processing subject: 08
+                                                                                                                                                                                                                                                                                     2025-02-17 01:01:19 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/custom_envelope_caps/subject_level_feature_selection/sub-08_task-checker_desc-CustomEnvBk8CapsEegOnly_predictions.csv
+2025-02-17 01:01:19 - INFO - 
+Processing subject: 09
+2025-02-17 01:25:32 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/custom_envelope_caps/subject_level_feature_selection/sub-09_task-checker_desc-CustomEnvBk8CapsEegOnly_predictions.csv
+2025-02-17 01:25:32 - INFO - 
+Processing subject: 11
+2025-02-17 02:12:26 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/custom_envelope_caps/subject_level_feature_selection/sub-11_task-checker_desc-CustomEnvBk8CapsEegOnly_predictions.csv
+2025-02-17 02:12:26 - INFO - 
+Processing subject: 12
+                                                                                                                                                                                                                                                                                     2025-02-17 02:57:42 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/custom_envelope_caps/subject_level_feature_selection/sub-12_task-checker_desc-CustomEnvBk8CapsEegOnly_predictions.csv
+2025-02-17 02:57:42 - INFO - 
+Processing subject: 13
+2025-02-17 03:58:42 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/custom_envelope_caps/subject_level_feature_selection/sub-13_task-checker_desc-CustomEnvBk8CapsEegOnly_predictions.csv
+2025-02-17 03:58:42 - INFO - 
+Processing subject: 14
+2025-02-17 04:48:35 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/custom_envelope_caps/subject_level_feature_selection/sub-14_task-checker_desc-CustomEnvBk8CapsEegOnly_predictions.csv
+2025-02-17 04:48:35 - INFO - 
+Processing subject: 15
+                                                                                                                                                                                                                                                                                     2025-02-17 05:34:44 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/custom_envelope_caps/subject_level_feature_selection/sub-15_task-checker_desc-CustomEnvBk8CapsEegOnly_predictions.csv
+2025-02-17 05:34:44 - INFO - 
+Processing subject: 16
+2025-02-17 05:59:02 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/custom_envelope_caps/subject_level_feature_selection/sub-16_task-checker_desc-CustomEnvBk8CapsEegOnly_predictions.csv
+2025-02-17 05:59:02 - INFO - 
+Processing subject: 17
+2025-02-17 07:11:00 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/custom_envelope_caps/subject_level_feature_selection/sub-17_task-checker_desc-CustomEnvBk8CapsEegOnly_predictions.csv
+2025-02-17 07:11:00 - INFO - 
+Processing subject: 18
+2025-02-17 07:36:15 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/custom_envelope_caps/subject_level_feature_selection/sub-18_task-checker_desc-CustomEnvBk8CapsEegOnly_predictions.csv
+2025-02-17 07:36:15 - INFO - 
+Processing subject: 20
+                                                                                                                                                                                                                                                                                     2025-02-17 08:23:49 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/custom_envelope_caps/subject_level_feature_selection/sub-20_task-checker_desc-CustomEnvBk8CapsEegOnly_predictions.csv
+2025-02-17 08:23:49 - INFO - 
+Processing subject: 21

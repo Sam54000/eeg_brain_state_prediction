@@ -1,3 +1,10 @@
+"""
+This module is dedicated to configurations class for the plots.
+
+These classes contain all the parameters to tweak the plot. Feel free to add
+more class as you see fit in function of what you want to plot and how. When creating a class you will want to inherit from the BaseConfig class. For now,
+it is quite rigid but it is planned to make it more flexible in the future.
+"""
 from dataclasses import dataclass, field
 from typing import List, Optional
 import itertools
@@ -16,7 +23,6 @@ class BaseConfig:
     output_dir: Path = root / Path('data/figures')
     output_filename: Path = Path("plot.png")  # Default filename
     
-    # Define color palette parameters
     palette_type: str = "diverging"  # can be "diverging", "sequential", etc.
     palette_args: dict = field(default_factory=lambda: {
         "h_neg": 150,  # hue for negative values
@@ -28,7 +34,6 @@ class BaseConfig:
     })
 
     def __post_init__(self):
-        # Generate the color palette based on parameters
         if self.palette_type == "diverging":
             self.color_palette = sns.diverging_palette(
                 self.palette_args["h_neg"],
@@ -37,12 +42,8 @@ class BaseConfig:
                 center=self.palette_args["center"],
                 n=self.palette_args["n"]
             )
-        # Add more palette types as needed
         
-        # Create the anatomy color mapping
         self.anatomy_colors = dict(zip(self.anatomical_order, self.color_palette))
-        
-        # Ensure output_filename is a full path
         self.output_filename = self.output_dir / self.output_filename
 
 @dataclass
@@ -59,18 +60,31 @@ class HeatmapConfig(BaseConfig):
         "linewidth": 2,
         "linestyle": "-"
     })
-    # Add layout parameters
     layout_args: dict = field(default_factory=lambda: {
-        "left": 0.25,    # left margin
-        "right": 0.95,   # right margin
-        "top": 0.95,     # top margin
-        "bottom": 0.1    # bottom margin
+        "left": 0.25,
+        "right": 0.95,
+        "top": 0.95,
+        "bottom": 0.1
     })
     xlabel: str = "Frequency (Hz)"
     ylabel: str = "Channel Name"
 
 @dataclass
 class BoxPlotConfig(BaseConfig):
+    """Configuration for EEG box plot visualization
+    
+    This class was used to plot the accuracy value as a function of the
+    signal quality to see if signal quality influence on the prediction.
+    
+    Args:
+        figsize (tuple): The size of the figure.
+        animation_interval (int): The interval of the animation if you want
+                                 to save the plot as an animation.
+        x (str): The x-axis variable.
+        xlim (tuple): The limits of the x-axis.
+        xlabel (str): The label of the x-axis.
+        ylabel (str): The label of the y-axis.
+    """
     figsize: tuple = (13, 15)
     animation_interval: int = 100
     x: str = 'pearson_r'

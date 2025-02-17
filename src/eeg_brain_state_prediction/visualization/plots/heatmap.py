@@ -158,7 +158,8 @@ class EEGHeatmapPlot(BasePlot):
         Args:
             level (str, optional): The level to plot the heatmap can be at the
                                    subject level (Default) or at the population
-                                   level.
+                                   level. When population level is chosen, 
+                                   
         """
         if level == "subject":
             self._plot_subject_level()
@@ -175,10 +176,8 @@ class EEGHeatmapPlot(BasePlot):
                          **heatmap_args) -> None:
         """Plot heatmap for a single CAP value"""
         
-        # Sort anatomical regions
         sorted_data, anatomy_info = self._sort_anatomical_data(selection)
         
-        # Create heatmap
         sns.heatmap(
             sorted_data,
             cmap=self.config.cmap,
@@ -189,7 +188,6 @@ class EEGHeatmapPlot(BasePlot):
             **heatmap_args
         )
         
-        # Add anatomical separators
         self._add_anatomical_separators(ax, anatomy_info)
         
         if chan_labels:
@@ -261,22 +259,18 @@ class EEGHeatmapPlot(BasePlot):
     
     def _add_anatomy_labels(self, ax: plt.Axes, anatomy_info: pd.DataFrame,
                             xpos: float) -> None:
-        # Add anatomy labels
         anatomy_changes = np.where(anatomy_info['anatomy'].values[1:] != 
                                  anatomy_info['anatomy'].values[:-1])[0]
         anatomy_changes = np.append(anatomy_changes, len(anatomy_info))
         unique_anatomies = anatomy_info['anatomy'].unique()
         
-        # Force exact positioning by using transform coordinates
 
         for i, anatomy in enumerate(unique_anatomies):
-            # Calculate exact middle position
             if i == 0:
                 middle = anatomy_changes[i] / 2
             else:
                 middle = (anatomy_changes[i-1] + anatomy_changes[i]) / 2
 
-            # Use transform to maintain exact float coordinates
             ax.text(xpos, 
                     middle, 
                     anatomy.capitalize(),
