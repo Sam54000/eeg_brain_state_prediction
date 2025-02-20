@@ -1,5 +1,8 @@
 #!/bin/bash
-/home/slouviot/01_projects/eeg_brain_state_prediction/src/run_custom_env_parallel_features_selection_checker.sh 2> /home/slouviot/01_projects/eeg_brain_state_prediction/logs/errors_custom_env_parallel_features_selection_checker.log > /home/slouviot/01_projects/eeg_brain_state_prediction/logs/output_custom_env_parallel_features_selection_checker.log 
-/home/slouviot/01_projects/eeg_brain_state_prediction/src/run_custom_env_parallel_features_selection_rest.sh 2> /home/slouviot/01_projects/eeg_brain_state_prediction/logs/errors_custom_env_parallel_features_selection_rest.log > /home/slouviot/01_projects/eeg_brain_state_prediction/logs/output_custom_env_parallel_features_selection_rest.log 
-/home/slouviot/01_projects/eeg_brain_state_prediction/src/run_custom_env_parallel_checker_with_pupil.sh 2> /home/slouviot/01_projects/eeg_brain_state_prediction/logs/errors_custom_env_parallel_checker_with_pupil.log > /home/slouviot/01_projects/eeg_brain_state_prediction/logs/output_custom_env_parallel_checker_with_pupil.log 
-/home/slouviot/01_projects/eeg_brain_state_prediction/src/run_custom_env_parallel_rest_with_pupil.sh 2> /home/slouviot/01_projects/eeg_brain_state_prediction/logs/errors_custom_env_parallel_rest_with_pupil.log > /home/slouviot/01_projects/eeg_brain_state_prediction/logs/output_custom_env_parallel_rest_with_pupil.log 
+
+# Run the feature selection script for each task and session
+python /home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/ml_pipeline/main_custom_envelope_features_selection_double_dipping_sub_level_sessions.py --task checker --session 02 --additional_info EegOnly
+python /home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/ml_pipeline/main_custom_envelope_features_selection_double_dipping_sub_level_sessions.py --task rest --session 02 --additional_info EegOnly
+python /home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/ml_pipeline/main_custom_envelope_features_selection_double_dipping_sub_level_sessions.py --task rest --session 02 --additional_info WithPupil
+
+
