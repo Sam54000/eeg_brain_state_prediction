@@ -2,8 +2,7 @@
 """
 import os
 from dotenv import load_dotenv
-
-load_dotenv()
+from eeg_brain_state_prediction.logger import setup_logger, log_execution
 
 import scipy.stats
 import sklearn
@@ -15,68 +14,35 @@ import scipy
 import logging
 import sklearn.model_selection
 import pandas as pd
-import argparse
 import combine_data as combine_data
 import bids_explorer.architecture as arch
 from typing import Dict, List, Callable, Optional, Union, Any, Tuple
 from types import FunctionType
+import eeg_brain_state_prediction.tools.configs as configs
 from dataclasses import dataclass, field
 
-@dataclass
-class ModelConfig:
-    """Configuration class for model parameters"""
-    description: str 
-    eeg_feature: str = "GfpBk"
-    sampling_rate_hz: float = 3.8
-    window_length_seconds: int = 10
-
-    caps: np.ndarray = field(default_factory=lambda: np.array([
-        'CAP1', 'CAP2', 'CAP3', 'CAP4', 'CAP5', 'CAP6', 'CAP7', 'CAP8'
-    ]))
-
-    n_bands: int = 1
-    n_channels: int = 1
-
-    aggregation_function: Callable[[np.ndarray, float], tuple[float, float]] = scipy.stats.ttest_1samp
-    stat_func_kwargs: Dict[str, Any] = field(default_factory=lambda: {"popmean": 0})
-    nb_desired_features: List[int] = field(
-        default_factory=lambda: [ModelConfig.n_bands * ModelConfig.n_channels]
-    )
-    code_root: Path = Path(
-        os.environ["HOME"],
-        "01_projects",
-        "eeg_brain_state_prediction",
-    )
-    data_root: Path = Path("/data2/Projects/eeg_fmri_natview/derivatives")
-    runs: Optional[List[str]] = None
-    task: str = "rest"
-    additional_info: str = "All"
-    feature_set = {
-        "eyetracking": None,
-        "eeg": {
-            "channel": np.arange(n_channels).repeat(n_bands),
-            "band": np.tile(np.arange(n_bands),n_channels),
-        }
-    }
-    data_directory: str = f"data/eeg_bands_cpca/{eeg_feature}{additional_info}"
-    n_threads: int = 32
-    features_data_filename: Optional[str | Path] = None
-
 def setup_logger(log_file=None):
-    """Configure logging with timestamp and formatting"""
-    logging.basicConfig(
-        level=logging.INFO,
-        format='%(asctime)s - %(levelname)s - %(message)s',
-        datefmt='%Y-%m-%d %H:%M:%S',
-        handlers=[
-            logging.StreamHandler(),  # Console output
-            logging.FileHandler(log_file) if log_file else logging.NullHandler()
-        ]
-    )
-    return logging.getLogger(__name__)
+    """Wrapper around the centralized logger setup for backward compatibility"""
+    return setup_logger(__name__, log_file)
 
-def create_bids_architecture(config: "ModelConfig") -> arch.BidsArchitecture:
-    """Create BIDS architecture with given parameters"""
+@log_execution()
+def create_bids_architecture(
+    config: configs.PipelineConfig
+    ) -> arch.BidsArchitecture:
+    """Create BIDS architecture with given parameters.
+
+    Create the BidsArchitecture for accessing to the multimodal data in 
+    an ordered manner.
+
+    Args: 
+        config (configs.PipelineConfig): The configuration instance dedicated
+            to the pipeline.
+    
+    Returns:
+        arch.BidsArchitecture: The architecture instance.
+    
+    """
+    logger = logging.getLogger(__name__)
     parameters = {
         "root": config.data_root,
         "datatype": "multimodal",
@@ -86,17 +52,23 @@ def create_bids_architecture(config: "ModelConfig") -> arch.BidsArchitecture:
         "task": config.task,
         "extension": ".pkl",
     }
-    print(f"Creating BIDS architecture with parameters: {parameters}")
-    print(f"Data root path exists: {config.data_root.exists()}")
-    print(f"Full data root path: {config.data_root.absolute()}")
+    logger.info(f"Creating BIDS architecture with parameters: {parameters}")
+    logger.info(f"Data root path exists: {config.data_root.exists()}")
+    logger.info(f"Full data root path: {config.data_root.absolute()}")
     
     architecture = arch.BidsArchitecture(**parameters)
     if hasattr(architecture, 'database'):
-        print(f"Database info: {architecture.database.shape if hasattr(architecture.database, 'shape') else 'No shape attribute'}")
+        logger.info(f"Database info: {architecture.database.shape if hasattr(architecture.database, 'shape') else 'No shape attribute'}")
     return architecture
 
 def initialize_results_dict() -> Dict:
-    """Initialize the dictionary for storing results"""
+    """Initialize the dictionary for storing results.
+    
+    Returns:
+        dict: The dictionary to populate in the loop and transform in a 
+        `pandas.DataFrame` at the end of the process.
+    """
+
     return {
         "subject": [],
         "session": [],
@@ -107,55 +79,85 @@ def initialize_results_dict() -> Dict:
         "n_features": [],
     }
 
-def train_and_evaluate_model(X_train: np.ndarray, Y_train: np.ndarray, 
-                           X_test: np.ndarray, Y_test: np.ndarray) -> float:
-    """Train model and return correlation coefficient"""
-    estimator = sklearn.linear_model.RidgeCV(cv=5)
+def train_and_evaluate_model(
+    estimator: sklearn.base.BaseEstimator,
+    X_train: np.ndarray, 
+    Y_train: np.ndarray,
+    X_test: np.ndarray,
+    Y_test: np.ndarray
+    ) -> float:
+    """Train model and return correlation coefficient.
+    
+    This function train the model by fitting the desired estimator.
+
+    Args:
+        estimator (sklearn.bas.BasEstimator): The estimator to use to fit the 
+            data.
+        X_train (np.ndarray): The training data.
+        Y_train (np.ndarray): The training targets.
+        X_test (np.ndarray): The test data.
+        Y_test (np.ndarray): The real test target to compare to the estimated
+            ones.
+    
+    Returns:
+        float: The Pearson' correlation between predicated and real values.
+    
+    """
     estimator.fit(X_train, Y_train)
     Y_hat = estimator.predict(X_test)
     return np.corrcoef(Y_test.T, Y_hat.T)[0, 1]
 
-def process_single_iteration(big_data: Any, 
-                             train_keys: List, 
-                             test_keys: List,
-                             cap: str, 
-                             feature_set: Dict, 
-                             config: "ModelConfig"
-                             ) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
-    """Process a single iteration of data preparation and model training"""
-    return combine_data.create_train_test_data(
+def transform(big_data: Dict[int, Dict[Any]], 
+              train_keys: List[int], 
+              test_keys: List,
+              brainstate: str, 
+              feature_set: Dict, 
+              config: configs.PipelineConfig
+              ) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+    """Transform the multimodal data into format to use with sklearn.
+
+    Transform the multimodal data into predictors, target, and train
+    and test sets.
+    
+    Args:
+        big_data 
+    
+    """
+    X_train, Y_train, X_test, Y_test = combine_data.create_train_test_data(
         big_data=big_data,
         train_keys=train_keys,
         test_keys=test_keys,
-        cap_name=cap,
+        brainstate=brainstate,
         features_args=feature_set,
-        window_length=int(config.sampling_rate_hz * config.window_length_seconds),
+        window_length=int(config.sampling_rate_hz*config.window_length_seconds),
         masking=True,
         trim_args=(5, None)
     )
+    return X_train, Y_train, X_test, Y_test
 
-def make_saving_path(config: "ModelConfig", subject: str) -> Path:
+def make_saving_path(config: configs.PipelineConfig, subject: str) -> Path:
     """Make saving path"""
     output_path = config.code_root / config.data_directory
-    # Create directory if it doesn't exist
     output_path.mkdir(parents=True, exist_ok=True)
     
     filename = f"sub-{subject}_task-{config.task}_desc-{config.description}{config.additional_info}_predictions.csv"
     full_path = output_path / filename
     return full_path
 
+@log_execution()
 def save_results(results_df: pd.DataFrame, 
                  full_path: Path,
                  ) -> None:
-    print(f"Saving results to: {full_path}")
+    logger = logging.getLogger(__name__)
+    logger.info(f"Saving results to: {full_path}")
     results_df.to_csv(full_path, index=False)
-    print(f"File saved successfully with {len(results_df)} rows")
+    logger.info(f"File saved successfully with {len(results_df)} rows")
 
 def get_all_features_dataframe(csv_file: str | Path) -> pd.DataFrame:
     return pd.read_csv(csv_file)
 
 def aggregate_df_across_subjects(dataframe: pd.DataFrame,
-                                 config: "ModelConfig",
+                                 config: configs.ModelConfig,
                                  ) -> pd.DataFrame:
     """When getting features for the entire population."""
     if isinstance(config.aggregation_function, str):
@@ -209,10 +211,23 @@ def get_best_n_feature_combinations(
         }
     }
 
-def pipeline(
+for subject in ["01"]:#architecture.subjects:
+    full_path = utils.make_saving_path(config, subject)
+    #if full_path.exists():
+    #    logger.info(f"File already exists: {full_path}")
+    #    continue
+    logger.info(f"\nProcessing subject: {subject}")
+    utils.pipeline(
+        architecture=architecture, 
+        subject=subject, 
+        config=config,
+    )
+
+@log_execution()
+def pipeline_1(
     architecture: 'arch.BidsArchitecture', 
     subject: str, 
-    config: "ModelConfig",
+    config: 
 ) -> None:
     """Run iterative feature selection process.
     
@@ -240,7 +255,7 @@ def pipeline(
     else:
         config.nb_desired_features = [1]
     for n_features in config.nb_desired_features:
-        print(f"Processing {n_features} features")
+        logger.info(f"Processing {n_features} features")
         
         for test_keys, test_session in test_arch:
             train_keys = train_arch.database.index.values
@@ -291,3 +306,77 @@ def pipeline(
     logger.info(f"Saving results to: {make_saving_path(config, subject)}")
     save_results(results_df = results_df, 
                  full_path = make_saving_path(config, subject)) 
+
+def best_features_screening(pipeline_config: configs.PipelineConfig,
+             multimodal_config: configs.MultimodalConfig,
+             model_config: configs.ModelConfig):
+    for brainstate in multimodal_config.brainstates.brainstates:
+        best_features_combinations = get_best_n_feature_combinations(
+            n_features=n_features,
+            aggregated_selection=features_csv[features_csv["brainstate"] == brainstate],
+            to_sort = "t_stat",
+        )
+        atomic_pipelines()
+
+#Maybe make different kind of piplines as decorators because they are wrapping
+#The atomic pipeline function
+
+def atomic_pipelines(big_data: dict,
+                     train_keys: list,
+                     test_keys: list,
+                     feature_set: dict,
+                     brainstate: str,
+                     pipeline_config: configs.PipelineConfig,
+                     model_config: configs.ModelConfig) -> dict:
+
+    if not isinstance(test_keys, list):
+        test_keys = list(test_keys)
+
+    sampling_rate, window_length_seocnds = (
+        pipeline_config.sampling_rate_hz,
+        pipeline_config.window_length_seconds
+    )
+
+    X_train, Y_train, X_test, Y_test = combine_data.create_train_test_data(
+        big_data=big_data,
+        train_keys=train_keys,
+        test_keys=test_keys,
+        brainstate=brainstate,
+        features_args=feature_set,
+        window_length=int(sampling_rate*window_length_seocnds),
+        masking=True,
+        trim_args=(5, None)
+    )
+    
+    sets_shape = [*X_train.shape,
+                  *Y_train.shape,
+                  *X_test.shape,
+                  *Y_test.shape]
+    
+
+    if any(shape == 0 for shape in  sets_shape):
+        return
+
+    r = train_and_evaluate_model(
+        model_config = model_config,
+        X_train      = X_train, 
+        Y_train      = Y_train, 
+        X_test       = X_test, 
+        Y_test       = Y_test,
+        )
+
+    
+    results['subject'].append(subject)
+    results['session'].append(test_session['session'])
+    results[brainstate].append(brainstate)
+    results['pearson_r'].append(r)
+    eeg_spec = config.feature_set.get('eeg')
+    if eeg_spec is not None:
+        results['frequency_Hz'].append(eeg_spec.get('band'))
+        results['electrode'].append(eeg_spec.get('channel'))
+    else:
+        results['frequency_Hz'].append(None)
+        results['electrode'].append(None)
+
+    results['n_features'].append(n_features)
+    

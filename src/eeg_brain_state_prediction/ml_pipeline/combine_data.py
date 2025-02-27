@@ -87,18 +87,6 @@ def filter_data(data: np.ndarray,
     filtered_data = scipy.signal.sosfilt(filtered_data, data, axis=1)
     return filtered_data
 
-def generate_train_test_architectures(train_subjects: np.ndarray,
-                                      test_subjects: np.ndarray,
-                                      architecture: arch.BidsArchitecture,
-                             ) -> tuple[arch.BidsArchitecture,arch.BidsArchitecture]:
-    
-
-    test_architecture = architecture.select(subject = test_subjects)
-    train_architecture = architecture.remove(subject = test_subjects)
-
-
-    return train_architecture, test_architecture
-
 def generate_train_test_keys(
     train_architecture: arch.BidsArchitecture,
     test_architecture: arch.BidsArchitecture,
@@ -110,32 +98,34 @@ def generate_train_test_keys(
     return train_keys, test_keys
     
 
-def extract_cap_name_list(big_data: dict) -> list[str]:
-    """Extract the list of CAP names from the encapuslated dictionary.
+def extract_brainstates_list(big_data: dict) -> list[str]:
+    """Extract the list of brainstates names from the encapuslated dictionary.
     
     Args:
         big_data (dict): The big dictionary containing all the data
         keys_list (list): The list of keys to access the data in the dictionary.
     
     Returns:
-        list: The list of CAP names
+        list: The list of brainstates names
     """
     return big_data[list(big_data.keys())[0]]['brainstates']['labels']
     
-def get_real_cap_name_and_idx(cap_name: str,
-                      cap_list: list[str]) -> tuple[str,int]:
-    """Get the real CAP name based on a substring from the list of CAP names.
+def get_real_brainstates_and_idx(
+    brainstate: str,
+    brainstates: list[str]) -> tuple[str,int]:
+    """Get the real brainstates name based on a substring from the list of brainstates names.
     
     Args:
-        cap_name (str): The substring to look for in the list of CAP names
-        cap_list (list): The list of CAP names
+        brainstate(str): The substring to look for in the list of brainstates names
+        brainstates (list): The list of brainstates names
     
     Returns:
-        tuple[str,int]: The real cap name and its index in the list
+        tuple[str,int]: The real brainstate name and its index in the list
     """
-    real_cap_name = [cap for cap in cap_list if cap_name in cap][0]
-    real_cap_idx = cap_list.index(real_cap_name)
-    return real_cap_name, real_cap_idx
+    real_brainstate_name = [bs for bs in brainstates 
+                            if brainstate in bs][0]
+    real_brainstate_idx = brainstates.index(real_brainstate_name)
+    return real_brainstate_name, real_brainstate_idx
 
 def crop_data(array: np.ndarray, 
               axis: int = -1, 
@@ -655,15 +645,15 @@ def create_X(big_data: dict,
             
 def create_Y(big_data: dict,
              keys_list: np.ndarray,
-             cap_name: str,
+             brainstate: str,
              trim_args: tuple = (None, None)
              ) -> np.ndarray:
     
-    cap_names_list = extract_cap_name_list(big_data)
+    brainstates = extract_brainstates_list(big_data)
 
-    _, cap_index = get_real_cap_name_and_idx(
-        cap_name,
-        cap_names_list
+    _, brainstate_index = get_real_brainstates_and_idx(
+        brainstate,
+        brainstates
         )
     
     array = create_big_feature_array(
@@ -673,7 +663,7 @@ def create_Y(big_data: dict,
         keys_list           = keys_list,
         trim_args           = trim_args
         )
-    selection = array[:,cap_index,:,:]
+    selection = array[:,brainstate_index,:,:]
     selection = np.reshape(selection,(array.shape[0],
                                       1,
                                       array.shape[2])
@@ -684,7 +674,7 @@ def create_Y(big_data: dict,
 def create_X_and_Y(big_data: dict,
                    keys_list: np.ndarray,
                    X_args: dict,
-                   cap_name: str,
+                   brainstate: str,
                    window_length: int = 45,
                    trim_args: tuple = (None, None)
                   ) -> tuple[Any,Any]:
@@ -744,7 +734,7 @@ def create_X_and_Y(big_data: dict,
     Y_array = create_Y(
         big_data = big_data,
         keys_list = keys_list,
-        cap_name = cap_name,
+        brainstate=brainstate,
         trim_args = trim_args
     )
     windowed_Y = Y_array[:,:,window_length:]
@@ -874,7 +864,7 @@ def print_keys(keys_list: np.ndarray, title = None):
 def create_train_test_data(big_data: dict,
                            train_keys: np.ndarray,
                            test_keys: np.ndarray,
-                           cap_name: str,
+                           brainstate: str,
                            features_args: dict,
                            window_length: int = 45,
                            masking: bool = False,
@@ -886,7 +876,7 @@ def create_train_test_data(big_data: dict,
     Args:
         big_data (dict): The encapsulated dictionary containing all the data.
         train_keys (np.ndarray)
-        cap_name (str): The CAP name to consider.
+        brainstate(str): The brainstate name to consider.
         modality(str): The modality to consider.
         band_name (str | None): The name of the EEG band to consider if the
                                 modality is EEG. Default to None.
@@ -915,7 +905,7 @@ def create_train_test_data(big_data: dict,
         big_data         = big_data,
         keys_list        = train_keys,
         X_args           = features_args,
-        cap_name         = cap_name,
+        brainstate=brainstate,
         window_length    = window_length,
         trim_args        = trim_args
         )
@@ -930,7 +920,7 @@ def create_train_test_data(big_data: dict,
         big_data         = big_data,
         keys_list        = test_keys,
         X_args           = features_args,
-        cap_name         = cap_name,
+        brainstate=brainstate,
         window_length    = window_length,
         trim_args        = trim_args
         )
@@ -990,16 +980,15 @@ def xcorr_with_ttest(subject_list: list,
                      sessions: list,
                      task: str,
                      run: str,
-                     cap_name: str,
+                     brainstate: str,
                      sampling_rate: str,
                      nb_features = 5,
                      ):
     """ Returns dictionary of t-tested cross correlations. 
     Returns dictionary of t-tested cross correlations for a given list of 
     participants' fMRI, EEG, and pupillometry data from a given task.  
-    Each element in the dictionary is a series of t-stats for a certain CAP x 
-    channel-band or CAP x pupillometry analysis cross correlation 
-    (and is labeled as such, eg "tsCAP1_Oz-alpha", "tsCAP5_PD-firstder")
+    Each element in the dictionary is a series of t-stats for a certain brainstate x channel-band or brainstate x pupillometry analysis 
+    cross correlation (and is labeled as such, eg "tsCAP1_Oz-alpha", "tsCAP5_PD-firstder")
     
     Args:
         subject_list (list): The list of subject to run the function on.
@@ -1035,7 +1024,7 @@ def xcorr_with_ttest(subject_list: list,
             ts_path = os.path.join(
                 eeg_files_path,
                 sampling_rate, 
-                f"task-{task}_{cap_name}_{channel}-{band}-raw_xcorr-full.csv")
+                f"task-{task}_{brainstate}_{channel}-{band}-raw_xcorr-full.csv")
             try:
                 df_ts = pd.read_csv(ts_path)
                 sub_idx_in_df = [col for col in df_ts.columns
@@ -1056,7 +1045,7 @@ def xcorr_with_ttest(subject_list: list,
         ts_path = os.path.join(
             pupil_files_path,
             pupil_analysis, 
-            f"task-{task}_{cap_name}_{pupil_analysis}_xcorr-full.csv")
+            f"task-{task}_{brainstate}_{pupil_analysis}_xcorr-full.csv")
         try:
             df_ts = pd.read_csv(ts_path)
             selection = df_ts[sub_idx_in_df]

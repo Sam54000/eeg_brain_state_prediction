@@ -1,13 +1,7 @@
-import pickle
-import numpy as np
-from pathlib import Path
 from dataclasses import dataclass
-from typing import Optional, List
-import copy
-from . import features
+from eeg_brain_state_prediction.data_pipeline.tools import features
 
 @dataclass
 class BrainstatesFeatures(features.BaseFeatures):
     def __post_init__(self):
         super().__post_init__()
-        # Add any BrainstatesFeatures-specific initialization here

@@ -8,6 +8,7 @@ from typing import Optional
 import matplotlib.pyplot as plt
 import mne
 import numpy as np
+from eeg_brain_state_prediction.logger import setup_logger, log_execution
 
 mne.set_log_level(verbose="ERROR", return_old_level=False, add_frames=None)
 
@@ -26,63 +27,6 @@ class ProcessingError(DataPipelineError):
 class ConfigurationError(DataPipelineError):
     """Raised when configuration is invalid"""
     pass
-
-def setup_logger(name: str = __name__, log_file: Optional[str] = None, level: str = "INFO") -> logging.Logger:
-    """Configure logging with timestamp and formatting
-
-    Args:
-        name (str): Logger name
-        log_file (Optional[str]): Path to log file
-        level (str): Logging level (DEBUG, INFO, WARNING, ERROR, CRITICAL)
-
-    Returns:
-        logging.Logger: Configured logger instance
-    """
-    if log_file:
-        log_dir = Path(log_file).parent
-        log_dir.mkdir(parents=True, exist_ok=True)
-
-    formatter = logging.Formatter(
-        '%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-        datefmt='%Y-%m-%d %H:%M:%S'
-    )
-
-    logger = logging.getLogger(name)
-    logger.setLevel(getattr(logging, level.upper()))
-    logger.handlers = []
-    console_handler = logging.StreamHandler()
-    console_handler.setFormatter(formatter)
-    logger.addHandler(console_handler)
-    
-    if log_file:
-        file_handler = logging.FileHandler(log_file)
-        file_handler.setFormatter(formatter)
-        logger.addHandler(file_handler)
-
-    return logger
-
-def log_execution(logger: Optional[logging.Logger] = None):
-    """Decorator to log function execution with parameters and results
-
-    Args:
-        logger (Optional[logging.Logger]): Logger instance to use. If None, creates a new logger.
-    """
-    def decorator(func):
-        @functools.wraps(func)
-        def wrapper(*args, **kwargs):
-            nonlocal logger
-            if logger is None:
-                logger = setup_logger(func.__module__)
-
-            logger.debug(f"Entering {func.__name__} with args={args}, kwargs={kwargs}")
-            try:
-                result = func(*args, **kwargs)
-                return result
-            except Exception as e:
-                logger.error(f"Error in {func.__name__}: {str(e)}", exc_info=True)
-                raise
-        return wrapper
-    return decorator
 
 def validate_data(data: np.ndarray, 
                  check_nan: bool = True, 
@@ -121,35 +65,7 @@ class BlinkRemover:
         self.eog_evoked.apply_baseline((None, None))
         return self
 
-    def plot_removal_results(self, saving_filename=None):
-        figure = mne.viz.plot_projs_joint(self.eog_projs, self.eog_evoked)
-        figure.suptitle("EOG projectors")
-        if saving_filename:
-            figure.savefig(saving_filename)
-        plt.close()
 
-    def plot_blinks_found(self, saving_filename=None):
-        self._find_blinks()
-        figure = self.eog_evoked.plot_joint(times=0)
-        if saving_filename:
-            figure.savefig(saving_filename)
-        plt.close()
-
-    def remove_blinks(self) -> mne.io.Raw:
-        """Remove the EOG artifacts from the raw data.
-
-        Args:
-            raw (mne.io.Raw): The raw data from which the EOG artifacts will be removed.
-
-        Returns:
-            mne.io.Raw: The raw data without the EOG artifacts.
-        """
-        self.eog_projs, _ = mne.preprocessing.compute_proj_eog(
-            self.raw, n_eeg=2, reject=None, no_proj=True, ch_name=self.channels
-        )
-        self.blink_removed_raw = self.raw.copy()
-        self.blink_removed_raw.add_proj(self.eog_projs).apply_proj()
-        return self
 
 def extract_gradient_trigger_name(
     raw: mne.io.Raw, desired_trigger_name: str = "R128", on_missing: str = "raise"

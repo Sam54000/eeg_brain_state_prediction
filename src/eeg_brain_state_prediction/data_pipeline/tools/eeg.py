@@ -3,7 +3,6 @@ import mne
 from dataclasses import dataclass
 from typing import Optional, List
 import eeg_brain_state_prediction.data_pipeline.tools.eeg_channels as eeg_channels
-from typing import Optional
 import pickle
 from eeg_brain_state_prediction.tools.configs import (
     EegFeaturesConfig, 
@@ -11,7 +10,7 @@ from eeg_brain_state_prediction.tools.configs import (
 )
 
 import scipy.signal as signal
-from eeg_brain_state_prediction.data_pipeline.tools.artifacts import Detector
+from eeg_brain_state_prediction.data_pipeline.tools.artifacts import Muscle, OtherArtifact, Annotator
 from eeg_brain_state_prediction.data_pipeline.tools.utils import (
     log_execution,
     setup_logger,
@@ -197,9 +196,9 @@ class EEGfeatures(features.BaseFeatures):
             montage = mne.channels.make_standard_montage(self.eeg_config.montage)
             self.raw.set_montage(montage)
             self.raw.pick_types(eeg=True)
-            channel_selection = self._get_existing_channels()
+            self.channel_selection = self._get_existing_channels()
             self.feature = np.expand_dims(
-                self.raw.get_data(picks=channel_selection), 
+                self.raw.get_data(picks=self.channel_selection), 
                 axis=2
             )
             self.feature_info = list()
@@ -232,24 +231,33 @@ class EEGfeatures(features.BaseFeatures):
         }
 
     def _resample(self):
-        self.feature_info.append(f"Resampled from {self.raw.info['sfreq']} Hz to {self.eeg_config.sampling_rate_hz} Hz")
-        self.raw.resample(self.eeg_config.sampling_rate_hz)
-        self.time = self.raw.times
+        if self.eeg_config.sampling_rate_hz is not None:
+            self.feature_info.append(f"Resampled from {self.raw.info['sfreq']} Hz to {self.eeg_config.sampling_rate_hz} Hz")
+            self.raw.resample(self.eeg_config.sampling_rate_hz)
+            self.time = self.raw.times
         return self
 
     def _get_existing_channels(self):
         existing_channels = set(self.raw.info["ch_names"])
-        requested_channels = set(self.eeg_config.channels)
-        selection = existing_channels.intersection(requested_channels)
+        if self.eeg_config.channels is not None:
+            requested_channels = set(self.eeg_config.channels)
+            selection = existing_channels.intersection(requested_channels)
+        else:
+            selection = existing_channels
         return list(selection)
 
     def annotate_artifacts(self, raw: mne.io.Raw):
-        annotator_instance = Detector(raw)
-        annotator_instance.detect_muscles(filter_freq=(30, None))
-        annotator_instance.detect_other()
-        annotator_instance.merge_annotations()
-        annotator_instance.generate_mask()
-        return annotator_instance.mask
+        muscle_detector = Muscle(raw).detect(filter_freq=(30, None))
+        other_detector = OtherArtifact(raw).detect()
+        
+        annotator = Annotator(raw)
+        annotator.add_detector(muscle_detector)
+        annotator.add_detector(other_detector)
+        
+        annotator.merge_annotations()
+        annotator.generate_mask()
+        
+        return annotator.mask
 
     def save(self, filename):
         print(f"\nsaving into {filename}")

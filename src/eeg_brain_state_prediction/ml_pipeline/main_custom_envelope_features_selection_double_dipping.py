@@ -4,27 +4,22 @@ The aggregation across subject is done either with mean or median
 
 import os
 from datetime import datetime
-
-nthreads = "32" # 64 on synapse
-
-os.environ["OMP_NUM_THREADS"] = nthreads
-os.environ["OPENBLAS_NUM_THREADS"] = nthreads
-os.environ["MKL_NUM_THREADS"] = nthreads
-os.environ["VECLIB_MAXIMUM_THREADS"] = nthreads
-os.environ["NUMEXPR_NUM_THREADS"] = nthreads
 from pathlib import Path
 import utils
 import numpy as np
 import bids_explorer.architecture as arch
+import eeg_brain_state_prediction.tools.configs as configs
+from eeg_brain_state_prediction.logger import setup_logger
 
 
-def main(config: "utils.ModelConfig") -> None:
+def main(config: configs.PipelineConfig) -> None:
     """Main function to orchestrate the feature selection process"""
-    logger = utils.setup_logger(
-        Path.home()/
+    logger = setup_logger(
+        name=__name__,
+        log_file=Path.home()/
         f"01_projects/eeg_brain_state_prediction/logs/"\
-        f"double_dipping_{config.task}_WithPupil.log"
-    )
+        f"double_dipping_{config.task}_{config.additional_descriptions}.log"
+        )
     
     logger.info(f"Starting processing with task: {config.task}, description: {config.description}")
     
@@ -44,17 +39,6 @@ def main(config: "utils.ModelConfig") -> None:
     architecture = utils.create_bids_architecture(config)
     logger.info(f"Found {len(architecture.subjects)} subjects to process")
          
-    for subject in ["01"]:#architecture.subjects:
-        full_path = utils.make_saving_path(config, subject)
-        #if full_path.exists():
-        #    logger.info(f"File already exists: {full_path}")
-        #    continue
-        logger.info(f"\nProcessing subject: {subject}")
-        utils.pipeline(
-            architecture=architecture, 
-            subject=subject, 
-            config=config,
-        )
     logger.info("\nProcessing completed successfully")
 
 if __name__ == "__main__":

@@ -1,8 +1,8 @@
 import os
+import copy
 import pickle
 from pathlib import Path
 from typing import Any, Dict, List, Union
-import copy
 import re
 import numpy as np
 from bids_explorer import architecture as arch
@@ -157,7 +157,7 @@ def make_multimodal_dictionary(
     Raises:
         ProcessingError: If processing fails
     """
-    multimodal_dict = {}
+    multimodal_dict = copy.deepcopy(dict_modality)
     
     classes = {
         "eeg": EEGfeatures,
@@ -188,7 +188,7 @@ def make_multimodal_dictionary(
                 data = classes[modality].from_file(filenames[0])
 
                 
-            multimodal_dict[modality] = data.to_dict()
+            multimodal_dict[modality].update(data.to_dict())
             logger.debug("Successfully loaded data for modality: %s", modality)
             
         except Exception as e:
