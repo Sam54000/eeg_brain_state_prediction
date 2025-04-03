@@ -197,9 +197,9 @@ class EEGfeatures(features.BaseFeatures):
             montage = mne.channels.make_standard_montage(self.eeg_config.montage)
             self.raw.set_montage(montage)
             self.raw.pick_types(eeg=True)
-            channel_selection = self._get_existing_channels()
+            self.channel_selection = self._get_existing_channels()
             self.feature = np.expand_dims(
-                self.raw.get_data(picks=channel_selection), 
+                self.raw.get_data(picks=self.channel_selection), 
                 axis=2
             )
             self.feature_info = list()
@@ -210,7 +210,7 @@ class EEGfeatures(features.BaseFeatures):
             self.time = self.raw.times
             self.labels = {
                 "channels_info": eeg_channels.generate_dictionary(
-                    self.channel_names
+                    self.channel_selection
                 ),
                 "frequencies": self.feature_config.frequencies,
             }
@@ -239,8 +239,11 @@ class EEGfeatures(features.BaseFeatures):
 
     def _get_existing_channels(self):
         existing_channels = set(self.raw.info["ch_names"])
-        requested_channels = set(self.eeg_config.channels)
-        selection = existing_channels.intersection(requested_channels)
+        if self.eeg_config.channels is not None:
+            requested_channels = set(self.eeg_config.channels)
+            selection = existing_channels.intersection(requested_channels)
+        else:
+            selection = existing_channels
         return list(selection)
 
     def annotate_artifacts(self, raw: mne.io.Raw):
@@ -253,5 +256,6 @@ class EEGfeatures(features.BaseFeatures):
 
     def save(self, filename):
         print(f"\nsaving into {filename}")
+        print(self.to_dict())
         with open(filename, "wb") as file:
             pickle.dump(self.to_dict(), file)

@@ -120,6 +120,7 @@ if __name__ == "__main__":
         overwrite = True,
         tasks = ["rest", "checker"],
         n_threads = 32,
+        subjects = ["01"],
     )
 
     brainstates_config = BrainstatesConfig(

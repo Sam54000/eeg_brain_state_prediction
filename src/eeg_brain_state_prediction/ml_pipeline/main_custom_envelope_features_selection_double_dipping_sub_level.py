@@ -73,8 +73,8 @@ if __name__ == "__main__":
         nb_desired_features=range(1,51),
         data_directory="data/custom_envelope_caps/subject_level_feature_selection",
         task = "checker",
-        additional_info="WithPupil",
-        n_threads = 80,
+        additional_info="EegOnly",
+        n_threads = 32,
         features_data_filename="/home/slouviot/01_projects/eeg_brain_state_prediction/data/custom_envelope_caps/group_level/sub-all_task-checker_desc-CustomEnvBk_tstats.csv",
         
     )

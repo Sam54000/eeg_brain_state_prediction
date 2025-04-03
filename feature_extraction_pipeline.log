@@ -934,3 +934,32 @@ Traceback (most recent call last):
 ValueError: No appropriate channels found for the given picks ([])
 2025-02-11 11:50:32 - eeg_brain_state_prediction.data_pipeline.feature_extraction - INFO - Starting processing of file: /data2/Projects/eeg_fmri_natview/raw/sub-01/ses-01/eeg/sub-01_ses-01_task-rest_run-01_eeg.edf
 2025-02-11 11:50:34 - eeg_brain_state_prediction.data_pipeline.feature_extraction - INFO - Starting processing of file: /data2/Projects/eeg_fmri_natview/raw/sub-01/ses-01/eeg/sub-01_ses-01_task-checker_run-01_eeg.edf
+2025-02-26 16:10:08 - __main__ - INFO - Starting processing of file: /data2/Projects/eeg_fmri_natview/raw/sub-04/ses-01/eeg/sub-04_ses-01_task-rest_run-01_eeg.edf
+2025-02-26 16:10:12 - __main__ - ERROR - Error in pipeline: cannot access local variable 'selection' where it is not associated with a value
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/utils.py", line 78, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/feature_extraction.py", line 54, in wrapper
+    return func(*args, **kwargs, output_path=output_path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/feature_extraction.py", line 119, in pipeline
+    eeg_features = EEGfeatures(
+                   ^^^^^^^^^^^^
+  File "<string>", line 11, in __init__
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/eeg.py", line 200, in __post_init__
+    self.channel_selection = self._get_existing_channels()
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/eeg.py", line 247, in _get_existing_channels
+    return list(selection)
+                ^^^^^^^^^
+UnboundLocalError: cannot access local variable 'selection' where it is not associated with a value
+2025-02-26 16:11:17 - __main__ - INFO - Starting processing of file: /data2/Projects/eeg_fmri_natview/raw/sub-04/ses-01/eeg/sub-04_ses-01_task-rest_run-01_eeg.edf
+2025-02-26 16:11:57 - __main__ - INFO - Starting processing of file: /data2/Projects/eeg_fmri_natview/raw/sub-04/ses-01/eeg/sub-04_ses-01_task-checker_run-01_eeg.edf
+2025-02-26 16:14:24 - __main__ - INFO - Starting processing of file: /data2/Projects/eeg_fmri_natview/raw/sub-01/ses-01/eeg/sub-01_ses-01_task-rest_run-01_eeg.edf
+2025-02-26 16:16:15 - __main__ - INFO - Starting processing of file: /data2/Projects/eeg_fmri_natview/raw/sub-01/ses-01/eeg/sub-01_ses-01_task-rest_run-01_eeg.edf
+2025-02-26 16:17:04 - __main__ - INFO - Starting processing of file: /data2/Projects/eeg_fmri_natview/raw/sub-01/ses-01/eeg/sub-01_ses-01_task-checker_run-01_eeg.edf
+2025-02-26 16:50:55 - eeg_brain_state_prediction.data_pipeline.feature_extraction - INFO - Starting processing of file: /data2/Projects/eeg_fmri_natview/raw/sub-02/ses-01/eeg/sub-02_ses-01_task-rest_run-01_eeg.edf
+2025-02-26 16:51:47 - eeg_brain_state_prediction.data_pipeline.feature_extraction - INFO - Starting processing of file: /data2/Projects/eeg_fmri_natview/raw/sub-02/ses-01/eeg/sub-02_ses-01_task-checker_run-01_eeg.edf
+2025-02-26 16:51:55 - eeg_brain_state_prediction.data_pipeline.feature_extraction - INFO - Starting processing of file: /data2/Projects/eeg_fmri_natview/raw/sub-01/ses-01/eeg/sub-01_ses-01_task-rest_run-01_eeg.edf
+2025-02-26 16:52:06 - eeg_brain_state_prediction.data_pipeline.feature_extraction - INFO - Starting processing of file: /data2/Projects/eeg_fmri_natview/raw/sub-01/ses-01/eeg/sub-01_ses-01_task-checker_run-01_eeg.edf

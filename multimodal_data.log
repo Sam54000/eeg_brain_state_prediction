@@ -611,3 +611,45 @@ TypeError: save() got an unexpected keyword argument 'multimodal_config'
 2025-02-11 11:50:36 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eyetracking
 2025-02-11 11:50:36 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/derivatives/sub-01/ses-01/multimodal/sub-01_ses-01_task-rest_run-01_desc-RawBk8NotResampled_multimodal.pkl
 2025-02-11 11:50:37 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-02-26 16:20:58 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-02-26 16:20:58 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-02-26 16:20:58 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eyetracking
+2025-02-26 16:20:58 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/derivatives/sub-01/ses-01/multimodal/sub-01_ses-01_task-checker_run-01_desc-RawBk8NotResampled_multimodal.pkl
+2025-02-26 16:23:14 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-02-26 16:23:14 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-02-26 16:23:14 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eyetracking
+2025-02-26 16:23:14 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/derivatives/sub-01/ses-01/multimodal/sub-01_ses-01_task-checker_run-01_desc-RawBk8NotResampled_multimodal.pkl
+2025-02-26 16:25:22 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-02-26 16:25:22 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-02-26 16:25:22 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eyetracking
+2025-02-26 16:27:45 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-02-26 16:29:06 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-02-26 16:30:33 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-02-26 16:31:05 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eyetracking
+2025-02-26 16:33:02 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-02-26 16:33:07 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-02-26 16:33:09 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eyetracking
+2025-02-26 16:34:19 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-02-26 16:35:59 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-02-26 16:35:59 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eyetracking
+2025-02-26 16:36:19 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/derivatives/sub-01/ses-01/multimodal/sub-01_ses-01_task-checker_run-01_desc-RawBk8NotResampled_multimodal.pkl
+2025-02-26 16:52:26 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-02-26 16:52:31 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-02-26 16:52:31 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eyetracking
+2025-02-26 16:52:45 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/derivatives/sub-01/ses-01/multimodal/sub-01_ses-01_task-checker_run-01_desc-RawBk8NotResampled_multimodal.pkl
+2025-02-26 16:52:45 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-02-26 16:52:46 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-02-26 16:52:48 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-02-26 16:52:48 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eyetracking
+2025-02-26 16:52:57 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/derivatives/sub-02/ses-01/multimodal/sub-02_ses-01_task-checker_run-01_desc-RawBk8NotResampled_multimodal.pkl
+2025-02-26 16:52:57 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-02-26 16:53:00 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-02-26 16:53:02 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-02-26 16:53:02 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eyetracking
+2025-02-26 16:53:06 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/derivatives/sub-01/ses-01/multimodal/sub-01_ses-01_task-rest_run-01_desc-RawBk8NotResampled_multimodal.pkl
+2025-02-26 16:53:06 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-02-26 16:53:08 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-02-26 16:53:09 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-02-26 16:53:09 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eyetracking
+2025-02-26 16:53:13 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/derivatives/sub-02/ses-01/multimodal/sub-02_ses-01_task-rest_run-01_desc-RawBk8NotResampled_multimodal.pkl
+2025-02-26 16:53:13 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data

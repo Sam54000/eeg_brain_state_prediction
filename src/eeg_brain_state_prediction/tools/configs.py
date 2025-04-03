@@ -85,19 +85,17 @@ class EegConfig:
     tmin: Optional[float] = None
     tmax: Optional[float] = None
 
-@dataclass
 class EegFeaturesConfig:
-    """Configuration class for EEG feature extraction
-    
-    Attributes:
-        frequencies (list[tuple[float, float]]): List of frequency bands to extract
-    """
-    frequencies: List[tuple[float, float]] = field(
-        default_factory=lambda: [(0.5, 40)]
-    )
-    n_bands: int = len(frequencies)
-    n_channels: int = 1
-
+    def __init__(self, 
+                 frequencies: Optional[list[tuple]],
+                 n_channels: int = 1):
+        """Configuration class for EEG feature extraction
+        
+        Attributes:
+            frequencies (list[tuple[float, float]]): List of frequency bands to extract
+        """
+        self.frequencies = frequencies
+        self.n_channels = n_channels
 
 
 @dataclass

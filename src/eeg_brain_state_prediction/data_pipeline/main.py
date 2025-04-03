@@ -92,7 +92,7 @@ if __name__ == "__main__":
             "eeg_brain_state_prediction",
         ),
         tasks= ["checker", "rest"],
-        subjects= ["01"],
+        subjects= ["01", "02"],
         sessions=["01"],
         runs=["01"],
     )
@@ -103,7 +103,6 @@ if __name__ == "__main__":
         montage= "easycap-M1",
         low_frequency_hz= None,
         high_frequency_hz= None,
-        channels= ['Fp1', 'Fp2', 'F3', 'F4', 'C3', 'C4', 'P3', 'P4', 'O1', 'O2', 'F7', 'F8', 'T7', 'T8', 'P7', 'P8', 'FPz', 'Fz', 'Cz', 'Pz', 'POz', 'Oz', 'FT9', 'FT10', 'TP9', 'TP10'],
     )
 
     eeg_features_config = EegFeaturesConfig(

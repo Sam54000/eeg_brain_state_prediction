@@ -52,7 +52,6 @@ class ModelConfig:
     task: str = "rest"
     additional_info: str = "All"
     feature_set = {
-        "eyetracking": ["pupil_dilation","first_derivative", "second_derivative"],
         "eeg": {
             "channel": np.arange(n_channels).repeat(n_bands),
             "band": np.tile(np.arange(n_bands),n_channels),

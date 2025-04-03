@@ -1,8 +1,8 @@
 import os
 import pickle
+import copy
 from pathlib import Path
 from typing import Any, Dict, List, Union
-import copy
 import re
 import numpy as np
 from bids_explorer import architecture as arch
@@ -249,14 +249,14 @@ def trim_to_min_time(
             the trimmed data (values) for each modality (keys).
     """
 
-    trimed_multimodal = {}
+    trimed_multimodal = copy.deepcopy(multimodal_dict)
     min_time = min([data["time"][-1] for data in multimodal_dict.values()])
 
     for modality in multimodal_dict.keys():
         min_length = np.argmin(
             abs(multimodal_dict[modality]["time"] - np.floor(min_time))
         )
-        trimed_multimodal[modality] = {
+        trimed_multimodal[modality] |= {
                 "time": multimodal_dict[modality]["time"][:min_length],
                 "feature": multimodal_dict[modality]["feature"][:, :min_length, ...],
             "mask": multimodal_dict[modality]["mask"][:min_length],
