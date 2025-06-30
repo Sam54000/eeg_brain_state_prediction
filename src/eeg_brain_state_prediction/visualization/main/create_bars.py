@@ -1,29 +1,21 @@
+#%%
 import sys
 from pathlib import Path
 sys.path.append(str(Path(__file__).parent.parent.parent))
 import pandas as pd
 import re
+from eeg_brain_state_prediction.visualization.plots.bars_legacy import plot_corr
 from eeg_brain_state_prediction.visualization.plots.bars import EEGBarPlot
 from eeg_brain_state_prediction.visualization.config.plot_config import BarPlotConfig
 from itertools import product
 from eeg_brain_state_prediction.visualization.utils.plot_utils import split_camel_case
 
 
-tasks = ["rest", "checker"]
-eeg_features = ["GfpBk"]
-brainstates = [
-        "Cpca1054ArCombined8",
-        "Cpca1054ArIndividual8",
-        "Cpca1054BrCombined8",
-        "Cpca1054BrIndividual8",
-        "Cpca1054NrCombined8",
-        "Cpca1054NrIndividual8",
-        "Cpca1054RawCombined8",
-        "Cpca1054RawIndividual8",
-]
-additional_info = "PupilOnly"
-elements = ["magnitude", "phase", "real"]
-descriptions = [eeg_features+brainstate for brainstate in brainstates]
+tasks = ["MeRest"]
+eeg_features = ["Gfp"]
+brainstates = ["CapsGS"]
+additional_info = ""
+elements = ["CapsGS"]#["magnitude", "phase", "real"]
 
 # Define custom title formatting
 def format_title(description, task, element, additional_info) -> str:
@@ -52,10 +44,10 @@ combinations = product(
         eeg_features,
     )
 
-data_path = Path("/home/slouviot/01_projects/eeg_brain_state_prediction/data/cpca")
-for task, cpca, eeg in list(combinations):
+data_path = Path("/home/slouviot/01_projects/eeg_brain_state_prediction/data/chang_data/gfp")
+for task, brainstate, eeg in list(combinations):
     df = pd.DataFrame()
-    description = f"{eeg}{cpca}PupilOnly"
+    description = f"{eeg}{brainstate}"
     for file in data_path.iterdir():
         file_description = re.search(r"desc-\w+(?=_)", file.name).group(0)
         file_task = re.search(r"task-\w+(?=_)", file.name).group(0)
@@ -63,20 +55,10 @@ for task, cpca, eeg in list(combinations):
             temp = pd.read_csv(file)
             df = pd.concat([df,temp])
 
-config = BarPlotConfig(
-    output_dir=Path("/home/slouviot/01_projects/"\
-                    "eeg_brain_state_prediction/data/figures/cpca"),
-    pdf_output_filename = f"Cpca1054_{additional_info}",
-    combinations=combinations,
-    additional_info=additional_info,
-    elements=elements,
-    saving_format="png",
-)
 
-plot = EEGBarPlot(
-    data=df,
-    config=config,
-    title_formatter=format_title
-)
-
-plot.create_plot(output=config.saving_format)
+#%%
+for n_features in df["n_features"].unique():
+    fig, ax = plot_corr(df[df["n_features"] == n_features])
+    ax.set_title(f"{n_features} features")
+    fig.savefig(f"/home/slouviot/01_projects/eeg_brain_state_prediction/figures/chang_data/gfp/sub-all_ses-01_task-MeRest_desc-BandsEnv{n_features}_baplots.png")
+# %%

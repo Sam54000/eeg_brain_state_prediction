@@ -59,7 +59,7 @@ class EyeConfig:
 class BrainstatesConfig:
     description: list[str] = field(default_factory=lambda: ["Cpca1054"])
     brainstates: np.ndarray = field(default_factory=lambda: np.array([
-        'CAP1', 'CAP2', 'CAP3', 'CAP4', 'CAP5', 'CAP6', 'CAP7', 'CAP8'
+        'GS','CAP1', 'CAP2', 'CAP3', 'CAP4', 'CAP5', 'CAP6', 'CAP7', 'CAP8'
     ]))
 
 @dataclass

@@ -1,0 +1,356 @@
+2025-03-13 16:47:05 - INFO - Starting processing with task: ['rest', 'dme', 'monkey1', 'monkey2', 'monkey5', 'tp', 'dmh'], description: GfpBk8Caps
+2025-03-13 16:47:05 - INFO - 
+Config Debug:
+2025-03-13 16:47:05 - INFO - Code root: /home/slouviot/01_projects/eeg_brain_state_prediction
+2025-03-13 16:47:05 - INFO - Data root: /data2/Projects/eeg_fmri_natview/derivatives
+2025-03-13 16:47:05 - INFO - Data directory: data/pupil_training
+2025-03-13 16:47:05 - INFO - Found 21 subjects to process
+2025-03-13 16:47:05 - INFO - Processing task: rest, cap: CAP1
+2025-03-13 16:47:05 - INFO - Create X and Y
+2025-03-13 16:47:05 - INFO - Build windowed mask
+2025-03-13 16:47:05 - INFO - Create X and Y with mask
+2025-03-13 16:47:05 - INFO - Train model
+2025-03-13 16:47:06 - INFO - Save model to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/pupil_training/sub-all_task-rest_desc-ridgeCAP1_model.pkl
+2025-03-13 16:47:06 - INFO - Processing task: rest, cap: CAP2
+2025-03-13 16:47:06 - INFO - Create X and Y
+2025-03-13 16:47:06 - INFO - Build windowed mask
+2025-03-13 16:47:06 - INFO - Create X and Y with mask
+2025-03-13 16:47:06 - INFO - Train model
+2025-03-13 16:47:07 - INFO - Save model to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/pupil_training/sub-all_task-rest_desc-ridgeCAP2_model.pkl
+2025-03-13 16:47:07 - INFO - Processing task: rest, cap: CAP3
+2025-03-13 16:47:07 - INFO - Create X and Y
+2025-03-13 16:47:07 - INFO - Build windowed mask
+2025-03-13 16:47:07 - INFO - Create X and Y with mask
+2025-03-13 16:47:07 - INFO - Train model
+2025-03-13 16:47:08 - INFO - Save model to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/pupil_training/sub-all_task-rest_desc-ridgeCAP3_model.pkl
+2025-03-13 16:47:08 - INFO - Processing task: rest, cap: CAP4
+2025-03-13 16:47:08 - INFO - Create X and Y
+2025-03-13 16:47:08 - INFO - Build windowed mask
+2025-03-13 16:47:08 - INFO - Create X and Y with mask
+2025-03-13 16:47:08 - INFO - Train model
+2025-03-13 16:47:09 - INFO - Save model to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/pupil_training/sub-all_task-rest_desc-ridgeCAP4_model.pkl
+2025-03-13 16:47:09 - INFO - Processing task: rest, cap: CAP5
+2025-03-13 16:47:09 - INFO - Create X and Y
+2025-03-13 16:47:09 - INFO - Build windowed mask
+2025-03-13 16:47:09 - INFO - Create X and Y with mask
+2025-03-13 16:47:09 - INFO - Train model
+2025-03-13 16:47:10 - INFO - Save model to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/pupil_training/sub-all_task-rest_desc-ridgeCAP5_model.pkl
+2025-03-13 16:47:10 - INFO - Processing task: rest, cap: CAP6
+2025-03-13 16:47:10 - INFO - Create X and Y
+2025-03-13 16:47:10 - INFO - Build windowed mask
+2025-03-13 16:47:10 - INFO - Create X and Y with mask
+2025-03-13 16:47:10 - INFO - Train model
+2025-03-13 16:47:11 - INFO - Save model to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/pupil_training/sub-all_task-rest_desc-ridgeCAP6_model.pkl
+2025-03-13 16:47:11 - INFO - Processing task: rest, cap: CAP7
+2025-03-13 16:47:11 - INFO - Create X and Y
+2025-03-13 16:47:11 - INFO - Build windowed mask
+2025-03-13 16:47:11 - INFO - Create X and Y with mask
+2025-03-13 16:47:11 - INFO - Train model
+2025-03-13 16:47:12 - INFO - Save model to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/pupil_training/sub-all_task-rest_desc-ridgeCAP7_model.pkl
+2025-03-13 16:47:12 - INFO - Processing task: rest, cap: CAP8
+2025-03-13 16:47:12 - INFO - Create X and Y
+2025-03-13 16:47:12 - INFO - Build windowed mask
+2025-03-13 16:47:12 - INFO - Create X and Y with mask
+2025-03-13 16:47:12 - INFO - Train model
+2025-03-13 16:47:13 - INFO - Save model to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/pupil_training/sub-all_task-rest_desc-ridgeCAP8_model.pkl
+2025-03-13 16:47:13 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/pupil_training/sub-all_task-rest_desc-modelCAP8_model.pkl
+2025-03-13 16:47:13 - INFO - Processing task: dme, cap: CAP1
+2025-03-13 16:47:13 - INFO - Create X and Y
+2025-03-13 16:47:13 - INFO - Build windowed mask
+2025-03-13 16:47:13 - INFO - Create X and Y with mask
+2025-03-13 16:47:13 - INFO - Train model
+2025-03-13 16:47:14 - INFO - Save model to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/pupil_training/sub-all_task-dme_desc-ridgeCAP1_model.pkl
+2025-03-13 16:47:14 - INFO - Processing task: dme, cap: CAP2
+2025-03-13 16:47:14 - INFO - Create X and Y
+2025-03-13 16:47:14 - INFO - Build windowed mask
+2025-03-13 16:47:14 - INFO - Create X and Y with mask
+2025-03-13 16:47:14 - INFO - Train model
+2025-03-13 16:47:14 - INFO - Save model to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/pupil_training/sub-all_task-dme_desc-ridgeCAP2_model.pkl
+2025-03-13 16:47:14 - INFO - Processing task: dme, cap: CAP3
+2025-03-13 16:47:14 - INFO - Create X and Y
+2025-03-13 16:47:14 - INFO - Build windowed mask
+2025-03-13 16:47:14 - INFO - Create X and Y with mask
+2025-03-13 16:47:14 - INFO - Train model
+2025-03-13 16:47:15 - INFO - Save model to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/pupil_training/sub-all_task-dme_desc-ridgeCAP3_model.pkl
+2025-03-13 16:47:15 - INFO - Processing task: dme, cap: CAP4
+2025-03-13 16:47:15 - INFO - Create X and Y
+2025-03-13 16:47:15 - INFO - Build windowed mask
+2025-03-13 16:47:15 - INFO - Create X and Y with mask
+2025-03-13 16:47:15 - INFO - Train model
+2025-03-13 16:47:15 - INFO - Save model to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/pupil_training/sub-all_task-dme_desc-ridgeCAP4_model.pkl
+2025-03-13 16:47:15 - INFO - Processing task: dme, cap: CAP5
+2025-03-13 16:47:15 - INFO - Create X and Y
+2025-03-13 16:47:15 - INFO - Build windowed mask
+2025-03-13 16:47:15 - INFO - Create X and Y with mask
+2025-03-13 16:47:15 - INFO - Train model
+2025-03-13 16:47:16 - INFO - Save model to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/pupil_training/sub-all_task-dme_desc-ridgeCAP5_model.pkl
+2025-03-13 16:47:16 - INFO - Processing task: dme, cap: CAP6
+2025-03-13 16:47:16 - INFO - Create X and Y
+2025-03-13 16:47:16 - INFO - Build windowed mask
+2025-03-13 16:47:16 - INFO - Create X and Y with mask
+2025-03-13 16:47:16 - INFO - Train model
+2025-03-13 16:47:17 - INFO - Save model to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/pupil_training/sub-all_task-dme_desc-ridgeCAP6_model.pkl
+2025-03-13 16:47:17 - INFO - Processing task: dme, cap: CAP7
+2025-03-13 16:47:17 - INFO - Create X and Y
+2025-03-13 16:47:17 - INFO - Build windowed mask
+2025-03-13 16:47:17 - INFO - Create X and Y with mask
+2025-03-13 16:47:17 - INFO - Train model
+2025-03-13 16:47:17 - INFO - Save model to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/pupil_training/sub-all_task-dme_desc-ridgeCAP7_model.pkl
+2025-03-13 16:47:17 - INFO - Processing task: dme, cap: CAP8
+2025-03-13 16:47:17 - INFO - Create X and Y
+2025-03-13 16:47:17 - INFO - Build windowed mask
+2025-03-13 16:47:17 - INFO - Create X and Y with mask
+2025-03-13 16:47:17 - INFO - Train model
+2025-03-13 16:47:18 - INFO - Save model to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/pupil_training/sub-all_task-dme_desc-ridgeCAP8_model.pkl
+2025-03-13 16:47:18 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/pupil_training/sub-all_task-dme_desc-modelCAP8_model.pkl
+2025-03-13 16:47:18 - INFO - Processing task: monkey1, cap: CAP1
+2025-03-13 16:47:18 - INFO - Create X and Y
+2025-03-13 16:47:18 - INFO - Build windowed mask
+2025-03-13 16:47:18 - INFO - Create X and Y with mask
+2025-03-13 16:47:18 - INFO - Train model
+2025-03-13 16:47:18 - INFO - Save model to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/pupil_training/sub-all_task-monkey1_desc-ridgeCAP1_model.pkl
+2025-03-13 16:47:18 - INFO - Processing task: monkey1, cap: CAP2
+2025-03-13 16:47:18 - INFO - Create X and Y
+2025-03-13 16:47:18 - INFO - Build windowed mask
+2025-03-13 16:47:18 - INFO - Create X and Y with mask
+2025-03-13 16:47:18 - INFO - Train model
+2025-03-13 16:47:18 - INFO - Save model to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/pupil_training/sub-all_task-monkey1_desc-ridgeCAP2_model.pkl
+2025-03-13 16:47:18 - INFO - Processing task: monkey1, cap: CAP3
+2025-03-13 16:47:18 - INFO - Create X and Y
+2025-03-13 16:47:18 - INFO - Build windowed mask
+2025-03-13 16:47:18 - INFO - Create X and Y with mask
+2025-03-13 16:47:18 - INFO - Train model
+2025-03-13 16:47:19 - INFO - Save model to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/pupil_training/sub-all_task-monkey1_desc-ridgeCAP3_model.pkl
+2025-03-13 16:47:19 - INFO - Processing task: monkey1, cap: CAP4
+2025-03-13 16:47:19 - INFO - Create X and Y
+2025-03-13 16:47:19 - INFO - Build windowed mask
+2025-03-13 16:47:19 - INFO - Create X and Y with mask
+2025-03-13 16:47:19 - INFO - Train model
+2025-03-13 16:47:19 - INFO - Save model to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/pupil_training/sub-all_task-monkey1_desc-ridgeCAP4_model.pkl
+2025-03-13 16:47:19 - INFO - Processing task: monkey1, cap: CAP5
+2025-03-13 16:47:19 - INFO - Create X and Y
+2025-03-13 16:47:19 - INFO - Build windowed mask
+2025-03-13 16:47:19 - INFO - Create X and Y with mask
+2025-03-13 16:47:19 - INFO - Train model
+2025-03-13 16:47:19 - INFO - Save model to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/pupil_training/sub-all_task-monkey1_desc-ridgeCAP5_model.pkl
+2025-03-13 16:47:19 - INFO - Processing task: monkey1, cap: CAP6
+2025-03-13 16:47:19 - INFO - Create X and Y
+2025-03-13 16:47:19 - INFO - Build windowed mask
+2025-03-13 16:47:19 - INFO - Create X and Y with mask
+2025-03-13 16:47:19 - INFO - Train model
+2025-03-13 16:47:20 - INFO - Save model to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/pupil_training/sub-all_task-monkey1_desc-ridgeCAP6_model.pkl
+2025-03-13 16:47:20 - INFO - Processing task: monkey1, cap: CAP7
+2025-03-13 16:47:20 - INFO - Create X and Y
+2025-03-13 16:47:20 - INFO - Build windowed mask
+2025-03-13 16:47:20 - INFO - Create X and Y with mask
+2025-03-13 16:47:20 - INFO - Train model
+2025-03-13 16:47:20 - INFO - Save model to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/pupil_training/sub-all_task-monkey1_desc-ridgeCAP7_model.pkl
+2025-03-13 16:47:20 - INFO - Processing task: monkey1, cap: CAP8
+2025-03-13 16:47:20 - INFO - Create X and Y
+2025-03-13 16:47:20 - INFO - Build windowed mask
+2025-03-13 16:47:20 - INFO - Create X and Y with mask
+2025-03-13 16:47:20 - INFO - Train model
+2025-03-13 16:47:20 - INFO - Save model to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/pupil_training/sub-all_task-monkey1_desc-ridgeCAP8_model.pkl
+2025-03-13 16:47:20 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/pupil_training/sub-all_task-monkey1_desc-modelCAP8_model.pkl
+2025-03-13 16:47:20 - INFO - Processing task: monkey2, cap: CAP1
+2025-03-13 16:47:20 - INFO - Create X and Y
+2025-03-13 16:47:20 - INFO - Build windowed mask
+2025-03-13 16:47:20 - INFO - Create X and Y with mask
+2025-03-13 16:47:20 - INFO - Train model
+2025-03-13 16:47:20 - INFO - Save model to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/pupil_training/sub-all_task-monkey2_desc-ridgeCAP1_model.pkl
+2025-03-13 16:47:20 - INFO - Processing task: monkey2, cap: CAP2
+2025-03-13 16:47:20 - INFO - Create X and Y
+2025-03-13 16:47:20 - INFO - Build windowed mask
+2025-03-13 16:47:20 - INFO - Create X and Y with mask
+2025-03-13 16:47:20 - INFO - Train model
+2025-03-13 16:47:20 - INFO - Save model to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/pupil_training/sub-all_task-monkey2_desc-ridgeCAP2_model.pkl
+2025-03-13 16:47:20 - INFO - Processing task: monkey2, cap: CAP3
+2025-03-13 16:47:20 - INFO - Create X and Y
+2025-03-13 16:47:20 - INFO - Build windowed mask
+2025-03-13 16:47:20 - INFO - Create X and Y with mask
+2025-03-13 16:47:20 - INFO - Train model
+2025-03-13 16:47:21 - INFO - Save model to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/pupil_training/sub-all_task-monkey2_desc-ridgeCAP3_model.pkl
+2025-03-13 16:47:21 - INFO - Processing task: monkey2, cap: CAP4
+2025-03-13 16:47:21 - INFO - Create X and Y
+2025-03-13 16:47:21 - INFO - Build windowed mask
+2025-03-13 16:47:21 - INFO - Create X and Y with mask
+2025-03-13 16:47:21 - INFO - Train model
+2025-03-13 16:47:21 - INFO - Save model to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/pupil_training/sub-all_task-monkey2_desc-ridgeCAP4_model.pkl
+2025-03-13 16:47:21 - INFO - Processing task: monkey2, cap: CAP5
+2025-03-13 16:47:21 - INFO - Create X and Y
+2025-03-13 16:47:21 - INFO - Build windowed mask
+2025-03-13 16:47:21 - INFO - Create X and Y with mask
+2025-03-13 16:47:21 - INFO - Train model
+2025-03-13 16:47:21 - INFO - Save model to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/pupil_training/sub-all_task-monkey2_desc-ridgeCAP5_model.pkl
+2025-03-13 16:47:21 - INFO - Processing task: monkey2, cap: CAP6
+2025-03-13 16:47:21 - INFO - Create X and Y
+2025-03-13 16:47:21 - INFO - Build windowed mask
+2025-03-13 16:47:21 - INFO - Create X and Y with mask
+2025-03-13 16:47:21 - INFO - Train model
+2025-03-13 16:47:21 - INFO - Save model to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/pupil_training/sub-all_task-monkey2_desc-ridgeCAP6_model.pkl
+2025-03-13 16:47:21 - INFO - Processing task: monkey2, cap: CAP7
+2025-03-13 16:47:21 - INFO - Create X and Y
+2025-03-13 16:47:21 - INFO - Build windowed mask
+2025-03-13 16:47:21 - INFO - Create X and Y with mask
+2025-03-13 16:47:21 - INFO - Train model
+2025-03-13 16:47:21 - INFO - Save model to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/pupil_training/sub-all_task-monkey2_desc-ridgeCAP7_model.pkl
+2025-03-13 16:47:21 - INFO - Processing task: monkey2, cap: CAP8
+2025-03-13 16:47:21 - INFO - Create X and Y
+2025-03-13 16:47:21 - INFO - Build windowed mask
+2025-03-13 16:47:21 - INFO - Create X and Y with mask
+2025-03-13 16:47:21 - INFO - Train model
+2025-03-13 16:47:22 - INFO - Save model to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/pupil_training/sub-all_task-monkey2_desc-ridgeCAP8_model.pkl
+2025-03-13 16:47:22 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/pupil_training/sub-all_task-monkey2_desc-modelCAP8_model.pkl
+2025-03-13 16:47:22 - INFO - Processing task: monkey5, cap: CAP1
+2025-03-13 16:47:22 - INFO - Create X and Y
+2025-03-13 16:47:22 - INFO - Build windowed mask
+2025-03-13 16:47:22 - INFO - Create X and Y with mask
+2025-03-13 16:47:22 - INFO - Train model
+2025-03-13 16:47:22 - INFO - Save model to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/pupil_training/sub-all_task-monkey5_desc-ridgeCAP1_model.pkl
+2025-03-13 16:47:22 - INFO - Processing task: monkey5, cap: CAP2
+2025-03-13 16:47:22 - INFO - Create X and Y
+2025-03-13 16:47:22 - INFO - Build windowed mask
+2025-03-13 16:47:22 - INFO - Create X and Y with mask
+2025-03-13 16:47:22 - INFO - Train model
+2025-03-13 16:47:22 - INFO - Save model to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/pupil_training/sub-all_task-monkey5_desc-ridgeCAP2_model.pkl
+2025-03-13 16:47:22 - INFO - Processing task: monkey5, cap: CAP3
+2025-03-13 16:47:22 - INFO - Create X and Y
+2025-03-13 16:47:22 - INFO - Build windowed mask
+2025-03-13 16:47:22 - INFO - Create X and Y with mask
+2025-03-13 16:47:22 - INFO - Train model
+2025-03-13 16:47:22 - INFO - Save model to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/pupil_training/sub-all_task-monkey5_desc-ridgeCAP3_model.pkl
+2025-03-13 16:47:22 - INFO - Processing task: monkey5, cap: CAP4
+2025-03-13 16:47:22 - INFO - Create X and Y
+2025-03-13 16:47:22 - INFO - Build windowed mask
+2025-03-13 16:47:22 - INFO - Create X and Y with mask
+2025-03-13 16:47:22 - INFO - Train model
+2025-03-13 16:47:22 - INFO - Save model to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/pupil_training/sub-all_task-monkey5_desc-ridgeCAP4_model.pkl
+2025-03-13 16:47:22 - INFO - Processing task: monkey5, cap: CAP5
+2025-03-13 16:47:22 - INFO - Create X and Y
+2025-03-13 16:47:22 - INFO - Build windowed mask
+2025-03-13 16:47:22 - INFO - Create X and Y with mask
+2025-03-13 16:47:22 - INFO - Train model
+2025-03-13 16:47:22 - INFO - Save model to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/pupil_training/sub-all_task-monkey5_desc-ridgeCAP5_model.pkl
+2025-03-13 16:47:22 - INFO - Processing task: monkey5, cap: CAP6
+2025-03-13 16:47:22 - INFO - Create X and Y
+2025-03-13 16:47:22 - INFO - Build windowed mask
+2025-03-13 16:47:22 - INFO - Create X and Y with mask
+2025-03-13 16:47:22 - INFO - Train model
+2025-03-13 16:47:23 - INFO - Save model to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/pupil_training/sub-all_task-monkey5_desc-ridgeCAP6_model.pkl
+2025-03-13 16:47:23 - INFO - Processing task: monkey5, cap: CAP7
+2025-03-13 16:47:23 - INFO - Create X and Y
+2025-03-13 16:47:23 - INFO - Build windowed mask
+2025-03-13 16:47:23 - INFO - Create X and Y with mask
+2025-03-13 16:47:23 - INFO - Train model
+2025-03-13 16:47:23 - INFO - Save model to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/pupil_training/sub-all_task-monkey5_desc-ridgeCAP7_model.pkl
+2025-03-13 16:47:23 - INFO - Processing task: monkey5, cap: CAP8
+2025-03-13 16:47:23 - INFO - Create X and Y
+2025-03-13 16:47:23 - INFO - Build windowed mask
+2025-03-13 16:47:23 - INFO - Create X and Y with mask
+2025-03-13 16:47:23 - INFO - Train model
+2025-03-13 16:47:23 - INFO - Save model to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/pupil_training/sub-all_task-monkey5_desc-ridgeCAP8_model.pkl
+2025-03-13 16:47:23 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/pupil_training/sub-all_task-monkey5_desc-modelCAP8_model.pkl
+2025-03-13 16:47:23 - INFO - Processing task: tp, cap: CAP1
+2025-03-13 16:47:23 - INFO - Create X and Y
+2025-03-13 16:47:23 - INFO - Build windowed mask
+2025-03-13 16:47:23 - INFO - Create X and Y with mask
+2025-03-13 16:47:23 - INFO - Train model
+2025-03-13 16:47:23 - INFO - Save model to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/pupil_training/sub-all_task-tp_desc-ridgeCAP1_model.pkl
+2025-03-13 16:47:23 - INFO - Processing task: tp, cap: CAP2
+2025-03-13 16:47:23 - INFO - Create X and Y
+2025-03-13 16:47:23 - INFO - Build windowed mask
+2025-03-13 16:47:23 - INFO - Create X and Y with mask
+2025-03-13 16:47:23 - INFO - Train model
+2025-03-13 16:47:23 - INFO - Save model to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/pupil_training/sub-all_task-tp_desc-ridgeCAP2_model.pkl
+2025-03-13 16:47:23 - INFO - Processing task: tp, cap: CAP3
+2025-03-13 16:47:23 - INFO - Create X and Y
+2025-03-13 16:47:23 - INFO - Build windowed mask
+2025-03-13 16:47:23 - INFO - Create X and Y with mask
+2025-03-13 16:47:23 - INFO - Train model
+2025-03-13 16:47:24 - INFO - Save model to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/pupil_training/sub-all_task-tp_desc-ridgeCAP3_model.pkl
+2025-03-13 16:47:24 - INFO - Processing task: tp, cap: CAP4
+2025-03-13 16:47:24 - INFO - Create X and Y
+2025-03-13 16:47:24 - INFO - Build windowed mask
+2025-03-13 16:47:24 - INFO - Create X and Y with mask
+2025-03-13 16:47:24 - INFO - Train model
+2025-03-13 16:47:24 - INFO - Save model to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/pupil_training/sub-all_task-tp_desc-ridgeCAP4_model.pkl
+2025-03-13 16:47:24 - INFO - Processing task: tp, cap: CAP5
+2025-03-13 16:47:24 - INFO - Create X and Y
+2025-03-13 16:47:24 - INFO - Build windowed mask
+2025-03-13 16:47:24 - INFO - Create X and Y with mask
+2025-03-13 16:47:24 - INFO - Train model
+2025-03-13 16:47:24 - INFO - Save model to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/pupil_training/sub-all_task-tp_desc-ridgeCAP5_model.pkl
+2025-03-13 16:47:24 - INFO - Processing task: tp, cap: CAP6
+2025-03-13 16:47:24 - INFO - Create X and Y
+2025-03-13 16:47:24 - INFO - Build windowed mask
+2025-03-13 16:47:24 - INFO - Create X and Y with mask
+2025-03-13 16:47:24 - INFO - Train model
+2025-03-13 16:47:24 - INFO - Save model to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/pupil_training/sub-all_task-tp_desc-ridgeCAP6_model.pkl
+2025-03-13 16:47:24 - INFO - Processing task: tp, cap: CAP7
+2025-03-13 16:47:24 - INFO - Create X and Y
+2025-03-13 16:47:24 - INFO - Build windowed mask
+2025-03-13 16:47:24 - INFO - Create X and Y with mask
+2025-03-13 16:47:24 - INFO - Train model
+2025-03-13 16:47:24 - INFO - Save model to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/pupil_training/sub-all_task-tp_desc-ridgeCAP7_model.pkl
+2025-03-13 16:47:24 - INFO - Processing task: tp, cap: CAP8
+2025-03-13 16:47:24 - INFO - Create X and Y
+2025-03-13 16:47:24 - INFO - Build windowed mask
+2025-03-13 16:47:24 - INFO - Create X and Y with mask
+2025-03-13 16:47:24 - INFO - Train model
+2025-03-13 16:47:25 - INFO - Save model to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/pupil_training/sub-all_task-tp_desc-ridgeCAP8_model.pkl
+2025-03-13 16:47:25 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/pupil_training/sub-all_task-tp_desc-modelCAP8_model.pkl
+2025-03-13 16:47:25 - INFO - Processing task: dmh, cap: CAP1
+2025-03-13 16:47:25 - INFO - Create X and Y
+2025-03-13 16:47:25 - INFO - Build windowed mask
+2025-03-13 16:47:25 - INFO - Create X and Y with mask
+2025-03-13 16:47:25 - INFO - Train model
+2025-03-13 16:47:25 - INFO - Save model to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/pupil_training/sub-all_task-dmh_desc-ridgeCAP1_model.pkl
+2025-03-13 16:47:25 - INFO - Processing task: dmh, cap: CAP2
+2025-03-13 16:47:25 - INFO - Create X and Y
+2025-03-13 16:47:25 - INFO - Build windowed mask
+2025-03-13 16:47:25 - INFO - Create X and Y with mask
+2025-03-13 16:47:25 - INFO - Train model
+2025-03-13 16:47:25 - INFO - Save model to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/pupil_training/sub-all_task-dmh_desc-ridgeCAP2_model.pkl
+2025-03-13 16:47:25 - INFO - Processing task: dmh, cap: CAP3
+2025-03-13 16:47:25 - INFO - Create X and Y
+2025-03-13 16:47:25 - INFO - Build windowed mask
+2025-03-13 16:47:25 - INFO - Create X and Y with mask
+2025-03-13 16:47:25 - INFO - Train model
+2025-03-13 16:47:26 - INFO - Save model to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/pupil_training/sub-all_task-dmh_desc-ridgeCAP3_model.pkl
+2025-03-13 16:47:26 - INFO - Processing task: dmh, cap: CAP4
+2025-03-13 16:47:26 - INFO - Create X and Y
+2025-03-13 16:47:26 - INFO - Build windowed mask
+2025-03-13 16:47:26 - INFO - Create X and Y with mask
+2025-03-13 16:47:26 - INFO - Train model
+2025-03-13 16:47:26 - INFO - Save model to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/pupil_training/sub-all_task-dmh_desc-ridgeCAP4_model.pkl
+2025-03-13 16:47:26 - INFO - Processing task: dmh, cap: CAP5
+2025-03-13 16:47:26 - INFO - Create X and Y
+2025-03-13 16:47:26 - INFO - Build windowed mask
+2025-03-13 16:47:26 - INFO - Create X and Y with mask
+2025-03-13 16:47:26 - INFO - Train model
+2025-03-13 16:47:26 - INFO - Save model to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/pupil_training/sub-all_task-dmh_desc-ridgeCAP5_model.pkl
+2025-03-13 16:47:26 - INFO - Processing task: dmh, cap: CAP6
+2025-03-13 16:47:26 - INFO - Create X and Y
+2025-03-13 16:47:26 - INFO - Build windowed mask
+2025-03-13 16:47:26 - INFO - Create X and Y with mask
+2025-03-13 16:47:26 - INFO - Train model
+2025-03-13 16:47:27 - INFO - Save model to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/pupil_training/sub-all_task-dmh_desc-ridgeCAP6_model.pkl
+2025-03-13 16:47:27 - INFO - Processing task: dmh, cap: CAP7
+2025-03-13 16:47:27 - INFO - Create X and Y
+2025-03-13 16:47:27 - INFO - Build windowed mask
+2025-03-13 16:47:27 - INFO - Create X and Y with mask
+2025-03-13 16:47:27 - INFO - Train model
+2025-03-13 16:47:27 - INFO - Save model to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/pupil_training/sub-all_task-dmh_desc-ridgeCAP7_model.pkl
+2025-03-13 16:47:27 - INFO - Processing task: dmh, cap: CAP8
+2025-03-13 16:47:27 - INFO - Create X and Y
+2025-03-13 16:47:27 - INFO - Build windowed mask
+2025-03-13 16:47:27 - INFO - Create X and Y with mask
+2025-03-13 16:47:27 - INFO - Train model
+2025-03-13 16:47:27 - INFO - Save model to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/pupil_training/sub-all_task-dmh_desc-ridgeCAP8_model.pkl
+2025-03-13 16:47:27 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/pupil_training/sub-all_task-dmh_desc-modelCAP8_model.pkl
+2025-03-13 16:47:27 - INFO - 
+Processing completed successfully
+Creating BIDS architecture with parameters: {'root': PosixPath('/data2/Projects/eeg_fmri_natview/derivatives'), 'datatype': 'multimodal', 'suffix': 'multimodal', 'description': 'GfpBk8Caps', 'run': '01', 'task': ['rest', 'dme', 'monkey1', 'monkey2', 'monkey5', 'tp', 'dmh'], 'extension': '.pkl'}
+Data root path exists: True
+Full data root path: /data2/Projects/eeg_fmri_natview/derivatives
+Database info: (132, 14)

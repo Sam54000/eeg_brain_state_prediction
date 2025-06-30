@@ -1,0 +1,27 @@
+2025-03-18 16:17:16 - eeg_brain_state_prediction.data_pipeline.tools.eeg - ERROR - Error in crop: 'NoneType' object is not subscriptable
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/utils.py", line 78, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/eeg.py", line 60, in crop
+    eeg_features.mask = eeg_features.mask[tmin:]
+                        ~~~~~~~~~~~~~~~~~^^^^^^^
+TypeError: 'NoneType' object is not subscriptable
+2025-03-18 16:39:57 - eeg_brain_state_prediction.data_pipeline.tools.eeg - ERROR - Error in crop: 'NoneType' object is not subscriptable
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/utils.py", line 78, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/eeg.py", line 60, in crop
+    eeg_features.mask = eeg_features.mask[tmin:]
+                        ~~~~~~~~~~~~~~~~~^^^^^^^
+TypeError: 'NoneType' object is not subscriptable
+2025-03-18 17:05:32 - eeg_brain_state_prediction.data_pipeline.tools.eeg - ERROR - Error in crop: 'NoneType' object is not subscriptable
+Traceback (most recent call last):
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/utils.py", line 78, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/data_pipeline/tools/eeg.py", line 60, in crop
+    eeg_features.mask = eeg_features.mask[tmin:]
+                        ~~~~~~~~~~~~~~~~~^^^^^^^
+TypeError: 'NoneType' object is not subscriptable

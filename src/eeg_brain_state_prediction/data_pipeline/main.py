@@ -33,41 +33,26 @@ def main(
 
     for file_id, eeg_file in eeg_architecture:
         feature_extraction.pipeline(
-            raw_path=pipeline_config.raw_path,
-            subject=eeg_file["subject"],
-            session = eeg_file["session"],
-            task=eeg_file["task"],
-            run=eeg_file["run"],
+            element=eeg_file,
+            overwrite=pipeline_config.overwrite,
             pipeline_config=pipeline_config,
             eeg_config=multimodal_config.eeg,
             eeg_features_config=eeg_features_config,
         )
     
-    multimodal_architecture = arch.BidsArchitecture(
-        root = pipeline_config.derivatives_path
-    )
+        multimodal_architecture = arch.BidsArchitecture(
+            root = pipeline_config.derivatives_path
+        )
 
-    multimodal_architecture.select(
-        subject = pipeline_config.subjects,
-        task = pipeline_config.tasks,
-        session = pipeline_config.sessions,
-        run = pipeline_config.runs,
-        inplace = True,
-    )
+        selection = multimodal_architecture.select(
+            subject = eeg_file["subject"],
+            task = eeg_file["task"],
+            session = eeg_file["session"],
+            acquisition = eeg_file["acquisition"],
+        )
 
-    combination = product(
-        multimodal_architecture.tasks, 
-        multimodal_architecture.subjects,
-        multimodal_architecture.sessions,
-        multimodal_architecture.runs
-    )
-
-    for task, subject, session, run in combination:
         multimodal.pipeline(
-            subject=subject,
-            session = session,
-            task = task,
-            run = run,
+            element = eeg_file,
             eeg_description = multimodal_config.eeg.description,
             resampling_factor= multimodal_config.resampling_factor,
             overwrite=pipeline_config.overwrite,
@@ -83,23 +68,23 @@ if __name__ == "__main__":
 
     pipeline_config = PipelineConfig(
         n_threads = 32,
-        raw_path = Path("/data2/Projects/eeg_fmri_natview/raw"),
-        derivatives_path = Path("/data2/Projects/eeg_fmri_natview/derivatives"),
+        raw_path = Path("/data2/Projects/eeg_fmri_natview/chang_data/raw"),
+        derivatives_path = Path("/data2/Projects/eeg_fmri_natview/chang_data/derivatives"),
         overwrite = False,
         code_root = Path(
             os.environ["HOME"],
             "01_projects",
             "eeg_brain_state_prediction",
         ),
-        tasks= ["checker", "rest"],
-        subjects= ["01", "02"],
-        sessions=["01"],
-        runs=["01"],
+        tasks= ["MeRest"],
+        subjects= None,
+        sessions= None,
+        runs= None,
     )
 
     eeg_config = EegConfig(
-        description= "RawBk",
-        sampling_rate_hz= 200,
+        description= "Gfp",
+        sampling_rate_hz= 250,
         montage= "easycap-M1",
         low_frequency_hz= None,
         high_frequency_hz= None,
@@ -110,9 +95,7 @@ if __name__ == "__main__":
     )
 
     brainstates_config = BrainstatesConfig(
-        description = ["caps", 
-                       "Cpca1054NrCombined",
-                       "Cpca1054NeIndividual"],
+        description = ["caps"],
     )
         
     eyetracking_config = EyeConfig(
@@ -127,12 +110,11 @@ if __name__ == "__main__":
         sampling_rate_hz = 3.8,
         tr_time_seconds = 2.1,
         modalities = ["brainstates", 
-                      "eeg",
-                      "eyetracking"],
+                      "eeg"],
         brainstates = brainstates_config,
         eeg = eeg_config,
-        eyetracking = eyetracking_config,
-        additional_description = "NotResampled",
+        eyetracking = eyetracking_config, #When removing one modlity the default value is a String so it throws an error. To modify
+        additional_description = "Caps",
         )
 
     main(pipeline_config=pipeline_config,

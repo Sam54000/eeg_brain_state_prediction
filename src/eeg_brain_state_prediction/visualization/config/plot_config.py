@@ -153,6 +153,7 @@ class BarPlotConfig:
     
     output_dir: Path
     pdf_outpout_filename: Path | str
+    combinations: itertools.product
     figsize: tuple = (6, 3)
     palette: str = 'Paired'
     strip_alpha: float = 0.5
@@ -163,7 +164,6 @@ class BarPlotConfig:
     ylabel: str = 'Correlation(yhat,ytest)'
     elements: list = field(default_factory=lambda: ["magnitude", "phase", "real"])
     saving_format: str = 'png'
-    combinations: itertools.product
     additional_info: str = ''
 
     def __post_init__(self):

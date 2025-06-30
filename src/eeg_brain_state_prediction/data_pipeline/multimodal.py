@@ -1,3 +1,4 @@
+import os
 from eeg_brain_state_prediction.tools.configs import (
     MultimodalConfig,
     PipelineConfig,
@@ -11,12 +12,10 @@ import bids_explorer.paths.bids as bids
 from itertools import product
 import eeg_brain_state_prediction.data_pipeline.tools.utils as utils
 from pathlib import Path
+import pandas as pd
 
 def pipeline(
-    subject: str,
-    session: str,
-    task: str,
-    run: str,
+    element: pd.Series,
     eeg_description: str,
     resampling_factor: float,
     overwrite: bool,
@@ -26,24 +25,45 @@ def pipeline(
     data_architecture: arch.BidsArchitecture,
     additional_description: str,
     ) -> None:
+    """Run the multimodal pipeline
 
+    Args:
+        subject (str): Subject ID
+        session (str): Session ID
+        task (str): Task ID
+        run (str): Run ID
+        eeg_description (str): EEG description
+        resampling_factor (float): Resampling factor
+        overwrite (bool): Overwrite existing files
+        derivatives_path (Path): Path to derivatives directory
+        modalities (list[str]): List of modalities to process
+        multimodal_config (MultimodalConfig): Multimodal configuration
+        data_architecture (arch.BidsArchitecture): Bids architecture
+        additional_description (str): Additional description
+    """
+
+    to_reject = ["atime",
+                 "mtime",
+                 "ctime",
+                 "root",
+                 "suffix",
+                 "extension",
+                 "datatype",
+                 "filename",
+                 "description"
+                 ]
+    kwargs = {e: val for e, val in element.items() 
+              if (e not in to_reject and val is not None)}
     dict_modality = multimodal.collect_filenames(
-        subject = subject,
-        session = session,
-        task = task,
-        run = run,
         multimodal_config = multimodal_config,
         data_architecture = data_architecture,
-        modalities = modalities
+        modalities = modalities,
+        **kwargs
         )
 
     multimodal.print_filenames(
-        subject = subject,
-        session = session,
-        task = task,
-        description = eeg_description,
-        run = run,
-        dict_modalities = dict_modality
+        dict_modalities = dict_modality,
+        **kwargs
         )
 
     if any((filename is None for filename in dict_modality.values())):
@@ -51,15 +71,12 @@ def pipeline(
 
     path = bids.BidsPath(
         root = derivatives_path,
-        subject = subject,
-        session = session,
         datatype = "multimodal",
-        task = task,
-        run = run,
         description = f"{eeg_description}"\
             f"{resampling_factor}",
         suffix = "multimodal",
-        extension = ".pkl"
+        extension = ".pkl",
+        **kwargs
         )
 
     if path.fullpath.exists() and not(overwrite):
@@ -68,8 +85,15 @@ def pipeline(
     multimodal_dict = multimodal.make_multimodal_dictionary(
         dict_modality = dict_modality
         )
+
+    resampled_multimodal = multimodal.resample_all(
+        multimodal_dict = multimodal_dict,
+        tr_time_seconds = multimodal_config.tr_time_seconds,
+        resampling_factor = resampling_factor
+        )
+
     trimed_multimodal = multimodal.trim_to_min_time(
-        multimodal_dict = multimodal_dict
+        multimodal_dict = resampled_multimodal
         )
 
     multimodal.save(
@@ -90,20 +114,9 @@ def main(multimodal_config: MultimodalConfig,
         task=pipeline_config.tasks, 
         inplace=True
         )
-
-    combination = product(
-        architecture.tasks, 
-        architecture.subjects,
-        architecture.sessions,
-        architecture.runs
-    )
-
-    for task, subject, session, run in combination:
+    for id, element in architecture:
         pipeline(
-            subject = subject,
-            session = session,
-            task = task,
-            run = run,
+            element = element,
             eeg_description = multimodal_config.eeg.description,
             resampling_factor = multimodal_config.resampling_factor,
             overwrite = pipeline_config.overwrite,
@@ -112,29 +125,37 @@ def main(multimodal_config: MultimodalConfig,
             multimodal_config = multimodal_config,
             data_architecture = architecture,
             additional_description = multimodal_config.additional_description
-            )
+        )
         
 if __name__ == "__main__":
 
     pipeline_config = PipelineConfig(
-        overwrite = True,
-        tasks = ["rest", "checker"],
         n_threads = 32,
-        subjects = ["01"],
+        raw_path = Path("/data2/Projects/eeg_fmri_natview/chang_data/derivatives"),
+        derivatives_path = Path("/data2/Projects/eeg_fmri_natview/chang_data/derivatives"),
+        overwrite = False,
+        code_root = Path(
+            os.environ["HOME"],
+            "01_projects",
+            "eeg_brain_state_prediction",
+        ),
+        tasks= ["MeRest"],
+        subjects= None,
+        sessions= None,
+        runs= None,
     )
 
     brainstates_config = BrainstatesConfig(
-        description = ["caps", 
-                       "Cpca1054NrCombined",
-                       "Cpca1054NeIndividual"],
+        description = ["caps"],
+        
     )
 
     eeg_config = EegConfig(
-        description = "RawBk",
-        sampling_rate_hz = 200,
+        description = "SSDbandsEnv",
+        sampling_rate_hz = 250,
         montage = "easycap-M1",
-        low_frequency_hz = 0.5,
-        high_frequency_hz = 40,
+        low_frequency_hz = None,
+        high_frequency_hz = None,
     )
 
     eyetracking_config = EyeConfig(
@@ -146,11 +167,11 @@ if __name__ == "__main__":
         resampling_factor = 8,
         sampling_rate_hz = 3.8,
         tr_time_seconds = 2.1,
-        modalities = ["brainstates", "eeg", "eyetracking"],
+        modalities = ["brainstates", "eeg"],
         brainstates = brainstates_config,
         eeg = eeg_config,
         eyetracking = eyetracking_config,
-        additional_description = "NotResampled",
+        additional_description = "Caps",
         )
     
     logger = utils.setup_logger(

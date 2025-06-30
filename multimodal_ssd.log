@@ -1,635 +1,569 @@
-Error.  nthreads cannot be larger than environment variable "NUMEXPR_MAX_THREADS" (64)2025-03-26 13:52:46 - INFO - Starting processing with task: MeRest, description: BandsEnv
-2025-03-26 13:52:46 - INFO - 
-Config Debug:
-2025-03-26 13:52:46 - INFO - Code root: /home/slouviot/01_projects/eeg_brain_state_prediction
-2025-03-26 13:52:46 - INFO - Data root: /data2/Projects/eeg_fmri_natview/chang_data/derivatives
-2025-03-26 13:52:46 - INFO - Data directory: /home/slouviot/01_projects/eeg_brain_state_prediction/data/chang_data/eeg_bands
-2025-03-26 13:52:46 - INFO - Found 11 subjects to process
-2025-03-26 13:52:46 - INFO - 
-Processing subject: 0010
-2025-03-26 17:17:20 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/chang_data/eeg_bands/sub-0010_task-MeRest_desc-BandsEnv_predictions.csv
-2025-03-26 17:17:20 - INFO - 
-Processing subject: 0012
-2025-03-26 20:35:49 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/chang_data/eeg_bands/sub-0012_task-MeRest_desc-BandsEnv_predictions.csv
-2025-03-26 20:35:50 - INFO - 
-Processing subject: 0014
-2025-03-26 23:52:05 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/chang_data/eeg_bands/sub-0014_task-MeRest_desc-BandsEnv_predictions.csv
-2025-03-26 23:52:05 - INFO - 
-Processing subject: 0016
-2025-03-27 03:07:41 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/chang_data/eeg_bands/sub-0016_task-MeRest_desc-BandsEnv_predictions.csv
-2025-03-27 03:07:41 - INFO - 
-Processing subject: 0021
-2025-03-27 04:49:32 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/chang_data/eeg_bands/sub-0021_task-MeRest_desc-BandsEnv_predictions.csv
-2025-03-27 04:49:32 - INFO - 
-Processing subject: 0027
-2025-03-27 06:36:41 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/chang_data/eeg_bands/sub-0027_task-MeRest_desc-BandsEnv_predictions.csv
-2025-03-27 06:36:41 - INFO - 
-Processing subject: 0028
-Error.  nthreads cannot be larger than environment variable "NUMEXPR_MAX_THREADS" (64)2025-03-27 07:45:40 - INFO - Starting processing with task: MeRest, description: BandsEnv
-2025-03-27 07:45:40 - INFO - 
-Config Debug:
-2025-03-27 07:45:40 - INFO - Code root: /home/slouviot/01_projects/eeg_brain_state_prediction
-2025-03-27 07:45:40 - INFO - Data root: /data2/Projects/eeg_fmri_natview/chang_data/derivatives
-2025-03-27 07:45:40 - INFO - Data directory: /home/slouviot/01_projects/eeg_brain_state_prediction/data/chang_data/eeg_bands
-2025-03-27 07:45:40 - INFO - Found 11 subjects to process
-2025-03-27 07:45:40 - INFO - 
-Processing subject: 0028
-Creating BIDS architecture with parameters: {'root': PosixPath('/data2/Projects/eeg_fmri_natview/chang_data/derivatives'), 'datatype': 'multimodal', 'suffix': 'multimodal', 'description': 'BandsEnv', 'task': 'MeRest', 'extension': '.pkl'}
-Data root path exists: True
-Full data root path: /data2/Projects/eeg_fmri_natview/chang_data/derivatives
-Database info: (15, 14)
-Traceback (most recent call last):
-  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/ml_pipeline/main_bands_chang_nested_cross_validation_with_corr.py", line 108, in <module>
-    main(config)
-  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/ml_pipeline/main_bands_chang_nested_cross_validation_with_corr.py", line 62, in main
-    utils.pipeline(
-  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/ml_pipeline/utils_bands_chang_nested_cross_validationy_with_corr.py", line 259, in pipeline
-    results = nested_cross_val(
-              ^^^^^^^^^^^^^^^^^
-  File "/home/slouviot/01_projects/eeg_brain_state_prediction/src/eeg_brain_state_prediction/ml_pipeline/utils_bands_chang_nested_cross_validationy_with_corr.py", line 220, in nested_cross_val
-    results["acquisition"].append(test_arch["acquisition"])
-    ~~~~~~~^^^^^^^^^^^^^^^
-KeyError: 'acquisition'
-Error.  nthreads cannot be larger than environment variable "NUMEXPR_MAX_THREADS" (64)2025-03-27 07:46:40 - INFO - Starting processing with task: MeRest, description: BandsEnv
-2025-03-27 07:46:40 - INFO - 
-Config Debug:
-2025-03-27 07:46:40 - INFO - Code root: /home/slouviot/01_projects/eeg_brain_state_prediction
-2025-03-27 07:46:40 - INFO - Data root: /data2/Projects/eeg_fmri_natview/chang_data/derivatives
-2025-03-27 07:46:40 - INFO - Data directory: /home/slouviot/01_projects/eeg_brain_state_prediction/data/chang_data/eeg_bands
-2025-03-27 07:46:40 - INFO - Found 11 subjects to process
-2025-03-27 07:46:40 - INFO - 
-Processing subject: 0028
-2025-03-27 09:35:15 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/chang_data/eeg_bands/sub-0028_task-MeRest_desc-BandsEnv_predictions.csv
-2025-03-27 09:35:15 - INFO - 
-Processing subject: 0029
-2025-03-27 11:20:30 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/chang_data/eeg_bands/sub-0029_task-MeRest_desc-BandsEnv_predictions.csv
-2025-03-27 11:20:31 - INFO - 
-Processing subject: 0030
-2025-03-27 12:56:27 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/chang_data/eeg_bands/sub-0030_task-MeRest_desc-BandsEnv_predictions.csv
-2025-03-27 12:56:27 - INFO - 
-Processing subject: 0031
-2025-03-27 14:46:46 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/chang_data/eeg_bands/sub-0031_task-MeRest_desc-BandsEnv_predictions.csv
-2025-03-27 14:46:46 - INFO - 
-Processing subject: 0032
-2025-03-27 16:35:14 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/chang_data/eeg_bands/sub-0032_task-MeRest_desc-BandsEnv_predictions.csv
-2025-03-27 16:35:14 - INFO - 
-Processing completed successfully
-Creating BIDS architecture with parameters: {'root': PosixPath('/data2/Projects/eeg_fmri_natview/chang_data/derivatives'), 'datatype': 'multimodal', 'suffix': 'multimodal', 'description': 'BandsEnv', 'task': 'MeRest', 'extension': '.pkl'}
-Data root path exists: True
-Full data root path: /data2/Projects/eeg_fmri_natview/chang_data/derivatives
-Database info: (15, 14)
-Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/chang_data/eeg_bands/sub-0028_task-MeRest_desc-BandsEnv_predictions.csv
-File saved successfully with 1350 rows
-Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/chang_data/eeg_bands/sub-0029_task-MeRest_desc-BandsEnv_predictions.csv
-File saved successfully with 1350 rows
-Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/chang_data/eeg_bands/sub-0030_task-MeRest_desc-BandsEnv_predictions.csv
-File saved successfully with 1350 rows
-Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/chang_data/eeg_bands/sub-0031_task-MeRest_desc-BandsEnv_predictions.csv
-File saved successfully with 1350 rows
-Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/chang_data/eeg_bands/sub-0032_task-MeRest_desc-BandsEnv_predictions.csv
-File saved successfully with 1350 rows
-2025-03-31 09:53:29 - eeg_brain_state_prediction.data_pipeline.tools.utils - INFO - Starting main_collect_multimodal_data_resampled
-2025-03-31 09:53:29 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:53:29 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:53:36 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0010/ses-01/multimodal/sub-0010_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:53:36 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:53:36 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:53:36 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:53:39 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0010/ses-01/multimodal/sub-0010_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:53:39 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:53:39 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:53:39 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:53:46 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0010/ses-01/multimodal/sub-0010_ses-01_task-MeRest_acq-mr0015_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:53:46 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:53:46 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:53:46 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:53:49 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0010/ses-01/multimodal/sub-0010_ses-01_task-MeRest_acq-mr0015_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:53:49 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:53:49 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:53:49 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:53:52 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0010/ses-01/multimodal/sub-0010_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:53:52 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:53:52 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:53:52 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:53:55 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0010/ses-01/multimodal/sub-0010_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:53:55 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:53:55 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:53:55 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:53:58 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0010/ses-01/multimodal/sub-0010_ses-01_task-MeRest_acq-mr0015_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:53:58 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:53:58 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:53:58 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:54:01 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0010/ses-01/multimodal/sub-0010_ses-01_task-MeRest_acq-mr0015_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:54:01 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:54:01 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:54:01 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:54:04 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0010/ses-01/multimodal/sub-0010_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:54:04 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:54:04 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:54:04 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:54:07 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0010/ses-01/multimodal/sub-0010_ses-01_task-MeRest_acq-mr0015_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:54:07 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:54:07 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:54:07 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:54:10 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0010/ses-01/multimodal/sub-0010_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:54:10 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:54:10 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:54:10 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:54:13 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0010/ses-01/multimodal/sub-0010_ses-01_task-MeRest_acq-mr0015_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:54:13 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:54:13 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:54:13 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:54:16 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0010/ses-01/multimodal/sub-0010_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:54:16 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:54:16 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:54:16 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:54:19 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0010/ses-01/multimodal/sub-0010_ses-01_task-MeRest_acq-mr0015_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:54:19 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:54:19 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:54:19 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:54:22 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0010/ses-01/multimodal/sub-0010_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:54:22 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:54:22 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:54:22 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:54:25 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0010/ses-01/multimodal/sub-0010_ses-01_task-MeRest_acq-mr0015_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:54:25 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:54:25 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:54:25 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:54:28 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0010/ses-01/multimodal/sub-0010_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:54:28 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:54:28 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:54:28 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:54:31 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0010/ses-01/multimodal/sub-0010_ses-01_task-MeRest_acq-mr0015_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:54:31 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:54:31 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:54:31 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:54:38 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0012/ses-01/multimodal/sub-0012_ses-01_task-MeRest_acq-mr0018_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:54:38 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:54:38 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:54:38 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:54:41 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0012/ses-01/multimodal/sub-0012_ses-01_task-MeRest_acq-mr0018_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:54:41 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:54:41 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:54:41 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:54:48 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0012/ses-01/multimodal/sub-0012_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:54:48 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:54:48 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:54:48 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:54:51 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0012/ses-01/multimodal/sub-0012_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:54:51 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:54:51 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:54:51 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:54:54 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0012/ses-01/multimodal/sub-0012_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:54:54 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:54:54 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:54:54 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:54:57 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0012/ses-01/multimodal/sub-0012_ses-01_task-MeRest_acq-mr0018_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:54:57 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:54:57 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:54:57 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:55:00 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0012/ses-01/multimodal/sub-0012_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:55:00 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:55:00 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:55:00 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:55:03 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0012/ses-01/multimodal/sub-0012_ses-01_task-MeRest_acq-mr0018_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:55:03 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:55:03 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:55:03 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:55:06 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0012/ses-01/multimodal/sub-0012_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:55:06 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:55:06 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:55:06 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:55:09 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0012/ses-01/multimodal/sub-0012_ses-01_task-MeRest_acq-mr0018_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:55:09 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:55:09 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:55:09 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:55:12 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0012/ses-01/multimodal/sub-0012_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:55:12 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:55:12 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:55:12 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:55:15 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0012/ses-01/multimodal/sub-0012_ses-01_task-MeRest_acq-mr0018_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:55:15 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:55:15 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:55:15 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:55:18 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0012/ses-01/multimodal/sub-0012_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:55:19 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:55:19 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:55:19 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:55:22 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0012/ses-01/multimodal/sub-0012_ses-01_task-MeRest_acq-mr0018_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:55:22 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:55:22 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:55:22 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:55:25 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0012/ses-01/multimodal/sub-0012_ses-01_task-MeRest_acq-mr0018_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:55:25 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:55:25 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:55:25 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:55:28 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0012/ses-01/multimodal/sub-0012_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:55:28 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:55:28 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:55:28 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:55:31 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0012/ses-01/multimodal/sub-0012_ses-01_task-MeRest_acq-mr0018_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:55:31 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:55:31 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:55:31 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:55:34 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0012/ses-01/multimodal/sub-0012_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:55:34 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:55:34 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:55:34 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:55:41 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0014/ses-01/multimodal/sub-0014_ses-01_task-MeRest_acq-mr0018_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:55:41 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:55:41 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:55:41 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:55:44 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0014/ses-01/multimodal/sub-0014_ses-01_task-MeRest_acq-mr0018_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:55:44 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:55:44 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:55:44 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:55:51 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0014/ses-01/multimodal/sub-0014_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:55:51 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:55:51 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:55:51 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:55:54 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0014/ses-01/multimodal/sub-0014_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:55:54 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:55:54 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:55:54 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:55:56 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0014/ses-01/multimodal/sub-0014_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:55:56 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:55:56 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:55:56 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:55:59 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0014/ses-01/multimodal/sub-0014_ses-01_task-MeRest_acq-mr0018_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:55:59 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:55:59 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:55:59 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:56:02 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0014/ses-01/multimodal/sub-0014_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:56:02 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:56:02 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:56:02 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:56:05 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0014/ses-01/multimodal/sub-0014_ses-01_task-MeRest_acq-mr0018_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:56:05 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:56:05 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:56:05 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:56:08 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0014/ses-01/multimodal/sub-0014_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:56:08 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:56:08 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:56:08 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:56:11 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0014/ses-01/multimodal/sub-0014_ses-01_task-MeRest_acq-mr0018_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:56:11 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:56:11 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:56:11 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:56:14 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0014/ses-01/multimodal/sub-0014_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:56:14 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:56:14 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:56:14 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:56:16 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0014/ses-01/multimodal/sub-0014_ses-01_task-MeRest_acq-mr0018_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:56:16 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:56:16 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:56:16 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:56:19 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0014/ses-01/multimodal/sub-0014_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:56:19 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:56:19 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:56:19 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:56:22 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0014/ses-01/multimodal/sub-0014_ses-01_task-MeRest_acq-mr0018_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:56:22 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:56:22 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:56:22 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:56:25 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0014/ses-01/multimodal/sub-0014_ses-01_task-MeRest_acq-mr0018_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:56:25 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:56:25 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:56:25 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:56:28 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0014/ses-01/multimodal/sub-0014_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:56:28 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:56:28 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:56:28 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:56:31 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0014/ses-01/multimodal/sub-0014_ses-01_task-MeRest_acq-mr0018_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:56:31 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 09:56:31 - eeg_brain_state_prediction.data_pipeline.tools.utils - INFO - Starting main_collect_multimodal_data_resampled
 2025-03-31 09:56:31 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
 2025-03-31 09:56:31 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:56:34 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0014/ses-01/multimodal/sub-0014_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:56:34 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:56:34 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:56:34 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:56:41 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0016/ses-01/multimodal/sub-0016_ses-01_task-MeRest_acq-mr0006_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 09:56:35 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0010/ses-01/multimodal/sub-0010_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 09:56:35 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 09:56:35 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 09:56:35 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 09:56:38 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0010/ses-01/multimodal/sub-0010_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 09:56:38 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 09:56:38 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 09:56:38 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 09:56:41 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0010/ses-01/multimodal/sub-0010_ses-01_task-MeRest_acq-mr0015_desc-SSDbandsEnv8Caps_multimodal.pkl
 2025-03-31 09:56:41 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
 2025-03-31 09:56:41 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
 2025-03-31 09:56:41 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:56:44 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0016/ses-01/multimodal/sub-0016_ses-01_task-MeRest_acq-mr0006_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 09:56:44 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0010/ses-01/multimodal/sub-0010_ses-01_task-MeRest_acq-mr0015_desc-SSDbandsEnv8Caps_multimodal.pkl
 2025-03-31 09:56:44 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
 2025-03-31 09:56:44 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
 2025-03-31 09:56:44 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:56:51 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0016/ses-01/multimodal/sub-0016_ses-01_task-MeRest_acq-mr0015_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:56:51 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:56:51 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:56:51 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:56:54 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0016/ses-01/multimodal/sub-0016_ses-01_task-MeRest_acq-mr0015_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:56:54 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:56:54 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:56:54 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:56:56 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0016/ses-01/multimodal/sub-0016_ses-01_task-MeRest_acq-mr0015_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 09:56:47 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0010/ses-01/multimodal/sub-0010_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 09:56:47 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 09:56:47 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 09:56:47 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 09:56:50 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0010/ses-01/multimodal/sub-0010_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 09:56:50 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 09:56:50 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 09:56:50 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 09:56:53 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0010/ses-01/multimodal/sub-0010_ses-01_task-MeRest_acq-mr0015_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 09:56:53 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 09:56:53 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 09:56:53 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 09:56:56 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0010/ses-01/multimodal/sub-0010_ses-01_task-MeRest_acq-mr0015_desc-SSDbandsEnv8Caps_multimodal.pkl
 2025-03-31 09:56:57 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
 2025-03-31 09:56:57 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
 2025-03-31 09:56:57 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:56:59 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0016/ses-01/multimodal/sub-0016_ses-01_task-MeRest_acq-mr0006_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 09:57:00 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0010/ses-01/multimodal/sub-0010_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
 2025-03-31 09:57:00 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
 2025-03-31 09:57:00 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
 2025-03-31 09:57:00 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:57:02 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0016/ses-01/multimodal/sub-0016_ses-01_task-MeRest_acq-mr0015_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 09:57:03 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0010/ses-01/multimodal/sub-0010_ses-01_task-MeRest_acq-mr0015_desc-SSDbandsEnv8Caps_multimodal.pkl
 2025-03-31 09:57:03 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
 2025-03-31 09:57:03 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
 2025-03-31 09:57:03 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:57:05 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0016/ses-01/multimodal/sub-0016_ses-01_task-MeRest_acq-mr0006_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 09:57:06 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0010/ses-01/multimodal/sub-0010_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
 2025-03-31 09:57:06 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
 2025-03-31 09:57:06 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
 2025-03-31 09:57:06 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:57:08 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0016/ses-01/multimodal/sub-0016_ses-01_task-MeRest_acq-mr0015_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:57:08 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:57:08 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:57:08 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:57:11 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0016/ses-01/multimodal/sub-0016_ses-01_task-MeRest_acq-mr0006_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:57:11 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:57:11 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:57:11 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:57:14 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0016/ses-01/multimodal/sub-0016_ses-01_task-MeRest_acq-mr0015_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:57:14 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:57:14 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:57:14 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:57:17 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0016/ses-01/multimodal/sub-0016_ses-01_task-MeRest_acq-mr0006_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:57:17 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:57:17 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:57:17 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:57:20 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0016/ses-01/multimodal/sub-0016_ses-01_task-MeRest_acq-mr0015_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 09:57:09 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0010/ses-01/multimodal/sub-0010_ses-01_task-MeRest_acq-mr0015_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 09:57:09 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 09:57:09 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 09:57:09 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 09:57:12 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0010/ses-01/multimodal/sub-0010_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 09:57:12 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 09:57:12 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 09:57:12 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 09:57:15 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0010/ses-01/multimodal/sub-0010_ses-01_task-MeRest_acq-mr0015_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 09:57:15 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 09:57:15 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 09:57:15 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 09:57:18 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0010/ses-01/multimodal/sub-0010_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 09:57:18 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 09:57:18 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 09:57:18 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 09:57:21 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0010/ses-01/multimodal/sub-0010_ses-01_task-MeRest_acq-mr0015_desc-SSDbandsEnv8Caps_multimodal.pkl
 2025-03-31 09:57:21 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
 2025-03-31 09:57:21 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
 2025-03-31 09:57:21 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:57:24 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0016/ses-01/multimodal/sub-0016_ses-01_task-MeRest_acq-mr0006_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 09:57:24 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0010/ses-01/multimodal/sub-0010_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
 2025-03-31 09:57:24 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
 2025-03-31 09:57:24 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
 2025-03-31 09:57:24 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:57:27 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0016/ses-01/multimodal/sub-0016_ses-01_task-MeRest_acq-mr0006_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 09:57:27 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0010/ses-01/multimodal/sub-0010_ses-01_task-MeRest_acq-mr0015_desc-SSDbandsEnv8Caps_multimodal.pkl
 2025-03-31 09:57:27 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
 2025-03-31 09:57:27 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
 2025-03-31 09:57:27 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:57:30 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0016/ses-01/multimodal/sub-0016_ses-01_task-MeRest_acq-mr0015_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 09:57:30 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0010/ses-01/multimodal/sub-0010_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
 2025-03-31 09:57:30 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
 2025-03-31 09:57:30 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
 2025-03-31 09:57:30 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:57:33 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0016/ses-01/multimodal/sub-0016_ses-01_task-MeRest_acq-mr0006_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 09:57:33 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0010/ses-01/multimodal/sub-0010_ses-01_task-MeRest_acq-mr0015_desc-SSDbandsEnv8Caps_multimodal.pkl
 2025-03-31 09:57:33 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
 2025-03-31 09:57:33 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
 2025-03-31 09:57:33 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:57:36 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0016/ses-01/multimodal/sub-0016_ses-01_task-MeRest_acq-mr0015_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:57:36 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:57:36 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:57:36 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:57:43 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0021/ses-01/multimodal/sub-0021_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 09:57:36 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0012/ses-01/multimodal/sub-0012_ses-01_task-MeRest_acq-mr0018_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 09:57:37 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 09:57:37 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 09:57:37 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 09:57:40 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0012/ses-01/multimodal/sub-0012_ses-01_task-MeRest_acq-mr0018_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 09:57:40 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 09:57:40 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 09:57:40 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 09:57:43 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0012/ses-01/multimodal/sub-0012_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
 2025-03-31 09:57:43 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
 2025-03-31 09:57:43 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
 2025-03-31 09:57:43 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:57:46 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0021/ses-01/multimodal/sub-0021_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 09:57:46 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0012/ses-01/multimodal/sub-0012_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
 2025-03-31 09:57:46 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
 2025-03-31 09:57:46 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
 2025-03-31 09:57:46 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:57:49 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0021/ses-01/multimodal/sub-0021_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 09:57:49 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0012/ses-01/multimodal/sub-0012_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
 2025-03-31 09:57:49 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
 2025-03-31 09:57:49 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
 2025-03-31 09:57:49 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:57:52 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0021/ses-01/multimodal/sub-0021_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 09:57:52 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0012/ses-01/multimodal/sub-0012_ses-01_task-MeRest_acq-mr0018_desc-SSDbandsEnv8Caps_multimodal.pkl
 2025-03-31 09:57:52 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
 2025-03-31 09:57:52 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
 2025-03-31 09:57:52 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:57:55 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0021/ses-01/multimodal/sub-0021_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 09:57:55 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0012/ses-01/multimodal/sub-0012_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
 2025-03-31 09:57:55 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
 2025-03-31 09:57:55 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
 2025-03-31 09:57:55 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:57:58 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0021/ses-01/multimodal/sub-0021_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 09:57:58 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0012/ses-01/multimodal/sub-0012_ses-01_task-MeRest_acq-mr0018_desc-SSDbandsEnv8Caps_multimodal.pkl
 2025-03-31 09:57:58 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
 2025-03-31 09:57:58 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
 2025-03-31 09:57:58 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:58:01 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0021/ses-01/multimodal/sub-0021_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 09:58:01 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0012/ses-01/multimodal/sub-0012_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
 2025-03-31 09:58:01 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
 2025-03-31 09:58:01 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
 2025-03-31 09:58:01 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:58:03 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0021/ses-01/multimodal/sub-0021_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:58:03 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:58:03 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:58:03 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:58:06 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0021/ses-01/multimodal/sub-0021_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:58:06 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:58:06 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 09:58:04 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0012/ses-01/multimodal/sub-0012_ses-01_task-MeRest_acq-mr0018_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 09:58:04 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 09:58:04 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 09:58:04 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 09:58:07 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0012/ses-01/multimodal/sub-0012_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 09:58:07 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 09:58:07 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
 2025-03-31 09:58:07 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:58:14 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0027/ses-01/multimodal/sub-0027_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 09:58:10 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0012/ses-01/multimodal/sub-0012_ses-01_task-MeRest_acq-mr0018_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 09:58:11 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 09:58:11 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 09:58:11 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 09:58:14 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0012/ses-01/multimodal/sub-0012_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
 2025-03-31 09:58:14 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
 2025-03-31 09:58:14 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
 2025-03-31 09:58:14 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:58:17 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0027/ses-01/multimodal/sub-0027_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 09:58:17 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0012/ses-01/multimodal/sub-0012_ses-01_task-MeRest_acq-mr0018_desc-SSDbandsEnv8Caps_multimodal.pkl
 2025-03-31 09:58:17 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
 2025-03-31 09:58:17 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
 2025-03-31 09:58:17 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:58:20 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0027/ses-01/multimodal/sub-0027_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 09:58:20 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0012/ses-01/multimodal/sub-0012_ses-01_task-MeRest_acq-mr0018_desc-SSDbandsEnv8Caps_multimodal.pkl
 2025-03-31 09:58:20 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
 2025-03-31 09:58:20 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
 2025-03-31 09:58:20 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:58:23 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0027/ses-01/multimodal/sub-0027_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 09:58:23 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0012/ses-01/multimodal/sub-0012_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
 2025-03-31 09:58:23 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
 2025-03-31 09:58:23 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
 2025-03-31 09:58:23 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:58:26 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0027/ses-01/multimodal/sub-0027_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 09:58:26 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0012/ses-01/multimodal/sub-0012_ses-01_task-MeRest_acq-mr0018_desc-SSDbandsEnv8Caps_multimodal.pkl
 2025-03-31 09:58:26 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
 2025-03-31 09:58:26 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
 2025-03-31 09:58:26 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:58:29 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0027/ses-01/multimodal/sub-0027_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 09:58:29 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0012/ses-01/multimodal/sub-0012_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
 2025-03-31 09:58:29 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
 2025-03-31 09:58:29 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
 2025-03-31 09:58:29 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:58:32 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0027/ses-01/multimodal/sub-0027_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 09:58:32 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0012/ses-01/multimodal/sub-0012_ses-01_task-MeRest_acq-mr0018_desc-SSDbandsEnv8Caps_multimodal.pkl
 2025-03-31 09:58:32 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
 2025-03-31 09:58:32 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
 2025-03-31 09:58:32 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:58:34 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0027/ses-01/multimodal/sub-0027_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:58:34 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:58:34 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:58:34 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:58:37 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0027/ses-01/multimodal/sub-0027_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:58:37 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:58:37 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 09:58:35 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0012/ses-01/multimodal/sub-0012_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 09:58:35 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 09:58:35 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 09:58:35 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 09:58:38 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0014/ses-01/multimodal/sub-0014_ses-01_task-MeRest_acq-mr0018_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 09:58:38 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 09:58:38 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
 2025-03-31 09:58:38 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:58:45 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0028/ses-01/multimodal/sub-0028_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:58:45 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:58:45 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:58:45 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:58:48 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0028/ses-01/multimodal/sub-0028_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:58:48 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:58:48 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:58:48 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:58:51 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0028/ses-01/multimodal/sub-0028_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 09:58:41 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0014/ses-01/multimodal/sub-0014_ses-01_task-MeRest_acq-mr0018_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 09:58:41 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 09:58:41 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 09:58:41 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 09:58:44 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0014/ses-01/multimodal/sub-0014_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 09:58:44 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 09:58:44 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 09:58:44 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 09:58:47 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0014/ses-01/multimodal/sub-0014_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 09:58:47 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 09:58:47 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 09:58:47 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 09:58:50 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0014/ses-01/multimodal/sub-0014_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
 2025-03-31 09:58:51 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
 2025-03-31 09:58:51 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
 2025-03-31 09:58:51 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:58:53 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0028/ses-01/multimodal/sub-0028_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:58:53 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:58:53 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:58:53 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:58:56 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0028/ses-01/multimodal/sub-0028_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:58:56 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:58:56 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:58:56 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:58:59 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0028/ses-01/multimodal/sub-0028_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:58:59 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:58:59 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:58:59 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:59:02 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0028/ses-01/multimodal/sub-0028_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:59:02 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:59:02 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:59:02 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:59:05 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0028/ses-01/multimodal/sub-0028_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:59:05 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:59:05 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:59:05 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:59:08 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0028/ses-01/multimodal/sub-0028_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:59:08 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:59:08 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:59:08 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:59:15 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0029/ses-01/multimodal/sub-0029_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:59:16 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:59:16 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:59:16 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:59:19 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0029/ses-01/multimodal/sub-0029_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:59:19 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:59:19 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:59:19 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:59:22 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0029/ses-01/multimodal/sub-0029_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:59:22 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:59:22 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:59:22 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:59:25 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0029/ses-01/multimodal/sub-0029_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:59:25 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:59:25 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:59:25 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:59:28 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0029/ses-01/multimodal/sub-0029_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:59:28 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:59:28 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:59:28 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:59:31 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0029/ses-01/multimodal/sub-0029_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:59:31 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:59:31 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:59:31 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:59:34 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0029/ses-01/multimodal/sub-0029_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:59:34 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:59:34 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:59:34 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:59:37 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0029/ses-01/multimodal/sub-0029_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:59:37 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:59:37 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:59:37 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:59:40 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0029/ses-01/multimodal/sub-0029_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:59:40 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:59:40 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:59:40 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:59:48 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0030/ses-01/multimodal/sub-0030_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:59:48 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:59:48 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:59:48 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:59:51 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0030/ses-01/multimodal/sub-0030_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:59:51 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:59:51 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:59:51 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:59:54 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0030/ses-01/multimodal/sub-0030_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:59:54 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:59:54 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:59:54 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 09:59:57 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0030/ses-01/multimodal/sub-0030_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 09:59:57 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 09:59:57 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 09:59:57 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 10:00:00 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0030/ses-01/multimodal/sub-0030_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 10:00:00 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 10:00:00 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 10:00:00 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 10:00:03 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0030/ses-01/multimodal/sub-0030_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 09:58:53 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0014/ses-01/multimodal/sub-0014_ses-01_task-MeRest_acq-mr0018_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 09:58:54 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 09:58:54 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 09:58:54 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 09:58:57 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0014/ses-01/multimodal/sub-0014_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 09:58:57 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 09:58:57 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 09:58:57 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 09:59:00 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0014/ses-01/multimodal/sub-0014_ses-01_task-MeRest_acq-mr0018_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 09:59:00 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 09:59:00 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 09:59:00 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 09:59:03 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0014/ses-01/multimodal/sub-0014_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 09:59:03 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 09:59:03 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 09:59:03 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 09:59:06 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0014/ses-01/multimodal/sub-0014_ses-01_task-MeRest_acq-mr0018_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 09:59:06 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 09:59:06 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 09:59:06 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 09:59:09 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0014/ses-01/multimodal/sub-0014_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 09:59:09 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 09:59:09 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 09:59:09 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 09:59:12 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0014/ses-01/multimodal/sub-0014_ses-01_task-MeRest_acq-mr0018_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 09:59:12 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 09:59:12 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 09:59:12 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 09:59:15 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0014/ses-01/multimodal/sub-0014_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 09:59:15 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 09:59:15 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 09:59:15 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 09:59:18 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0014/ses-01/multimodal/sub-0014_ses-01_task-MeRest_acq-mr0018_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 09:59:18 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 09:59:18 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 09:59:18 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 09:59:21 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0014/ses-01/multimodal/sub-0014_ses-01_task-MeRest_acq-mr0018_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 09:59:21 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 09:59:21 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 09:59:21 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 09:59:24 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0014/ses-01/multimodal/sub-0014_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 09:59:24 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 09:59:24 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 09:59:24 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 09:59:27 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0014/ses-01/multimodal/sub-0014_ses-01_task-MeRest_acq-mr0018_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 09:59:27 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 09:59:27 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 09:59:27 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 09:59:30 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0014/ses-01/multimodal/sub-0014_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 09:59:30 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 09:59:30 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 09:59:30 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 09:59:33 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0014/ses-01/multimodal/sub-0014_ses-01_task-MeRest_acq-mr0018_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 09:59:33 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 09:59:33 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 09:59:33 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 09:59:36 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0014/ses-01/multimodal/sub-0014_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 09:59:36 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 09:59:36 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 09:59:36 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 09:59:39 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0016/ses-01/multimodal/sub-0016_ses-01_task-MeRest_acq-mr0006_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 09:59:39 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 09:59:39 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 09:59:39 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 09:59:42 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0016/ses-01/multimodal/sub-0016_ses-01_task-MeRest_acq-mr0006_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 09:59:42 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 09:59:42 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 09:59:42 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 09:59:45 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0016/ses-01/multimodal/sub-0016_ses-01_task-MeRest_acq-mr0015_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 09:59:45 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 09:59:46 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 09:59:46 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 09:59:49 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0016/ses-01/multimodal/sub-0016_ses-01_task-MeRest_acq-mr0015_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 09:59:49 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 09:59:49 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 09:59:49 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 09:59:52 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0016/ses-01/multimodal/sub-0016_ses-01_task-MeRest_acq-mr0015_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 09:59:52 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 09:59:52 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 09:59:52 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 09:59:55 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0016/ses-01/multimodal/sub-0016_ses-01_task-MeRest_acq-mr0006_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 09:59:55 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 09:59:55 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 09:59:55 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 09:59:58 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0016/ses-01/multimodal/sub-0016_ses-01_task-MeRest_acq-mr0015_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 09:59:58 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 09:59:58 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 09:59:58 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 10:00:01 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0016/ses-01/multimodal/sub-0016_ses-01_task-MeRest_acq-mr0006_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:00:01 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 10:00:01 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 10:00:01 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 10:00:04 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0016/ses-01/multimodal/sub-0016_ses-01_task-MeRest_acq-mr0015_desc-SSDbandsEnv8Caps_multimodal.pkl
 2025-03-31 10:00:04 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
 2025-03-31 10:00:04 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
 2025-03-31 10:00:04 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 10:00:07 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0030/ses-01/multimodal/sub-0030_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:00:07 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0016/ses-01/multimodal/sub-0016_ses-01_task-MeRest_acq-mr0006_desc-SSDbandsEnv8Caps_multimodal.pkl
 2025-03-31 10:00:07 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
 2025-03-31 10:00:07 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
 2025-03-31 10:00:07 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 10:00:10 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0030/ses-01/multimodal/sub-0030_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:00:10 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0016/ses-01/multimodal/sub-0016_ses-01_task-MeRest_acq-mr0015_desc-SSDbandsEnv8Caps_multimodal.pkl
 2025-03-31 10:00:10 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
 2025-03-31 10:00:10 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
 2025-03-31 10:00:10 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 10:00:13 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0030/ses-01/multimodal/sub-0030_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:00:13 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0016/ses-01/multimodal/sub-0016_ses-01_task-MeRest_acq-mr0006_desc-SSDbandsEnv8Caps_multimodal.pkl
 2025-03-31 10:00:13 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
 2025-03-31 10:00:13 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
 2025-03-31 10:00:13 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 10:00:21 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0031/ses-01/multimodal/sub-0031_ses-01_task-MeRest_acq-mr0015_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 10:00:21 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 10:00:21 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 10:00:21 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 10:00:24 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0031/ses-01/multimodal/sub-0031_ses-01_task-MeRest_acq-mr0015_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 10:00:24 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 10:00:24 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 10:00:24 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 10:00:27 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0031/ses-01/multimodal/sub-0031_ses-01_task-MeRest_acq-mr0015_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 10:00:27 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 10:00:27 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 10:00:27 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 10:00:30 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0031/ses-01/multimodal/sub-0031_ses-01_task-MeRest_acq-mr0015_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 10:00:30 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 10:00:30 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 10:00:30 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 10:00:34 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0031/ses-01/multimodal/sub-0031_ses-01_task-MeRest_acq-mr0015_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 10:00:34 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 10:00:34 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 10:00:34 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 10:00:37 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0031/ses-01/multimodal/sub-0031_ses-01_task-MeRest_acq-mr0015_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 10:00:37 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 10:00:37 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 10:00:37 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 10:00:40 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0031/ses-01/multimodal/sub-0031_ses-01_task-MeRest_acq-mr0015_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 10:00:40 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 10:00:40 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 10:00:40 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 10:00:43 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0031/ses-01/multimodal/sub-0031_ses-01_task-MeRest_acq-mr0015_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 10:00:43 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 10:00:43 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 10:00:43 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 10:00:46 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0031/ses-01/multimodal/sub-0031_ses-01_task-MeRest_acq-mr0015_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 10:00:46 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 10:00:46 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 10:00:46 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 10:00:54 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0032/ses-01/multimodal/sub-0032_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 10:00:54 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 10:00:54 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 10:00:54 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 10:00:57 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0032/ses-01/multimodal/sub-0032_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:00:16 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0016/ses-01/multimodal/sub-0016_ses-01_task-MeRest_acq-mr0015_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:00:16 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 10:00:16 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 10:00:16 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 10:00:19 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0016/ses-01/multimodal/sub-0016_ses-01_task-MeRest_acq-mr0006_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:00:19 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 10:00:19 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 10:00:19 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 10:00:22 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0016/ses-01/multimodal/sub-0016_ses-01_task-MeRest_acq-mr0006_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:00:22 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 10:00:23 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 10:00:23 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 10:00:26 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0016/ses-01/multimodal/sub-0016_ses-01_task-MeRest_acq-mr0015_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:00:26 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 10:00:26 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 10:00:26 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 10:00:29 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0016/ses-01/multimodal/sub-0016_ses-01_task-MeRest_acq-mr0006_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:00:29 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 10:00:29 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 10:00:29 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 10:00:32 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0016/ses-01/multimodal/sub-0016_ses-01_task-MeRest_acq-mr0015_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:00:32 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 10:00:32 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 10:00:32 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 10:00:35 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0021/ses-01/multimodal/sub-0021_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:00:35 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 10:00:35 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 10:00:35 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 10:00:38 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0021/ses-01/multimodal/sub-0021_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:00:38 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 10:00:38 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 10:00:38 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 10:00:41 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0021/ses-01/multimodal/sub-0021_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:00:41 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 10:00:41 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 10:00:41 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 10:00:44 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0021/ses-01/multimodal/sub-0021_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:00:44 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 10:00:44 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 10:00:44 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 10:00:47 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0021/ses-01/multimodal/sub-0021_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:00:47 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 10:00:47 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 10:00:47 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 10:00:50 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0021/ses-01/multimodal/sub-0021_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:00:50 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 10:00:50 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 10:00:50 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 10:00:53 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0021/ses-01/multimodal/sub-0021_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:00:53 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 10:00:53 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 10:00:53 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 10:00:56 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0021/ses-01/multimodal/sub-0021_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
 2025-03-31 10:00:57 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
 2025-03-31 10:00:57 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
 2025-03-31 10:00:57 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 10:01:00 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0032/ses-01/multimodal/sub-0032_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:01:00 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0021/ses-01/multimodal/sub-0021_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
 2025-03-31 10:01:00 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
 2025-03-31 10:01:00 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
 2025-03-31 10:01:00 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 10:01:03 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0032/ses-01/multimodal/sub-0032_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:01:03 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0027/ses-01/multimodal/sub-0027_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
 2025-03-31 10:01:03 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
 2025-03-31 10:01:03 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
 2025-03-31 10:01:03 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 10:01:06 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0032/ses-01/multimodal/sub-0032_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 10:01:07 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 10:01:07 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 10:01:07 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 10:01:10 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0032/ses-01/multimodal/sub-0032_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 10:01:10 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 10:01:10 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 10:01:10 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 10:01:13 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0032/ses-01/multimodal/sub-0032_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 10:01:13 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 10:01:13 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 10:01:13 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 10:01:16 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0032/ses-01/multimodal/sub-0032_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
-2025-03-31 10:01:16 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 10:01:16 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
-2025-03-31 10:01:16 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
-2025-03-31 10:01:19 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0032/ses-01/multimodal/sub-0032_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:01:06 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0027/ses-01/multimodal/sub-0027_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:01:06 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 10:01:06 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 10:01:06 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 10:01:09 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0027/ses-01/multimodal/sub-0027_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:01:09 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 10:01:09 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 10:01:09 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 10:01:12 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0027/ses-01/multimodal/sub-0027_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:01:12 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 10:01:12 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 10:01:12 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 10:01:15 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0027/ses-01/multimodal/sub-0027_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:01:15 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 10:01:15 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 10:01:15 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 10:01:18 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0027/ses-01/multimodal/sub-0027_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
 2025-03-31 10:01:19 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
-2025-03-31 10:01:19 - eeg_brain_state_prediction.data_pipeline.tools.utils - INFO - Finished main_collect_multimodal_data_resampled
+2025-03-31 10:01:19 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 10:01:19 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 10:01:22 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0027/ses-01/multimodal/sub-0027_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:01:22 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 10:01:22 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 10:01:22 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 10:01:25 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0027/ses-01/multimodal/sub-0027_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:01:25 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 10:01:25 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 10:01:25 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 10:01:28 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0027/ses-01/multimodal/sub-0027_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:01:28 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 10:01:28 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 10:01:28 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 10:01:31 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0028/ses-01/multimodal/sub-0028_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:01:31 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 10:01:31 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 10:01:31 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 10:01:34 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0028/ses-01/multimodal/sub-0028_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:01:34 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 10:01:34 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 10:01:34 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 10:01:37 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0028/ses-01/multimodal/sub-0028_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:01:37 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 10:01:37 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 10:01:37 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 10:01:40 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0028/ses-01/multimodal/sub-0028_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:01:40 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 10:01:40 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 10:01:40 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 10:01:43 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0028/ses-01/multimodal/sub-0028_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:01:43 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 10:01:43 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 10:01:43 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 10:01:46 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0028/ses-01/multimodal/sub-0028_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:01:46 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 10:01:46 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 10:01:46 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 10:01:49 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0028/ses-01/multimodal/sub-0028_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:01:49 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 10:01:49 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 10:01:49 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 10:01:52 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0028/ses-01/multimodal/sub-0028_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:01:53 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 10:01:53 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 10:01:53 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 10:01:56 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0028/ses-01/multimodal/sub-0028_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:01:56 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 10:01:56 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 10:01:56 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 10:01:59 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0029/ses-01/multimodal/sub-0029_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:01:59 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 10:01:59 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 10:01:59 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 10:02:02 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0029/ses-01/multimodal/sub-0029_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:02:02 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 10:02:02 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 10:02:02 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 10:02:05 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0029/ses-01/multimodal/sub-0029_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:02:05 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 10:02:05 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 10:02:05 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 10:02:08 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0029/ses-01/multimodal/sub-0029_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:02:08 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 10:02:08 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 10:02:08 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 10:02:11 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0029/ses-01/multimodal/sub-0029_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:02:11 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 10:02:11 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 10:02:11 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 10:02:14 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0029/ses-01/multimodal/sub-0029_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:02:14 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 10:02:14 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 10:02:14 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 10:02:17 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0029/ses-01/multimodal/sub-0029_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:02:17 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 10:02:17 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 10:02:17 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 10:02:20 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0029/ses-01/multimodal/sub-0029_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:02:20 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 10:02:20 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 10:02:20 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 10:02:23 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0029/ses-01/multimodal/sub-0029_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:02:23 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 10:02:23 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 10:02:23 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 10:02:26 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0030/ses-01/multimodal/sub-0030_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:02:26 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 10:02:26 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 10:02:26 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 10:02:29 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0030/ses-01/multimodal/sub-0030_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:02:29 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 10:02:29 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 10:02:29 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 10:02:32 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0030/ses-01/multimodal/sub-0030_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:02:32 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 10:02:33 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 10:02:33 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 10:02:36 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0030/ses-01/multimodal/sub-0030_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:02:36 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 10:02:36 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 10:02:36 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 10:02:39 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0030/ses-01/multimodal/sub-0030_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:02:39 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 10:02:39 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 10:02:39 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 10:02:42 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0030/ses-01/multimodal/sub-0030_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:02:42 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 10:02:42 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 10:02:42 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 10:02:45 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0030/ses-01/multimodal/sub-0030_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:02:45 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 10:02:45 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 10:02:45 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 10:02:48 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0030/ses-01/multimodal/sub-0030_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:02:48 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 10:02:48 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 10:02:48 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 10:02:51 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0030/ses-01/multimodal/sub-0030_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:02:51 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 10:02:51 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 10:02:51 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 10:02:54 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0031/ses-01/multimodal/sub-0031_ses-01_task-MeRest_acq-mr0015_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:02:54 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 10:02:54 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 10:02:54 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 10:02:57 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0031/ses-01/multimodal/sub-0031_ses-01_task-MeRest_acq-mr0015_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:02:57 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 10:02:57 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 10:02:57 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 10:03:00 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0031/ses-01/multimodal/sub-0031_ses-01_task-MeRest_acq-mr0015_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:03:00 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 10:03:00 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 10:03:00 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 10:03:03 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0031/ses-01/multimodal/sub-0031_ses-01_task-MeRest_acq-mr0015_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:03:03 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 10:03:03 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 10:03:03 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 10:03:06 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0031/ses-01/multimodal/sub-0031_ses-01_task-MeRest_acq-mr0015_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:03:06 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 10:03:06 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 10:03:06 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 10:03:09 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0031/ses-01/multimodal/sub-0031_ses-01_task-MeRest_acq-mr0015_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:03:09 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 10:03:09 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 10:03:09 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 10:03:12 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0031/ses-01/multimodal/sub-0031_ses-01_task-MeRest_acq-mr0015_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:03:12 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 10:03:12 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 10:03:12 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 10:03:15 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0031/ses-01/multimodal/sub-0031_ses-01_task-MeRest_acq-mr0015_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:03:16 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 10:03:16 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 10:03:16 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 10:03:19 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0031/ses-01/multimodal/sub-0031_ses-01_task-MeRest_acq-mr0015_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:03:19 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 10:03:19 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 10:03:19 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 10:03:22 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0032/ses-01/multimodal/sub-0032_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:03:22 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 10:03:22 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 10:03:22 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 10:03:25 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0032/ses-01/multimodal/sub-0032_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:03:25 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 10:03:25 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 10:03:25 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 10:03:28 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0032/ses-01/multimodal/sub-0032_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:03:28 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 10:03:28 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 10:03:28 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 10:03:31 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0032/ses-01/multimodal/sub-0032_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:03:31 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 10:03:31 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 10:03:31 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 10:03:34 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0032/ses-01/multimodal/sub-0032_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:03:34 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 10:03:34 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 10:03:34 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 10:03:37 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0032/ses-01/multimodal/sub-0032_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:03:37 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 10:03:37 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 10:03:37 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 10:03:40 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0032/ses-01/multimodal/sub-0032_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:03:40 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 10:03:40 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 10:03:40 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 10:03:43 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0032/ses-01/multimodal/sub-0032_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:03:43 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 10:03:43 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: brainstates
+2025-03-31 10:03:43 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Loading data for modality: eeg
+2025-03-31 10:03:46 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Saving data to: /data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0032/ses-01/multimodal/sub-0032_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv8Caps_multimodal.pkl
+2025-03-31 10:03:46 - eeg_brain_state_prediction.data_pipeline.tools.multimodal - INFO - Successfully saved data
+2025-03-31 10:03:46 - eeg_brain_state_prediction.data_pipeline.tools.utils - INFO - Finished main_collect_multimodal_data_resampled
 └── Session: 01
         ├── EEG file        : [PosixPath('/data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0010/ses-01/eeg/sub-0010_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv_eeg.pkl')]
         ├── brainstates file: [PosixPath('/data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0010/ses-01/brainstates/sub-0010_ses-01_task-MeRest_acq-mr0009_desc-caps_brainstates.pkl')]
@@ -873,6 +807,86 @@ Trim to min time
 └── Session: 01
         ├── EEG file        : [PosixPath('/data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0010/ses-01/eeg/sub-0010_ses-01_task-MeRest_acq-mr0015_desc-SSDbandsEnv_eeg.pkl')]
         ├── brainstates file: [PosixPath('/data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0010/ses-01/brainstates/sub-0010_ses-01_task-MeRest_acq-mr0015_desc-caps_brainstates.pkl')]
+        └── eyetracking file: None
+
+Make multimodal dictionary
+    brainstates
+            duration  : 1467.90 seconds
+            time shape: (700,)
+            data shape: (9, 700)
+            mask shape: (700,)
+    eeg
+            duration  : 1470.00 seconds
+            time shape: (367500,)
+            data shape: (29, 367500, 5)
+            mask shape: (367500,)
+
+Resample all
+    brainstates
+            duration  : 1467.64 seconds
+            time shape: (5592,)
+            data shape: (9, 5592)
+            mask shape: (5592,)
+    eeg
+            duration  : 1469.74 seconds
+            time shape: (5600,)
+            data shape: (29, 5600, 5)
+            mask shape: (5600,)
+
+Trim to min time
+    brainstates
+            duration  : 1466.85 seconds
+            time shape: (5589,)
+            data shape: (9, 5589)
+            mask shape: (5589,)
+    eeg
+            duration  : 1466.85 seconds
+            time shape: (5589,)
+            data shape: (29, 5589, 5)
+            mask shape: (5589,)
+└── Session: 01
+        ├── EEG file        : [PosixPath('/data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0010/ses-01/eeg/sub-0010_ses-01_task-MeRest_acq-mr0015_desc-SSDbandsEnv_eeg.pkl')]
+        ├── brainstates file: [PosixPath('/data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0010/ses-01/brainstates/sub-0010_ses-01_task-MeRest_acq-mr0015_desc-caps_brainstates.pkl')]
+        └── eyetracking file: None
+
+Make multimodal dictionary
+    brainstates
+            duration  : 1467.90 seconds
+            time shape: (700,)
+            data shape: (9, 700)
+            mask shape: (700,)
+    eeg
+            duration  : 1470.00 seconds
+            time shape: (367500,)
+            data shape: (29, 367500, 5)
+            mask shape: (367500,)
+
+Resample all
+    brainstates
+            duration  : 1467.64 seconds
+            time shape: (5592,)
+            data shape: (9, 5592)
+            mask shape: (5592,)
+    eeg
+            duration  : 1469.74 seconds
+            time shape: (5600,)
+            data shape: (29, 5600, 5)
+            mask shape: (5600,)
+
+Trim to min time
+    brainstates
+            duration  : 1466.85 seconds
+            time shape: (5589,)
+            data shape: (9, 5589)
+            mask shape: (5589,)
+    eeg
+            duration  : 1466.85 seconds
+            time shape: (5589,)
+            data shape: (29, 5589, 5)
+            mask shape: (5589,)
+└── Session: 01
+        ├── EEG file        : [PosixPath('/data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0010/ses-01/eeg/sub-0010_ses-01_task-MeRest_acq-mr0009_desc-SSDbandsEnv_eeg.pkl')]
+        ├── brainstates file: [PosixPath('/data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0010/ses-01/brainstates/sub-0010_ses-01_task-MeRest_acq-mr0009_desc-caps_brainstates.pkl')]
         └── eyetracking file: None
 
 Make multimodal dictionary
@@ -1873,6 +1887,86 @@ Trim to min time
 └── Session: 01
         ├── EEG file        : [PosixPath('/data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0012/ses-01/eeg/sub-0012_ses-01_task-MeRest_acq-mr0018_desc-SSDbandsEnv_eeg.pkl')]
         ├── brainstates file: [PosixPath('/data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0012/ses-01/brainstates/sub-0012_ses-01_task-MeRest_acq-mr0018_desc-caps_brainstates.pkl')]
+        └── eyetracking file: None
+
+Make multimodal dictionary
+    brainstates
+            duration  : 1467.90 seconds
+            time shape: (700,)
+            data shape: (9, 700)
+            mask shape: (700,)
+    eeg
+            duration  : 1471.00 seconds
+            time shape: (367750,)
+            data shape: (29, 367750, 5)
+            mask shape: (367750,)
+
+Resample all
+    brainstates
+            duration  : 1467.64 seconds
+            time shape: (5592,)
+            data shape: (9, 5592)
+            mask shape: (5592,)
+    eeg
+            duration  : 1470.79 seconds
+            time shape: (5604,)
+            data shape: (29, 5604, 5)
+            mask shape: (5604,)
+
+Trim to min time
+    brainstates
+            duration  : 1466.85 seconds
+            time shape: (5589,)
+            data shape: (9, 5589)
+            mask shape: (5589,)
+    eeg
+            duration  : 1466.85 seconds
+            time shape: (5589,)
+            data shape: (29, 5589, 5)
+            mask shape: (5589,)
+└── Session: 01
+        ├── EEG file        : [PosixPath('/data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0012/ses-01/eeg/sub-0012_ses-01_task-MeRest_acq-mr0018_desc-SSDbandsEnv_eeg.pkl')]
+        ├── brainstates file: [PosixPath('/data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0012/ses-01/brainstates/sub-0012_ses-01_task-MeRest_acq-mr0018_desc-caps_brainstates.pkl')]
+        └── eyetracking file: None
+
+Make multimodal dictionary
+    brainstates
+            duration  : 1467.90 seconds
+            time shape: (700,)
+            data shape: (9, 700)
+            mask shape: (700,)
+    eeg
+            duration  : 1471.00 seconds
+            time shape: (367750,)
+            data shape: (29, 367750, 5)
+            mask shape: (367750,)
+
+Resample all
+    brainstates
+            duration  : 1467.64 seconds
+            time shape: (5592,)
+            data shape: (9, 5592)
+            mask shape: (5592,)
+    eeg
+            duration  : 1470.79 seconds
+            time shape: (5604,)
+            data shape: (29, 5604, 5)
+            mask shape: (5604,)
+
+Trim to min time
+    brainstates
+            duration  : 1466.85 seconds
+            time shape: (5589,)
+            data shape: (9, 5589)
+            mask shape: (5589,)
+    eeg
+            duration  : 1466.85 seconds
+            time shape: (5589,)
+            data shape: (29, 5589, 5)
+            mask shape: (5589,)
+└── Session: 01
+        ├── EEG file        : [PosixPath('/data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0012/ses-01/eeg/sub-0012_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv_eeg.pkl')]
+        ├── brainstates file: [PosixPath('/data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0012/ses-01/brainstates/sub-0012_ses-01_task-MeRest_acq-mr0012_desc-caps_brainstates.pkl')]
         └── eyetracking file: None
 
 Make multimodal dictionary
@@ -2593,6 +2687,86 @@ Trim to min time
 └── Session: 01
         ├── EEG file        : [PosixPath('/data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0014/ses-01/eeg/sub-0014_ses-01_task-MeRest_acq-mr0018_desc-SSDbandsEnv_eeg.pkl')]
         ├── brainstates file: [PosixPath('/data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0014/ses-01/brainstates/sub-0014_ses-01_task-MeRest_acq-mr0018_desc-caps_brainstates.pkl')]
+        └── eyetracking file: None
+
+Make multimodal dictionary
+    brainstates
+            duration  : 1467.90 seconds
+            time shape: (700,)
+            data shape: (9, 700)
+            mask shape: (700,)
+    eeg
+            duration  : 1471.00 seconds
+            time shape: (367750,)
+            data shape: (29, 367750, 5)
+            mask shape: (367750,)
+
+Resample all
+    brainstates
+            duration  : 1467.64 seconds
+            time shape: (5592,)
+            data shape: (9, 5592)
+            mask shape: (5592,)
+    eeg
+            duration  : 1470.79 seconds
+            time shape: (5604,)
+            data shape: (29, 5604, 5)
+            mask shape: (5604,)
+
+Trim to min time
+    brainstates
+            duration  : 1466.85 seconds
+            time shape: (5589,)
+            data shape: (9, 5589)
+            mask shape: (5589,)
+    eeg
+            duration  : 1466.85 seconds
+            time shape: (5589,)
+            data shape: (29, 5589, 5)
+            mask shape: (5589,)
+└── Session: 01
+        ├── EEG file        : [PosixPath('/data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0014/ses-01/eeg/sub-0014_ses-01_task-MeRest_acq-mr0018_desc-SSDbandsEnv_eeg.pkl')]
+        ├── brainstates file: [PosixPath('/data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0014/ses-01/brainstates/sub-0014_ses-01_task-MeRest_acq-mr0018_desc-caps_brainstates.pkl')]
+        └── eyetracking file: None
+
+Make multimodal dictionary
+    brainstates
+            duration  : 1467.90 seconds
+            time shape: (700,)
+            data shape: (9, 700)
+            mask shape: (700,)
+    eeg
+            duration  : 1471.00 seconds
+            time shape: (367750,)
+            data shape: (29, 367750, 5)
+            mask shape: (367750,)
+
+Resample all
+    brainstates
+            duration  : 1467.64 seconds
+            time shape: (5592,)
+            data shape: (9, 5592)
+            mask shape: (5592,)
+    eeg
+            duration  : 1470.79 seconds
+            time shape: (5604,)
+            data shape: (29, 5604, 5)
+            mask shape: (5604,)
+
+Trim to min time
+    brainstates
+            duration  : 1466.85 seconds
+            time shape: (5589,)
+            data shape: (9, 5589)
+            mask shape: (5589,)
+    eeg
+            duration  : 1466.85 seconds
+            time shape: (5589,)
+            data shape: (29, 5589, 5)
+            mask shape: (5589,)
+└── Session: 01
+        ├── EEG file        : [PosixPath('/data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0014/ses-01/eeg/sub-0014_ses-01_task-MeRest_acq-mr0012_desc-SSDbandsEnv_eeg.pkl')]
+        ├── brainstates file: [PosixPath('/data2/Projects/eeg_fmri_natview/chang_data/derivatives/sub-0014/ses-01/brainstates/sub-0014_ses-01_task-MeRest_acq-mr0012_desc-caps_brainstates.pkl')]
         └── eyetracking file: None
 
 Make multimodal dictionary
@@ -6030,71 +6204,3 @@ Trim to min time
             time shape: (5589,)
             data shape: (29, 5589, 5)
             mask shape: (5589,)
-Error.  nthreads cannot be larger than environment variable "NUMEXPR_MAX_THREADS" (64)2025-03-31 10:14:46 - INFO - Starting processing with task: MeRest, description: SSDbandsEnv
-2025-03-31 10:14:46 - INFO - 
-Config Debug:
-2025-03-31 10:14:46 - INFO - Code root: /home/slouviot/01_projects/eeg_brain_state_prediction
-2025-03-31 10:14:46 - INFO - Data root: /data2/Projects/eeg_fmri_natview/chang_data/derivatives
-2025-03-31 10:14:46 - INFO - Data directory: /home/slouviot/01_projects/eeg_brain_state_prediction/data/chang_data/eeg_bands
-2025-03-31 10:14:46 - INFO - Found 11 subjects to process
-2025-03-31 10:14:50 - INFO - 
-Processing subject: 0010
-2025-03-31 11:33:37 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/chang_data/eeg_bands/sub-0010_task-MeRest_desc-SSDbandsEnvGroupLevel_predictions.csv
-2025-03-31 11:33:37 - INFO - 
-Processing subject: 0012
-2025-03-31 12:47:31 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/chang_data/eeg_bands/sub-0012_task-MeRest_desc-SSDbandsEnvGroupLevel_predictions.csv
-2025-03-31 12:47:31 - INFO - 
-Processing subject: 0014
-2025-03-31 14:01:28 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/chang_data/eeg_bands/sub-0014_task-MeRest_desc-SSDbandsEnvGroupLevel_predictions.csv
-2025-03-31 14:01:28 - INFO - 
-Processing subject: 0016
-2025-03-31 15:14:58 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/chang_data/eeg_bands/sub-0016_task-MeRest_desc-SSDbandsEnvGroupLevel_predictions.csv
-2025-03-31 15:14:58 - INFO - 
-Processing subject: 0021
-2025-03-31 15:54:30 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/chang_data/eeg_bands/sub-0021_task-MeRest_desc-SSDbandsEnvGroupLevel_predictions.csv
-2025-03-31 15:54:30 - INFO - 
-Processing subject: 0027
-2025-03-31 16:34:05 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/chang_data/eeg_bands/sub-0027_task-MeRest_desc-SSDbandsEnvGroupLevel_predictions.csv
-2025-03-31 16:34:05 - INFO - 
-Processing subject: 0028
-2025-03-31 17:14:14 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/chang_data/eeg_bands/sub-0028_task-MeRest_desc-SSDbandsEnvGroupLevel_predictions.csv
-2025-03-31 17:14:14 - INFO - 
-Processing subject: 0029
-2025-03-31 17:53:55 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/chang_data/eeg_bands/sub-0029_task-MeRest_desc-SSDbandsEnvGroupLevel_predictions.csv
-2025-03-31 17:53:55 - INFO - 
-Processing subject: 0030
-2025-03-31 18:33:14 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/chang_data/eeg_bands/sub-0030_task-MeRest_desc-SSDbandsEnvGroupLevel_predictions.csv
-2025-03-31 18:33:14 - INFO - 
-Processing subject: 0031
-2025-03-31 19:12:37 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/chang_data/eeg_bands/sub-0031_task-MeRest_desc-SSDbandsEnvGroupLevel_predictions.csv
-2025-03-31 19:12:37 - INFO - 
-Processing subject: 0032
-2025-03-31 19:51:58 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/chang_data/eeg_bands/sub-0032_task-MeRest_desc-SSDbandsEnvGroupLevel_predictions.csv
-2025-03-31 19:51:58 - INFO - 
-Processing completed successfully
-Creating BIDS architecture with parameters: {'root': PosixPath('/data2/Projects/eeg_fmri_natview/chang_data/derivatives'), 'datatype': 'multimodal', 'suffix': 'multimodal', 'description': 'SSDbandsEnv', 'task': 'MeRest', 'extension': '.pkl'}
-Data root path exists: True
-Full data root path: /data2/Projects/eeg_fmri_natview/chang_data/derivatives
-Database info: (15, 14)
-Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/chang_data/eeg_bands/sub-0010_task-MeRest_desc-SSDbandsEnvGroupLevel_predictions.csv
-File saved successfully with 270 rows
-Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/chang_data/eeg_bands/sub-0012_task-MeRest_desc-SSDbandsEnvGroupLevel_predictions.csv
-File saved successfully with 270 rows
-Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/chang_data/eeg_bands/sub-0014_task-MeRest_desc-SSDbandsEnvGroupLevel_predictions.csv
-File saved successfully with 270 rows
-Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/chang_data/eeg_bands/sub-0016_task-MeRest_desc-SSDbandsEnvGroupLevel_predictions.csv
-File saved successfully with 270 rows
-Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/chang_data/eeg_bands/sub-0021_task-MeRest_desc-SSDbandsEnvGroupLevel_predictions.csv
-File saved successfully with 270 rows
-Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/chang_data/eeg_bands/sub-0027_task-MeRest_desc-SSDbandsEnvGroupLevel_predictions.csv
-File saved successfully with 270 rows
-Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/chang_data/eeg_bands/sub-0028_task-MeRest_desc-SSDbandsEnvGroupLevel_predictions.csv
-File saved successfully with 270 rows
-Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/chang_data/eeg_bands/sub-0029_task-MeRest_desc-SSDbandsEnvGroupLevel_predictions.csv
-File saved successfully with 270 rows
-Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/chang_data/eeg_bands/sub-0030_task-MeRest_desc-SSDbandsEnvGroupLevel_predictions.csv
-File saved successfully with 270 rows
-Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/chang_data/eeg_bands/sub-0031_task-MeRest_desc-SSDbandsEnvGroupLevel_predictions.csv
-File saved successfully with 270 rows
-Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/chang_data/eeg_bands/sub-0032_task-MeRest_desc-SSDbandsEnvGroupLevel_predictions.csv
-File saved successfully with 270 rows

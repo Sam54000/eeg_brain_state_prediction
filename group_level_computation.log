@@ -1,0 +1,68 @@
+Error.  nthreads cannot be larger than environment variable "NUMEXPR_MAX_THREADS" (64)2025-03-28 11:34:38 - INFO - Starting processing with task: MeRest, description: BandsEnv
+2025-03-28 11:34:38 - INFO - 
+Config Debug:
+2025-03-28 11:34:38 - INFO - Code root: /home/slouviot/01_projects/eeg_brain_state_prediction
+2025-03-28 11:34:38 - INFO - Data root: /data2/Projects/eeg_fmri_natview/chang_data/derivatives
+2025-03-28 11:34:38 - INFO - Data directory: /home/slouviot/01_projects/eeg_brain_state_prediction/data/chang_data/eeg_bands
+2025-03-28 11:34:38 - INFO - Found 11 subjects to process
+2025-03-28 11:34:42 - INFO - 
+Processing subject: 0010
+2025-03-28 12:48:14 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/chang_data/eeg_bands/sub-0010_task-MeRest_desc-BandsEnvGroupLevel_predictions.csv
+2025-03-28 12:48:14 - INFO - 
+Processing subject: 0012
+2025-03-28 14:01:59 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/chang_data/eeg_bands/sub-0012_task-MeRest_desc-BandsEnvGroupLevel_predictions.csv
+2025-03-28 14:01:59 - INFO - 
+Processing subject: 0014
+2025-03-28 15:15:13 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/chang_data/eeg_bands/sub-0014_task-MeRest_desc-BandsEnvGroupLevel_predictions.csv
+2025-03-28 15:15:13 - INFO - 
+Processing subject: 0016
+2025-03-28 16:28:08 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/chang_data/eeg_bands/sub-0016_task-MeRest_desc-BandsEnvGroupLevel_predictions.csv
+2025-03-28 16:28:08 - INFO - 
+Processing subject: 0021
+2025-03-28 17:07:15 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/chang_data/eeg_bands/sub-0021_task-MeRest_desc-BandsEnvGroupLevel_predictions.csv
+2025-03-28 17:07:15 - INFO - 
+Processing subject: 0027
+2025-03-28 17:46:18 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/chang_data/eeg_bands/sub-0027_task-MeRest_desc-BandsEnvGroupLevel_predictions.csv
+2025-03-28 17:46:18 - INFO - 
+Processing subject: 0028
+2025-03-28 18:25:21 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/chang_data/eeg_bands/sub-0028_task-MeRest_desc-BandsEnvGroupLevel_predictions.csv
+2025-03-28 18:25:21 - INFO - 
+Processing subject: 0029
+2025-03-28 19:04:22 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/chang_data/eeg_bands/sub-0029_task-MeRest_desc-BandsEnvGroupLevel_predictions.csv
+2025-03-28 19:04:22 - INFO - 
+Processing subject: 0030
+2025-03-28 19:43:27 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/chang_data/eeg_bands/sub-0030_task-MeRest_desc-BandsEnvGroupLevel_predictions.csv
+2025-03-28 19:43:27 - INFO - 
+Processing subject: 0031
+2025-03-28 20:25:04 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/chang_data/eeg_bands/sub-0031_task-MeRest_desc-BandsEnvGroupLevel_predictions.csv
+2025-03-28 20:25:04 - INFO - 
+Processing subject: 0032
+2025-03-28 21:04:09 - INFO - Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/chang_data/eeg_bands/sub-0032_task-MeRest_desc-BandsEnvGroupLevel_predictions.csv
+2025-03-28 21:04:09 - INFO - 
+Processing completed successfully
+Creating BIDS architecture with parameters: {'root': PosixPath('/data2/Projects/eeg_fmri_natview/chang_data/derivatives'), 'datatype': 'multimodal', 'suffix': 'multimodal', 'description': 'BandsEnv', 'task': 'MeRest', 'extension': '.pkl'}
+Data root path exists: True
+Full data root path: /data2/Projects/eeg_fmri_natview/chang_data/derivatives
+Database info: (15, 14)
+Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/chang_data/eeg_bands/sub-0010_task-MeRest_desc-BandsEnvGroupLevel_predictions.csv
+File saved successfully with 270 rows
+Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/chang_data/eeg_bands/sub-0012_task-MeRest_desc-BandsEnvGroupLevel_predictions.csv
+File saved successfully with 270 rows
+Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/chang_data/eeg_bands/sub-0014_task-MeRest_desc-BandsEnvGroupLevel_predictions.csv
+File saved successfully with 270 rows
+Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/chang_data/eeg_bands/sub-0016_task-MeRest_desc-BandsEnvGroupLevel_predictions.csv
+File saved successfully with 270 rows
+Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/chang_data/eeg_bands/sub-0021_task-MeRest_desc-BandsEnvGroupLevel_predictions.csv
+File saved successfully with 270 rows
+Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/chang_data/eeg_bands/sub-0027_task-MeRest_desc-BandsEnvGroupLevel_predictions.csv
+File saved successfully with 270 rows
+Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/chang_data/eeg_bands/sub-0028_task-MeRest_desc-BandsEnvGroupLevel_predictions.csv
+File saved successfully with 270 rows
+Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/chang_data/eeg_bands/sub-0029_task-MeRest_desc-BandsEnvGroupLevel_predictions.csv
+File saved successfully with 270 rows
+Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/chang_data/eeg_bands/sub-0030_task-MeRest_desc-BandsEnvGroupLevel_predictions.csv
+File saved successfully with 270 rows
+Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/chang_data/eeg_bands/sub-0031_task-MeRest_desc-BandsEnvGroupLevel_predictions.csv
+File saved successfully with 270 rows
+Saving results to: /home/slouviot/01_projects/eeg_brain_state_prediction/data/chang_data/eeg_bands/sub-0032_task-MeRest_desc-BandsEnvGroupLevel_predictions.csv
+File saved successfully with 270 rows

@@ -1,0 +1,551 @@
+Extracting EDF parameters from /data2/Projects/eeg_fmri_natview/chang_data/raw/sub-0010/ses-01/eeg/sub-0010_ses-01_task-MeRest_acq-mr0009_eeg.edf...
+EDF file detected
+Setting channel info structure...
+Creating raw.info structure...
+Reading 0 ... 367499  =      0.000 ...  1469.996 secs...
+Sampling frequency of the instance is already 250.0, returning unmodified.
+Filtering raw data in 1 contiguous segment
+Setting up band-pass filter from 1 - 30 Hz
+
+FIR filter parameters
+---------------------
+Designing a one-pass, zero-phase, non-causal bandpass filter:
+- Windowed time-domain design (firwin) method
+- Hamming window with 0.0194 passband ripple and 53 dB stopband attenuation
+- Lower passband edge: 1.00
+- Lower transition bandwidth: 1.00 Hz (-6 dB cutoff frequency: 0.50 Hz)
+- Upper passband edge: 30.00 Hz
+- Upper transition bandwidth: 7.50 Hz (-6 dB cutoff frequency: 33.75 Hz)
+- Filter length: 825 samples (3.300 s)
+
+[Parallel(n_jobs=1)]: Done  17 tasks      | elapsed:    0.1s
+NOTE: pick_channels() is a legacy function. New code should use inst.pick(...).
+Not setting metadata
+700 matching events found
+Setting baseline interval to [-10.0, 0.0] s
+Applying baseline correction (mode: mean)
+0 projection items activated
+Using data from preloaded Raw for 700 events and 2501 original time points ...
+5 bad epochs dropped
+Extracting EDF parameters from /data2/Projects/eeg_fmri_natview/chang_data/raw/sub-0010/ses-01/eeg/sub-0010_ses-01_task-MeRest_acq-mr0015_eeg.edf...
+EDF file detected
+Setting channel info structure...
+Creating raw.info structure...
+Reading 0 ... 367499  =      0.000 ...  1469.996 secs...
+Sampling frequency of the instance is already 250.0, returning unmodified.
+Filtering raw data in 1 contiguous segment
+Setting up band-pass filter from 1 - 30 Hz
+
+FIR filter parameters
+---------------------
+Designing a one-pass, zero-phase, non-causal bandpass filter:
+- Windowed time-domain design (firwin) method
+- Hamming window with 0.0194 passband ripple and 53 dB stopband attenuation
+- Lower passband edge: 1.00
+- Lower transition bandwidth: 1.00 Hz (-6 dB cutoff frequency: 0.50 Hz)
+- Upper passband edge: 30.00 Hz
+- Upper transition bandwidth: 7.50 Hz (-6 dB cutoff frequency: 33.75 Hz)
+- Filter length: 825 samples (3.300 s)
+
+[Parallel(n_jobs=1)]: Done  17 tasks      | elapsed:    0.1s
+NOTE: pick_channels() is a legacy function. New code should use inst.pick(...).
+Not setting metadata
+700 matching events found
+Setting baseline interval to [-10.0, 0.0] s
+Applying baseline correction (mode: mean)
+0 projection items activated
+Using data from preloaded Raw for 700 events and 2501 original time points ...
+5 bad epochs dropped
+Extracting EDF parameters from /data2/Projects/eeg_fmri_natview/chang_data/raw/sub-0012/ses-01/eeg/sub-0012_ses-01_task-MeRest_acq-mr0012_eeg.edf...
+EDF file detected
+Setting channel info structure...
+Creating raw.info structure...
+Reading 0 ... 367749  =      0.000 ...  1470.996 secs...
+Sampling frequency of the instance is already 250.0, returning unmodified.
+Filtering raw data in 1 contiguous segment
+Setting up band-pass filter from 1 - 30 Hz
+
+FIR filter parameters
+---------------------
+Designing a one-pass, zero-phase, non-causal bandpass filter:
+- Windowed time-domain design (firwin) method
+- Hamming window with 0.0194 passband ripple and 53 dB stopband attenuation
+- Lower passband edge: 1.00
+- Lower transition bandwidth: 1.00 Hz (-6 dB cutoff frequency: 0.50 Hz)
+- Upper passband edge: 30.00 Hz
+- Upper transition bandwidth: 7.50 Hz (-6 dB cutoff frequency: 33.75 Hz)
+- Filter length: 825 samples (3.300 s)
+
+[Parallel(n_jobs=1)]: Done  17 tasks      | elapsed:    0.1s
+NOTE: pick_channels() is a legacy function. New code should use inst.pick(...).
+Not setting metadata
+700 matching events found
+Setting baseline interval to [-10.0, 0.0] s
+Applying baseline correction (mode: mean)
+0 projection items activated
+Using data from preloaded Raw for 700 events and 2501 original time points ...
+5 bad epochs dropped
+Extracting EDF parameters from /data2/Projects/eeg_fmri_natview/chang_data/raw/sub-0012/ses-01/eeg/sub-0012_ses-01_task-MeRest_acq-mr0018_eeg.edf...
+EDF file detected
+Setting channel info structure...
+Creating raw.info structure...
+Reading 0 ... 367749  =      0.000 ...  1470.996 secs...
+Sampling frequency of the instance is already 250.0, returning unmodified.
+Filtering raw data in 1 contiguous segment
+Setting up band-pass filter from 1 - 30 Hz
+
+FIR filter parameters
+---------------------
+Designing a one-pass, zero-phase, non-causal bandpass filter:
+- Windowed time-domain design (firwin) method
+- Hamming window with 0.0194 passband ripple and 53 dB stopband attenuation
+- Lower passband edge: 1.00
+- Lower transition bandwidth: 1.00 Hz (-6 dB cutoff frequency: 0.50 Hz)
+- Upper passband edge: 30.00 Hz
+- Upper transition bandwidth: 7.50 Hz (-6 dB cutoff frequency: 33.75 Hz)
+- Filter length: 825 samples (3.300 s)
+
+[Parallel(n_jobs=1)]: Done  17 tasks      | elapsed:    0.1s
+NOTE: pick_channels() is a legacy function. New code should use inst.pick(...).
+Not setting metadata
+700 matching events found
+Setting baseline interval to [-10.0, 0.0] s
+Applying baseline correction (mode: mean)
+0 projection items activated
+Using data from preloaded Raw for 700 events and 2501 original time points ...
+5 bad epochs dropped
+Extracting EDF parameters from /data2/Projects/eeg_fmri_natview/chang_data/raw/sub-0014/ses-01/eeg/sub-0014_ses-01_task-MeRest_acq-mr0012_eeg.edf...
+EDF file detected
+Setting channel info structure...
+Creating raw.info structure...
+Reading 0 ... 367749  =      0.000 ...  1470.996 secs...
+Sampling frequency of the instance is already 250.0, returning unmodified.
+Filtering raw data in 1 contiguous segment
+Setting up band-pass filter from 1 - 30 Hz
+
+FIR filter parameters
+---------------------
+Designing a one-pass, zero-phase, non-causal bandpass filter:
+- Windowed time-domain design (firwin) method
+- Hamming window with 0.0194 passband ripple and 53 dB stopband attenuation
+- Lower passband edge: 1.00
+- Lower transition bandwidth: 1.00 Hz (-6 dB cutoff frequency: 0.50 Hz)
+- Upper passband edge: 30.00 Hz
+- Upper transition bandwidth: 7.50 Hz (-6 dB cutoff frequency: 33.75 Hz)
+- Filter length: 825 samples (3.300 s)
+
+[Parallel(n_jobs=1)]: Done  17 tasks      | elapsed:    0.1s
+NOTE: pick_channels() is a legacy function. New code should use inst.pick(...).
+Not setting metadata
+700 matching events found
+Setting baseline interval to [-10.0, 0.0] s
+Applying baseline correction (mode: mean)
+0 projection items activated
+Using data from preloaded Raw for 700 events and 2501 original time points ...
+5 bad epochs dropped
+Extracting EDF parameters from /data2/Projects/eeg_fmri_natview/chang_data/raw/sub-0014/ses-01/eeg/sub-0014_ses-01_task-MeRest_acq-mr0018_eeg.edf...
+EDF file detected
+Setting channel info structure...
+Creating raw.info structure...
+Reading 0 ... 367749  =      0.000 ...  1470.996 secs...
+Sampling frequency of the instance is already 250.0, returning unmodified.
+Filtering raw data in 1 contiguous segment
+Setting up band-pass filter from 1 - 30 Hz
+
+FIR filter parameters
+---------------------
+Designing a one-pass, zero-phase, non-causal bandpass filter:
+- Windowed time-domain design (firwin) method
+- Hamming window with 0.0194 passband ripple and 53 dB stopband attenuation
+- Lower passband edge: 1.00
+- Lower transition bandwidth: 1.00 Hz (-6 dB cutoff frequency: 0.50 Hz)
+- Upper passband edge: 30.00 Hz
+- Upper transition bandwidth: 7.50 Hz (-6 dB cutoff frequency: 33.75 Hz)
+- Filter length: 825 samples (3.300 s)
+
+[Parallel(n_jobs=1)]: Done  17 tasks      | elapsed:    0.1s
+NOTE: pick_channels() is a legacy function. New code should use inst.pick(...).
+Not setting metadata
+700 matching events found
+Setting baseline interval to [-10.0, 0.0] s
+Applying baseline correction (mode: mean)
+0 projection items activated
+Using data from preloaded Raw for 700 events and 2501 original time points ...
+5 bad epochs dropped
+Extracting EDF parameters from /data2/Projects/eeg_fmri_natview/chang_data/raw/sub-0016/ses-01/eeg/sub-0016_ses-01_task-MeRest_acq-mr0015_eeg.edf...
+EDF file detected
+Setting channel info structure...
+Creating raw.info structure...
+Reading 0 ... 367499  =      0.000 ...  1469.996 secs...
+Sampling frequency of the instance is already 250.0, returning unmodified.
+Filtering raw data in 1 contiguous segment
+Setting up band-pass filter from 1 - 30 Hz
+
+FIR filter parameters
+---------------------
+Designing a one-pass, zero-phase, non-causal bandpass filter:
+- Windowed time-domain design (firwin) method
+- Hamming window with 0.0194 passband ripple and 53 dB stopband attenuation
+- Lower passband edge: 1.00
+- Lower transition bandwidth: 1.00 Hz (-6 dB cutoff frequency: 0.50 Hz)
+- Upper passband edge: 30.00 Hz
+- Upper transition bandwidth: 7.50 Hz (-6 dB cutoff frequency: 33.75 Hz)
+- Filter length: 825 samples (3.300 s)
+
+[Parallel(n_jobs=1)]: Done  17 tasks      | elapsed:    0.1s
+NOTE: pick_channels() is a legacy function. New code should use inst.pick(...).
+Not setting metadata
+700 matching events found
+Setting baseline interval to [-10.0, 0.0] s
+Applying baseline correction (mode: mean)
+0 projection items activated
+Using data from preloaded Raw for 700 events and 2501 original time points ...
+5 bad epochs dropped
+Extracting EDF parameters from /data2/Projects/eeg_fmri_natview/chang_data/raw/sub-0016/ses-01/eeg/sub-0016_ses-01_task-MeRest_acq-mr0006_eeg.edf...
+EDF file detected
+Setting channel info structure...
+Creating raw.info structure...
+Reading 0 ... 367749  =      0.000 ...  1470.996 secs...
+Sampling frequency of the instance is already 250.0, returning unmodified.
+Filtering raw data in 1 contiguous segment
+Setting up band-pass filter from 1 - 30 Hz
+
+FIR filter parameters
+---------------------
+Designing a one-pass, zero-phase, non-causal bandpass filter:
+- Windowed time-domain design (firwin) method
+- Hamming window with 0.0194 passband ripple and 53 dB stopband attenuation
+- Lower passband edge: 1.00
+- Lower transition bandwidth: 1.00 Hz (-6 dB cutoff frequency: 0.50 Hz)
+- Upper passband edge: 30.00 Hz
+- Upper transition bandwidth: 7.50 Hz (-6 dB cutoff frequency: 33.75 Hz)
+- Filter length: 825 samples (3.300 s)
+
+[Parallel(n_jobs=1)]: Done  17 tasks      | elapsed:    0.1s
+NOTE: pick_channels() is a legacy function. New code should use inst.pick(...).
+Not setting metadata
+700 matching events found
+Setting baseline interval to [-10.0, 0.0] s
+Applying baseline correction (mode: mean)
+0 projection items activated
+Using data from preloaded Raw for 700 events and 2501 original time points ...
+5 bad epochs dropped
+Extracting EDF parameters from /data2/Projects/eeg_fmri_natview/chang_data/raw/sub-0021/ses-01/eeg/sub-0021_ses-01_task-MeRest_acq-mr0012_eeg.edf...
+EDF file detected
+Setting channel info structure...
+Creating raw.info structure...
+Reading 0 ... 367749  =      0.000 ...  1470.996 secs...
+Sampling frequency of the instance is already 250.0, returning unmodified.
+Filtering raw data in 1 contiguous segment
+Setting up band-pass filter from 1 - 30 Hz
+
+FIR filter parameters
+---------------------
+Designing a one-pass, zero-phase, non-causal bandpass filter:
+- Windowed time-domain design (firwin) method
+- Hamming window with 0.0194 passband ripple and 53 dB stopband attenuation
+- Lower passband edge: 1.00
+- Lower transition bandwidth: 1.00 Hz (-6 dB cutoff frequency: 0.50 Hz)
+- Upper passband edge: 30.00 Hz
+- Upper transition bandwidth: 7.50 Hz (-6 dB cutoff frequency: 33.75 Hz)
+- Filter length: 825 samples (3.300 s)
+
+[Parallel(n_jobs=1)]: Done  17 tasks      | elapsed:    0.1s
+NOTE: pick_channels() is a legacy function. New code should use inst.pick(...).
+Not setting metadata
+700 matching events found
+Setting baseline interval to [-10.0, 0.0] s
+Applying baseline correction (mode: mean)
+0 projection items activated
+Using data from preloaded Raw for 700 events and 2501 original time points ...
+5 bad epochs dropped
+Extracting EDF parameters from /data2/Projects/eeg_fmri_natview/chang_data/raw/sub-0027/ses-01/eeg/sub-0027_ses-01_task-MeRest_acq-mr0009_eeg.edf...
+EDF file detected
+Setting channel info structure...
+Creating raw.info structure...
+Reading 0 ... 367499  =      0.000 ...  1469.996 secs...
+Sampling frequency of the instance is already 250.0, returning unmodified.
+Filtering raw data in 1 contiguous segment
+Setting up band-pass filter from 1 - 30 Hz
+
+FIR filter parameters
+---------------------
+Designing a one-pass, zero-phase, non-causal bandpass filter:
+- Windowed time-domain design (firwin) method
+- Hamming window with 0.0194 passband ripple and 53 dB stopband attenuation
+- Lower passband edge: 1.00
+- Lower transition bandwidth: 1.00 Hz (-6 dB cutoff frequency: 0.50 Hz)
+- Upper passband edge: 30.00 Hz
+- Upper transition bandwidth: 7.50 Hz (-6 dB cutoff frequency: 33.75 Hz)
+- Filter length: 825 samples (3.300 s)
+
+[Parallel(n_jobs=1)]: Done  17 tasks      | elapsed:    0.1s
+NOTE: pick_channels() is a legacy function. New code should use inst.pick(...).
+Not setting metadata
+700 matching events found
+Setting baseline interval to [-10.0, 0.0] s
+Applying baseline correction (mode: mean)
+0 projection items activated
+Using data from preloaded Raw for 700 events and 2501 original time points ...
+5 bad epochs dropped
+Extracting EDF parameters from /data2/Projects/eeg_fmri_natview/chang_data/raw/sub-0028/ses-01/eeg/sub-0028_ses-01_task-MeRest_acq-mr0012_eeg.edf...
+EDF file detected
+Setting channel info structure...
+Creating raw.info structure...
+Reading 0 ... 367499  =      0.000 ...  1469.996 secs...
+Sampling frequency of the instance is already 250.0, returning unmodified.
+Filtering raw data in 1 contiguous segment
+Setting up band-pass filter from 1 - 30 Hz
+
+FIR filter parameters
+---------------------
+Designing a one-pass, zero-phase, non-causal bandpass filter:
+- Windowed time-domain design (firwin) method
+- Hamming window with 0.0194 passband ripple and 53 dB stopband attenuation
+- Lower passband edge: 1.00
+- Lower transition bandwidth: 1.00 Hz (-6 dB cutoff frequency: 0.50 Hz)
+- Upper passband edge: 30.00 Hz
+- Upper transition bandwidth: 7.50 Hz (-6 dB cutoff frequency: 33.75 Hz)
+- Filter length: 825 samples (3.300 s)
+
+[Parallel(n_jobs=1)]: Done  17 tasks      | elapsed:    0.1s
+NOTE: pick_channels() is a legacy function. New code should use inst.pick(...).
+Not setting metadata
+700 matching events found
+Setting baseline interval to [-10.0, 0.0] s
+Applying baseline correction (mode: mean)
+0 projection items activated
+Using data from preloaded Raw for 700 events and 2501 original time points ...
+5 bad epochs dropped
+Extracting EDF parameters from /data2/Projects/eeg_fmri_natview/chang_data/raw/sub-0029/ses-01/eeg/sub-0029_ses-01_task-MeRest_acq-mr0012_eeg.edf...
+EDF file detected
+Setting channel info structure...
+Creating raw.info structure...
+Reading 0 ... 367499  =      0.000 ...  1469.996 secs...
+Sampling frequency of the instance is already 250.0, returning unmodified.
+Filtering raw data in 1 contiguous segment
+Setting up band-pass filter from 1 - 30 Hz
+
+FIR filter parameters
+---------------------
+Designing a one-pass, zero-phase, non-causal bandpass filter:
+- Windowed time-domain design (firwin) method
+- Hamming window with 0.0194 passband ripple and 53 dB stopband attenuation
+- Lower passband edge: 1.00
+- Lower transition bandwidth: 1.00 Hz (-6 dB cutoff frequency: 0.50 Hz)
+- Upper passband edge: 30.00 Hz
+- Upper transition bandwidth: 7.50 Hz (-6 dB cutoff frequency: 33.75 Hz)
+- Filter length: 825 samples (3.300 s)
+
+[Parallel(n_jobs=1)]: Done  17 tasks      | elapsed:    0.1s
+NOTE: pick_channels() is a legacy function. New code should use inst.pick(...).
+Not setting metadata
+700 matching events found
+Setting baseline interval to [-10.0, 0.0] s
+Applying baseline correction (mode: mean)
+0 projection items activated
+Using data from preloaded Raw for 700 events and 2501 original time points ...
+5 bad epochs dropped
+Extracting EDF parameters from /data2/Projects/eeg_fmri_natview/chang_data/raw/sub-0030/ses-01/eeg/sub-0030_ses-01_task-MeRest_acq-mr0009_eeg.edf...
+EDF file detected
+Setting channel info structure...
+Creating raw.info structure...
+Reading 0 ... 367499  =      0.000 ...  1469.996 secs...
+Sampling frequency of the instance is already 250.0, returning unmodified.
+Filtering raw data in 1 contiguous segment
+Setting up band-pass filter from 1 - 30 Hz
+
+FIR filter parameters
+---------------------
+Designing a one-pass, zero-phase, non-causal bandpass filter:
+- Windowed time-domain design (firwin) method
+- Hamming window with 0.0194 passband ripple and 53 dB stopband attenuation
+- Lower passband edge: 1.00
+- Lower transition bandwidth: 1.00 Hz (-6 dB cutoff frequency: 0.50 Hz)
+- Upper passband edge: 30.00 Hz
+- Upper transition bandwidth: 7.50 Hz (-6 dB cutoff frequency: 33.75 Hz)
+- Filter length: 825 samples (3.300 s)
+
+[Parallel(n_jobs=1)]: Done  17 tasks      | elapsed:    0.1s
+NOTE: pick_channels() is a legacy function. New code should use inst.pick(...).
+Not setting metadata
+700 matching events found
+Setting baseline interval to [-10.0, 0.0] s
+Applying baseline correction (mode: mean)
+0 projection items activated
+Using data from preloaded Raw for 700 events and 2501 original time points ...
+5 bad epochs dropped
+Extracting EDF parameters from /data2/Projects/eeg_fmri_natview/chang_data/raw/sub-0031/ses-01/eeg/sub-0031_ses-01_task-MeRest_acq-mr0015_eeg.edf...
+EDF file detected
+Setting channel info structure...
+Creating raw.info structure...
+Reading 0 ... 367499  =      0.000 ...  1469.996 secs...
+Sampling frequency of the instance is already 250.0, returning unmodified.
+Filtering raw data in 1 contiguous segment
+Setting up band-pass filter from 1 - 30 Hz
+
+FIR filter parameters
+---------------------
+Designing a one-pass, zero-phase, non-causal bandpass filter:
+- Windowed time-domain design (firwin) method
+- Hamming window with 0.0194 passband ripple and 53 dB stopband attenuation
+- Lower passband edge: 1.00
+- Lower transition bandwidth: 1.00 Hz (-6 dB cutoff frequency: 0.50 Hz)
+- Upper passband edge: 30.00 Hz
+- Upper transition bandwidth: 7.50 Hz (-6 dB cutoff frequency: 33.75 Hz)
+- Filter length: 825 samples (3.300 s)
+
+[Parallel(n_jobs=1)]: Done  17 tasks      | elapsed:    0.1s
+NOTE: pick_channels() is a legacy function. New code should use inst.pick(...).
+Not setting metadata
+700 matching events found
+Setting baseline interval to [-10.0, 0.0] s
+Applying baseline correction (mode: mean)
+0 projection items activated
+Using data from preloaded Raw for 700 events and 2501 original time points ...
+5 bad epochs dropped
+Extracting EDF parameters from /data2/Projects/eeg_fmri_natview/chang_data/raw/sub-0032/ses-01/eeg/sub-0032_ses-01_task-MeRest_acq-mr0009_eeg.edf...
+EDF file detected
+Setting channel info structure...
+Creating raw.info structure...
+Reading 0 ... 367749  =      0.000 ...  1470.996 secs...
+Sampling frequency of the instance is already 250.0, returning unmodified.
+Filtering raw data in 1 contiguous segment
+Setting up band-pass filter from 1 - 30 Hz
+
+FIR filter parameters
+---------------------
+Designing a one-pass, zero-phase, non-causal bandpass filter:
+- Windowed time-domain design (firwin) method
+- Hamming window with 0.0194 passband ripple and 53 dB stopband attenuation
+- Lower passband edge: 1.00
+- Lower transition bandwidth: 1.00 Hz (-6 dB cutoff frequency: 0.50 Hz)
+- Upper passband edge: 30.00 Hz
+- Upper transition bandwidth: 7.50 Hz (-6 dB cutoff frequency: 33.75 Hz)
+- Filter length: 825 samples (3.300 s)
+
+[Parallel(n_jobs=1)]: Done  17 tasks      | elapsed:    0.1s
+NOTE: pick_channels() is a legacy function. New code should use inst.pick(...).
+Not setting metadata
+700 matching events found
+Setting baseline interval to [-10.0, 0.0] s
+Applying baseline correction (mode: mean)
+0 projection items activated
+Using data from preloaded Raw for 700 events and 2501 original time points ...
+5 bad epochs dropped
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+['Covariances', 'SVC']
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:   43.2s remaining:  3.2min
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  1.2min remaining:  1.5min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed:  1.7min remaining:   38.2s
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed:  2.2min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/sklearn/linear_model/_logistic.py:465: ConvergenceWarning: lbfgs failed to converge (status=1):
+STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
+
+Increase the number of iterations (max_iter) or scale the data as shown in:
+    https://scikit-learn.org/stable/modules/preprocessing.html
+Please also refer to the documentation for alternative solver options:
+    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
+  n_iter_i = _check_optimize_result(
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/sklearn/linear_model/_logistic.py:465: ConvergenceWarning: lbfgs failed to converge (status=1):
+STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
+
+Increase the number of iterations (max_iter) or scale the data as shown in:
+    https://scikit-learn.org/stable/modules/preprocessing.html
+Please also refer to the documentation for alternative solver options:
+    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
+  n_iter_i = _check_optimize_result(
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:   43.7s remaining:  3.3min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/sklearn/linear_model/_logistic.py:465: ConvergenceWarning: lbfgs failed to converge (status=1):
+STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
+
+Increase the number of iterations (max_iter) or scale the data as shown in:
+    https://scikit-learn.org/stable/modules/preprocessing.html
+Please also refer to the documentation for alternative solver options:
+    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
+  n_iter_i = _check_optimize_result(
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/sklearn/linear_model/_logistic.py:465: ConvergenceWarning: lbfgs failed to converge (status=1):
+STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
+
+Increase the number of iterations (max_iter) or scale the data as shown in:
+    https://scikit-learn.org/stable/modules/preprocessing.html
+Please also refer to the documentation for alternative solver options:
+    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
+  n_iter_i = _check_optimize_result(
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/sklearn/linear_model/_logistic.py:465: ConvergenceWarning: lbfgs failed to converge (status=1):
+STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
+
+Increase the number of iterations (max_iter) or scale the data as shown in:
+    https://scikit-learn.org/stable/modules/preprocessing.html
+Please also refer to the documentation for alternative solver options:
+    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
+  n_iter_i = _check_optimize_result(
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  1.2min remaining:  1.4min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/sklearn/linear_model/_logistic.py:465: ConvergenceWarning: lbfgs failed to converge (status=1):
+STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
+
+Increase the number of iterations (max_iter) or scale the data as shown in:
+    https://scikit-learn.org/stable/modules/preprocessing.html
+Please also refer to the documentation for alternative solver options:
+    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
+  n_iter_i = _check_optimize_result(
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/sklearn/linear_model/_logistic.py:465: ConvergenceWarning: lbfgs failed to converge (status=1):
+STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
+
+Increase the number of iterations (max_iter) or scale the data as shown in:
+    https://scikit-learn.org/stable/modules/preprocessing.html
+Please also refer to the documentation for alternative solver options:
+    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
+  n_iter_i = _check_optimize_result(
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/sklearn/linear_model/_logistic.py:465: ConvergenceWarning: lbfgs failed to converge (status=1):
+STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
+
+Increase the number of iterations (max_iter) or scale the data as shown in:
+    https://scikit-learn.org/stable/modules/preprocessing.html
+Please also refer to the documentation for alternative solver options:
+    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
+  n_iter_i = _check_optimize_result(
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed:  1.7min remaining:   37.4s
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/sklearn/linear_model/_logistic.py:465: ConvergenceWarning: lbfgs failed to converge (status=1):
+STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
+
+Increase the number of iterations (max_iter) or scale the data as shown in:
+    https://scikit-learn.org/stable/modules/preprocessing.html
+Please also refer to the documentation for alternative solver options:
+    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
+  n_iter_i = _check_optimize_result(
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/sklearn/linear_model/_logistic.py:465: ConvergenceWarning: lbfgs failed to converge (status=1):
+STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
+
+Increase the number of iterations (max_iter) or scale the data as shown in:
+    https://scikit-learn.org/stable/modules/preprocessing.html
+Please also refer to the documentation for alternative solver options:
+    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
+  n_iter_i = _check_optimize_result(
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/sklearn/linear_model/_logistic.py:465: ConvergenceWarning: lbfgs failed to converge (status=1):
+STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
+
+Increase the number of iterations (max_iter) or scale the data as shown in:
+    https://scikit-learn.org/stable/modules/preprocessing.html
+Please also refer to the documentation for alternative solver options:
+    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
+  n_iter_i = _check_optimize_result(
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed:  2.1min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:   42.6s remaining:  3.2min
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  1.2min remaining:  1.4min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed:  1.7min remaining:   37.7s
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed:  2.1min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+['Covariances', 'TSclassifier']
+['Covariances', 'CSP', 'SVC']
+['Covariances', 'CSP', 'TSclassifier']
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:   37.6s remaining:  2.8min
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  1.2min remaining:  1.4min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed:  1.7min remaining:   37.6s
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed:  2.2min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:   52.8s remaining:  4.0min
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  1.4min remaining:  1.7min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed:  2.0min remaining:   45.0s

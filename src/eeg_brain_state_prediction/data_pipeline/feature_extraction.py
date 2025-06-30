@@ -1,4 +1,5 @@
 import os
+import numpy as np
 import functools
 from pathlib import Path
 
@@ -19,43 +20,15 @@ from eeg_brain_state_prediction.tools.configs import (
 from eeg_brain_state_prediction.data_pipeline.tools.eeg import (
     EEGfeatures,
     crop,
+    extract_envelope,
+    extract_frequency_bands,
+    extract_gfp,
+    ssd_low_rank_factorization
 )
 
 from eeg_brain_state_prediction.data_pipeline.tools.utils import ProcessingError, log_execution
 
 logger = utils.setup_logger(__name__, "feature_extraction_pipeline.log")
-
-def prepare_pipeline(func):
-    @functools.wraps(func)
-    def wrapper(*args, **kwargs) -> None:
-        path = bids.BidsPath(
-            root = kwargs["raw_path"],
-            subject = kwargs["subject"],
-            session = kwargs["session"],
-            task = kwargs["task"],
-            run = kwargs["run"],
-            datatype = "eeg",
-            suffix = "eeg",
-            extension = ".edf",
-            )
-        
-        logger.info("Starting processing of file: %s", path.fullpath)
-            
-        if not os.path.exists(path.fullpath):
-            raise FileNotFoundError(f"Input file not found: {path.fullpath}")
-            
-        output_path = setup_path(
-            filename = path.fullpath,
-            pipeline_config = kwargs["pipeline_config"],
-            eeg_config = kwargs["eeg_config"]
-            )
-
-        #try:
-        return func(*args, **kwargs, output_path=output_path)
-        #except Exception as e:
-        #    raise ProcessingError(e)
-            
-    return wrapper
 
 def setup_path(filename: str | Path,
                pipeline_config: PipelineConfig,
@@ -76,17 +49,12 @@ def setup_path(filename: str | Path,
     return bids_path
 
 @log_execution(logger)
-@prepare_pipeline
 def pipeline(
-    raw_path: Path,
-    subject: str,
-    session: str,
-    task: str,
-    run: str,
+    element: pd.Series,
     pipeline_config: PipelineConfig,
     eeg_config: EegConfig,
     eeg_features_config: EegFeaturesConfig,
-    output_path: bids.BidsPath,
+    overwrite: bool,
 ) -> None:
     """Process individual EEG file for feature extraction
     
@@ -100,19 +68,8 @@ def pipeline(
         ProcessingError: If processing fails
         FileNotFoundError: If input file doesn't exist
     """
-    raw_path = bids.BidsPath(
-        root = raw_path,
-        subject = subject,
-        session = session,
-        task = task,
-        run = run,
-        datatype = "eeg",
-        suffix = "eeg",
-        extension = ".edf",
-        )
-
     raw = mne.io.read_raw_edf(
-        raw_path.fullpath,
+        element["filename"],
         preload=True
         )
     
@@ -121,13 +78,33 @@ def pipeline(
         feature_config=eeg_features_config,
         eeg_config=eeg_config,
     )
+
+    tmin, tmax = utils.get_gradient_first_and_last_occurence(raw)
     
     eeg_features = crop(
         eeg_features=eeg_features,
-        eeg_config=eeg_config,
+        tmin=tmin,
+        tmax=tmax,
+        reset_time=True,
     )
+    
+    #eeg_features = extract_frequency_bands(eeg_features, eeg_features_config)
+    #eeg_features = extract_envelope(eeg_features)
+    #eeg_features = extract_gfp(eeg_features)
+    #eeg_features.mask = np.ones_like(eeg_features.time, dtype=bool) #For some reason chang data doesn't give any good data but after visual review the data are very good so I pute everything to True.
+    eeg_features = ssd_low_rank_factorization(eeg_features)
+    eeg_features = extract_envelope(eeg_features)
+    output_path = setup_path(
+        filename = element["filename"],
+        pipeline_config = pipeline_config,
+        eeg_config = eeg_config
+        )
 
-    eeg_features.save(output_path.fullpath)
+    if output_path.fullpath.exists() and not(overwrite):
+        return
+
+    else:   
+        eeg_features.save(output_path.fullpath)
 
 def main(pipeline_config: PipelineConfig,
          eeg_config: EegConfig,
@@ -141,36 +118,50 @@ def main(pipeline_config: PipelineConfig,
     architecture.select(
         subject=pipeline_config.subjects,
         task=pipeline_config.tasks,
+        datatype="eeg",
+        suffix="eeg",
+        extension=".edf",
         inplace=True
         )
 
     for file_id, element in architecture:
         pipeline(
-            raw_path=pipeline_config.raw_path,
-            subject=element.subject,
-            session=element.session,
-            task=element.task,
-            run=element.run,
+            element=element,
             pipeline_config=pipeline_config,
             eeg_config=eeg_config,
             eeg_features_config=eeg_features_config,
+            overwrite=pipeline_config.overwrite,
         )
     
 if __name__ == "__main__":
     pipeline_config = PipelineConfig(
-        raw_path=Path("/data2/Projects/eeg_fmri_natview/raw"),
-        derivatives_path=Path("/data2/Projects/eeg_fmri_natview/derivatives"),
+        raw_path=Path("/data2/Projects/eeg_fmri_natview/chang_data/raw"),
+        derivatives_path=Path("/data2/Projects/eeg_fmri_natview/chang_data/derivatives"),
         overwrite=True,
-        tasks=["rest", "checker"],
+        tasks=["MeRest"],
     )
     eeg_config = EegConfig(
-        sampling_rate_hz=200,
+        sampling_rate_hz=250,
         montage="easycap-M1",
         low_frequency_hz=0.5,
         high_frequency_hz=40,
+        description="SSDbandsEnv",
+        channels=['Fp1', 'Fp2', 'F3', 'F4', 'C3', 'C4', 'P3', 'P4', 'O1', 'O2', 'F7', 'F8', 'T7', 'T8', 'Fz', 'Cz', 'Pz', 'Oz', 'FC1', 'FC2', 'CP1', 'CP2', 'FC5', 'FC6', 'CP5', 'CP6', 'TP9', 'TP10', 'POz']
     )
+    #low_freq = np.arange(1,39)
+    #high_freq = np.arange(3,41)
+    #freqs = [couple for couple in zip(low_freq, high_freq)]
+    #freqs.insert(0, (0.5,2))
+    freqs = [
+        (0.5,4),
+        (4,8),
+        (8,13),
+        (13,30),
+        (30,40)
+    ]
+    
     eeg_features_config = EegFeaturesConfig(
-        frequencies=[(0.5, 40)],
+        frequencies=freqs,
     )
     main(pipeline_config, eeg_config, eeg_features_config)
 

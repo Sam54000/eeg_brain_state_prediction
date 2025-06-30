@@ -187,6 +187,12 @@ def extract_gradient_trigger_name(
     else:
             return None
     
+def get_gradient_first_and_last_occurence(raw: mne.io.Raw):
+    gradient_trigger_name = extract_gradient_trigger_name(raw)
+    events, event_id = mne.events_from_annotations(raw)
+    picked_events = mne.pick_events(events, include=[event_id[gradient_trigger_name]])
+    return picked_events[0, 0], picked_events[-1, 0]
+
 def measure_gradient_time(raw, print_results=True):
     gradient_trigger_name = extract_gradient_trigger_name(raw)
     events, event_id = mne.events_from_annotations(raw)

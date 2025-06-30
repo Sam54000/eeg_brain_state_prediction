@@ -1,5 +1,7 @@
 import numpy as np
+from mne.decoding import SSD
 import mne
+from scipy.signal import kaiserord, firwin
 from dataclasses import dataclass
 from typing import Optional, List
 import eeg_brain_state_prediction.data_pipeline.tools.eeg_channels as eeg_channels
@@ -19,78 +21,6 @@ from eeg_brain_state_prediction.data_pipeline.tools.utils import (
 from eeg_brain_state_prediction.data_pipeline.tools import features
 logger = setup_logger(__name__, "feature_extraction.log")
 
-def apply_fir_filter(data: np.ndarray, 
-                     sfreq: float, 
-                     l_freq: Optional[float] = None, 
-                     h_freq: Optional[float] = None, 
-                     filter_length: str = 'auto', 
-                     l_trans_bandwidth: float = 0.5, 
-                     h_trans_bandwidth: float = 0.5) -> np.ndarray:
-    """
-    Apply a zero-phase FIR filter to a time series along the time dimension (axis 1).
-
-    Args:
-        data (np.ndarray): The time series data to filter with shape (..., n_times, ...).
-        sfreq (float): Sampling frequency of the data.
-        l_freq (float or None): Lower cutoff frequency. 
-            If None, only a low-pass filter is applied (default is None).
-        h_freq (float or None): Upper cutoff frequency. 
-            If None, only a high-pass filter is applied (default is None).
-        filter_length (str or int): Length of the FIR filter. 
-            If 'auto', it will be determined automatically (default is 'auto').
-        l_trans_bandwidth (float): Width of the transition band for the high-pass filter (in Hz).
-        h_trans_bandwidth (float): Width of the transition band for the low-pass filter (in Hz).
-
-    Returns:
-        np.ndarray: The filtered time series with the same shape as input.
-
-    Raises:
-        ValueError: If cutoff frequencies exceed the Nyquist frequency (sfreq/2).
-    """
-    nyquist_freq = sfreq / 2
-
-    if l_freq is not None and l_freq >= nyquist_freq:
-        raise ValueError(f"Lower cutoff frequency ({l_freq} Hz) must be less than Nyquist frequency ({nyquist_freq} Hz)")
-    if h_freq is not None and h_freq >= nyquist_freq:
-        raise ValueError(f"Upper cutoff frequency ({h_freq} Hz) must be less than Nyquist frequency ({nyquist_freq} Hz)")
-
-    if filter_length == 'auto':
-        if l_freq is not None and h_freq is not None:
-            filter_length = 'auto'
-        elif l_freq is not None:
-            filter_length = '10s'
-        elif h_freq is not None:
-            filter_length = '10s'
-        else:
-            raise ValueError("No filtering requested (both l_freq and h_freq are None).")
-
-    if isinstance(filter_length, str):
-        if filter_length.endswith('s'):
-            filter_length = int(float(filter_length[:-1]) * sfreq)
-        else:
-            raise ValueError("filter_length must be 'auto' or a string ending with 's' (e.g., '10s').")
-
-    if l_freq is not None and h_freq is not None:
-        filt = signal.firwin(filter_length, [l_freq, h_freq], pass_zero=False, fs=sfreq,
-                             window='hamming', scale=False)
-    elif l_freq is not None:
-        filt = signal.firwin(filter_length, l_freq, pass_zero=False, fs=sfreq,
-                             window='hamming', scale=False)
-    elif h_freq is not None:
-        filt = signal.firwin(filter_length, h_freq, pass_zero=True, fs=sfreq,
-                             window='hamming', scale=False)
-    else:
-        raise ValueError("No filtering requested (both l_freq and h_freq are None).")
-
-    # Apply filter along time dimension (axis 1)
-    filtered_data = np.apply_along_axis(
-        lambda x: signal.filtfilt(filt, 1.0, x),
-        axis=1,
-        arr=data
-    )
-
-    return filtered_data
-
 @log_execution(logger)
 def extract_frequency_bands(
     eeg_features: "EEGfeatures",
@@ -107,34 +37,39 @@ def extract_frequency_bands(
     """
     extracted_feature = []
     for low_frequency, high_frequency in feature_config.frequencies:
-        filtered_feature = apply_fir_filter(eeg_features.feature,
-                                            eeg_features.raw.info["sfreq"],
-                                            l_freq=low_frequency, 
-                                            h_freq=high_frequency
-                                            )
+        temp = eeg_features.raw.copy().filter(
+            l_freq=low_frequency,
+            h_freq=high_frequency
+            )
+        filtered_feature = temp.get_data()
         extracted_feature.append(filtered_feature)
     
     extracted_feature = np.stack(extracted_feature, axis=2)
+    eeg_features.time = temp.times
     eeg_features.feature = extracted_feature
     eeg_features.feature_info.append(f"{len(feature_config.frequencies)} frequency bands extracted from {feature_config.frequencies[0][0]} to {feature_config.frequencies[-1][1]} Hz")
     return eeg_features
 
 @log_execution(logger)
 def crop(eeg_features: "EEGfeatures",
-         eeg_config: EegConfig,
+         tmin: Optional[float] = None,
+         tmax: Optional[float] = None,
+         reset_time: bool = True,
          ) -> "EEGfeatures":
-    if eeg_config.tmin is not None:
-        tmin_idx = np.argmin(np.abs(eeg_features.time - eeg_config.tmin))
-        eeg_features.feature = eeg_features.feature[:, tmin_idx:]
-        eeg_features.mask = eeg_features.mask[:, tmin_idx:]
-        eeg_features.time = eeg_features.time[tmin_idx:]
-    if eeg_config.tmax is not None:
-        tmax_idx = np.argmin(np.abs(eeg_features.time - eeg_config.tmax))
-        eeg_features.feature = eeg_features.feature[:, :tmax_idx]
-        eeg_features.mask = eeg_features.mask[:, :tmax_idx]
-        eeg_features.time = eeg_features.time[:tmax_idx]
+    if tmin is not None:
+        eeg_features.feature = eeg_features.feature[:, tmin:, :]
+        eeg_features.mask = eeg_features.mask[tmin:]
+        eeg_features.time = eeg_features.time[tmin:]
+    if tmax is not None:
+        eeg_features.feature = eeg_features.feature[:, :tmax, :]
+        eeg_features.mask = eeg_features.mask[:tmax]
+        eeg_features.time = eeg_features.time[:tmax]
     eeg_features.feature_info.append(
         f"Cropped from {eeg_features.time[0]}s to {eeg_features.time[-1]}s")
+    if reset_time:
+        eeg_features.time = eeg_features.time - eeg_features.time[0]
+        eeg_features.feature_info.append(
+            f"Reset time: {eeg_features.time[0]}s to {eeg_features.time[-1]}s")
     return eeg_features
 
 @log_execution(logger)
@@ -173,6 +108,43 @@ def resample(eeg_features: "EEGfeatures",
     eeg_features.feature_info.append(f"Resampled from {eeg_features.sfreq} Hz to {eeg_config.sampling_rate_hz} Hz")
     return eeg_features
 
+def ssd_low_rank_factorization(eeg_features: "EEGfeatures") -> "EEGfeatures":
+    extracted_features = []
+    for frequencies in eeg_features.feature_config.frequencies:
+        ssd = SSD(
+            info=eeg_features.raw.info,
+            reg="oas",
+            sort_by_spectral_ratio=True,
+            return_filtered=True,
+            n_components=6,
+            filt_params_signal=dict(
+                l_freq=frequencies[0],
+                h_freq=frequencies[1],
+                l_trans_bandwidth=0.5,
+                h_trans_bandwidth=0.5,
+            ),
+            filt_params_noise=dict(
+                l_freq=frequencies[0]-1 if frequencies[0] > 1 else 0,
+                h_freq=frequencies[1]+1,
+                l_trans_bandwidth=0.5,
+                h_trans_bandwidth=0.5,
+            )
+        )
+
+        X = eeg_features.raw.copy().get_data()
+        ssd.fit(X)
+        extracted_features.append(ssd.apply(X))
+    extracted_features = np.stack(extracted_features, 2)
+    eeg_features.time = eeg_features.raw.times
+    eeg_features.feature = extracted_features
+    eeg_features.feature_info.append(
+        f"{extracted_features.shape[2]} low rank factorisation through SSD "
+        +f"from {eeg_features.feature_config.frequencies[0][0]} to "
+        +f"{eeg_features.feature_config.frequencies[-1][1]} Hz"
+        )
+    
+    return eeg_features
+
 @dataclass
 class EEGfeatures(features.BaseFeatures):
     raw: Optional[mne.io.Raw] = None
@@ -192,22 +164,22 @@ class EEGfeatures(features.BaseFeatures):
             self.eeg_config is not None
         )
         if all(conditions):
+            self.feature_info = list()
+            self.resample()
             map = eeg_channels.map_types(self.raw)
             self.raw.set_channel_types(map)
             montage = mne.channels.make_standard_montage(self.eeg_config.montage)
             self.raw.set_montage(montage)
             self.raw.pick_types(eeg=True)
             self.channel_selection = self._get_existing_channels()
+            self.raw.pick(self.channel_selection)
             self.feature = np.expand_dims(
-                self.raw.get_data(picks=self.channel_selection), 
+                self.raw.get_data(), 
                 axis=2
             )
-            self.feature_info = list()
-            self.channel_names = self.raw.info["ch_names"]
-            self._resample()
             self.frequencies = self.feature_config.frequencies
-            self.mask = self.annotate_artifacts(self.raw)
-            self.time = self.raw.times
+            #self._mask = self.annotate_artifacts(self.raw)
+            self._mask = np.ones_like(self.time, dtype=bool) #For some reason chang data doesn't give any good data but after visual review the data are very good so I pute everything to True.
             self.labels = {
                 "channels_info": eeg_channels.generate_dictionary(
                     self.channel_selection
@@ -221,6 +193,15 @@ class EEGfeatures(features.BaseFeatures):
                    feature_config = feature_config,
                    eeg_config = eeg_config)
     
+    @property
+    def mask(self):
+        self._mask = np.ones_like(self.time, dtype=bool)
+        return self._mask
+    
+    @mask.setter
+    def mask(self, value):
+        self._mask = value
+        return self._mask
     
     def to_dict(self):
         return {
@@ -231,24 +212,30 @@ class EEGfeatures(features.BaseFeatures):
             "mask": self.mask,
         }
 
-    def _resample(self):
+    def resample(self):
         self.feature_info.append(f"Resampled from {self.raw.info['sfreq']} Hz to {self.eeg_config.sampling_rate_hz} Hz")
         self.raw.resample(self.eeg_config.sampling_rate_hz)
         self.time = self.raw.times
         return self
 
     def _get_existing_channels(self):
-        existing_channels = set(self.raw.info["ch_names"])
+        existing_channels = self.raw.info["ch_names"]
         if self.eeg_config.channels is not None:
-            requested_channels = set(self.eeg_config.channels)
-            selection = existing_channels.intersection(requested_channels)
+            requested_channels = self.eeg_config.channels
+            selection = [ch for ch in existing_channels if ch in requested_channels]
         else:
             selection = existing_channels
         return list(selection)
+    
+    def extract_gfp(self):
+        gfp = np.std(self.feature, axis=0, keepdims=True)
+        self.feature = gfp
+        self.feature_info.append("GFP extracted")
+        return self
 
     def annotate_artifacts(self, raw: mne.io.Raw):
         annotator_instance = Detector(raw)
-        annotator_instance.detect_muscles(filter_freq=(30, None))
+        annotator_instance.detect_muscles(filter_freq=(100, None))
         annotator_instance.detect_other()
         annotator_instance.merge_annotations()
         annotator_instance.generate_mask()

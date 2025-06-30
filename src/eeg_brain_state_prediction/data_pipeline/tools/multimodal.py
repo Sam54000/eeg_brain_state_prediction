@@ -53,7 +53,12 @@ def validate_time_series(time: np.ndarray, data: np.ndarray) -> None:
     
     if time.ndim != 1:
         raise ValidationError("Time array must be 1-dimensional")
-    if time.size != data.shape[1]:
+    shape_does_not_match = (
+        time.size != data.shape[0] 
+        if data.ndim == 1 
+        else time.size != data.shape[1]
+    )
+    if shape_does_not_match:
         raise ValidationError(
             f"Time points ({time.size}) do not match data points ({data.shape[1]})"
         )
@@ -113,7 +118,8 @@ def resample_time(
 def resample_data(
     data: np.ndarray, 
     not_resampled_time: np.ndarray, 
-    resampled_time: np.ndarray
+    resampled_time: np.ndarray,
+    axis: int = 1
 ) -> np.ndarray:
     """Resample data using cubic spline interpolation
     
@@ -129,13 +135,14 @@ def resample_data(
         ProcessingError: If resampling fails
     """
     try:
-        validate_time_series(not_resampled_time, data)
-        validate_data(resampled_time, check_nan=True, check_inf=True)
+        #validate_time_series(not_resampled_time, data)
+        #validate_data(resampled_time, check_nan=True, check_inf=True)
 
-        interpolator = CubicSpline(not_resampled_time, data, axis=1)
+        interpolator = CubicSpline(not_resampled_time, data, axis=axis)
         resampled = interpolator(resampled_time)
         
         validate_data(resampled, check_nan=True, check_inf=True)
+        validate_time_series(resampled_time, resampled)
         return resampled
         
     except Exception as e:
@@ -205,29 +212,35 @@ def resample_all(
     ) -> Dict[str, Dict[str, Any]]:
 
     resampled_multimodal = {}
+    multimodal_dict["eeg"]["time"] = (
+        multimodal_dict["eeg"]["time"] 
+        + multimodal_dict["brainstates"]["time"][0]
+    )
     for modality, data in multimodal_dict.items():
+
         resampled_time = resample_time(
-            data["time"],
+            time = data["time"],
             tr_time_seconds=tr_time_seconds,
             resampling_factor=resampling_factor,
         )
-
         resampled_features = resample_data(
             data=data["feature"],
             not_resampled_time=data["time"],
             resampled_time=resampled_time,
+            axis=1,
         )
 
         resampled_mask = resample_data(
             data=data["mask"],
             not_resampled_time=data["time"],
             resampled_time=resampled_time,
+            axis = 0,
         )
 
         resampled_multimodal[modality] = {
             "time": resampled_time,
             "feature": resampled_features,
-            "mask": resampled_mask,
+            "mask": resampled_mask.astype(bool),
             "labels": data["labels"],
             "feature_info": data["feature_info"],
             
@@ -265,41 +278,28 @@ def trim_to_min_time(
     return trimed_multimodal
 
 def print_filenames(
-    subject: str,
-    session: str,
-    task: str,
-    description: str,
-    run: str,
-    dict_modalities: Dict[str, Path | str | None]
+    dict_modalities: Dict[str, Path | str | None],
+    **kwargs,
     ) -> None:
     """ Print the filenames of the multimodal data in a nice format.
     
     Args:
-        subject (str): The subject ID.
-        session (str): The session ID.
-        task (str): The task ID.
-        description (str): The description of the task.
-        run (str): The run ID.
         dict_modalities (Dict[str, Path | str | None]): A dictionary containing
             the filenames for each modality.
     """
     eeg_file = dict_modalities.get('eeg', None)
     brainstates_file = dict_modalities.get('brainstates', None)
     eyetracking_file = dict_modalities.get('eyetracking', None)
-    print(f"└── Session: {session}")
-    print(f"    └── Run: {run}")
+    print(f"└── Session: {kwargs['session']}")
     print(f"        ├── EEG file        : {eeg_file}")
     print(f"        ├── brainstates file: {brainstates_file }")
     print(f"        └── eyetracking file: {eyetracking_file }")
 
 def collect_filenames(
-    subject: str,
-    session: str,
-    task: str,
-    run: str,
     multimodal_config: MultimodalConfig,
     data_architecture: arch.BidsArchitecture,
     modalities: List[str],
+    **kwargs,
 ) -> Dict[str, Path | str | None]:
     """Collect the filenames of the multimodal data.
 
@@ -320,13 +320,10 @@ def collect_filenames(
     """
 
     selection = data_architecture.select(
-        subject = subject, 
-        task = task,
-        session = session,
-        run = run,
         datatype = modalities,
         suffix = modalities,
-        extension = ".pkl"
+        extension = ".pkl",
+        **kwargs,
     )
 
     dict_modality = {}
@@ -368,7 +365,7 @@ def save(
     try:
         saving_path = os.fspath(path.fullpath).replace(
             path.description,
-            path.description + additional_description
+            path.description + (additional_description if additional_description is not None else "")
         )
         
         logger.info("Saving data to: %s", saving_path)

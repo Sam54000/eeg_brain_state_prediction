@@ -23,7 +23,8 @@ class Detector:
         Returns:
             The Detectorinstance
         """
-        muscle_annotations, _ = annotate_muscle_zscore(self.raw, **kwargs)
+        muscle_annotations, _ = annotate_muscle_zscore(self.raw, **kwargs,
+                                                       threshold=6)
         self.artifacts_general_annotations.append(muscle_annotations)
 
         return self

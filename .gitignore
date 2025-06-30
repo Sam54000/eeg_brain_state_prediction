@@ -9,3 +9,4 @@ models
 data/
 figures/
 logs/
+__pycache__/
