@@ -30,6 +30,7 @@ from sklearn.pipeline import Pipeline
 import pyriemann
 from pyriemann.estimation import Coherences, Covariances
 from pyriemann.spatialfilters import CSP
+from pyriemann.spatialfilters import SPoC
 from pyriemann.spatialfilters import AJDC
 from pyriemann.classification import SVC
 from pyriemann.regression import SVR
@@ -38,7 +39,7 @@ from pyriemann.classification import TSclassifier
 import bids_explorer.architecture.architecture as arch
 from sklearn.base import BaseEstimator, TransformerMixin
 from pyriemann.utils.base import nearest_sym_pos_def
-
+#%%
 class NearestSPD(TransformerMixin, BaseEstimator):
     """Transformer to convert matrices to their nearest symmetric positive definite version.
     
@@ -154,7 +155,6 @@ def simple_experiment_regression():
     filters = [
         ("No_Filter", None), 
         ("CSP", CSP(nfilter=4, metric="riemann", log = False)),
-        ("SPoC", CSP(nfilter=4, metric="riemann", log = False)),
         ]
     regressors = [
         ("SVR", SVR(C=0.01)),
@@ -349,7 +349,7 @@ def generate_X_y_groups_epochs(
             else:
                 bs = bs[:, starting_index:ending_index]
             Y.append(bs)
-            groups.append(np.ones_like(bs) * i)
+            groups.append(np.ones(bs.shape[-1]) * i)
 
     X = np.concatenate(X, axis = 0)
     if Y[0].ndim == 1:
@@ -359,9 +359,7 @@ def generate_X_y_groups_epochs(
     groups = np.concatenate(groups, axis = 0)
     return X, Y, groups
 
-#%%
 
-#%%
 def classification(eeg_architecture, bs_architecture):
     pipelines = simple_experiment_classification()
     pipelines.append(process_ensemble_func_con())
@@ -380,7 +378,7 @@ def classification(eeg_architecture, bs_architecture):
     df = pd.DataFrame()
     for pipeline in pipelines:
         if isinstance(pipeline, StackingClassifier):
-            names = pipeline.estimators_
+            names = ["cov","lagged","instataneous"]
         else:
             names = list(pipeline.named_steps.keys())
         print(names)
@@ -412,17 +410,18 @@ def regression(eeg_architecture, bs_architecture):
     )
     pipelines = simple_experiment_regression()
     df = pd.DataFrame()
-    for pipeline in pipelines:
+    for i, pipeline in enumerate(pipelines):
         if isinstance(pipeline, StackingClassifier):
-            names = pipeline.estimators_
+            names = ["cov","lagged","instataneous"]
         else:
             names = list(pipeline.named_steps.keys())
         print(names)
         for cap in range(Y.shape[0]):
+            Ycap = np.squeeze(Y[cap,:])
             scores = cross_val_multiscore(
                 pipeline,
                 X,
-                Y[cap,:],
+                Ycap,
                 groups = groups,
                 cv= model_selection.LeaveOneGroupOut(),
                 n_jobs=-1,
@@ -435,8 +434,45 @@ def regression(eeg_architecture, bs_architecture):
             })
             sub_df["pipeline"] = "-".join(names)
             df = pd.concat([df,sub_df])
-    df.to_csv("regression_result.csv")
+        df.to_csv(f"regression_result_{i}.csv")
+#%%
 
+
+eeg_architecture = arch.BidsArchitecture(
+    root = "/data2/Projects/eeg_fmri_natview/chang_data/raw/",
+)
+bs_architecture = arch.BidsArchitecture(
+    root = "/data2/Projects/eeg_fmri_natview/chang_data/derivatives/",
+    datatype = "brainstates",
+    extension = "pkl"
+)
+
+X, Y, groups = generate_X_y_groups_epochs(
+    selected_subjects = eeg_architecture.subjects,
+    time_window = (-10, 0),
+    eeg_architecture = eeg_architecture,
+    bs_architecture = bs_architecture,
+    classes = True,
+    nb_subjects = None,
+)
+
+one_Y = Y.copy()
+one_Y[np.where(one_Y>0)] = 1
+cov = Covariances(estimator="lwf")
+scaler = Scaler(scalings = "median")
+scaled_x = scaler.fit(X)
+CovX = cov.fit_transform(scaled_x)
+csp = CSP(nfilter = 6, metric = "riemann", log = False)
+csp_x = csp.fit_transform(CovX, one_Y)
+res = pyriemann.classification.class_distinctiveness(
+    CovX,
+    one_Y,
+    exponent=1,
+    metric='riemann',
+    return_num_denom=False
+    )
+
+#%%
 if __name__ == "__main__":
     eeg_architecture = arch.BidsArchitecture(
         root = "/data2/Projects/eeg_fmri_natview/chang_data/raw/",
@@ -446,5 +482,5 @@ if __name__ == "__main__":
         datatype = "brainstates",
         extension = "pkl"
     )
-    classification(eeg_architecture,bs_architecture)
+    #classification(eeg_architecture,bs_architecture)
     regression(eeg_architecture,bs_architecture)

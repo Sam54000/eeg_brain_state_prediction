@@ -434,118 +434,1492 @@ Applying baseline correction (mode: mean)
 Using data from preloaded Raw for 700 events and 2501 original time points ...
 5 bad epochs dropped
 [Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
-['Covariances', 'SVC']
-[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:   43.2s remaining:  3.2min
-[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  1.2min remaining:  1.5min
-[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed:  1.7min remaining:   38.2s
+['Covariances', 'SVR']
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:   46.4s remaining:  3.5min
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  1.3min remaining:  1.6min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed:  1.9min remaining:   42.1s
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed:  2.3min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:   45.9s remaining:  3.4min
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  1.3min remaining:  1.5min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed:  1.8min remaining:   40.2s
 [Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed:  2.2min finished
 [Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
-/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/sklearn/linear_model/_logistic.py:465: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  n_iter_i = _check_optimize_result(
-/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/sklearn/linear_model/_logistic.py:465: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  n_iter_i = _check_optimize_result(
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:   45.9s remaining:  3.4min
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  1.3min remaining:  1.5min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed:  1.7min remaining:   39.2s
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed:  2.2min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
 [Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:   43.7s remaining:  3.3min
-/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/sklearn/linear_model/_logistic.py:465: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  n_iter_i = _check_optimize_result(
-/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/sklearn/linear_model/_logistic.py:465: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  n_iter_i = _check_optimize_result(
-/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/sklearn/linear_model/_logistic.py:465: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  n_iter_i = _check_optimize_result(
-[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  1.2min remaining:  1.4min
-/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/sklearn/linear_model/_logistic.py:465: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  n_iter_i = _check_optimize_result(
-/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/sklearn/linear_model/_logistic.py:465: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  n_iter_i = _check_optimize_result(
-/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/sklearn/linear_model/_logistic.py:465: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  n_iter_i = _check_optimize_result(
-[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed:  1.7min remaining:   37.4s
-/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/sklearn/linear_model/_logistic.py:465: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  n_iter_i = _check_optimize_result(
-/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/sklearn/linear_model/_logistic.py:465: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  n_iter_i = _check_optimize_result(
-/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/sklearn/linear_model/_logistic.py:465: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  n_iter_i = _check_optimize_result(
-[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed:  2.1min finished
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  1.3min remaining:  1.6min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed:  1.9min remaining:   42.1s
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed:  2.3min finished
 [Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
-[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:   42.6s remaining:  3.2min
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:   43.6s remaining:  3.3min
 [Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  1.2min remaining:  1.4min
-[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed:  1.7min remaining:   37.7s
-[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed:  2.1min finished
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed:  1.9min remaining:   41.6s
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed:  2.3min finished
 [Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
-['Covariances', 'TSclassifier']
-['Covariances', 'CSP', 'SVC']
-['Covariances', 'CSP', 'TSclassifier']
-[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:   37.6s remaining:  2.8min
-[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  1.2min remaining:  1.4min
-[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed:  1.7min remaining:   37.6s
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/joblib/externals/loky/process_executor.py:752: UserWarning: A worker stopped while some jobs were given to the executor. This can be caused by a too short worker timeout or by a memory leak.
+  warnings.warn(
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:   43.1s remaining:  3.2min
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  1.4min remaining:  1.7min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed:  1.9min remaining:   42.6s
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed:  2.4min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:   44.0s remaining:  3.3min
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  1.3min remaining:  1.5min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed:  1.8min remaining:   40.3s
 [Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed:  2.2min finished
 [Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
-[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:   52.8s remaining:  4.0min
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:   43.7s remaining:  3.3min
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  1.3min remaining:  1.5min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed:  1.7min remaining:   39.3s
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed:  2.2min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:   48.8s remaining:  3.7min
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  1.3min remaining:  1.6min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed:  1.8min remaining:   41.1s
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed:  2.3min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+['Covariances', 'KNearestNeighbor']
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  6.6min remaining: 29.6min
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  7.1min remaining:  8.5min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed: 10.3min remaining:  3.9min
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed: 10.8min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  6.6min remaining: 29.5min
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  7.0min remaining:  8.4min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed: 10.3min remaining:  3.9min
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed: 10.9min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  6.5min remaining: 29.3min
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  7.0min remaining:  8.4min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed: 10.3min remaining:  3.9min
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed: 10.8min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  6.7min remaining: 30.3min
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  7.1min remaining:  8.5min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed: 10.3min remaining:  3.9min
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed: 10.8min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  6.8min remaining: 30.6min
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  7.2min remaining:  8.6min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed: 10.5min remaining:  3.9min
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed: 11.0min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  6.6min remaining: 29.8min
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  7.1min remaining:  8.5min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed: 10.4min remaining:  3.9min
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed: 10.9min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  6.5min remaining: 29.4min
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  7.1min remaining:  8.5min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed: 10.2min remaining:  3.8min
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed: 10.8min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  6.7min remaining: 30.4min
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  7.3min remaining:  8.7min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed: 10.6min remaining:  4.0min
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed: 11.1min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  6.8min remaining: 30.5min
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  7.3min remaining:  8.8min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed: 10.6min remaining:  4.0min
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed: 11.1min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+['Covariances', 'CSP', 'SVR']
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  6.3min remaining: 28.4min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  7.5min remaining:  9.0min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed:  8.8min remaining:  3.3min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed:  9.7min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  6.2min remaining: 27.9min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  7.8min remaining:  9.4min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed:  9.0min remaining:  3.4min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed:  9.7min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  6.2min remaining: 27.9min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  7.9min remaining:  9.5min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed:  8.9min remaining:  3.3min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed:  9.6min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  6.2min remaining: 28.0min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  8.1min remaining:  9.7min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed:  9.2min remaining:  3.4min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed:  9.8min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  6.0min remaining: 27.0min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  7.5min remaining:  9.0min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed:  8.2min remaining:  3.1min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed:  9.3min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  6.0min remaining: 27.1min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  7.2min remaining:  8.6min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed:  9.0min remaining:  3.4min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed:  9.2min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  6.0min remaining: 27.2min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  7.3min remaining:  8.8min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed:  8.7min remaining:  3.3min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed:  9.3min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  6.0min remaining: 27.2min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  7.6min remaining:  9.1min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed:  8.8min remaining:  3.3min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed:  9.5min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  6.1min remaining: 27.3min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  7.7min remaining:  9.2min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed:  8.8min remaining:  3.3min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed:  9.1min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+['Covariances', 'CSP', 'KNearestNeighbor']
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  8.7min remaining: 39.2min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed: 10.0min remaining: 12.0min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed: 10.6min remaining:  4.0min
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed: 11.3min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  9.0min remaining: 40.7min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed: 10.1min remaining: 12.1min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed: 10.8min remaining:  4.0min
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed: 11.0min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  8.9min remaining: 39.9min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed: 10.1min remaining: 12.1min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed: 10.6min remaining:  4.0min
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed: 11.5min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  8.7min remaining: 39.3min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed: 10.2min remaining: 12.3min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed: 10.6min remaining:  4.0min
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed: 11.3min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  9.0min remaining: 40.5min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed: 10.1min remaining: 12.1min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed: 10.7min remaining:  4.0min
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed: 11.2min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed: 10.0min remaining: 44.9min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed: 11.4min remaining: 13.7min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed: 11.9min remaining:  4.5min
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed: 12.4min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  9.7min remaining: 43.4min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed: 10.8min remaining: 13.0min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed: 11.5min remaining:  4.3min
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed: 11.7min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  8.9min remaining: 40.2min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  9.8min remaining: 11.7min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed: 10.2min remaining:  3.8min
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed: 11.1min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  9.2min remaining: 41.2min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed: 10.4min remaining: 12.5min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed: 10.8min remaining:  4.0min
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed: 11.3min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+['Zscore_scale', 'Covariances', 'SVR']
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  1.1min remaining:  4.8min
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  1.5min remaining:  1.8min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed:  1.9min remaining:   43.8s
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed:  2.5min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  1.3min remaining:  5.9min
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  1.8min remaining:  2.2min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed:  2.5min remaining:   57.0s
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed:  2.9min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:   51.8s remaining:  3.9min
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  1.7min remaining:  2.1min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed:  2.2min remaining:   48.8s
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed:  2.6min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:   52.6s remaining:  3.9min
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  1.6min remaining:  1.9min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed:  2.0min remaining:   44.4s
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed:  2.5min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:   50.9s remaining:  3.8min
 [Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  1.4min remaining:  1.7min
-[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed:  2.0min remaining:   45.0s
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed:  2.0min remaining:   46.1s
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed:  2.6min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  1.1min remaining:  4.8min
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  1.7min remaining:  2.1min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed:  2.2min remaining:   49.0s
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed:  2.7min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  1.1min remaining:  5.0min
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  1.7min remaining:  2.0min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed:  2.3min remaining:   51.2s
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed:  2.8min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  1.4min remaining:  6.1min
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  1.8min remaining:  2.2min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed:  2.4min remaining:   54.4s
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed:  3.0min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:   57.1s remaining:  4.3min
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  1.6min remaining:  1.9min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed:  2.2min remaining:   49.0s
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed:  2.8min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+['Zscore_scale', 'Covariances', 'KNearestNeighbor']
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  7.7min remaining: 34.8min
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  8.2min remaining:  9.8min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed: 11.7min remaining:  4.4min
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed: 12.3min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  7.5min remaining: 33.6min
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  8.1min remaining:  9.8min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed: 11.1min remaining:  4.2min
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed: 11.9min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  6.7min remaining: 30.2min
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  7.5min remaining:  9.0min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed: 10.4min remaining:  3.9min
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed: 11.0min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  6.8min remaining: 30.5min
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  7.3min remaining:  8.7min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed: 10.6min remaining:  4.0min
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed: 11.5min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  6.9min remaining: 30.9min
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  7.5min remaining:  9.0min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed: 10.4min remaining:  3.9min
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed: 11.0min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  6.8min remaining: 30.5min
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  7.4min remaining:  8.8min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed: 10.5min remaining:  3.9min
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed: 11.2min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  6.9min remaining: 30.8min
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  7.3min remaining:  8.8min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed: 10.5min remaining:  3.9min
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed: 11.2min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  6.9min remaining: 31.1min
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  7.2min remaining:  8.7min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed: 10.5min remaining:  3.9min
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed: 11.0min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  6.8min remaining: 30.6min
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  7.3min remaining:  8.8min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed: 10.3min remaining:  3.9min
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed: 11.3min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+['Zscore_scale', 'Covariances', 'CSP', 'SVR']
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  7.3min remaining: 32.7min
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  7.8min remaining:  9.3min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed:  8.7min remaining:  3.3min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed:  9.2min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  7.3min remaining: 33.0min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  7.9min remaining:  9.5min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed:  9.0min remaining:  3.4min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed:  9.5min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  7.1min remaining: 32.1min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  7.5min remaining:  9.0min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed:  9.1min remaining:  3.4min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed:  9.8min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  6.9min remaining: 30.9min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  8.3min remaining:  9.9min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed:  8.9min remaining:  3.3min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed:  9.8min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  7.3min remaining: 32.9min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  7.8min remaining:  9.4min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed:  9.1min remaining:  3.4min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed:  9.3min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  7.1min remaining: 31.9min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  7.7min remaining:  9.3min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed:  8.9min remaining:  3.3min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed:  9.4min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  7.7min remaining: 34.5min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  8.4min remaining: 10.1min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed:  9.8min remaining:  3.7min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed: 10.1min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  8.0min remaining: 35.9min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  8.3min remaining: 10.0min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed:  9.6min remaining:  3.6min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed: 10.2min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  6.7min remaining: 30.0min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  8.2min remaining:  9.8min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed:  9.7min remaining:  3.6min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed:  9.9min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+['Zscore_scale', 'Covariances', 'CSP', 'KNearestNeighbor']
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed: 10.7min remaining: 48.2min
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed: 10.9min remaining: 13.1min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed: 11.6min remaining:  4.4min
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed: 11.8min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  9.8min remaining: 44.1min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed: 10.6min remaining: 12.7min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed: 11.2min remaining:  4.2min
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed: 11.6min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  9.8min remaining: 44.2min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed: 10.6min remaining: 12.7min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed: 11.0min remaining:  4.1min
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed: 11.7min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  9.6min remaining: 43.3min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed: 10.6min remaining: 12.7min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed: 11.1min remaining:  4.2min
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed: 11.9min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  9.8min remaining: 44.1min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed: 10.8min remaining: 12.9min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed: 11.1min remaining:  4.2min
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed: 12.0min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  9.7min remaining: 43.5min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed: 10.7min remaining: 12.8min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed: 11.0min remaining:  4.1min
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed: 11.6min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed: 10.0min remaining: 45.0min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed: 11.2min remaining: 13.4min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed: 11.5min remaining:  4.3min
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed: 12.0min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed: 10.1min remaining: 45.2min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed: 11.1min remaining: 13.3min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed: 11.5min remaining:  4.3min
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed: 11.8min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  9.6min remaining: 43.3min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed: 10.4min remaining: 12.4min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed: 11.0min remaining:  4.1min
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed: 11.7min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+['Median_scale', 'Covariances', 'SVR']
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  1.3min remaining:  6.0min
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  1.9min remaining:  2.3min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed:  2.4min remaining:   53.0s
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed:  2.9min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  1.5min remaining:  7.0min
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  2.2min remaining:  2.6min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed:  3.1min remaining:  1.2min
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed:  3.3min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  1.5min remaining:  6.8min
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  1.9min remaining:  2.2min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed:  2.3min remaining:   52.6s
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed:  2.9min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  1.2min remaining:  5.4min
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  1.9min remaining:  2.2min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed:  2.4min remaining:   52.9s
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed:  3.0min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  1.4min remaining:  6.4min
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  1.9min remaining:  2.3min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed:  2.4min remaining:   53.3s
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed:  2.9min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  1.3min remaining:  5.7min
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  1.8min remaining:  2.2min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed:  2.3min remaining:   52.3s
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed:  2.9min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  1.2min remaining:  5.5min
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  2.0min remaining:  2.4min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed:  2.3min remaining:   52.7s
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed:  2.9min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  1.2min remaining:  5.4min
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  1.9min remaining:  2.3min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed:  2.3min remaining:   52.7s
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed:  3.0min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  1.2min remaining:  5.5min
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  2.0min remaining:  2.4min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed:  2.4min remaining:   53.0s
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed:  2.9min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  7.1min remaining: 32.1min
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  7.7min remaining:  9.2min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed: 10.9min remaining:  4.1min
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed: 11.4min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+['Median_scale', 'Covariances', 'KNearestNeighbor']
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  7.2min remaining: 32.6min
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  7.8min remaining:  9.3min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed: 10.9min remaining:  4.1min
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed: 11.6min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  7.2min remaining: 32.2min
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  7.7min remaining:  9.2min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed: 11.0min remaining:  4.1min
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed: 11.4min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  7.2min remaining: 32.2min
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  7.7min remaining:  9.2min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed: 11.0min remaining:  4.1min
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed: 11.8min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  7.3min remaining: 32.9min
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  7.7min remaining:  9.2min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed: 10.8min remaining:  4.1min
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed: 11.8min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  7.4min remaining: 33.2min
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  7.8min remaining:  9.3min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed: 10.9min remaining:  4.1min
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed: 11.4min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  7.2min remaining: 32.3min
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  8.0min remaining:  9.6min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed: 10.8min remaining:  4.1min
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed: 11.4min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  7.2min remaining: 32.4min
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  8.1min remaining:  9.7min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed: 10.9min remaining:  4.1min
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed: 11.6min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  7.3min remaining: 32.8min
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  7.7min remaining:  9.2min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed: 10.9min remaining:  4.1min
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed: 11.5min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+['Median_scale', 'Covariances', 'CSP', 'SVR']
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  8.4min remaining: 38.0min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  8.7min remaining: 10.4min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed: 10.0min remaining:  3.7min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed: 10.4min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  7.4min remaining: 33.4min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  8.4min remaining: 10.0min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed:  9.9min remaining:  3.7min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed: 10.6min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  7.4min remaining: 33.1min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  8.3min remaining: 10.0min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed: 10.2min remaining:  3.8min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed: 10.4min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  7.3min remaining: 33.1min
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  8.6min remaining: 10.4min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed: 10.0min remaining:  3.7min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed: 10.6min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  7.5min remaining: 33.6min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  8.8min remaining: 10.6min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed: 10.0min remaining:  3.8min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed: 10.6min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  7.6min remaining: 34.3min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  8.8min remaining: 10.6min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed: 10.3min remaining:  3.9min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed: 10.6min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  7.0min remaining: 31.4min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  8.6min remaining: 10.4min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed: 10.1min remaining:  3.8min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed: 10.5min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  7.3min remaining: 33.0min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  8.9min remaining: 10.7min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed: 10.0min remaining:  3.8min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed: 10.6min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  7.0min remaining: 31.5min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed:  8.8min remaining: 10.5min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed: 10.1min remaining:  3.8min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed: 10.6min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+['Median_scale', 'Covariances', 'CSP', 'KNearestNeighbor']
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed: 10.2min remaining: 45.9min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed: 11.0min remaining: 13.2min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed: 11.7min remaining:  4.4min
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed: 12.0min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed: 10.0min remaining: 45.2min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed: 11.1min remaining: 13.4min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed: 11.8min remaining:  4.4min
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed: 12.2min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed: 10.1min remaining: 45.3min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed: 11.4min remaining: 13.7min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed: 11.9min remaining:  4.4min
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed: 12.3min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed:  9.9min remaining: 44.5min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed: 11.3min remaining: 13.6min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed: 11.9min remaining:  4.5min
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed: 12.2min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed: 10.2min remaining: 45.9min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed: 11.1min remaining: 13.3min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed: 11.6min remaining:  4.3min
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed: 12.1min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed: 10.1min remaining: 45.6min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed: 11.1min remaining: 13.3min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed: 11.3min remaining:  4.2min
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed: 12.3min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed: 10.2min remaining: 45.9min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed: 11.0min remaining: 13.2min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed: 11.6min remaining:  4.3min
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed: 12.3min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed: 10.4min remaining: 47.0min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed: 11.3min remaining: 13.6min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed: 11.7min remaining:  4.4min
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed: 12.4min finished
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 128 concurrent workers.
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   2 out of  11 | elapsed: 10.1min remaining: 45.3min
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+/home/slouviot/miniconda3/envs/mne/lib/python3.12/site-packages/pyriemann/utils/ajd.py:213: UserWarning: Convergence not reached
+  warnings.warn("Convergence not reached")
+[Parallel(n_jobs=-1)]: Done   5 out of  11 | elapsed: 10.9min remaining: 13.1min
+[Parallel(n_jobs=-1)]: Done   8 out of  11 | elapsed: 11.6min remaining:  4.4min
+[Parallel(n_jobs=-1)]: Done  11 out of  11 | elapsed: 11.9min finished

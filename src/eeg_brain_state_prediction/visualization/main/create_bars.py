@@ -17,7 +17,6 @@ brainstates = ["CapsGS"]
 additional_info = ""
 elements = ["CapsGS"]#["magnitude", "phase", "real"]
 
-# Define custom title formatting
 def format_title(description, task, element, additional_info) -> str:
     """Format plot title based on current configuration
     
@@ -27,17 +26,13 @@ def format_title(description, task, element, additional_info) -> str:
     Returns:
         Formatted title string
     """
-    # Create base title
     title = f"{split_camel_case(description)} - {task} - {element} - "\
             f"{additional_info}"
     
-    # Apply any needed replacements
     title = title.replace("8", "").replace("Cpca1054", "")
     
     return title
 
-# Generate lists
-# Merge DataFrames
 combinations = product(
         tasks,
         brainstates,

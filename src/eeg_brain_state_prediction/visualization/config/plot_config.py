@@ -25,12 +25,12 @@ class BaseConfig:
     
     palette_type: str = "diverging"  # can be "diverging", "sequential", etc.
     palette_args: dict = field(default_factory=lambda: {
-        "h_neg": 150,  # hue for negative values
-        "h_pos": 40,   # hue for positive values
-        "l": 50,       # lightness
-        "s": 75,       # saturation
+        "h_neg": 150,  
+        "h_pos": 40,   
+        "l": 50,       
+        "s": 75,       
         "center": "dark",
-        "n": 12        # number of colors
+        "n": 12        
     })
 
     def __post_init__(self):
